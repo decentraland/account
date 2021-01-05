@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "name": "account",
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/.*", "dest": "/index.html" }
+  ],
+  "github": {
+    "silent": true
+  },
+  "build": {
+    "env": {
+      "REACT_APP_PEER_URL": "https://peer.decentraland.org"
+    }
+  }
+}
