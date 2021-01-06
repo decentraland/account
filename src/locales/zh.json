@@ -1,1 +1,8 @@
-{}
+{
+  "account_header": {
+    "actions": {
+      "change_alias": "更改别名",
+      "edit_avatar": "编辑头像"
+    }
+  }
+}

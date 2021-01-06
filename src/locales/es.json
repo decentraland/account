@@ -1,1 +1,8 @@
-{}
+{
+  "account_header": {
+    "actions": {
+      "change_alias": "Cambiar Alias",
+      "edit_avatar": "Editar Avatar"
+    }
+  }
+}
