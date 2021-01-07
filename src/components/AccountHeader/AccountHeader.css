@@ -1,0 +1,53 @@
+.AccountHeader {
+  display: flex;
+  flex-direction: row;
+}
+
+.AccountHeader.ui.header.large {
+  /*background-color: var(--account-header-background);*/
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0.24)), var(--account-header-background);
+  height: 176px;
+  padding: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+}
+
+.AccountHeader .profile-text {
+  color: white;
+  padding-top: 15px;
+  padding-left: 27px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.AccountHeader .profile-text .profile-name {
+  line-height: 48px;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+
+.AccountHeader .profile-text .profile-description {
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 30px;
+}
+
+.AccountHeader .actions {
+  flex-grow: 1;
+  text-align: right;
+}
+
+
+.AccountHeader .actions > * {
+  margin-top: 5%;
+}
+
+
+.AccountHeader .ui.button.inverted.primary {
+  color: white;
+  border-color: white;
+}
+
