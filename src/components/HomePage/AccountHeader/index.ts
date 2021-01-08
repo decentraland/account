@@ -1,2 +1,2 @@
-import AccountHeader from './AccountHeader'
+import AccountHeader from './AccountHeader.container'
 export { AccountHeader }
