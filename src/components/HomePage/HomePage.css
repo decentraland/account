@@ -1,2 +1,117 @@
-.HomePage {
+
+.HomePage .mana-logo {
+  width: 24px;
+  height: 28px;
+  background-image: url('../../images/mana-red-logo.png'); 
+}
+
+
+.HomePage .matic-logo {
+  width: 24px;
+  height: 24px;
+  background-image: url('../../images/matic-logo.png'); 
+}
+
+.HomePage .in-transaction-logo {
+  width: 34px;
+  height: 34px;
+  background-image: url('../../images/in-transaction.png'); 
+}
+
+.HomePage .out-transaction-logo {
+  width: 34px;
+  height: 34px;
+  background-image: url('../../images/out-transaction.png'); 
+}
+
+.HomePage .pending-transaction-logo {
+  width: 34px;
+  height: 34px;
+  background-image: url('../../images/pending-transaction.png'); 
+}
+
+.AccountCardHeader {
+  padding: 22px;
+  border-bottom: 1px solid #ccc;
+}
+
+.AccountCardHeader .title{
+  font-size: 21px;
+  line-height: 28px;
+  margin-bottom: 10px;
+}
+
+.AccountCardHeader .fundsContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.AccountCardHeader .funds {
+  flex-grow: 1;
+}
+
+
+.AccountCardHeader .funds .amount {
+  display: flex;
+  justify-content: row;
+  align-items: flex-start;
+  align-items: center;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 42px;
+}
+
+.AccountCardHeader .funds .amount :first-child {
+  margin-right: 10px;
+}
+
+.AccountCardHeader .actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.AccountCardHeader .actions button:first-child {
+  min-width: 44px;
+}
+
+.AccountTransactions .description {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+  text-transform: uppercase;
+  color: #736E7D;
+}
+
+.AccountTransactions .TransactionData {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.AccountTransactions .TransactionData .AccountTransaction {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 24px 0px;
+  font-size: 17px;
+  line-height: 26px;
+  letter-spacing: -0.2px;
+}
+
+.AccountTransactions .TransactionData .AccountTransaction .DescriptionStatus{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.AccountTransactions .TransactionData .AccountTransaction .DescriptionStatus :last-child {
+  font-size: 15px;
+  line-height: 24px;
+  color: #736E7D;
 }
