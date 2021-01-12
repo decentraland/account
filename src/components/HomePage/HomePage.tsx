@@ -2,9 +2,14 @@ import React from 'react'
 import { Page } from 'decentraland-ui'
 import { Footer, Navbar } from 'decentraland-dapps/dist/containers'
 import { AccountHeader } from './AccountHeader'
-import { AccountCardContainer, AccountCard } from './AccountCard'
+import {
+  NetworkType,
+  TransactionStatus,
+  TransactionType
+} from './AccountCard/AccountCard.types'
 import { Props } from './HomePage.types'
 import './HomePage.css'
+import { AccountCard, AccountCardContainer } from './AccountCard'
 
 const HomePage = (_props: Props) => {
   return (
@@ -14,67 +19,54 @@ const HomePage = (_props: Props) => {
         <AccountHeader />
         <AccountCardContainer>
           <AccountCard
-            type="mana"
+            type={NetworkType.ETHEREUM}
             title="Mana"
-            onFetchAmount={() => '200,000'}
-            onFetchTransactions={() => ({
-              latest: [
-                {
-                  type: 'input',
-                  description: 'Added tokens via transak',
-                  status: 'Completed',
-                  amount: '3,000'
-                },
-                {
-                  type: 'input',
-                  description: 'Added tokens via transak',
-                  status: 'Completed',
-                  amount: '3,000'
-                },
-                {
-                  type: 'output',
-                  description: 'Added tokens via transak',
-                  status: 'Completed',
-                  amount: '3,000'
-                }
-              ],
-              pending: []
-            })}
+            onFetchAmount={() => 200}
+            onFetchTransactions={() => [
+              {
+                type: TransactionType.DEPOSIT,
+                description: 'Added tokens via transak',
+                status: TransactionStatus.CONFIRMED,
+                amount: 3000
+              },
+              {
+                type: TransactionType.WITHDRAWAL,
+                description: 'Added tokens via transak',
+                status: TransactionStatus.CONFIRMED,
+                amount: 3000
+              },
+              {
+                type: TransactionType.DEPOSIT,
+                description: 'Added tokens via transak',
+                status: TransactionStatus.CONFIRMED,
+                amount: 3000
+              }
+            ]}
           />
           <AccountCard
-            type="matic"
+            type={NetworkType.MATIC}
             title="Matic Mana"
-            onFetchAmount={() => '300,000'}
-            onFetchTransactions={() => ({
-              latest: [
-                {
-                  type: 'input',
-                  description: 'Added tokens via transak',
-                  status: 'Completed',
-                  amount: '3,000'
-                },
-                {
-                  type: 'input',
-                  description: 'Added tokens via transak',
-                  status: 'Completed',
-                  amount: '3,000'
-                },
-                {
-                  type: 'output',
-                  description: 'Added tokens via transak',
-                  status: 'Completed',
-                  amount: '3,000'
-                }
-              ],
-              pending: [
-                {
-                  type: 'pending',
-                  description: 'Added tokens via transak',
-                  status: 'Pending',
-                  amount: '3,000'
-                }
-              ]
-            })}
+            onFetchAmount={() => 300}
+            onFetchTransactions={() => [
+              {
+                type: TransactionType.DEPOSIT,
+                description: 'Added tokens via transak',
+                status: TransactionStatus.CONFIRMED,
+                amount: 3000
+              },
+              {
+                type: TransactionType.WITHDRAWAL,
+                description: 'Added tokens via transak',
+                status: TransactionStatus.CONFIRMED,
+                amount: 3000
+              },
+              {
+                type: TransactionType.DEPOSIT,
+                description: 'Added tokens via transak',
+                status: TransactionStatus.CONFIRMED,
+                amount: 3000
+              }
+            ]}
           />
         </AccountCardContainer>
       </Page>

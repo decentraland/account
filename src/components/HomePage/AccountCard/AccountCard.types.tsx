@@ -1,16 +1,16 @@
 export enum NetworkType {
   MATIC = 'matic',
-  ETHEREUM = 'ethereum'
+  ETHEREUM = 'ethereum',
 }
 
 export enum TransactionType {
   DEPOSIT = 'deposit',
-  WITHDRAWAL = 'withdrawal'
+  WITHDRAWAL = 'withdrawal',
 }
 
 export enum TransactionStatus {
   CONFIRMED = 'confirmed',
-  PENDING = 'pending'
+  PENDING = 'pending',
 }
 
 export type Transaction = {
@@ -21,5 +21,8 @@ export type Transaction = {
 }
 
 export type Props = {
-  children: any
+  type: NetworkType
+  title: string
+  onFetchAmount: () => number
+  onFetchTransactions: () => Transaction[]
 }

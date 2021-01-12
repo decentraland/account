@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { Card } from 'decentraland-ui'
-import './AccountCard.css'
 import { AccountCardHeader } from './AccountCardHeader'
+import { Transaction, TransactionStatus, Props } from './AccountCard.types'
 import { AccountTransactions } from './AccountTransactions'
+import './AccountCard.css'
 
 const AccountCard = ({
   type,
   title,
   onFetchAmount,
   onFetchTransactions
-}: any) => {
+}: Props) => {
   const [amount, setAmount] = useState(0)
-  const [transactions, setTransactions] = useState({ latest: [], pending: [] })
+  const [transactions, setTransactions]: [Transaction[], any] = useState([])
 
   useEffect(() => {
     const a = onFetchAmount()
@@ -20,21 +21,28 @@ const AccountCard = ({
     setTransactions(t)
   }, [])
 
+  const pending = transactions.filter(
+    (tx) => tx.status === TransactionStatus.PENDING
+  )
+  const latest = transactions.filter(
+    (tx) => tx.status !== TransactionStatus.PENDING
+  )
+
   return (
     <Card className="AccountCard">
       <AccountCardHeader type={type} title={title} amount={amount} />
       <div className="AccountTransactions">
-        {transactions.pending.length > 0 ? (
+        {pending.length > 0 ? (
           <div className="description">
             <div> Pending Transactions </div>
           </div>
         ) : null}
-        <AccountTransactions transactions={transactions.pending} />
+        <AccountTransactions transactions={pending} />
         <div className="description">
           <div> Latest Transactions </div>
           <div> See all </div>
         </div>
-        <AccountTransactions transactions={transactions.latest} />
+        <AccountTransactions transactions={latest} />
       </div>
     </Card>
   )
