@@ -6,7 +6,7 @@ import {
   NetworkType,
   Props,
   TransactionStatus,
-  TransactionType,
+  TransactionType
 } from './HomePage.types'
 import './HomePage.css'
 import { AccountCard, AccountCardContainer } from './AccountCard'
@@ -27,20 +27,20 @@ const HomePage = (_props: Props) => {
                 type: TransactionType.DEPOSIT,
                 description: 'Added tokens via transak',
                 status: TransactionStatus.CONFIRMED,
-                amount: 3000,
+                amount: 3000
               },
               {
                 type: TransactionType.WITHDRAWAL,
                 description: 'Added tokens via transak',
                 status: TransactionStatus.CONFIRMED,
-                amount: 3000,
+                amount: 3000
               },
               {
                 type: TransactionType.DEPOSIT,
                 description: 'Added tokens via transak',
                 status: TransactionStatus.CONFIRMED,
-                amount: 3000,
-              },
+                amount: 3000
+              }
             ]}
           />
           <AccountCard
@@ -51,21 +51,21 @@ const HomePage = (_props: Props) => {
               {
                 type: TransactionType.DEPOSIT,
                 description: 'Added tokens via transak',
-                status: TransactionStatus.CONFIRMED,
-                amount: 3000,
+                status: TransactionStatus.PENDING,
+                amount: 3000
               },
               {
                 type: TransactionType.WITHDRAWAL,
                 description: 'Added tokens via transak',
                 status: TransactionStatus.CONFIRMED,
-                amount: 3000,
+                amount: 3000
               },
               {
                 type: TransactionType.DEPOSIT,
                 description: 'Added tokens via transak',
                 status: TransactionStatus.CONFIRMED,
-                amount: 3000,
-              },
+                amount: 3000
+              }
             ]}
           />
         </AccountCardContainer>

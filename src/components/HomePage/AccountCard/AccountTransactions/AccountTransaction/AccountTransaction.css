@@ -1,0 +1,22 @@
+.AccountTransaction {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 24px 0px;
+  font-size: 17px;
+  line-height: 26px;
+  letter-spacing: -0.2px;
+}
+
+.AccountTransaction .DescriptionStatus{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.AccountTransaction .DescriptionStatus :last-child {
+  font-size: 15px;
+  line-height: 24px;
+  color: #736E7D;
+}
