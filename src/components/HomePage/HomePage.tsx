@@ -1,8 +1,8 @@
 import React from 'react'
 import { Page } from 'decentraland-ui'
 import { Footer, Navbar } from 'decentraland-dapps/dist/containers'
-import { AccountHeader } from '../AccountHeader'
-import { AccountCardContainer, AccountCard } from '../AccountCard'
+import { AccountHeader } from './AccountHeader'
+import { AccountCardContainer, AccountCard } from './AccountCard'
 import { Props } from './HomePage.types'
 import './HomePage.css'
 
@@ -23,22 +23,22 @@ const HomePage = (_props: Props) => {
                   type: 'input',
                   description: 'Added tokens via transak',
                   status: 'Completed',
-                  amount: '3,000',
+                  amount: '3,000'
                 },
                 {
                   type: 'input',
                   description: 'Added tokens via transak',
                   status: 'Completed',
-                  amount: '3,000',
+                  amount: '3,000'
                 },
                 {
                   type: 'output',
                   description: 'Added tokens via transak',
                   status: 'Completed',
-                  amount: '3,000',
-                },
+                  amount: '3,000'
+                }
               ],
-              pending: [],
+              pending: []
             })}
           />
           <AccountCard
@@ -51,29 +51,29 @@ const HomePage = (_props: Props) => {
                   type: 'input',
                   description: 'Added tokens via transak',
                   status: 'Completed',
-                  amount: '3,000',
+                  amount: '3,000'
                 },
                 {
                   type: 'input',
                   description: 'Added tokens via transak',
                   status: 'Completed',
-                  amount: '3,000',
+                  amount: '3,000'
                 },
                 {
                   type: 'output',
                   description: 'Added tokens via transak',
                   status: 'Completed',
-                  amount: '3,000',
-                },
+                  amount: '3,000'
+                }
               ],
               pending: [
                 {
                   type: 'pending',
                   description: 'Added tokens via transak',
                   status: 'Pending',
-                  amount: '3,000',
-                },
-              ],
+                  amount: '3,000'
+                }
+              ]
             })}
           />
         </AccountCardContainer>
