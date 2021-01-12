@@ -1,4 +1,4 @@
-import { Transaction } from '../AccountCard.types'
+import { Transaction } from '../../HomePage.types'
 
 export type Props = {
   transactions: Transaction[]

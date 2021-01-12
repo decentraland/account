@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Icon } from 'decentraland-ui'
 import { Props } from './AccountCardHeader.types'
 import './AccountCardHeader.css'
-import { NetworkType } from '../AccountCard.types'
+import { NetworkType } from '../../HomePage.types'
 
 const AccountCardHeader = ({ type, title, amount }: Props) => (
   <div className="AccountCardHeader">

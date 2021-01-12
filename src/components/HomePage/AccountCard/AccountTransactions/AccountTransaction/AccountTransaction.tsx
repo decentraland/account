@@ -1,7 +1,7 @@
 import React from 'react'
+import { TransactionStatus, TransactionType } from '../../../HomePage.types'
 import { Props } from './AccountTransaction.types'
 import './AccountTransaction.css'
-import { TransactionStatus, TransactionType } from '../../AccountCard.types'
 
 const AccountTransaction = ({ amount, type, status, description }: Props) => (
   <div className="AccountTransaction">

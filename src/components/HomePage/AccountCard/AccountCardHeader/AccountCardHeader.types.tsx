@@ -1,4 +1,4 @@
-import { NetworkType } from '../AccountCard.types'
+import { NetworkType } from '../../HomePage.types'
 
 export type Props = {
   type: NetworkType
