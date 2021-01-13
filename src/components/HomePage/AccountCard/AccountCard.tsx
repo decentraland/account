@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Card } from 'decentraland-ui'
 import { Transaction, TransactionStatus } from '../HomePage.types'
 import { AccountCardHeader } from './AccountCardHeader'
@@ -10,7 +11,7 @@ const AccountCard = ({
   type,
   title,
   onFetchAmount,
-  onFetchTransactions,
+  onFetchTransactions
 }: Props) => {
   const [amount, setAmount] = useState(0)
   const [transactions, setTransactions]: [Transaction[], any] = useState([])
@@ -35,13 +36,13 @@ const AccountCard = ({
       <div className="AccountTransactions">
         {pending.length > 0 ? (
           <div className="description">
-            <div> Pending Transactions </div>
+            <div> {t('account_card.tx_pending')} </div>
           </div>
         ) : null}
         <AccountTransactions transactions={pending} />
         <div className="description">
-          <div> Latest Transactions </div>
-          <div> See all </div>
+          <div> {t('account_card.tx_latests')} </div>
+          <div> {t('account_card.see_all')} </div>
         </div>
         <AccountTransactions transactions={latest} />
       </div>

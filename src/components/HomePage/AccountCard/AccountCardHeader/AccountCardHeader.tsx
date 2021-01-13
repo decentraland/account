@@ -1,8 +1,9 @@
 import React from 'react'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button, Icon } from 'decentraland-ui'
+import { NetworkType } from '../../HomePage.types'
 import { Props } from './AccountCardHeader.types'
 import './AccountCardHeader.css'
-import { NetworkType } from '../../HomePage.types'
 
 const AccountCardHeader = ({ type, title, amount }: Props) => (
   <div className="AccountCardHeader">
@@ -20,7 +21,7 @@ const AccountCardHeader = ({ type, title, amount }: Props) => (
         <Button>
           <Icon name="plus" />
         </Button>
-        <Button>Convert</Button>
+        <Button>{t('account_card_header.convert')}</Button>
       </div>
     </div>
   </div>
