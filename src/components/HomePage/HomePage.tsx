@@ -21,8 +21,8 @@ const HomePage = (_props: Props) => {
           <AccountCard
             type={NetworkType.ETHEREUM}
             title="Mana"
-            onFetchAmount={() => 200}
-            onFetchTransactions={() => [
+            amount={200}
+            transactions={[
               {
                 type: TransactionType.DEPOSIT,
                 description: 'Added tokens via transak',
@@ -46,8 +46,8 @@ const HomePage = (_props: Props) => {
           <AccountCard
             type={NetworkType.MATIC}
             title="Matic Mana"
-            onFetchAmount={() => 300}
-            onFetchTransactions={() => [
+            amount={300}
+            transactions={[
               {
                 type: TransactionType.DEPOSIT,
                 description: 'Added tokens via transak',

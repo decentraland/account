@@ -1,28 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Card } from 'decentraland-ui'
-import { Transaction, TransactionStatus } from '../HomePage.types'
+import { TransactionStatus } from '../HomePage.types'
 import { AccountCardHeader } from './AccountCardHeader'
 import { Props } from './AccountCard.types'
 import { AccountTransactions } from './AccountTransactions'
 import './AccountCard.css'
 
-const AccountCard = ({
-  type,
-  title,
-  onFetchAmount,
-  onFetchTransactions
-}: Props) => {
-  const [amount, setAmount] = useState(0)
-  const [transactions, setTransactions]: [Transaction[], any] = useState([])
-
-  useEffect(() => {
-    const a = onFetchAmount()
-    setAmount(a)
-    const t = onFetchTransactions()
-    setTransactions(t)
-  }, [])
-
+const AccountCard = ({ type, title, amount, transactions }: Props) => {
   const pending = transactions.filter(
     (tx) => tx.status === TransactionStatus.PENDING
   )
