@@ -4,7 +4,10 @@ import { Props } from './AccountTransaction.types'
 import './AccountTransaction.css'
 
 const AccountTransaction = ({ amount, type, status, description }: Props) => (
-  <div className="AccountTransaction">
+  <div
+    className="AccountTransaction"
+    onClick={() => alert('Not implemented yet')}
+  >
     <div className="type">
       <div
         className={

@@ -15,6 +15,8 @@ const AccountCard = ({ type, title, amount, transactions }: Props) => {
     (tx) => tx.status !== TransactionStatus.PENDING
   )
 
+  const goToSeeAllTx = () => alert('Not implemented yet')
+
   return (
     <Card className="AccountCard">
       <AccountCardHeader type={type} title={title} amount={amount} />
@@ -27,7 +29,11 @@ const AccountCard = ({ type, title, amount, transactions }: Props) => {
         <AccountTransactions transactions={pending} />
         <div className="description">
           <div> {t('account_card.tx_latests')} </div>
-          <div> {t('account_card.see_all')} </div>
+          <div>
+            <a href="#" onClick={goToSeeAllTx}>
+              {t('account_card.see_all')}
+            </a>
+          </div>
         </div>
         <AccountTransactions transactions={latest} />
       </div>

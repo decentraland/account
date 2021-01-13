@@ -9,6 +9,11 @@
   letter-spacing: -0.2px;
 }
 
+.AccountTransaction:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
 .AccountTransaction .DescriptionStatus{
   display: flex;
   flex-direction: column;
