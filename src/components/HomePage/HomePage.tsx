@@ -2,6 +2,7 @@ import React from 'react'
 import { Page } from 'decentraland-ui'
 import { Footer, Navbar } from 'decentraland-dapps/dist/containers'
 import { AccountHeader } from './AccountHeader'
+import { AccountCard, AccountCardContainer } from './AccountCard'
 import {
   NetworkType,
   Props,
@@ -9,7 +10,6 @@ import {
   TransactionType
 } from './HomePage.types'
 import './HomePage.css'
-import { AccountCard, AccountCardContainer } from './AccountCard'
 
 const HomePage = (_props: Props) => {
   return (
