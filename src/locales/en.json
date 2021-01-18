@@ -1,4 +1,8 @@
 {
+  "global": {
+    "guest": "Guest",
+    "settings": "Settings"
+  },
   "account_header": {
     "actions": {
       "change_alias": "Change Alias",

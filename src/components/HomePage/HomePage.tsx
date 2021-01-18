@@ -1,6 +1,7 @@
 import React from 'react'
 import { Page } from 'decentraland-ui'
-import { Footer, Navbar } from 'decentraland-dapps/dist/containers'
+import { Footer } from 'decentraland-dapps/dist/containers'
+import { Navbar } from '../Navbar'
 import { AccountHeader } from './AccountHeader'
 import { AccountCard } from './AccountCard'
 import { AccountCardContainer } from './AccountCardContainer'
