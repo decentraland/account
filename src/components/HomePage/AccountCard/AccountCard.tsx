@@ -7,15 +7,19 @@ import { Props } from './AccountCard.types'
 import { AccountTransactions } from './AccountTransactions'
 import './AccountCard.css'
 
-const AccountCard = ({ type, title, amount, transactions }: Props) => {
+const AccountCard = ({
+  type,
+  title,
+  amount,
+  transactions,
+  onSeeAll,
+}: Props) => {
   const pending = transactions.filter(
     (tx) => tx.status === TransactionStatus.PENDING
   )
   const latest = transactions.filter(
     (tx) => tx.status !== TransactionStatus.PENDING
   )
-
-  const goToSeeAllTx = () => alert('Not implemented yet')
 
   return (
     <Card className="AccountCard">
@@ -30,7 +34,7 @@ const AccountCard = ({ type, title, amount, transactions }: Props) => {
         <div className="description">
           <div> {t('account_card.tx_latests')} </div>
           <div>
-            <a href="#" onClick={goToSeeAllTx}>
+            <a href="#" onClick={onSeeAll}>
               {t('account_card.see_all')}
             </a>
           </div>

@@ -6,15 +6,17 @@ import { translationReducer as translation } from 'decentraland-dapps/dist/modul
 import { storageReducer as storage } from 'decentraland-dapps/dist/modules/storage/reducer'
 import { transactionReducer as transaction } from 'decentraland-dapps/dist/modules/transaction/reducer'
 import { profileReducer as profile } from 'decentraland-dapps/dist/modules/profile/reducer'
+import { modalReducer as modal } from 'decentraland-dapps/dist/modules/modal/reducer'
 
 export const createRootReducer = (history: History) =>
   combineReducers({
-    router: connectRouter(history),
     profile,
     storage,
     transaction,
     translation,
     wallet,
+    modal,
+    router: connectRouter(history),
   })
 
 export type RootState = ReturnType<ReturnType<typeof createRootReducer>>
