@@ -1,10 +1,16 @@
-import React from "react";
-import { Page } from "decentraland-ui";
-import { Footer, Navbar } from "decentraland-dapps/dist/containers";
-import { AccountHeader } from "../AccountHeader";
-import { AccountCardContainer, AccountCard } from "../AccountCard";
-import { Props } from "./HomePage.types";
-import "./HomePage.css";
+import React from 'react'
+import { Page } from 'decentraland-ui'
+import { Footer, Navbar } from 'decentraland-dapps/dist/containers'
+import { AccountHeader } from './AccountHeader'
+import { AccountCard } from './AccountCard'
+import { AccountCardContainer } from './AccountCardContainer'
+import {
+  NetworkType,
+  Props,
+  TransactionStatus,
+  TransactionType,
+} from './HomePage.types'
+import './HomePage.css'
 
 const HomePage = (_props: Props) => {
   return (
@@ -13,17 +19,61 @@ const HomePage = (_props: Props) => {
       <Page className="HomePage">
         <AccountHeader />
         <AccountCardContainer>
-          <AccountCard>
-            <p> content 0 </p>
-          </AccountCard>
-          <AccountCard>
-            <p> content 1 </p>
-          </AccountCard>
+          <AccountCard
+            type={NetworkType.ETHEREUM}
+            title="Mana"
+            amount={200}
+            transactions={[
+              {
+                type: TransactionType.DEPOSIT,
+                description: 'Added tokens via transak',
+                status: TransactionStatus.CONFIRMED,
+                amount: 3000,
+              },
+              {
+                type: TransactionType.WITHDRAWAL,
+                description: 'Added tokens via transak',
+                status: TransactionStatus.CONFIRMED,
+                amount: 3000,
+              },
+              {
+                type: TransactionType.DEPOSIT,
+                description: 'Added tokens via transak',
+                status: TransactionStatus.CONFIRMED,
+                amount: 3000,
+              },
+            ]}
+          />
+          <AccountCard
+            type={NetworkType.MATIC}
+            title="Matic Mana"
+            amount={300}
+            transactions={[
+              {
+                type: TransactionType.DEPOSIT,
+                description: 'Added tokens via transak',
+                status: TransactionStatus.PENDING,
+                amount: 3000,
+              },
+              {
+                type: TransactionType.WITHDRAWAL,
+                description: 'Added tokens via transak',
+                status: TransactionStatus.CONFIRMED,
+                amount: 3000,
+              },
+              {
+                type: TransactionType.DEPOSIT,
+                description: 'Added tokens via transak',
+                status: TransactionStatus.CONFIRMED,
+                amount: 3000,
+              },
+            ]}
+          />
         </AccountCardContainer>
       </Page>
       <Footer />
     </>
-  );
-};
+  )
+}
 
-export default React.memo(HomePage);
+export default React.memo(HomePage)

@@ -1,0 +1,17 @@
+.AccountTransactions .description {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+  text-transform: uppercase;
+  color: #736E7D;
+}
+
+.AccountTransactions .TransactionData {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

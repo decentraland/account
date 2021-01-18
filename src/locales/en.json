@@ -4,5 +4,13 @@
       "change_alias": "Change Alias",
       "edit_avatar": "Edit Avatar"
     }
+  },
+  "account_card_header": {
+    "convert": "Convert"
+  },
+  "account_card": {
+    "tx_latests": "Latests Transactions",
+    "tx_pending": "Pending Transactions",
+    "see_all": "See all"
   }
 }

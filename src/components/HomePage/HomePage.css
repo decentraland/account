@@ -1,2 +1,29 @@
-.HomePage {
+.HomePage .mana-logo {
+  width: 24px;
+  height: 28px;
+  background-image: url('../../images/mana-red-logo.svg'); 
+}
+
+.HomePage .matic-logo {
+  width: 24px;
+  height: 24px;
+  background-image: url('../../images/matic-logo.svg'); 
+}
+
+.HomePage .in-transaction-logo {
+  width: 34px;
+  height: 34px;
+  background-image: url('../../images/in-transaction.svg'); 
+}
+
+.HomePage .out-transaction-logo {
+  width: 34px;
+  height: 34px;
+  background-image: url('../../images/out-transaction.svg'); 
+}
+
+.HomePage .pending-transaction-logo {
+  width: 34px;
+  height: 34px;
+  background-image: url('../../images/pending-transaction.svg'); 
 }

@@ -4,5 +4,13 @@
       "change_alias": "更改别名",
       "edit_avatar": "编辑头像"
     }
+  },
+  "account_card_header": {
+    "convert": "改造"
+  },
+  "account_card": {
+    "tx_latests": "最新交易",
+    "tx_pending": "待交易",
+    "see_all": "看到所有"
   }
 }

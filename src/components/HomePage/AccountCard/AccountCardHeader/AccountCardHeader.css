@@ -1,0 +1,44 @@
+.AccountCardHeader {
+  padding: 22px;
+  border-bottom: 1px solid #ccc;
+}
+
+.AccountCardHeader .title{
+  font-size: 21px;
+  line-height: 28px;
+  margin-bottom: 10px;
+}
+
+.AccountCardHeader .fundsContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.AccountCardHeader .funds {
+  flex-grow: 1;
+}
+
+
+.AccountCardHeader .funds .amount {
+  display: flex;
+  justify-content: row;
+  align-items: flex-start;
+  align-items: center;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 42px;
+}
+
+.AccountCardHeader .funds .amount :first-child {
+  margin-right: 10px;
+}
+
+.AccountCardHeader .actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.AccountCardHeader .actions button:first-child {
+  min-width: 44px;
+}
