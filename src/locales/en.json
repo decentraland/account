@@ -12,5 +12,12 @@
     "tx_latests": "Latests Transactions",
     "tx_pending": "Pending Transactions",
     "see_all": "See all"
+  },
+  "transaction_detail_modal" : {
+    "title": "Transaction Detail",
+    "operation": "Operation",
+    "amount": "Amount",
+    "type": "Type",
+    "status": "Status"
   }
 }

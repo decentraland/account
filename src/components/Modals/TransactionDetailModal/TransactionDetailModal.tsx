@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Close, ModalProps } from 'decentraland-ui'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import './TransactionDetailModal.css'
@@ -18,24 +19,24 @@ const TransactionDetailModal = ({ name, onClose, metadata }: Props) => {
       className="TransactionDetailModal"
       closeIcon={<Close onClick={onClose} />}
     >
-      <Modal.Header>Transaction Detail</Modal.Header>
+      <Modal.Header>{t('transaction_detail_modal.title')}</Modal.Header>
       <Modal.Content>
         <div className="data">
-          <div> Operation </div>
+          <div> {t('transaction_detail_modal.operation')} </div>
           <div> {description} </div>
         </div>
         <div className="data">
-          <div> Amount </div>
+          <div> {t('transaction_detail_modal.amount')} </div>
           <div> {amount} </div>
         </div>
         <div className="data">
-          <div> Type </div>
+          <div> {t('transaction_detail_modal.type')} </div>
           <div>
             {type === TransactionType.DEPOSIT ? 'DEPOSIT' : 'WITHDRAWAL'}
           </div>
         </div>
         <div className="data">
-          <div> Status </div>
+          <div> {t('transaction_detail_modal.status')} </div>
           <div>
             {status === TransactionStatus.CONFIRMED ? 'CONFIRMED' : 'PENDING'}
           </div>
