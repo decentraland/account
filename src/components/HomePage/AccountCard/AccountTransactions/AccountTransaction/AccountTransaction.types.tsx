@@ -7,7 +7,12 @@ export type Props = {
   status: TransactionStatus
   description: string
   amount: number
-  onTransactionDetail: () => void
+  onTransactionDetail: (
+    description: string,
+    amount: number,
+    status: TransactionStatus,
+    type: TransactionType
+  ) => void
 }
 
 export type MapStateProps = {}

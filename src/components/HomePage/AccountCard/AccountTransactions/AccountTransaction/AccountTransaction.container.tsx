@@ -11,7 +11,15 @@ import {
 const mapState = (_state: RootState): MapStateProps => ({})
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
-  onTransactionDetail: () => dispatch(openModal('TransactionDetailModal'))
+  onTransactionDetail: (description, amount, type, status) =>
+    dispatch(
+      openModal('TransactionDetailModal', {
+        description,
+        amount,
+        type,
+        status
+      })
+    )
 })
 
 export default connect(mapState, mapDispatch)(AccountTransaction)

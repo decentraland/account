@@ -2,17 +2,16 @@ import * as React from 'react'
 import { Close, ModalProps } from 'decentraland-ui'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import './TransactionDetailModal.css'
+import {
+  TransactionStatus,
+  TransactionType
+} from '../../HomePage/HomePage.types'
 
-type TransactionProps = {
-  operation: string
-  amount: number
-  initialilzed: string
-  status: string
-}
+type Props = ModalProps
 
-type Props = ModalProps | TransactionProps
-
-const TransactionDetailModal = ({ name, onClose }: Props) => {
+const TransactionDetailModal = ({ name, onClose, metadata }: Props) => {
+  const { description, amount, type, status } = metadata
+  console.log(description, amount, type, status)
   return (
     <Modal
       name={name}
@@ -23,19 +22,23 @@ const TransactionDetailModal = ({ name, onClose }: Props) => {
       <Modal.Content>
         <div className="data">
           <div> Operation </div>
-          <div> Withdraw to Matic Network </div>
+          <div> {description} </div>
         </div>
         <div className="data">
           <div> Amount </div>
-          <div> 15,000 USD </div>
+          <div> {amount} </div>
         </div>
         <div className="data">
-          <div> Initialized </div>
-          <div> Dec 13 - 14pm </div>
+          <div> Type </div>
+          <div>
+            {type === TransactionType.DEPOSIT ? 'DEPOSIT' : 'WITHDRAWAL'}
+          </div>
         </div>
         <div className="data">
           <div> Status </div>
-          <div> Completed </div>
+          <div>
+            {status === TransactionStatus.CONFIRMED ? 'CONFIRMED' : 'PENDING'}
+          </div>
         </div>
       </Modal.Content>
     </Modal>
