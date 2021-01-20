@@ -19,5 +19,13 @@
     "amount": "量",
     "type": "类型",
     "status": "状态"
+  },
+  "transaction_type": {
+    "deposit": "存款",
+    "withdrawal": "退出"
+  },
+  "transaction_status": {
+    "pending": "待定",
+    "confirmed": "已确认"
   }
 }

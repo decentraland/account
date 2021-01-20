@@ -19,5 +19,13 @@
     "amount": "Amount",
     "type": "Type",
     "status": "Status"
+  },
+  "transaction_type": {
+    "deposit": "Deposit",
+    "withdrawal": "Withdrawal"
+  },
+  "transaction_status": {
+    "pending": "Pending",
+    "confirmed": "Confirmed"
   }
 }

@@ -19,5 +19,13 @@
     "amount": "Cantidad",
     "type": "Tipo",
     "status": "Estado"
+  },
+  "transaction_type": {
+    "deposit": "Deposito",
+    "withdrawal": "Extracción"
+  },
+  "transaction_status": {
+    "pending": "Pendiente",
+    "confirmed": "Confirmado"
   }
 }

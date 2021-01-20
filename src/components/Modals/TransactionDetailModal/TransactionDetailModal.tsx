@@ -5,7 +5,7 @@ import Modal from 'decentraland-dapps/dist/containers/Modal'
 import './TransactionDetailModal.css'
 import {
   TransactionStatus,
-  TransactionType
+  TransactionType,
 } from '../../HomePage/HomePage.types'
 
 type Props = ModalProps
@@ -32,13 +32,17 @@ const TransactionDetailModal = ({ name, onClose, metadata }: Props) => {
         <div className="data">
           <div> {t('transaction_detail_modal.type')} </div>
           <div>
-            {type === TransactionType.DEPOSIT ? 'DEPOSIT' : 'WITHDRAWAL'}
+            {type === TransactionType.DEPOSIT
+              ? t('transaction_type.deposit')
+              : t('transaction_type.withdrawal')}
           </div>
         </div>
         <div className="data">
           <div> {t('transaction_detail_modal.status')} </div>
           <div>
-            {status === TransactionStatus.CONFIRMED ? 'CONFIRMED' : 'PENDING'}
+            {status === TransactionStatus.CONFIRMED
+              ? t('transaction_status.confirmed')
+              : t('transaction_status.pending')}
           </div>
         </div>
       </Modal.Content>
