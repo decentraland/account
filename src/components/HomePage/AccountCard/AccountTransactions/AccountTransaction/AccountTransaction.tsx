@@ -3,11 +3,14 @@ import { TransactionStatus, TransactionType } from '../../../HomePage.types'
 import { Props } from './AccountTransaction.types'
 import './AccountTransaction.css'
 
-const AccountTransaction = ({ amount, type, status, description }: Props) => (
-  <div
-    className="AccountTransaction"
-    onClick={() => alert('Not implemented yet')}
-  >
+const AccountTransaction = ({
+  amount,
+  type,
+  status,
+  description,
+  onTransactionDetail,
+}: Props) => (
+  <div className="AccountTransaction" onClick={() => onTransactionDetail()}>
     <div className="type">
       <div
         className={

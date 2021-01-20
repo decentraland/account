@@ -1,0 +1,23 @@
+.TransactionDetailModal .data :first-child {
+  font-size: 13px;
+  line-height: 18px;
+  text-transform: uppercase;
+  color: #736E7D;
+}
+
+.TransactionDetailModal .data :last-child {
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 30px;
+  letter-spacing: 0.315px;
+}
+
+.TransactionDetailModal .data {
+  margin-bottom: 40px;
+}
+
+.TransactionDetailModal.ui.modal > .header:not(.ui) {
+  border-bottom: 1px solid #ccc;
+  margin: 0;
+  padding: 20px 32px 28px 32px;
+}
