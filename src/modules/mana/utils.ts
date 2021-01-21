@@ -1,0 +1,2 @@
+export const MANA_CONTRACT_ADDRESS = process.env
+  .REACT_APP_MANA_CONTRACT_ADDRESS!

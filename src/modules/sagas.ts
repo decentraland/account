@@ -6,12 +6,13 @@ import { transactionSaga } from 'decentraland-dapps/dist/modules/transaction/sag
 import { walletSaga } from 'decentraland-dapps/dist/modules/wallet/sagas'
 import { modalSaga } from './modal/sagas'
 import { locationSaga } from './location/sagas'
+import { manaSaga } from './mana/sagas'
 import * as translations from '../locales'
 
 const analyticsSaga = createAnalyticsSaga()
 
 const profileSaga = createProfileSaga({
-  peerUrl: process.env.REACT_APP_PEER_URL!,
+  peerUrl: process.env.REACT_APP_PEER_URL!
 })
 
 const translationSaga = createTranslationSaga({ translations })
@@ -25,5 +26,6 @@ export function* rootSaga() {
     translationSaga(),
     modalSaga(),
     locationSaga(),
+    manaSaga()
   ])
 }
