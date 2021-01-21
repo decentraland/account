@@ -1,4 +1,4 @@
-import { RootState } from '../../modules/reducer'
+import { RootState } from '../../../modules/reducer'
 import { getData as getProfiles } from 'decentraland-dapps/dist/modules/profile/selectors'
 import {
   MapStateProps,
