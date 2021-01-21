@@ -25,3 +25,21 @@
   line-height: 24px;
   color: #736E7D;
 }
+
+.AccountTransaction .in-transaction-logo {
+  width: 34px;
+  height: 34px;
+  background-image: url('../../../../../images/in-transaction.svg'); 
+}
+
+.AccountTransaction .out-transaction-logo {
+  width: 34px;
+  height: 34px;
+  background-image: url('../../../../../images/out-transaction.svg'); 
+}
+
+.AccountTransaction .pending-transaction-logo {
+  width: 34px;
+  height: 34px;
+  background-image: url('../../../../../images/pending-transaction.svg'); 
+}

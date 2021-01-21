@@ -8,7 +8,7 @@ const AccountTransaction = ({
   type,
   status,
   description,
-  onTransactionDetail,
+  onTransactionDetail
 }: Props) => (
   <div
     className="AccountTransaction"

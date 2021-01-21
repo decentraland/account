@@ -11,7 +11,8 @@ import {
 const mapState = (_state: RootState): MapStateProps => ({})
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
-  onSeeAll: () => dispatch(openModal('TestModal')),
+  onSeeAll: (transactions) =>
+    dispatch(openModal('SeeAllTransactionModal', { transactions })),
 })
 
 export default connect(mapState, mapDispatch)(AccountCard)

@@ -34,7 +34,7 @@ const AccountCard = ({
         <div className="description">
           <div> {t('account_card.tx_latests')} </div>
           <div>
-            <div className="see-all" onClick={onSeeAll}>
+            <div className="see-all" onClick={() => onSeeAll(transactions)}>
               {t('account_card.see_all')}
             </div>
           </div>
