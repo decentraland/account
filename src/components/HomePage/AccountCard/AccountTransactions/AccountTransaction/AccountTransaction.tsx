@@ -12,7 +12,7 @@ const AccountTransaction = ({
 }: Props) => (
   <div
     className="AccountTransaction"
-    onClick={() => onTransactionDetail(description, amount, type, status)}
+    onClick={() => onTransactionDetail(description, amount, status, type)}
   >
     <div className="type">
       <div

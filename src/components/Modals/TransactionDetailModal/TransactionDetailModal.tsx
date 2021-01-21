@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Close, ModalProps } from 'decentraland-ui'
+import { Close } from 'decentraland-ui'
+import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import './TransactionDetailModal.css'
 import {
@@ -8,11 +9,12 @@ import {
   TransactionType,
 } from '../../HomePage/HomePage.types'
 
-type Props = ModalProps
-
-const TransactionDetailModal = ({ name, onClose, metadata }: Props) => {
+const TransactionDetailModal: React.FC<ModalProps> = ({
+  name,
+  onClose,
+  metadata,
+}) => {
   const { description, amount, type, status } = metadata
-  console.log(description, amount, type, status)
   return (
     <Modal
       name={name}
