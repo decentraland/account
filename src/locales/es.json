@@ -16,5 +16,20 @@
     "tx_latests": "Ultimas Transacciones",
     "tx_pending": "Transacciones Pendientes",
     "see_all": "Ver Todas"
+  },
+  "transaction_detail_modal" : {
+    "title": "Detalle de Transaction",
+    "operation": "Operacion",
+    "amount": "Cantidad",
+    "type": "Tipo",
+    "status": "Estado"
+  },
+  "transaction_type": {
+    "deposit": "Deposito",
+    "withdrawal": "Extracción"
+  },
+  "transaction_status": {
+    "pending": "Pendiente",
+    "confirmed": "Confirmado"
   }
 }

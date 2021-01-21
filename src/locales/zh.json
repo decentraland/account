@@ -16,5 +16,20 @@
     "tx_latests": "最新交易",
     "tx_pending": "待交易",
     "see_all": "看到所有"
+  },
+  "transaction_detail_modal" : {
+    "title": "交易明细",
+    "operation": "操作方式",
+    "amount": "量",
+    "type": "类型",
+    "status": "状态"
+  },
+  "transaction_type": {
+    "deposit": "存款",
+    "withdrawal": "退出"
+  },
+  "transaction_status": {
+    "pending": "待定",
+    "confirmed": "已确认"
   }
 }

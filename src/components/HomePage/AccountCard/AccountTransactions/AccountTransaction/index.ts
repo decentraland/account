@@ -1,2 +1,2 @@
-import AccountTransaction from './AccountTransaction'
+import AccountTransaction from './AccountTransaction.container'
 export { AccountTransaction }

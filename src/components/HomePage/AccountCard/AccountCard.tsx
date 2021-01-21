@@ -34,9 +34,9 @@ const AccountCard = ({
         <div className="description">
           <div> {t('account_card.tx_latests')} </div>
           <div>
-            <a href="#" onClick={onSeeAll}>
+            <div className="see-all" onClick={onSeeAll}>
               {t('account_card.see_all')}
-            </a>
+            </div>
           </div>
         </div>
         <AccountTransactions transactions={latest} />
