@@ -26,6 +26,6 @@ export function* rootSaga() {
     translationSaga(),
     modalSaga(),
     locationSaga(),
-    manaSaga()
+    manaSaga(),
   ])
 }
