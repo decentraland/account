@@ -7,6 +7,7 @@ import { storageReducer as storage } from 'decentraland-dapps/dist/modules/stora
 import { transactionReducer as transaction } from 'decentraland-dapps/dist/modules/transaction/reducer'
 import { profileReducer as profile } from 'decentraland-dapps/dist/modules/profile/reducer'
 import { modalReducer as modal } from 'decentraland-dapps/dist/modules/modal/reducer'
+import { manaReducer as mana } from './mana/reducer'
 
 export const createRootReducer = (history: History) =>
   combineReducers({
@@ -16,6 +17,7 @@ export const createRootReducer = (history: History) =>
     translation,
     wallet,
     modal,
+    mana,
     router: connectRouter(history),
   })
 
