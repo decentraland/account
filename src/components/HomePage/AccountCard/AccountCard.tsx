@@ -12,14 +12,14 @@ const AccountCard = ({
   title,
   amount,
   transactions,
-  onSeeAll,
+  onSeeAll
 }: Props) => {
-  const pending = transactions.filter(
-    (tx) => tx.status === TransactionStatus.PENDING
-  )
-  const latest = transactions.filter(
-    (tx) => tx.status !== TransactionStatus.PENDING
-  )
+  const pending = transactions
+    .filter((tx) => tx.status === TransactionStatus.PENDING)
+    .slice(0, 4)
+  const latest = transactions
+    .filter((tx) => tx.status !== TransactionStatus.PENDING)
+    .slice(0, 4)
 
   return (
     <Card className="AccountCard">

@@ -38,6 +38,24 @@ const HomePage = (_props: Props) => {
                 amount: 3000,
               },
               {
+                type: TransactionType.WITHDRAWAL,
+                description: 'Added tokens via transak',
+                status: TransactionStatus.CONFIRMED,
+                amount: 3000,
+              },
+              {
+                type: TransactionType.WITHDRAWAL,
+                description: 'Added tokens via transak',
+                status: TransactionStatus.CONFIRMED,
+                amount: 3000,
+              },
+              {
+                type: TransactionType.WITHDRAWAL,
+                description: 'Added tokens via transak',
+                status: TransactionStatus.CONFIRMED,
+                amount: 3000,
+              },
+              {
                 type: TransactionType.DEPOSIT,
                 description: 'Added tokens via transak',
                 status: TransactionStatus.CONFIRMED,

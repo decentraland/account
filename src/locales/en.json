@@ -24,6 +24,9 @@
     "type": "Type",
     "status": "Status"
   },
+  "see_all_transaction_modal": {
+    "title": "Eth Mana Transactions"
+  },
   "transaction_type": {
     "deposit": "Deposit",
     "withdrawal": "Withdrawal"

@@ -15,7 +15,7 @@ const SeeAllTransactionModal = ({ name, onClose, metadata }: ModalProps) => {
       className="SeeAllTransactionModal"
       closeIcon={<Close onClick={onClose} />}
     >
-      <Modal.Header>{t('transaction_detail_modal.title')}</Modal.Header>
+      <Modal.Header>{t('see_all_transaction_modal.title')}</Modal.Header>
       <Modal.Content>
         {transactions.map(
           (
