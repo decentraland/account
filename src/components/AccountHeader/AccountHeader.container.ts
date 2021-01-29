@@ -4,10 +4,10 @@ import {
   MapStateProps,
   MapDispatchProps,
   MapDispatch,
-} from './AccountHeader.types'
+} from '../HomePage/AccountHeader/AccountHeader.types'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { connect } from 'react-redux'
-import AccountHeader from './AccountHeader'
+import { AccountHeader } from '../HomePage/AccountHeader'
 
 const mapState = (state: RootState): MapStateProps => {
   const address = getAddress(state)
@@ -19,8 +19,8 @@ const mapState = (state: RootState): MapStateProps => {
 }
 
 const mapDispatch = (_dispatch: MapDispatch): MapDispatchProps => ({
-  onChangeAlias: () => {},
-  onEditAvatar: () => {},
+  onChangeAlias: () => { },
+  onEditAvatar: () => { },
 })
 
 export default connect(mapState, mapDispatch)(AccountHeader)
