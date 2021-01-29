@@ -14,7 +14,7 @@ const mapState = (state: RootState): MapStateProps => {
   const profiles = getProfiles(state)
   const profile = address && address in profiles ? profiles[address] : null
   return {
-    avatar: profile && profile.avatars.length > 0 ? profile.avatars[0] : null,
+    avatar: profile && profile.avatars.length > 0 ? profile.avatars[0] : null
   }
 }
 
