@@ -18,7 +18,7 @@ const HomePage = (_props: Props) => {
     <>
       <Navbar />
       <Page className="HomePage">
-        <AccountHeader avatar={null} onChangeAlias={() => ({})} onEditAvatar={() => ({})} />
+        <AccountHeader />
         <AccountCardContainer>
           <AccountCard
             type={NetworkType.ETHEREUM}
