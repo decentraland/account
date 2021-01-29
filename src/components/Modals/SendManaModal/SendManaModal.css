@@ -1,0 +1,21 @@
+.SendManaModal {
+}
+.SendManaModal .title {
+  text-align: center;
+}
+.SendManaModal .subtitle {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 26px;
+
+  /* identical to box height, or 153% */
+  text-align: center;
+  letter-spacing: -0.2px;
+}
+
+.SendManaModal .button-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

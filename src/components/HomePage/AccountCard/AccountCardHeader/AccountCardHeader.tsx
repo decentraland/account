@@ -5,7 +5,7 @@ import { NetworkType } from '../../HomePage.types'
 import { Props } from './AccountCardHeader.types'
 import './AccountCardHeader.css'
 
-const AccountCardHeader = ({ type, title, amount }: Props) => (
+const AccountCardHeader = ({ type, title, amount, onSendMana }: Props) => (
   <div className="AccountCardHeader">
     <div className="title">{title}</div>
     <div className="fundsContainer">
@@ -18,7 +18,7 @@ const AccountCardHeader = ({ type, title, amount }: Props) => (
         </div>
       </div>
       <div className="actions">
-        <Button>
+        <Button onClick={() => onSendMana()}>
           <Icon name="plus" />
         </Button>
         <Button>{t('account_card_header.convert')}</Button>
