@@ -7,6 +7,8 @@ import { Props } from './AccountCard.types'
 import { AccountTransactions } from './AccountTransactions'
 import './AccountCard.css'
 
+const MAX_TXS_TO_SHOW_PER_STATUS = 4
+
 const AccountCard = ({
   type,
   title,
@@ -16,11 +18,12 @@ const AccountCard = ({
 }: Props) => {
   const pending = transactions
     .filter((tx) => tx.status === TransactionStatus.PENDING)
-    .slice(0, 4)
+    .slice(0, MAX_TXS_TO_SHOW_PER_STATUS)
   const latest = transactions
     .filter((tx) => tx.status !== TransactionStatus.PENDING)
-    .slice(0, 4)
+    .slice(0, MAX_TXS_TO_SHOW_PER_STATUS)
 
+  const handleOnSeeAll = () => onSeeAll(transactions)
   return (
     <Card className="AccountCard">
       <AccountCardHeader type={type} title={title} amount={amount} />
@@ -34,7 +37,7 @@ const AccountCard = ({
         <div className="description">
           <div> {t('account_card.tx_latests')} </div>
           <div>
-            <div className="see-all" onClick={() => onSeeAll(transactions)}>
+            <div className="see-all" onClick={handleOnSeeAll}>
               {t('account_card.see_all')}
             </div>
           </div>
