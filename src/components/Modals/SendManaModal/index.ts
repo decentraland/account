@@ -1,3 +1,3 @@
-import SendManaModal from './SendManaModal'
+import SendManaModal from './SendManaModal.container'
 
 export default SendManaModal
