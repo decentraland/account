@@ -1,0 +1,15 @@
+.SeeAllTransactionModal.ui.modal > .header:not(.ui) {
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  margin: 0;
+  padding: 20px 32px 28px 32px;
+}
+
+.SeeAllTransactionModal .DescriptionStatus {
+  width: 450px;
+}
+
+.SeeAllTransactionModal .content {
+  height: 567px;
+  overflow: auto;
+}

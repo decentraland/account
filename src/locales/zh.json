@@ -24,6 +24,9 @@
     "type": "类型",
     "status": "状态"
   },
+  "see_all_transaction_modal": {
+    "title": "Eth Mana交易"
+  },
   "transaction_type": {
     "deposit": "存款",
     "withdrawal": "退出"

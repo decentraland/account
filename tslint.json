@@ -15,7 +15,9 @@
       true,
       { "printWidth": 80, "singleQuote": true, "semi": false }
     ],
-    "quotemark": [true, "single", "jsx-double"]
+    "quotemark": [true, "single", "jsx-double"],
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"]
   },
   "linterOptions": {
     "exclude": ["src/contracts/*.ts", "node_modules/**/*.ts", "./**/*.js"]

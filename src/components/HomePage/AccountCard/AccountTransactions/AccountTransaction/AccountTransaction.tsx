@@ -16,7 +16,7 @@ const AccountTransaction = ({
   >
     <div className="type">
       <div
-        className={
+        className={`transaction-logo ${
           type === TransactionType.DEPOSIT
             ? 'in-transaction-logo'
             : type === TransactionType.WITHDRAWAL
@@ -24,7 +24,7 @@ const AccountTransaction = ({
             : status === TransactionStatus.PENDING
             ? 'pending-transaction-logo'
             : ''
-        }
+        }`}
       />
     </div>
     <div className="DescriptionStatus">

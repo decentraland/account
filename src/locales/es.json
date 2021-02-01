@@ -24,6 +24,9 @@
     "type": "Tipo",
     "status": "Estado"
   },
+  "see_all_transaction_modal": {
+    "title": "Transacciones Eth Mana"
+  },
   "transaction_type": {
     "deposit": "Deposito",
     "withdrawal": "Extracción"

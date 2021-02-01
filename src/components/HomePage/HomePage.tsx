@@ -18,7 +18,7 @@ const HomePage = (_props: Props) => {
     <>
       <Navbar />
       <Page className="HomePage">
-        <AccountHeader avatar={null} onChangeAlias={() => ({})} onEditAvatar={() => ({})} />
+        <AccountHeader />
         <AccountCardContainer>
           <AccountCard
             type={NetworkType.ETHEREUM}
@@ -27,6 +27,24 @@ const HomePage = (_props: Props) => {
             transactions={[
               {
                 type: TransactionType.DEPOSIT,
+                description: 'Added tokens via transak',
+                status: TransactionStatus.CONFIRMED,
+                amount: 3000,
+              },
+              {
+                type: TransactionType.WITHDRAWAL,
+                description: 'Added tokens via transak',
+                status: TransactionStatus.CONFIRMED,
+                amount: 3000,
+              },
+              {
+                type: TransactionType.WITHDRAWAL,
+                description: 'Added tokens via transak',
+                status: TransactionStatus.CONFIRMED,
+                amount: 3000,
+              },
+              {
+                type: TransactionType.WITHDRAWAL,
                 description: 'Added tokens via transak',
                 status: TransactionStatus.CONFIRMED,
                 amount: 3000,

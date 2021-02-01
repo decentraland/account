@@ -7,37 +7,42 @@ import { Props } from './AccountCard.types'
 import { AccountTransactions } from './AccountTransactions'
 import './AccountCard.css'
 
+const MAX_TXS_TO_SHOW_PER_STATUS = 4
+
 const AccountCard = ({
   type,
   title,
   amount,
   transactions,
-  onSeeAll,
+  onSeeAll
 }: Props) => {
-  const pending = transactions.filter(
-    (tx) => tx.status === TransactionStatus.PENDING
-  )
-  const latest = transactions.filter(
-    (tx) => tx.status !== TransactionStatus.PENDING
-  )
+  const pending = transactions
+    .filter((tx) => tx.status === TransactionStatus.PENDING)
+    .slice(0, MAX_TXS_TO_SHOW_PER_STATUS)
+  const latest = transactions
+    .filter((tx) => tx.status !== TransactionStatus.PENDING)
+    .slice(0, MAX_TXS_TO_SHOW_PER_STATUS)
 
+  const handleOnSeeAll = () => onSeeAll(transactions)
   return (
     <Card className="AccountCard">
       <AccountCardHeader type={type} title={title} amount={amount} />
       <div className="AccountTransactions">
-        {pending.length > 0 ? (
-          <div className="description">
-            <div> {t('account_card.tx_pending')} </div>
+        <div>
+          <div className="see-all" onClick={handleOnSeeAll}>
+            {t('account_card.see_all')}
           </div>
+        </div>
+        {pending.length > 0 ? (
+          <>
+            <div className="description">
+              <div> {t('account_card.tx_pending')} </div>
+            </div>
+            <AccountTransactions transactions={pending} />
+          </>
         ) : null}
-        <AccountTransactions transactions={pending} />
         <div className="description">
           <div> {t('account_card.tx_latests')} </div>
-          <div>
-            <div className="see-all" onClick={onSeeAll}>
-              {t('account_card.see_all')}
-            </div>
-          </div>
         </div>
         <AccountTransactions transactions={latest} />
       </div>

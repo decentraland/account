@@ -7,7 +7,7 @@ export type Props = {
   title: string
   amount: number
   transactions: Transaction[]
-  onSeeAll: () => void
+  onSeeAll: (transactions: Transaction[]) => void
 }
 
 export type MapStateProps = {}
