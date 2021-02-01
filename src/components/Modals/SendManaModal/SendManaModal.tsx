@@ -1,13 +1,12 @@
 import * as React from 'react'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Button, Close } from 'decentraland-ui'
+import { Button, Close, Field } from 'decentraland-ui'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import './SendManaModal.css'
 
 const TransactionDetailModal: React.FC<ModalProps> = ({ name, onClose }) => {
-  const isUSDButtonAble = false
-  const isManaButtonAble = !isUSDButtonAble
+  const isUsdButtonDisabled = true
+  const isManaButtonDisabled = !isUsdButtonDisabled
   return (
     <Modal
       name={name}
@@ -20,27 +19,16 @@ const TransactionDetailModal: React.FC<ModalProps> = ({ name, onClose }) => {
       </Modal.Header>
       <Modal.Content>
         <div className="button-group">
-          <Button inverted disabled={isUSDButtonAble}>
-            USD
-          </Button>
-          <Button inverted disabled={isManaButtonAble}>
+          <Button inverted disabled={isManaButtonDisabled}>
             MANA
           </Button>
+          <Button inverted disabled={isUsdButtonDisabled}>
+            USD
+          </Button>
         </div>
-        <div className="data">
-          <div> {t('transaction_detail_modal.operation')} </div>
-        </div>
-        <div className="data">
-          <div> {t('transaction_detail_modal.amount')} </div>
-        </div>
-        <div className="data">
-          <div> {t('transaction_detail_modal.type')} </div>
-          <div />
-        </div>
-        <div className="data">
-          <div> {t('transaction_detail_modal.status')} </div>
-          <div />
-        </div>
+        <Field label="Amount" placeholder="0" />
+        <Field label="Wallet" placeholder="0x0000...0000" />
+        <Button primary> Send Tokens </Button>
       </Modal.Content>
     </Modal>
   )
