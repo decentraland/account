@@ -28,19 +28,21 @@ const AccountCard = ({
     <Card className="AccountCard">
       <AccountCardHeader type={type} title={title} amount={amount} />
       <div className="AccountTransactions">
-        {pending.length > 0 ? (
-          <div className="description">
-            <div> {t('account_card.tx_pending')} </div>
+        <div>
+          <div className="see-all" onClick={handleOnSeeAll}>
+            {t('account_card.see_all')}
           </div>
+        </div>
+        {pending.length > 0 ? (
+          <>
+            <div className="description">
+              <div> {t('account_card.tx_pending')} </div>
+            </div>
+            <AccountTransactions transactions={pending} />
+          </>
         ) : null}
-        <AccountTransactions transactions={pending} />
         <div className="description">
           <div> {t('account_card.tx_latests')} </div>
-          <div>
-            <div className="see-all" onClick={handleOnSeeAll}>
-              {t('account_card.see_all')}
-            </div>
-          </div>
         </div>
         <AccountTransactions transactions={latest} />
       </div>
