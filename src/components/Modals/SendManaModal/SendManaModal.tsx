@@ -1,12 +1,21 @@
-import * as React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Close, Field } from 'decentraland-ui'
-import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import './SendManaModal.css'
+import { Props } from './SendManaModal.types'
 
-const TransactionDetailModal: React.FC<ModalProps> = ({ name, onClose }) => {
+const TransactionDetailModal: React.FC<Props> = ({
+  name,
+  onClose,
+  manaPrice,
+  onManaPrice
+}) => {
   const isUsdButtonDisabled = true
   const isManaButtonDisabled = !isUsdButtonDisabled
+
+  useEffect(() => {
+    onManaPrice()
+  })
   return (
     <Modal
       name={name}
@@ -26,6 +35,7 @@ const TransactionDetailModal: React.FC<ModalProps> = ({ name, onClose }) => {
             USD
           </Button>
         </div>
+        <div className="button-group">{manaPrice}</div>
         <Field label="Amount" placeholder="0" />
         <Field label="Wallet" placeholder="0x0000...0000" />
         <Button primary> Send Tokens </Button>
