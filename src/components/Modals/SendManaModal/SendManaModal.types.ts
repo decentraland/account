@@ -1,15 +1,18 @@
 import { Dispatch } from 'redux'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
-import { sendManaRequest } from '../../../modules/mana/actions'
+import {
+  fetchManaPriceRequest,
+  sendManaRequest,
+} from '../../../modules/mana/actions'
 
 export type Props = ModalProps & {
+  manaPrice: number
   onSendMana: typeof sendManaRequest
+  onManaPrice: typeof fetchManaPriceRequest
 }
 
-export type State = {
-  currentName: string
-}
+export type State = {}
 
 export type MapState = Props
 export type MapDispatch = Dispatch
-export type MapDispatchProps = Pick<Props, 'onSendMana'>
+export type MapDispatchProps = Pick<Props, 'onSendMana' | 'onManaPrice'>
