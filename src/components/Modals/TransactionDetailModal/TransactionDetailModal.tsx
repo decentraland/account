@@ -6,13 +6,13 @@ import Modal from 'decentraland-dapps/dist/containers/Modal'
 import './TransactionDetailModal.css'
 import {
   TransactionStatus,
-  TransactionType
+  TransactionType,
 } from '../../HomePage/HomePage.types'
 
 const TransactionDetailModal: React.FC<ModalProps> = ({
   name,
   onClose,
-  metadata
+  metadata,
 }) => {
   const { description, amount, type, status } = metadata
   return (
