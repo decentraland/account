@@ -16,6 +16,11 @@
   letter-spacing: -0.2px;
 }
 
+.SendManaModal .price {
+  padding-top: 10px;
+  text-align: center;
+}
+
 .SendManaModal .button-group {
   display: flex;
   align-items: center;

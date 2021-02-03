@@ -11,7 +11,7 @@ import {
   sendManaFailure,
   SendManaRequestAction,
   sendManaSuccess,
-  SEND_MANA_REQUEST,
+  SEND_MANA_REQUEST
 } from './actions'
 import { Eth } from 'web3x-es/eth'
 import { ERC20 } from '../../contracts/ERC20'
@@ -19,6 +19,7 @@ import { Address } from 'web3x-es/address'
 import { MANA_CONTRACT_ADDRESS } from './utils'
 import { toWei } from 'web3x-es/utils'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { closeModal } from 'decentraland-dapps/dist/modules/modal/actions'
 
 export function* manaSaga() {
   yield takeEvery(SEND_MANA_REQUEST, handleSendManaRequest)
@@ -35,7 +36,6 @@ function* handleSendManaRequest(action: SendManaRequestAction) {
     }
 
     const address = yield select(getAddress)
-
     const mana = new ERC20(eth, Address.fromString(MANA_CONTRACT_ADDRESS))
 
     const txHash = yield call(() =>
@@ -45,6 +45,7 @@ function* handleSendManaRequest(action: SendManaRequestAction) {
         .getTxHash()
     )
 
+    yield put(closeModal('SendManaModal'))
     yield put(sendManaSuccess(to, amount, txHash))
   } catch (error) {
     yield put(sendManaFailure(to, amount, error))

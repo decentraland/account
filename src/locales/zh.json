@@ -34,5 +34,14 @@
   "transaction_status": {
     "pending": "待定",
     "confirmed": "已确认"
+  },
+  "send_mana_modal": {
+    "usd": "USD",
+    "mana": "MANA",
+    "wallet_label": "钱包",
+    "amount_label": "量",
+    "send_tokens": "发送令牌",
+    "title": "发送令牌",
+    "subtitle": "将令牌发送到所需的电子钱包"
   }
 }

@@ -1,21 +1,56 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button, Close, Field } from 'decentraland-ui'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
-import './SendManaModal.css'
 import { Props } from './SendManaModal.types'
+import './SendManaModal.css'
 
 const TransactionDetailModal: React.FC<Props> = ({
   name,
   onClose,
+  isLoading,
   manaPrice,
-  onManaPrice
+  onManaPrice,
+  onSendMana,
 }) => {
-  const isUsdButtonDisabled = true
-  const isManaButtonDisabled = !isUsdButtonDisabled
+  const [isManaPrice, setIsManaPrice] = useState(true)
+  const [amount, setAmount] = useState(0)
+  const [usd, setUsd] = useState(0)
+  const [mana, setMana] = useState(0)
+  const [to, setTo] = useState('')
+
+  const handleChangeManaPrice = () => {
+    setIsManaPrice(!isManaPrice)
+  }
+
+  const handleSetAmount = (e: React.FormEvent<HTMLInputElement>) => {
+    const intValue = parseInt(e.currentTarget.value, 10)
+    if (e.currentTarget.value.length === 0) {
+      setAmount(0)
+      setUsd(0)
+      setMana(0)
+    } else if (!isNaN(intValue)) {
+      setAmount(intValue)
+      if (isManaPrice) {
+        setUsd(intValue * manaPrice)
+        setMana(intValue)
+      } else {
+        setUsd(intValue)
+        setMana(intValue / manaPrice)
+      }
+    }
+  }
+
+  const handleSetTo = (e: React.FormEvent<HTMLInputElement>) => {
+    setTo(e.currentTarget.value)
+  }
+
+  const handleSendMana = () => onSendMana(to, mana)
 
   useEffect(() => {
     onManaPrice()
   })
+
   return (
     <Modal
       name={name}
@@ -23,22 +58,48 @@ const TransactionDetailModal: React.FC<Props> = ({
       closeIcon={<Close onClick={onClose} />}
     >
       <Modal.Header>
-        <div className="title"> Send Tokens </div>
-        <div className="subtitle"> Send Tokens to the desired Wallet </div>
+        <div className="title"> {t('send_mana_modal.send_tokens')} </div>
+        <div className="subtitle"> {t('send_mana_modal.subtitle')} </div>
       </Modal.Header>
       <Modal.Content>
         <div className="button-group">
-          <Button inverted disabled={isManaButtonDisabled}>
-            MANA
+          <Button
+            inverted
+            primary
+            disabled={!isManaPrice}
+            onClick={handleChangeManaPrice}
+          >
+            {t('send_mana_modal.mana')}
           </Button>
-          <Button inverted disabled={isUsdButtonDisabled}>
-            USD
+          <Button
+            inverted
+            primary
+            disabled={isManaPrice}
+            onClick={handleChangeManaPrice}
+          >
+            {t('send_mana_modal.usd')}
           </Button>
         </div>
-        <div className="button-group">{manaPrice}</div>
-        <Field label="Amount" placeholder="0" />
-        <Field label="Wallet" placeholder="0x0000...0000" />
-        <Button primary> Send Tokens </Button>
+        <div className="price">
+          {isManaPrice
+            ? `${t('send_mana_modal.usd')}: ${usd}`
+            : `${t('send_mana_modal.mana')}: ${mana}`}
+        </div>
+        <Field
+          label={t('send_mana_modal.amount_label')}
+          placeholder="0"
+          value={amount}
+          onChange={handleSetAmount}
+        />
+        <Field
+          label={t('send_mana_modal.wallet_label')}
+          placeholder="0x0000...0000"
+          value={to}
+          onChange={handleSetTo}
+        />
+        <Button primary onClick={handleSendMana} loading={isLoading}>
+          {t('send_mana_modal.send_tokens')}
+        </Button>
       </Modal.Content>
     </Modal>
   )
