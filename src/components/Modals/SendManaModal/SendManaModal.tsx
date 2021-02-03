@@ -11,12 +11,10 @@ const TransactionDetailModal: React.FC<Props> = ({
   isLoading,
   manaPrice,
   onManaPrice,
-  onSendMana,
+  onSendMana
 }) => {
   const [isManaPrice, setIsManaPrice] = useState(true)
   const [amount, setAmount] = useState(0)
-  const [usd, setUsd] = useState(0)
-  const [mana, setMana] = useState(0)
   const [to, setTo] = useState('')
 
   const handleChangeManaPrice = () => {
@@ -27,17 +25,8 @@ const TransactionDetailModal: React.FC<Props> = ({
     const intValue = parseInt(e.currentTarget.value, 10)
     if (e.currentTarget.value.length === 0) {
       setAmount(0)
-      setUsd(0)
-      setMana(0)
     } else if (!isNaN(intValue)) {
       setAmount(intValue)
-      if (isManaPrice) {
-        setUsd(intValue * manaPrice)
-        setMana(intValue)
-      } else {
-        setUsd(intValue)
-        setMana(intValue / manaPrice)
-      }
     }
   }
 
@@ -45,7 +34,13 @@ const TransactionDetailModal: React.FC<Props> = ({
     setTo(e.currentTarget.value)
   }
 
-  const handleSendMana = () => onSendMana(to, mana)
+  const handleSendMana = () => {
+    if (isManaPrice) {
+      onSendMana(to, amount)
+    } else {
+      onSendMana(to, amount / manaPrice)
+    }
+  }
 
   useEffect(() => {
     onManaPrice()
@@ -82,8 +77,8 @@ const TransactionDetailModal: React.FC<Props> = ({
         </div>
         <div className="price">
           {isManaPrice
-            ? `${t('send_mana_modal.usd')}: ${usd}`
-            : `${t('send_mana_modal.mana')}: ${mana}`}
+            ? `${t('send_mana_modal.usd')}: ${amount * manaPrice}`
+            : `${t('send_mana_modal.mana')}: ${amount / manaPrice}`}
         </div>
         <Field
           label={t('send_mana_modal.amount_label')}
