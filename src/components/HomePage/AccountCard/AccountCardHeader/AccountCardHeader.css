@@ -3,10 +3,15 @@
   border-bottom: 1px solid #ccc;
 }
 
-.AccountCardHeader .title{
+.AccountCardHeader .title {
   font-size: 21px;
   line-height: 28px;
   margin-bottom: 10px;
+}
+
+.AccountCardHeader .operation-menu {
+  font-size: 24px;
+  float: right;
 }
 
 .AccountCardHeader .fundsContainer {
@@ -41,4 +46,8 @@
 
 .AccountCardHeader .actions button:first-child {
   min-width: 44px;
+}
+
+.AccountCardHeader i.icon.dropdown {
+  display: none;
 }
