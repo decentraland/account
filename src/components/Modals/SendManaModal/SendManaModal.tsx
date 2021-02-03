@@ -11,7 +11,7 @@ const TransactionDetailModal: React.FC<Props> = ({
   isLoading,
   manaPrice,
   onManaPrice,
-  onSendMana
+  onSendMana,
 }) => {
   const [isManaPrice, setIsManaPrice] = useState(true)
   const [amount, setAmount] = useState(0)
@@ -77,8 +77,10 @@ const TransactionDetailModal: React.FC<Props> = ({
         </div>
         <div className="price">
           {isManaPrice
-            ? `${t('send_mana_modal.usd')}: ${amount * manaPrice}`
-            : `${t('send_mana_modal.mana')}: ${amount / manaPrice}`}
+            ? `${t('send_mana_modal.usd')} : ${(amount * manaPrice).toFixed(3)}`
+            : `${t('send_mana_modal.mana')}: ${(amount / manaPrice).toFixed(
+                3
+              )}`}
         </div>
         <Field
           label={t('send_mana_modal.amount_label')}
