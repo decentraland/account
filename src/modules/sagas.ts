@@ -6,24 +6,26 @@ import { transactionSaga } from 'decentraland-dapps/dist/modules/transaction/sag
 import { walletSaga } from 'decentraland-dapps/dist/modules/wallet/sagas'
 import { modalSaga } from './modal/sagas'
 import { manaSaga } from './mana/sagas'
+import { identitySaga } from './identity/sagas'
 import * as translations from '../locales'
 
 const analyticsSaga = createAnalyticsSaga()
 
 const profileSaga = createProfileSaga({
-  peerUrl: process.env.REACT_APP_PEER_URL!,
+  peerUrl: process.env.REACT_APP_PEER_URL!
 })
 
 const translationSaga = createTranslationSaga({ translations })
 
 export function* rootSaga() {
   yield all([
+    identitySaga(),
     analyticsSaga(),
     transactionSaga(),
     profileSaga(),
     walletSaga(),
     translationSaga(),
     modalSaga(),
-    manaSaga(),
+    manaSaga()
   ])
 }
