@@ -42,6 +42,10 @@
     "amount_label": "Amount",
     "send_tokens": "Enviar Tokens",
     "title": "Enviar Tokens",
-    "subtitle": "Enviar Tokens a la billetera deseada"
+    "subtitle": "Enviar Tokens a la billetera deseada",
+    "errors": {
+      "invalid_char": "Caracter invalido para una Billetera",
+      "invalid_address": "Billetera inválida"
+    }
   }
 }

@@ -42,6 +42,11 @@
     "amount_label": "量",
     "send_tokens": "发送令牌",
     "title": "发送令牌",
-    "subtitle": "将令牌发送到所需的电子钱包"
+    "subtitle": "将令牌发送到所需的电子钱包",
+    "errors": {
+      "invalid_char": "地址的无效字符",
+      "invalid_address": "无效地址"
+    }
+
   }
 }

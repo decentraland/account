@@ -46,7 +46,10 @@ const TransactionDetailModal: React.FC<Props> = ({
     } else {
       setErrors({
         ...errors,
-        to: { hasError: true, message: 'Invalid character for an Address' }
+        to: {
+          hasError: true,
+          message: t('send_mana_modal.errors.invalid_char')
+        }
       })
     }
   }
@@ -62,7 +65,10 @@ const TransactionDetailModal: React.FC<Props> = ({
     } else {
       setErrors({
         ...errors,
-        to: { hasError: true, message: 'Invalid Address' }
+        to: {
+          hasError: true,
+          message: t('send_mana_modal.errors.invalid_address')
+        }
       })
     }
   }
