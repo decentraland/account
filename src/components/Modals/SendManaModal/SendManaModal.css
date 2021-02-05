@@ -1,11 +1,17 @@
 .ui.modal.SendManaModal {
-  padding: 80px;
+  padding: 26px;
   width: 520px;
 }
 .SendManaModal .title {
   text-align: center;
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 30px;
+letter-spacing: 0.3px;
 }
+
 .SendManaModal .subtitle {
+  margin-top: 10px;
   font-style: normal;
   font-weight: normal;
   font-size: 17px;
@@ -14,6 +20,18 @@
   /* identical to box height, or 153% */
   text-align: center;
   letter-spacing: -0.2px;
+}
+
+.SendManaModal .dcl.close, .ui.modal > .dcl.close {
+  margin:10px;
+  padding: 10px;
+  background-color: white;
+}
+
+.SendManaModal .ui.sub.header {
+  text-transform: none;
+  font-size: 15px;
+  line-height: 24px;
 }
 
 .SendManaModal .price {
@@ -37,13 +55,22 @@
   letter-spacing: 0.4px;
 }
 
-.SendManaModal .dcl.field .ui.input input, .SendManaModal .ui.form .dcl.field .ui.input input
+.SendManaModal .dcl.field .ui.input.amount input, .SendManaModal .ui.form .dcl.field .ui.input.amount input
 {
   text-align:center;
   font-weight: 600;
-  font-size: 30px;
-  line-height: 20px;
+  font-size: 40px;
+  line-height: 48px;
 }
+
+.SendManaModal .dcl.field .ui.input.wallet input, .SendManaModal .ui.form .dcl.field .ui.input.wallet input
+{
+  text-align:center;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 26px;
+}
+
 .SendManaModal button.ui.primary {
   margin-top: 20px;
   width: 100%;

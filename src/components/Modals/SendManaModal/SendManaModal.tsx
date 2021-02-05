@@ -11,11 +11,15 @@ const TransactionDetailModal: React.FC<Props> = ({
   isLoading,
   manaPrice,
   onManaPrice,
-  onSendMana,
+  onSendMana
 }) => {
   const [isManaPrice, setIsManaPrice] = useState(true)
   const [amount, setAmount] = useState(0)
   const [to, setTo] = useState('')
+  const [errors, setErrors] = useState({
+    amount: { hasError: false, message: '' },
+    to: { hasError: false, message: '' }
+  })
 
   const handleChangeManaPrice = () => {
     setIsManaPrice(!isManaPrice)
@@ -31,14 +35,35 @@ const TransactionDetailModal: React.FC<Props> = ({
   }
 
   const handleSetTo = (e: React.FormEvent<HTMLInputElement>) => {
-    setTo(e.currentTarget.value)
+    const { value } = e.currentTarget
+    const isValid = /^[0-9a-fA-Fx]{0,42}$/.test(value)
+    if (isValid) {
+      setErrors({
+        ...errors,
+        to: { hasError: false, message: '' }
+      })
+      setTo(value)
+    } else {
+      setErrors({
+        ...errors,
+        to: { hasError: true, message: 'Invalid character for an Address' }
+      })
+    }
   }
 
   const handleSendMana = () => {
-    if (isManaPrice) {
-      onSendMana(to, amount)
+    const isValidAddress = /^0x[0-9a-fA-Fx]{40}$/.test(to)
+    if (isValidAddress) {
+      if (isManaPrice) {
+        onSendMana(to, amount)
+      } else {
+        onSendMana(to, amount / manaPrice)
+      }
     } else {
-      onSendMana(to, amount / manaPrice)
+      setErrors({
+        ...errors,
+        to: { hasError: true, message: 'Invalid Address' }
+      })
     }
   }
 
@@ -57,7 +82,7 @@ const TransactionDetailModal: React.FC<Props> = ({
         <div className="subtitle"> {t('send_mana_modal.subtitle')} </div>
       </Modal.Header>
       <Modal.Content>
-        <div className="button-group">
+        <div className="button-group" style={{ display: 'none' }}>
           <Button
             inverted
             primary
@@ -75,7 +100,7 @@ const TransactionDetailModal: React.FC<Props> = ({
             {t('send_mana_modal.usd')}
           </Button>
         </div>
-        <div className="price">
+        <div className="price" style={{ display: 'none' }}>
           {isManaPrice
             ? `${t('send_mana_modal.usd')} : ${(amount * manaPrice).toFixed(3)}`
             : `${t('send_mana_modal.mana')}: ${(amount / manaPrice).toFixed(
@@ -87,12 +112,18 @@ const TransactionDetailModal: React.FC<Props> = ({
           placeholder="0"
           value={amount}
           onChange={handleSetAmount}
+          className="amount"
+          message={errors.amount.message}
+          error={errors.amount.hasError}
         />
         <Field
           label={t('send_mana_modal.wallet_label')}
           placeholder="0x0000...0000"
           value={to}
           onChange={handleSetTo}
+          className="wallet"
+          message={errors.to.message}
+          error={errors.to.hasError}
         />
         <Button primary onClick={handleSendMana} loading={isLoading}>
           {t('send_mana_modal.send_tokens')}
