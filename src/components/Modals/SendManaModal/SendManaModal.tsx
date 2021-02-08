@@ -9,21 +9,15 @@ const TransactionDetailModal: React.FC<Props> = ({
   name,
   onClose,
   isLoading,
-  manaPrice,
   onManaPrice,
-  onSendMana
+  onSendMana,
 }) => {
-  const [isManaPrice, setIsManaPrice] = useState(true)
   const [amount, setAmount] = useState(0)
   const [to, setTo] = useState('')
   const [errors, setErrors] = useState({
     amount: { hasError: false, message: '' },
-    to: { hasError: false, message: '' }
+    to: { hasError: false, message: '' },
   })
-
-  const handleChangeManaPrice = () => {
-    setIsManaPrice(!isManaPrice)
-  }
 
   const handleSetAmount = (e: React.FormEvent<HTMLInputElement>) => {
     const intValue = parseInt(e.currentTarget.value, 10)
@@ -40,7 +34,7 @@ const TransactionDetailModal: React.FC<Props> = ({
     if (isValid) {
       setErrors({
         ...errors,
-        to: { hasError: false, message: '' }
+        to: { hasError: false, message: '' },
       })
       setTo(value)
     } else {
@@ -48,8 +42,8 @@ const TransactionDetailModal: React.FC<Props> = ({
         ...errors,
         to: {
           hasError: true,
-          message: t('send_mana_modal.errors.invalid_char')
-        }
+          message: t('send_mana_modal.errors.invalid_char'),
+        },
       })
     }
   }
@@ -57,18 +51,14 @@ const TransactionDetailModal: React.FC<Props> = ({
   const handleSendMana = () => {
     const isValidAddress = /^0x[0-9a-fA-Fx]{40}$/.test(to)
     if (isValidAddress) {
-      if (isManaPrice) {
-        onSendMana(to, amount)
-      } else {
-        onSendMana(to, amount / manaPrice)
-      }
+      onSendMana(to, amount)
     } else {
       setErrors({
         ...errors,
         to: {
           hasError: true,
-          message: t('send_mana_modal.errors.invalid_address')
-        }
+          message: t('send_mana_modal.errors.invalid_address'),
+        },
       })
     }
   }
@@ -88,31 +78,6 @@ const TransactionDetailModal: React.FC<Props> = ({
         <div className="subtitle"> {t('send_mana_modal.subtitle')} </div>
       </Modal.Header>
       <Modal.Content>
-        <div className="button-group" style={{ display: 'none' }}>
-          <Button
-            inverted
-            primary
-            disabled={!isManaPrice}
-            onClick={handleChangeManaPrice}
-          >
-            {t('send_mana_modal.mana')}
-          </Button>
-          <Button
-            inverted
-            primary
-            disabled={isManaPrice}
-            onClick={handleChangeManaPrice}
-          >
-            {t('send_mana_modal.usd')}
-          </Button>
-        </div>
-        <div className="price" style={{ display: 'none' }}>
-          {isManaPrice
-            ? `${t('send_mana_modal.usd')} : ${(amount * manaPrice).toFixed(3)}`
-            : `${t('send_mana_modal.mana')}: ${(amount / manaPrice).toFixed(
-                3
-              )}`}
-        </div>
         <Field
           label={t('send_mana_modal.amount_label')}
           placeholder="0"
