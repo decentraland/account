@@ -13,7 +13,7 @@ const Routes = () => {
     <>
       <Switch>
         <Route exact path={locations.root()} component={HomePage} />
-        <Route path={locations.signIn()} component={SignInPage} />
+        <Route exact path={locations.signIn()} component={SignInPage} />
         <Redirect to={locations.root()} />
       </Switch>
       {APP_ID ? (
