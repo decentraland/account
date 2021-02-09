@@ -9,14 +9,15 @@ const TransactionDetailModal: React.FC<Props> = ({
   name,
   onClose,
   isLoading,
+  manaPrice,
   onManaPrice,
-  onSendMana,
+  onSendMana
 }) => {
   const [amount, setAmount] = useState(0)
   const [to, setTo] = useState('')
   const [errors, setErrors] = useState({
     amount: { hasError: false, message: '' },
-    to: { hasError: false, message: '' },
+    to: { hasError: false, message: '' }
   })
 
   const handleSetAmount = (e: React.FormEvent<HTMLInputElement>) => {
@@ -34,7 +35,7 @@ const TransactionDetailModal: React.FC<Props> = ({
     if (isValid) {
       setErrors({
         ...errors,
-        to: { hasError: false, message: '' },
+        to: { hasError: false, message: '' }
       })
       setTo(value)
     } else {
@@ -42,8 +43,8 @@ const TransactionDetailModal: React.FC<Props> = ({
         ...errors,
         to: {
           hasError: true,
-          message: t('send_mana_modal.errors.invalid_char'),
-        },
+          message: t('send_mana_modal.errors.invalid_char')
+        }
       })
     }
   }
@@ -57,8 +58,8 @@ const TransactionDetailModal: React.FC<Props> = ({
         ...errors,
         to: {
           hasError: true,
-          message: t('send_mana_modal.errors.invalid_address'),
-        },
+          message: t('send_mana_modal.errors.invalid_address')
+        }
       })
     }
   }
@@ -87,6 +88,9 @@ const TransactionDetailModal: React.FC<Props> = ({
           message={errors.amount.message}
           error={errors.amount.hasError}
         />
+        <div className="usd-amount">
+          {(amount * manaPrice).toFixed(2)} {t('global.usd_symbol')}
+        </div>
         <Field
           label={t('send_mana_modal.wallet_label')}
           placeholder="0x0000...0000"

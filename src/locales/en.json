@@ -1,7 +1,8 @@
 {
   "global": {
     "guest": "Guest",
-    "settings": "Settings"
+    "settings": "Settings",
+    "usd_symbol": "USD"
   },
   "account_header": {
     "actions": {

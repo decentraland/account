@@ -1,7 +1,8 @@
 {
   "global": {
     "guest": "Invitado",
-    "settings": "Configuración"
+    "settings": "Configuración",
+    "usd_symbol": "USD"
   },
   "account_header": {
     "actions": {
