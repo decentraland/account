@@ -32,7 +32,7 @@ const ReceiveManaModal = ({ name, onClose, metadata }: ModalProps) => {
           placeholder="0x0000...0000"
           action={t('receive_mana_modal.copy')}
           onAction={copyToClipboard}
-          message={isCopied ? 'Copied!' : ''}
+          message={isCopied ? t('receive_mana_modal.copied') : ''}
         />
       </Modal.Content>
     </Modal>

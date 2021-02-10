@@ -33,7 +33,8 @@
   "receive_mana_modal": {
     "title": "Receive Tokens",
     "message": "If you want to receive tokens in this wallet you can do it by sharing your address",
-    "copy": "Copy"
+    "copy": "Copy",
+    "copied": "Copied!"
   },
   "transaction_type": {
     "deposit": "Deposit",
