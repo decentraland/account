@@ -12,6 +12,7 @@ const mapState = (_state: RootState): MapStateProps => ({})
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
   onSendMana: () => dispatch(openModal('SendManaModal')),
+  onReceiveMana: () => dispatch(openModal('ReceiveManaModal')),
 })
 
 export default connect(mapState, mapDispatch)(AccountCardHeader)

@@ -7,8 +7,9 @@ export type Props = {
   title: string
   amount: number
   onSendMana: () => void
+  onReceiveMana: () => void
 }
 
 export type MapStateProps = {}
-export type MapDispatchProps = Pick<Props, 'onSendMana'>
+export type MapDispatchProps = Pick<Props, 'onSendMana' | 'onReceiveMana'>
 export type MapDispatch = Dispatch<OpenModalAction>

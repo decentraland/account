@@ -5,7 +5,13 @@ import { NetworkType } from '../../HomePage.types'
 import { Props } from './AccountCardHeader.types'
 import './AccountCardHeader.css'
 
-const AccountCardHeader = ({ type, title, amount, onSendMana }: Props) => {
+const AccountCardHeader = ({
+  type,
+  title,
+  amount,
+  onSendMana,
+  onReceiveMana,
+}: Props) => {
   return (
     <div className="AccountCardHeader">
       <div className="title">
