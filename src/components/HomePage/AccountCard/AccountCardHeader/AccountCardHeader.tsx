@@ -6,11 +6,12 @@ import { Props } from './AccountCardHeader.types'
 import './AccountCardHeader.css'
 
 const AccountCardHeader = ({
+  wallet,
   type,
   title,
   amount,
   onSendMana,
-  onReceiveMana,
+  onReceiveMana
 }: Props) => {
   return (
     <div className="AccountCardHeader">
@@ -25,7 +26,7 @@ const AccountCardHeader = ({
               />
               <Dropdown.Item
                 text={t('account_card_header.receive')}
-                onClick={() => onReceiveMana()}
+                onClick={() => onReceiveMana(wallet)}
               />
             </Dropdown.Menu>
           </Dropdown>

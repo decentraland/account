@@ -30,6 +30,11 @@
   "see_all_transaction_modal": {
     "title": "Eth Mana Transactions"
   },
+  "receive_mana_modal": {
+    "title": "Receive Tokens",
+    "message": "If you want to receive tokens in this wallet you can do it by sharing your address",
+    "copy": "Copy"
+  },
   "transaction_type": {
     "deposit": "Deposit",
     "withdrawal": "Withdrawal"

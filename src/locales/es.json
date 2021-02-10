@@ -30,6 +30,11 @@
   "see_all_transaction_modal": {
     "title": "Transacciones Eth Mana"
   },
+  "receive_mana_modal": {
+    "title": "Recibir Tokens",
+    "message": "Si quieres recibir tokens in esta billetera puedes hacerlo compartiendo tu dirección",
+    "copy": "Copiar"
+  },
   "transaction_type": {
     "deposit": "Deposito",
     "withdrawal": "Extracción"
