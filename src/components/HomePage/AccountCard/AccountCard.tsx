@@ -14,7 +14,7 @@ const AccountCard = ({
   title,
   amount,
   transactions,
-  onSeeAll
+  onSeeAll,
 }: Props) => {
   const pending = transactions
     .filter((tx) => tx.status === TransactionStatus.PENDING)
@@ -26,7 +26,7 @@ const AccountCard = ({
   const handleOnSeeAll = () => onSeeAll(transactions)
   return (
     <Card className="AccountCard">
-      <AccountCardHeader type={type} title={title} amount={amount} />
+      <AccountCardHeader type={type} title={title} amount={amount} wallet="" />
       <div className="AccountTransactions">
         <div>
           <div className="see-all" onClick={handleOnSeeAll}>
