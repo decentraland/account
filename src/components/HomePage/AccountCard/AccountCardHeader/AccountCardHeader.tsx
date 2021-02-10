@@ -25,7 +25,7 @@ const AccountCardHeader = ({
               />
               <Dropdown.Item
                 text={t('account_card_header.receive')}
-                onClick={() => alert('must be implemented')}
+                onClick={() => onReceiveMana()}
               />
             </Dropdown.Menu>
           </Dropdown>
