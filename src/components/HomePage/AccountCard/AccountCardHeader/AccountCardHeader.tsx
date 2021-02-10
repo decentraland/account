@@ -11,8 +11,16 @@ const AccountCardHeader = ({
   title,
   amount,
   onSendMana,
-  onReceiveMana
+  onReceiveMana,
 }: Props) => {
+  const handleSendMana = () => onSendMana()
+
+  const handleReceiveMana = () => {
+    if (wallet) {
+      onReceiveMana(wallet)
+    }
+  }
+
   return (
     <div className="AccountCardHeader">
       <div className="title">
@@ -22,11 +30,11 @@ const AccountCardHeader = ({
             <Dropdown.Menu>
               <Dropdown.Item
                 text={t('account_card_header.send')}
-                onClick={() => onSendMana()}
+                onClick={handleSendMana}
               />
               <Dropdown.Item
                 text={t('account_card_header.receive')}
-                onClick={() => onReceiveMana(wallet)}
+                onClick={handleReceiveMana}
               />
             </Dropdown.Menu>
           </Dropdown>

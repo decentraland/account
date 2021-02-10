@@ -3,7 +3,7 @@ import { NetworkType } from '../../HomePage.types'
 import { OpenModalAction } from '../../../../modules/modal/actions'
 
 export type Props = {
-  wallet: string
+  wallet?: string
   type: NetworkType
   title: string
   amount: number
