@@ -1,2 +1,2 @@
-import AccountCardHeader from './AccountCardHeader'
+import AccountCardHeader from './AccountCardHeader.container'
 export { AccountCardHeader }

@@ -1,7 +1,8 @@
 {
   "global": {
     "guest": "Invitado",
-    "settings": "Configuración"
+    "settings": "Configuración",
+    "usd_symbol": "USD"
   },
   "account_header": {
     "actions": {
@@ -10,7 +11,9 @@
     }
   },
   "account_card_header": {
-    "convert": "Convertir"
+    "convert": "Convertir",
+    "receive": "Recibir",
+    "send": "Enviar"
   },
   "account_card": {
     "tx_latests": "Ultimas Transacciones",
@@ -34,5 +37,18 @@
   "transaction_status": {
     "pending": "Pendiente",
     "confirmed": "Confirmado"
+  },
+  "send_mana_modal": {
+    "usd": "USD",
+    "mana": "MANA",
+    "wallet_label": "Billetera",
+    "amount_label": "Amount",
+    "send_tokens": "Enviar Tokens",
+    "title": "Enviar Tokens",
+    "subtitle": "Enviar Tokens a la billetera deseada",
+    "errors": {
+      "invalid_char": "Caracter invalido para una Billetera",
+      "invalid_address": "Billetera inválida"
+    }
   }
 }

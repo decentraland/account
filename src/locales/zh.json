@@ -1,7 +1,8 @@
 {
   "global": {
     "guest": "客人",
-    "settings": "设定"
+    "settings": "设定",
+    "usd_symbol": "USD"
   },
   "account_header": {
     "actions": {
@@ -10,7 +11,9 @@
     }
   },
   "account_card_header": {
-    "convert": "改造"
+    "convert": "改造",
+    "receive": "接收",
+    "send": "发送"
   },
   "account_card": {
     "tx_latests": "最新交易",
@@ -34,5 +37,19 @@
   "transaction_status": {
     "pending": "待定",
     "confirmed": "已确认"
+  },
+  "send_mana_modal": {
+    "usd": "USD",
+    "mana": "MANA",
+    "wallet_label": "钱包",
+    "amount_label": "量",
+    "send_tokens": "发送令牌",
+    "title": "发送令牌",
+    "subtitle": "将令牌发送到所需的电子钱包",
+    "errors": {
+      "invalid_char": "地址的无效字符",
+      "invalid_address": "无效地址"
+    }
+
   }
 }

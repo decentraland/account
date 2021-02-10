@@ -1,7 +1,8 @@
 {
   "global": {
     "guest": "Guest",
-    "settings": "Settings"
+    "settings": "Settings",
+    "usd_symbol": "USD"
   },
   "account_header": {
     "actions": {
@@ -10,7 +11,9 @@
     }
   },
   "account_card_header": {
-    "convert": "Convert"
+    "convert": "Convert",
+    "receive": "Receive",
+    "send": "Send"
   },
   "account_card": {
     "tx_latests": "Latests Transactions",
@@ -34,5 +37,18 @@
   "transaction_status": {
     "pending": "Pending",
     "confirmed": "Confirmed"
+  },
+  "send_mana_modal": {
+    "usd": "USD",
+    "mana": "MANA",
+    "amount_label": "Amount",
+    "wallet_label": "Wallet",
+    "send_tokens": "Send Tokens",
+    "title": "Send Tokens",
+    "subtitle": "Send Tokens to the desired Wallet",
+    "errors": {
+      "invalid_char": "Invalid character for an Address",
+      "invalid_address": "Invalid Address"
+    }
   }
 }

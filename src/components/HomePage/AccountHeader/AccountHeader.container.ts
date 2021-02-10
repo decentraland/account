@@ -1,10 +1,10 @@
-import { connect } from 'react-redux'
+import { RootState } from '../../../modules/reducer'
 import {
   MapStateProps,
   MapDispatchProps,
   MapDispatch,
 } from './AccountHeader.types'
-import { RootState } from '../../../modules/reducer'
+import { connect } from 'react-redux'
 import { getProfile } from '../../../modules/profile/selectors'
 import AccountHeader from './AccountHeader'
 

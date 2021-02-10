@@ -1,0 +1,9 @@
+{
+  "outputPath": "./src/contracts",
+  "contracts": {
+    "ERC20": {
+      "source": "files",
+      "abiFile": "./src/contracts/ERC20.json"
+    }
+  }
+}
