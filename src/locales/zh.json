@@ -12,7 +12,8 @@
   },
   "account_card_header": {
     "convert": "改造",
-    "receive": "接收"
+    "receive": "接收",
+    "send": "发送"
   },
   "account_card": {
     "tx_latests": "最新交易",

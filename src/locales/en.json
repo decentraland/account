@@ -12,7 +12,8 @@
   },
   "account_card_header": {
     "convert": "Convert",
-    "receive": "Receive"
+    "receive": "Receive",
+    "send": "Send"
   },
   "account_card": {
     "tx_latests": "Latests Transactions",

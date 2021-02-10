@@ -13,7 +13,10 @@ const AccountCardHeader = ({ type, title, amount, onSendMana }: Props) => {
         <div className="operation-menu">
           <Dropdown text="..." direction="left">
             <Dropdown.Menu>
-              <Dropdown.Item text="Send" onClick={() => onSendMana()} />
+              <Dropdown.Item
+                text={t('account_card_header.send')}
+                onClick={() => onSendMana()}
+              />
               <Dropdown.Item
                 text={t('account_card_header.receive')}
                 onClick={() => alert('must be implemented')}
