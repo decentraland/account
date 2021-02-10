@@ -50,7 +50,7 @@ const TransactionDetailModal: React.FC<Props> = ({
   }
 
   const handleSendMana = () => {
-    const isValidAddress = /^0x[0-9a-fA-Fx]{40}$/.test(to)
+    const isValidAddress = /^0x[0-9a-fA-F]{40}$/.test(to)
     if (isValidAddress) {
       onSendMana(to, amount)
     } else {
@@ -66,7 +66,7 @@ const TransactionDetailModal: React.FC<Props> = ({
 
   useEffect(() => {
     onManaPrice()
-  })
+  }, [])
 
   return (
     <Modal
