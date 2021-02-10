@@ -12,8 +12,8 @@ const mapState = (state: RootState): MapStateProps => {
 }
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
-  onClickSettings: () => dispatch(push(locations.activity())),
-  onClickActivity: () => dispatch(push(locations.settings())),
+  onClickSettings: () => dispatch(push(locations.settings())),
+  onClickActivity: () => dispatch(push(locations.activity())),
 })
 
 export default connect(mapState, mapDispatch)(UserMenu)
