@@ -14,6 +14,7 @@ const mapState = (state: RootState): MapStateProps => ({
 })
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
+  onConvertToMaticMana: () => dispatch(openModal('ConvertToMaticManaModal')),
   onSendMana: () => dispatch(openModal('SendManaModal')),
   onReceiveMana: (walletAddress) =>
     dispatch(openModal('ReceiveManaModal', { walletAddress }))
