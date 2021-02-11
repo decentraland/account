@@ -5,7 +5,22 @@ import { NetworkType } from '../../HomePage.types'
 import { Props } from './AccountCardHeader.types'
 import './AccountCardHeader.css'
 
-const AccountCardHeader = ({ type, title, amount, onSendMana }: Props) => {
+const AccountCardHeader = ({
+  wallet,
+  type,
+  title,
+  amount,
+  onSendMana,
+  onReceiveMana,
+}: Props) => {
+  const handleSendMana = () => onSendMana()
+
+  const handleReceiveMana = () => {
+    if (wallet) {
+      onReceiveMana(wallet)
+    }
+  }
+
   return (
     <div className="AccountCardHeader">
       <div className="title">
@@ -15,11 +30,11 @@ const AccountCardHeader = ({ type, title, amount, onSendMana }: Props) => {
             <Dropdown.Menu>
               <Dropdown.Item
                 text={t('account_card_header.send')}
-                onClick={() => onSendMana()}
+                onClick={handleSendMana}
               />
               <Dropdown.Item
                 text={t('account_card_header.receive')}
-                onClick={() => alert('must be implemented')}
+                onClick={handleReceiveMana}
               />
             </Dropdown.Menu>
           </Dropdown>

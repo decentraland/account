@@ -1,0 +1,60 @@
+.ReceiveManaModal.ui.modal  {
+  width: 520px;
+  height: 278px;
+}
+
+.ReceiveManaModal .title {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 30px;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+
+.ReceiveManaModal .message {
+  text-align: center;
+  margin-bottom: 49px;
+}
+
+.ReceiveManaModal.ui.modal > .header:not(.ui) {
+  text-align: center;
+}
+
+.ReceiveManaModal .DescriptionStatus {
+  width: 450px;
+}
+
+.ReceiveManaModal.ui.modal > .content {
+  text-align: center;
+  padding: 0px 40px;
+}
+
+.ReceiveManaModal .dcl.field {
+  min-width: 360px;
+}
+
+.SendManaModal .dcl.close, .ui.modal > .dcl.close {
+  margin-top: -20px;
+  margin-right: -20px;
+  padding: 0px;
+}
+
+.ReceiveManaModal.ui.modal .field .ui.input input {
+  padding: 16px 9px;
+  background: #F3F2F5;
+  border: 1px solid rgba(115, 110, 125, 0.32);
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.ReceiveManaModal .dcl.field .overlay, .ui.form .dcl.field .overlay {
+  bottom: 37px;
+  text-transform: uppercase;
+}
+
+.ReceiveManaModal .dcl.field .overlay, .ui.form .dcl.field .overlay {
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 18px;
+}

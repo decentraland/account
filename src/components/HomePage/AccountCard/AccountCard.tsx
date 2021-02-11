@@ -14,7 +14,7 @@ const AccountCard = ({
   title,
   amount,
   transactions,
-  onSeeAll
+  onSeeAll,
 }: Props) => {
   const pending = transactions
     .filter((tx) => tx.status === TransactionStatus.PENDING)

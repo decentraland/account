@@ -30,6 +30,12 @@
   "see_all_transaction_modal": {
     "title": "Eth Mana交易"
   },
+  "receive_mana_modal": {
+    "title": "接收令牌",
+    "message": "如果您想在此钱包中接收令牌，可以通过共享您的地址来完成",
+    "copy": "复制",
+    "copied": "复制！"
+  },
   "transaction_type": {
     "deposit": "存款",
     "withdrawal": "退出"
