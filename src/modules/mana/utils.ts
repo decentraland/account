@@ -1,2 +1,3 @@
 export const MANA_CONTRACT_ADDRESS = process.env
   .REACT_APP_MANA_CONTRACT_ADDRESS!
+export const ERC20_PREDICATE = process.env.REACT_APP_ERC20_PREDICATE!

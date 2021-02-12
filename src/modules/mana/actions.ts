@@ -1,6 +1,30 @@
 import { action } from 'typesafe-actions'
 import { buildTransactionPayload } from 'decentraland-dapps/dist/modules/transaction/utils'
 
+// Approve MANA
+export const APPROVE_MANA_REQUEST = '[Request] Approve MANA'
+export const APPROVE_MANA_SUCCESS = '[Success] Approve MANA'
+export const APPROVE_MANA_FAILURE = '[Failure] Approve MANA'
+
+export const approveManaRequest = (allowance: string) =>
+  action(APPROVE_MANA_REQUEST, { allowance })
+export const approveManaSuccess = (
+  allowance: string,
+  address: string,
+  txHash: string
+) =>
+  action(APPROVE_MANA_SUCCESS, {
+    ...buildTransactionPayload(txHash, { allowance, address }),
+    allowance,
+    address
+  })
+export const approveManaFailure = (allowance: string, error: string) =>
+  action(APPROVE_MANA_FAILURE, { allowance, error })
+
+export type ApproveManaRequestAction = ReturnType<typeof approveManaRequest>
+export type ApproveManaSuccessAction = ReturnType<typeof approveManaSuccess>
+export type ApproveManaFailureAction = ReturnType<typeof approveManaFailure>
+
 // Send MANA
 export const SEND_MANA_REQUEST = '[Request] Send Mana'
 export const SEND_MANA_SUCCESS = '[Success] Send Mana'
@@ -12,7 +36,7 @@ export const sendManaSuccess = (to: string, amount: number, txHash: string) =>
   action(SEND_MANA_SUCCESS, {
     to,
     amount,
-    ...buildTransactionPayload(txHash, { to, amount }),
+    ...buildTransactionPayload(txHash, { to, amount })
   })
 export const sendManaFailure = (to: string, amount: number, error: string) =>
   action(SEND_MANA_FAILURE, { to, amount, error })

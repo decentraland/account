@@ -1,8 +1,9 @@
 import { connect } from 'react-redux'
 import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
 import {
+  approveManaRequest,
+  APPROVE_MANA_REQUEST,
   fetchManaPriceRequest,
-  sendManaRequest,
   SEND_MANA_REQUEST,
 } from '../../../modules/mana/actions'
 import { RootState } from '../../../modules/reducer'
@@ -12,11 +13,13 @@ import ConvertToMaticManaModal from './ConvertToMaticManaModal'
 
 const mapState = (state: RootState) => ({
   manaPrice: getManaPrice(state),
-  isLoading: isLoadingType(getLoading(state), SEND_MANA_REQUEST),
+  isLoading:
+    isLoadingType(getLoading(state), SEND_MANA_REQUEST) ||
+    isLoadingType(getLoading(state), APPROVE_MANA_REQUEST),
 })
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
-  onSendMana: (to, amount) => dispatch(sendManaRequest(to, amount)),
+  onApproveMana: (allowance) => dispatch(approveManaRequest(allowance)),
   onManaPrice: () => dispatch(fetchManaPriceRequest()),
 })
 

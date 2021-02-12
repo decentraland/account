@@ -3,6 +3,12 @@ import {
   LoadingState,
 } from 'decentraland-dapps/dist/modules/loading/reducer'
 import {
+  ApproveManaFailureAction,
+  ApproveManaRequestAction,
+  ApproveManaSuccessAction,
+  APPROVE_MANA_FAILURE,
+  APPROVE_MANA_REQUEST,
+  APPROVE_MANA_SUCCESS,
   FetchManaPriceFailureAction,
   FetchManaPriceRequestAction,
   FetchManaPriceSuccessAction,
@@ -40,11 +46,15 @@ type ManaReducerAction =
   | FetchManaPriceRequestAction
   | FetchManaPriceSuccessAction
   | FetchManaPriceFailureAction
+  | ApproveManaRequestAction
+  | ApproveManaSuccessAction
+  | ApproveManaFailureAction
 
 export function manaReducer(state = INITAL_STATE, action: ManaReducerAction) {
   switch (action.type) {
     case SEND_MANA_REQUEST:
-    case FETCH_MANA_PRICE_REQUEST: {
+    case FETCH_MANA_PRICE_REQUEST:
+    case APPROVE_MANA_REQUEST: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
@@ -70,8 +80,16 @@ export function manaReducer(state = INITAL_STATE, action: ManaReducerAction) {
       }
     }
 
+    case APPROVE_MANA_SUCCESS: {
+      return {
+        ...state,
+        loading: loadingReducer(state.loading, action),
+      }
+    }
+
     case SEND_MANA_FAILURE:
-    case FETCH_MANA_PRICE_FAILURE: {
+    case FETCH_MANA_PRICE_FAILURE:
+    case APPROVE_MANA_FAILURE: {
       const { error } = action.payload
       return {
         ...state,
