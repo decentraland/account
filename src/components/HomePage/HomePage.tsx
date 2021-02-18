@@ -13,7 +13,8 @@ import {
 } from './HomePage.types'
 import './HomePage.css'
 
-const HomePage = (_props: Props) => {
+const HomePage: React.FC<Props> = (props) => {
+  const { mana, manaL2 } = props
   return (
     <>
       <Navbar />
@@ -23,7 +24,7 @@ const HomePage = (_props: Props) => {
           <AccountCard
             type={NetworkType.ETHEREUM}
             title="Mana"
-            amount={200}
+            amount={mana | 0}
             transactions={[
               {
                 type: TransactionType.DEPOSIT,
@@ -66,7 +67,7 @@ const HomePage = (_props: Props) => {
           <AccountCard
             type={NetworkType.MATIC}
             title="Matic Mana"
-            amount={300}
+            amount={manaL2 | 0}
             transactions={[
               {
                 type: TransactionType.DEPOSIT,
