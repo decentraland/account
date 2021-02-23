@@ -763,4 +763,4 @@ export default new ContractAbi([
     stateMutability: 'payable',
     type: 'receive',
   },
-])
+] as any)
