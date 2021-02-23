@@ -10,13 +10,17 @@ const ConvertToMaticManaModal: React.FC<Props> = ({
   name,
   onClose,
   isLoading,
+  allowance,
   manaPrice,
   onManaPrice,
   onApproveMana,
+  onGetApprovedMana,
+  onDepositMana,
 }) => {
   const [isApproved, setIsApproved] = useState(false)
   const [amount, setAmount] = useState(0)
 
+  console.log({ allowance })
   const handleSetAmount = (e: React.FormEvent<HTMLInputElement>) => {
     const intValue = parseInt(e.currentTarget.value, 10)
     if (e.currentTarget.value.length === 0) {
@@ -33,12 +37,17 @@ const ConvertToMaticManaModal: React.FC<Props> = ({
   }
 
   const handleConvert = () => {
-    alert('Must be implemented')
+    onDepositMana(amount)
   }
 
   useEffect(() => {
     onManaPrice()
-  }, [])
+    onGetApprovedMana()
+    const amountAllowed = parseInt(allowance, 10)
+    if (!isNaN(amountAllowed) && amountAllowed > 100) {
+      setIsApproved(true)
+    }
+  }, [allowance])
 
   return (
     <Modal
@@ -63,10 +72,20 @@ const ConvertToMaticManaModal: React.FC<Props> = ({
         </div>
         <Section className="field">
           <Header sub={true}>MANA Approved</Header>
-          <Radio toggle checked={isApproved} onChange={handleApprove} />
+          <Radio
+            toggle
+            checked={isApproved}
+            onChange={handleApprove}
+            disabled={isApproved}
+          />
         </Section>
 
-        <Button primary onClick={handleConvert} loading={isLoading}>
+        <Button
+          primary
+          onClick={handleConvert}
+          loading={isLoading}
+          disabled={!isApproved}
+        >
           {t('convert_to_matic_modal.label_button')}
         </Button>
       </Modal.Content>
