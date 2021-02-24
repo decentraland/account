@@ -16,6 +16,7 @@ const ConvertToMaticManaModal: React.FC<Props> = ({
   onApproveMana,
   onGetApprovedMana,
   onDepositMana,
+  isWaitingApprovement,
 }) => {
   const [isApproved, setIsApproved] = useState(false)
   const [amount, setAmount] = useState(0)
@@ -83,7 +84,7 @@ const ConvertToMaticManaModal: React.FC<Props> = ({
         <Button
           primary
           onClick={handleConvert}
-          loading={isLoading}
+          loading={isLoading || isWaitingApprovement}
           disabled={!isApproved}
         >
           {t('convert_to_matic_modal.label_button')}

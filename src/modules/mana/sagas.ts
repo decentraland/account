@@ -34,7 +34,7 @@ import {
   ERC20_PREDICATE,
   ROOT_CHAIN_MANAGER,
 } from './utils'
-import { toHex, toWei } from 'web3x-es/utils'
+import { toWei } from 'web3x-es/utils'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { closeModal } from 'decentraland-dapps/dist/modules/modal/actions'
 import { RootChainManager } from '../../contracts/RootChainManager'
@@ -67,15 +67,13 @@ function* handleDepositMana(action: DepositManaRequestAction) {
         .depositFor(
           Address.fromString(from),
           Address.fromString(MANA_CONTRACT_ADDRESS),
-          abiCoder.encodeParameter(
-            'bytes',
-            toHex(toWei(amount.toString(), 'ether'))
-          )
+          abiCoder.encodeParameter('uint256', toWei(amount.toString(), 'ether'))
         )
         .send({ from: Address.fromString(from) })
         .getTxHash()
     )
 
+    yield put(closeModal('ConvertToMaticManaModal'))
     yield put(depositManaSuccess(amount, txHash))
   } catch (error) {
     yield put(depositManaFailure(amount, error))
@@ -130,6 +128,7 @@ function* handleApproveManaRequest(action: ApproveManaRequestAction) {
 
     yield put(approveManaSuccess(allowance, from.toString(), txHash))
   } catch (error) {
+    yield put(closeModal('ConvertToMaticManaModal'))
     yield put(approveManaFailure(allowance, error))
   }
 }

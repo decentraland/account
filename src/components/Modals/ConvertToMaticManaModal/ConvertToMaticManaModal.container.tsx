@@ -15,6 +15,7 @@ import {
   getManaPrice,
   getLoading,
   getAllowance,
+  isWaitingApprovement,
 } from '../../../modules/mana/selectors'
 import { MapDispatch, MapDispatchProps } from './ConvertToMaticManaModal.types'
 import ConvertToMaticManaModal from './ConvertToMaticManaModal'
@@ -22,6 +23,7 @@ import ConvertToMaticManaModal from './ConvertToMaticManaModal'
 const mapState = (state: RootState) => ({
   allowance: getAllowance(state),
   manaPrice: getManaPrice(state),
+  isWaitingApprovement: isWaitingApprovement(state),
   isLoading:
     isLoadingType(getLoading(state), DEPOSIT_MANA_REQUEST) ||
     isLoadingType(getLoading(state), SEND_MANA_REQUEST) ||

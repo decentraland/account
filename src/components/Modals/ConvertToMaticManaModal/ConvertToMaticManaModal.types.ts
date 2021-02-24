@@ -9,6 +9,7 @@ import {
 
 export type Props = ModalProps & {
   isLoading: boolean
+  isWaitingApprovement: boolean
   allowance: string
   manaPrice: number
   onGetApprovedMana: typeof getApprovedManaRequest
