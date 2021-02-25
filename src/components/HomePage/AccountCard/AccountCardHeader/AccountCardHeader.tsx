@@ -12,6 +12,7 @@ const AccountCardHeader = ({
   amount,
   onSendMana,
   onReceiveMana,
+  onConvertToMaticMana,
 }: Props) => {
   const handleSendMana = () => onSendMana()
 
@@ -55,7 +56,9 @@ const AccountCardHeader = ({
           <Button>
             <Icon name="plus" />
           </Button>
-          <Button>{t('account_card_header.convert')}</Button>
+          <Button onClick={() => onConvertToMaticMana()}>
+            {t('account_card_header.convert')}
+          </Button>
         </div>
       </div>
     </div>

@@ -56,5 +56,14 @@
       "invalid_char": "Invalid character for an Address",
       "invalid_address": "Invalid Address"
     }
+  },
+  "convert_to_matic_modal": {
+    "usd": "USD",
+    "mana": "MANA",
+    "amount_label": "Amount",
+    "label_button": "Complete Deposit",
+    "title": "Convert to Matic Mana",
+    "subtitle": "Convert Mana into Matic Mana",
+    "label_approvement": "MANA Approved"
   }
 }

@@ -48,7 +48,7 @@
     "usd": "USD",
     "mana": "MANA",
     "wallet_label": "Billetera",
-    "amount_label": "Amount",
+    "amount_label": "Cantidad",
     "send_tokens": "Enviar Tokens",
     "title": "Enviar Tokens",
     "subtitle": "Enviar Tokens a la billetera deseada",
@@ -56,5 +56,14 @@
       "invalid_char": "Caracter invalido para una Billetera",
       "invalid_address": "Billetera inválida"
     }
+  },
+  "convert_to_matic_modal": {
+    "usd": "USD",
+    "mana": "MANA",
+    "amount_label": "Cantidad",
+    "label_button": "Completar Deposito",
+    "title": "Convertir a Mana Matic",
+    "subtitle": "Convertir Mana en Mana Matic",
+    "label_approvement": "MANA Aprobado"
   }
 }

@@ -3,6 +3,18 @@ import { createEth } from 'decentraland-dapps/dist/lib/eth'
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { coingecko } from '../../lib/api/coingecko'
 import {
+  depositManaSuccess,
+  depositManaFailure,
+  DepositManaRequestAction,
+  DEPOSIT_MANA_REQUEST,
+  getApprovedManaSuccess,
+  getApprovedManaFailure,
+  GetApprovedManaRequestAction,
+  GET_APPROVED_MANA_REQUEST,
+  approveManaFailure,
+  ApproveManaRequestAction,
+  approveManaSuccess,
+  APPROVE_MANA_REQUEST,
   fetchManaPriceFailure,
   fetchManaPriceRequest,
   FetchManaPriceRequestAction,
@@ -14,17 +26,114 @@ import {
   SEND_MANA_REQUEST,
 } from './actions'
 import { Eth } from 'web3x-es/eth'
+import { abiCoder } from 'web3x-es/contract/abi-coder'
 import { ERC20 } from '../../contracts/ERC20'
 import { Address } from 'web3x-es/address'
-import { MANA_CONTRACT_ADDRESS } from './utils'
+import {
+  MANA_CONTRACT_ADDRESS,
+  ERC20_PREDICATE_CONTRACT_ADDRESS,
+  ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS,
+} from './utils'
 import { toWei } from 'web3x-es/utils'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { closeModal } from 'decentraland-dapps/dist/modules/modal/actions'
+import { RootChainManager } from '../../contracts/RootChainManager'
 
 export function* manaSaga() {
+  yield takeEvery(DEPOSIT_MANA_REQUEST, handleDepositManaRequest)
+  yield takeEvery(GET_APPROVED_MANA_REQUEST, handleGetApprovedManaRequest)
+  yield takeEvery(APPROVE_MANA_REQUEST, handleApproveManaRequest)
   yield takeEvery(SEND_MANA_REQUEST, handleSendManaRequest)
   yield takeEvery(FETCH_MANA_PRICE_REQUEST, handleFetchManaPriceRequest)
   yield takeEvery(CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess)
+}
+
+function* handleDepositManaRequest(action: DepositManaRequestAction) {
+  const { amount } = action.payload
+
+  try {
+    const eth: Eth | null = yield call(createEth)
+    if (!eth) {
+      throw new Error('Could not get Eth')
+    }
+    const from = yield select(getAddress)
+    const rootChainContract = new RootChainManager(
+      eth,
+      Address.fromString(ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS)
+    )
+
+    const txHash: string = yield call(() =>
+      rootChainContract.methods
+        .depositFor(
+          Address.fromString(from),
+          Address.fromString(MANA_CONTRACT_ADDRESS),
+          abiCoder.encodeParameter('uint256', toWei(amount.toString(), 'ether'))
+        )
+        .send({ from: Address.fromString(from) })
+        .getTxHash()
+    )
+
+    yield put(closeModal('ConvertToMaticManaModal'))
+    yield put(depositManaSuccess(amount, txHash))
+  } catch (error) {
+    yield put(depositManaFailure(amount, error))
+  }
+}
+
+function* handleGetApprovedManaRequest(_action: GetApprovedManaRequestAction) {
+  try {
+    const eth: Eth | null = yield call(createEth)
+    if (!eth) {
+      throw new Error('Could not get Eth')
+    }
+    const from = yield select(getAddress)
+    const manaContract = new ERC20(
+      eth,
+      Address.fromString(MANA_CONTRACT_ADDRESS)
+    )
+
+    const allowance: string = yield call(() =>
+      manaContract.methods
+        .allowance(
+          Address.fromString(from),
+          Address.fromString(ERC20_PREDICATE_CONTRACT_ADDRESS)
+        )
+        .call()
+    )
+    yield put(getApprovedManaSuccess(allowance))
+  } catch (error) {
+    yield put(getApprovedManaFailure(error))
+  }
+}
+
+function* handleApproveManaRequest(action: ApproveManaRequestAction) {
+  const { allowance } = action.payload
+  try {
+    const eth: Eth | null = yield call(createEth)
+    if (!eth) {
+      throw new Error('Could not get Eth')
+    }
+    const from = yield select(getAddress)
+    const manaContract = new ERC20(
+      eth,
+      Address.fromString(MANA_CONTRACT_ADDRESS)
+    )
+
+    const txHash: string = yield call(() =>
+      manaContract.methods
+        .approve(
+          Address.fromString(ERC20_PREDICATE_CONTRACT_ADDRESS),
+          allowance
+        )
+        .send({ from: Address.fromString(from) })
+        .getTxHash()
+    )
+
+    yield put(approveManaSuccess(allowance, from.toString(), txHash))
+  } catch (error) {
+    yield put(closeModal('ConvertToMaticManaModal'))
+    yield put(approveManaFailure(allowance, error))
+  }
 }
 
 function* handleSendManaRequest(action: SendManaRequestAction) {

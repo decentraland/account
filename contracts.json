@@ -4,6 +4,10 @@
     "ERC20": {
       "source": "files",
       "abiFile": "./src/contracts/ERC20.json"
+    },
+    "RootChainManager": {
+      "source": "files",
+      "abiFile": "./src/contracts/RootChainManager.json"
     }
   }
 }

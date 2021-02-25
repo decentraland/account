@@ -9,8 +9,12 @@ export type Props = {
   amount: number
   onSendMana: () => void
   onReceiveMana: (walletAddress: string) => void
+  onConvertToMaticMana: () => void
 }
 
 export type MapStateProps = {}
-export type MapDispatchProps = Pick<Props, 'onSendMana' | 'onReceiveMana'>
+export type MapDispatchProps = Pick<
+  Props,
+  'onSendMana' | 'onReceiveMana' | 'onConvertToMaticMana'
+>
 export type MapDispatch = Dispatch<OpenModalAction>
