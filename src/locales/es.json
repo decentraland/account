@@ -63,6 +63,7 @@
     "amount_label": "Cantidad",
     "label_button": "Completar Deposito",
     "title": "Convertir a Mana Matic",
-    "subtitle": "Convertir Mana en Mana Matic"
+    "subtitle": "Convertir Mana en Mana Matic",
+    "label_approvement": "MANA Aprobado"
   }
 }

@@ -72,7 +72,9 @@ const ConvertToMaticManaModal: React.FC<Props> = ({
           {(amount * manaPrice).toFixed(2)} {t('global.usd_symbol')}
         </div>
         <Section className="field">
-          <Header sub={true}>MANA Approved</Header>
+          <Header sub={true}>
+            {t('convert_to_matic_modal.label_approvement')}
+          </Header>
           <Radio
             toggle
             checked={isApproved}

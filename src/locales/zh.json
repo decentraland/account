@@ -63,6 +63,7 @@
     "amount_label": "量",
     "label_button": "完成存款",
     "title": "转换为魔力法力",
-    "subtitle": "将法力值转换成魔力法力值 "
+    "subtitle": "将法力值转换成魔力法力值 ",
+    "label_approvement": "MANA批准"
   }
 }
