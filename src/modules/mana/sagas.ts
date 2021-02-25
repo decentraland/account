@@ -31,8 +31,8 @@ import { ERC20 } from '../../contracts/ERC20'
 import { Address } from 'web3x-es/address'
 import {
   MANA_CONTRACT_ADDRESS,
-  ERC20_PREDICATE,
-  ROOT_CHAIN_MANAGER,
+  ERC20_PREDICATE_CONTRACT_ADDRESS,
+  ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS,
 } from './utils'
 import { toWei } from 'web3x-es/utils'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
@@ -40,15 +40,15 @@ import { closeModal } from 'decentraland-dapps/dist/modules/modal/actions'
 import { RootChainManager } from '../../contracts/RootChainManager'
 
 export function* manaSaga() {
-  yield takeEvery(DEPOSIT_MANA_REQUEST, handleDepositMana)
-  yield takeEvery(GET_APPROVED_MANA_REQUEST, handleGetApprovedMana)
+  yield takeEvery(DEPOSIT_MANA_REQUEST, handleDepositManaRequest)
+  yield takeEvery(GET_APPROVED_MANA_REQUEST, handleGetApprovedManaRequest)
   yield takeEvery(APPROVE_MANA_REQUEST, handleApproveManaRequest)
   yield takeEvery(SEND_MANA_REQUEST, handleSendManaRequest)
   yield takeEvery(FETCH_MANA_PRICE_REQUEST, handleFetchManaPriceRequest)
   yield takeEvery(CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess)
 }
 
-function* handleDepositMana(action: DepositManaRequestAction) {
+function* handleDepositManaRequest(action: DepositManaRequestAction) {
   const { amount } = action.payload
 
   try {
@@ -59,7 +59,7 @@ function* handleDepositMana(action: DepositManaRequestAction) {
     const from = yield select(getAddress)
     const rootChainContract = new RootChainManager(
       eth,
-      Address.fromString(ROOT_CHAIN_MANAGER)
+      Address.fromString(ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS)
     )
 
     const txHash: string = yield call(() =>
@@ -80,7 +80,7 @@ function* handleDepositMana(action: DepositManaRequestAction) {
   }
 }
 
-function* handleGetApprovedMana(_action: GetApprovedManaRequestAction) {
+function* handleGetApprovedManaRequest(_action: GetApprovedManaRequestAction) {
   try {
     const eth: Eth | null = yield call(createEth)
     if (!eth) {
@@ -96,7 +96,7 @@ function* handleGetApprovedMana(_action: GetApprovedManaRequestAction) {
       manaContract.methods
         .allowance(
           Address.fromString(from),
-          Address.fromString(ERC20_PREDICATE)
+          Address.fromString(ERC20_PREDICATE_CONTRACT_ADDRESS)
         )
         .call()
     )
@@ -121,7 +121,10 @@ function* handleApproveManaRequest(action: ApproveManaRequestAction) {
 
     const txHash: string = yield call(() =>
       manaContract.methods
-        .approve(Address.fromString(ERC20_PREDICATE), allowance)
+        .approve(
+          Address.fromString(ERC20_PREDICATE_CONTRACT_ADDRESS),
+          allowance
+        )
         .send({ from: Address.fromString(from) })
         .getTxHash()
     )

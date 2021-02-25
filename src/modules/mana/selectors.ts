@@ -45,7 +45,7 @@ export const getPendingTransactions = createSelector<
 >(getTransactions, (transactions) =>
   transactions.filter((transaction) => isPending(transaction.status))
 )
-export const isWaitingApprovement = createSelector<
+export const isWaitingForApproval = createSelector<
   RootState,
   Transaction[],
   boolean
