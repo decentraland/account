@@ -21,7 +21,6 @@ const ConvertToMaticManaModal: React.FC<Props> = ({
   const [isApproved, setIsApproved] = useState(false)
   const [amount, setAmount] = useState(0)
 
-  console.log({ allowance })
   const handleSetAmount = (e: React.FormEvent<HTMLInputElement>) => {
     const intValue = parseInt(e.currentTarget.value, 10)
     if (e.currentTarget.value.length === 0) {
