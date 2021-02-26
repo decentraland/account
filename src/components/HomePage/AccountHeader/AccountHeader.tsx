@@ -10,14 +10,6 @@ const EXPLORER_URL = process.env.REACT_APP_EXPLORER_URL!
 const AccountHeader = (props: Props) => {
   const { avatar } = props
 
-  const handleChangeAlias = () => {
-    window.open(`${BUILDER_URL}/names`, '_blank')
-  }
-
-  const handleEditAvatar = () => {
-    window.open(`${EXPLORER_URL}/?OPEN_AVATAR_EDITOR`, '_blank')
-  }
-
   return (
     <Header size="large" className="AccountHeader">
       <AvatarFace size="large" avatar={avatar || undefined} />
@@ -30,10 +22,15 @@ const AccountHeader = (props: Props) => {
         </div>
       </div>
       <div className="actions">
-        <Button primary inverted onClick={handleChangeAlias}>
+        <Button primary inverted href={`${BUILDER_URL}/names`} target="_blank">
           {t('account_header.actions.change_alias')}
         </Button>
-        <Button primary inverted onClick={handleEditAvatar}>
+        <Button
+          primary
+          inverted
+          href={`${EXPLORER_URL}/?OPEN_AVATAR_EDITOR`}
+          target="_blank"
+        >
           {t('account_header.actions.edit_avatar')}
         </Button>
       </div>
