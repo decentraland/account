@@ -11,6 +11,8 @@
   "build": {
     "env": {
       "REACT_APP_PEER_URL": "https://peer.decentraland.org",
+      "REACT_APP_BUILDER_URL": "https://builder.decentraland.org",
+      "REACT_APP_EXPLORER_URL": "https://play.decentraland.org",
       "REACT_APP_MANA_CONTRACT_ADDRESS": "0xe7fDae84ACaba2A5Ba817B6E6D8A2d415DBFEdbe",
       "REACT_APP_ERC20_PREDICATE_CONTRACT_ADDRESS": "0xdD6596F2029e6233DEFfaCa316e6A95217d4Dc34",
       "REACT_APP_ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS": "0xBbD7cBFA79faee899Eaf900F13C9065bF03B1A74"
