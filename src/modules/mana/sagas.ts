@@ -59,7 +59,8 @@ import {
   MANA_CONTRACT_ADDRESS,
   ERC20_PREDICATE_CONTRACT_ADDRESS,
   ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS,
-  waitForConfirmation,
+  waitForSync,
+  isWithdrawSynced,
 } from './utils'
 import { WithdrawStatus, WithdrawTransaction } from './types'
 import { getWithdrawTransactions } from './selectors'
@@ -192,7 +193,7 @@ function* handleWatchWithdrawTransactionSuccess(
   action: WatchWithdrawTransactionSuccessAction
 ) {
   const { tx } = action.payload
-  yield call(() => waitForConfirmation(tx.hash))
+  yield call(() => waitForSync(tx.hash, isWithdrawSynced))
   yield put(setWithdrawTransactionStatus(tx.hash, WithdrawStatus.CONFIRMED))
 }
 
