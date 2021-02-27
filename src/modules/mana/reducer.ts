@@ -33,7 +33,22 @@ import {
   DEPOSIT_MANA_REQUEST,
   DEPOSIT_MANA_SUCCESS,
   DEPOSIT_MANA_FAILURE,
+  WithdrawManaFailureAction,
+  WithdrawManaRequestAction,
+  WithdrawManaSuccessAction,
+  WITHDRAW_MANA_FAILURE,
+  WITHDRAW_MANA_REQUEST,
+  WITHDRAW_MANA_SUCCESS,
+  SetWithdrawTransactionStatusAction,
+  SET_WITHDRAW_TRANSACTION_STATUS,
+  WatchWithdrawTransactionRequestAction,
+  WatchWithdrawTransactionFailureAction,
+  WatchWithdrawTransactionSuccessAction,
+  WATCH_WITHDRAW_TRANSACTION_SUCCESS,
+  WATCH_WITHDRAW_TRANSACTION_REQUEST,
+  WATCH_WITHDRAW_TRANSACTION_FAILURE,
 } from './actions'
+import { WithdrawTransaction } from './types'
 
 export type ManaState = {
   data: {
@@ -42,6 +57,7 @@ export type ManaState = {
   }
   loading: LoadingState
   error: string | null
+  withdrawTransactions: WithdrawTransaction[]
 }
 
 const INITAL_STATE: ManaState = {
@@ -51,6 +67,7 @@ const INITAL_STATE: ManaState = {
   },
   loading: [],
   error: null,
+  withdrawTransactions: [],
 }
 
 type ManaReducerAction =
@@ -69,14 +86,26 @@ type ManaReducerAction =
   | DepositManaRequestAction
   | DepositManaSuccessAction
   | DepositManaFailureAction
+  | WithdrawManaRequestAction
+  | WithdrawManaSuccessAction
+  | WithdrawManaFailureAction
+  | WatchWithdrawTransactionRequestAction
+  | WatchWithdrawTransactionSuccessAction
+  | WatchWithdrawTransactionFailureAction
+  | SetWithdrawTransactionStatusAction
 
-export function manaReducer(state = INITAL_STATE, action: ManaReducerAction) {
+export function manaReducer(
+  state = INITAL_STATE,
+  action: ManaReducerAction
+): ManaState {
   switch (action.type) {
     case SEND_MANA_REQUEST:
     case FETCH_MANA_PRICE_REQUEST:
     case APPROVE_MANA_REQUEST:
     case GET_APPROVED_MANA_REQUEST:
-    case DEPOSIT_MANA_REQUEST: {
+    case DEPOSIT_MANA_REQUEST:
+    case WITHDRAW_MANA_REQUEST:
+    case WATCH_WITHDRAW_TRANSACTION_REQUEST: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
@@ -121,18 +150,53 @@ export function manaReducer(state = INITAL_STATE, action: ManaReducerAction) {
       }
     }
 
-    case DEPOSIT_MANA_SUCCESS: {
+    case DEPOSIT_MANA_SUCCESS:
+    case WITHDRAW_MANA_SUCCESS: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
       }
     }
 
+    case WATCH_WITHDRAW_TRANSACTION_SUCCESS: {
+      const { tx } = action.payload
+      return {
+        ...state,
+        loading: loadingReducer(state.loading, action),
+        withdrawTransactions: [
+          ...state.withdrawTransactions.filter((_tx) => _tx.hash !== tx.hash), // remove the tx if it was already added
+          tx,
+        ],
+      }
+    }
+
+    case SET_WITHDRAW_TRANSACTION_STATUS: {
+      const { txHash, status } = action.payload
+      const tx = state.withdrawTransactions.find((tx) => tx.hash === txHash)
+      return tx
+        ? {
+            ...state,
+            withdrawTransactions: [
+              // replace old tx with new one
+              ...state.withdrawTransactions.filter(
+                (_tx) => tx.hash !== _tx.hash
+              ),
+              {
+                ...tx,
+                status,
+              },
+            ],
+          }
+        : state
+    }
+
     case SEND_MANA_FAILURE:
     case FETCH_MANA_PRICE_FAILURE:
     case APPROVE_MANA_FAILURE:
     case GET_APPROVED_MANA_FAILURE:
-    case DEPOSIT_MANA_FAILURE: {
+    case DEPOSIT_MANA_FAILURE:
+    case WITHDRAW_MANA_FAILURE:
+    case WATCH_WITHDRAW_TRANSACTION_FAILURE: {
       const { error } = action.payload
       return {
         ...state,

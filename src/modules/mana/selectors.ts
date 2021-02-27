@@ -54,3 +54,6 @@ export const isWaitingForApproval = createSelector<
     (transaction) => APPROVE_MANA_SUCCESS === transaction.actionType
   )
 )
+
+export const getWithdrawTransactions = (state: RootState) =>
+  getState(state).withdrawTransactions
