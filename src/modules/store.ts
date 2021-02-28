@@ -10,8 +10,10 @@ import { createAnalyticsMiddleware } from 'decentraland-dapps/dist/modules/analy
 import { createRootReducer } from './reducer'
 import { rootSaga } from './sagas'
 import {
-  SET_WITHDRAW_TRANSACTION_STATUS,
-  WATCH_WITHDRAW_TRANSACTION_SUCCESS,
+  SET_DEPOSIT_STATUS,
+  SET_WITHDRAWAL_STATUS,
+  WATCH_DEPOSIT_STATUS_SUCCESS,
+  WATCH_WITHDRAWAL_STATUS_SUCCESS,
 } from './mana/actions'
 
 const isDev = process.env.NODE_ENV === 'development'
@@ -28,10 +30,15 @@ const loggerMiddleware = createLogger({
 const transactionMiddleware = createTransactionMiddleware()
 const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
   storageKey: 'account',
-  paths: [['mana', 'withdrawTransactions']],
+  paths: [
+    ['mana', 'data', 'deposits'],
+    ['mana', 'data', 'withdraws'],
+  ],
   actions: [
-    WATCH_WITHDRAW_TRANSACTION_SUCCESS,
-    SET_WITHDRAW_TRANSACTION_STATUS,
+    SET_DEPOSIT_STATUS,
+    SET_WITHDRAWAL_STATUS,
+    WATCH_DEPOSIT_STATUS_SUCCESS,
+    WATCH_WITHDRAWAL_STATUS_SUCCESS,
   ],
   migrations: {},
 })

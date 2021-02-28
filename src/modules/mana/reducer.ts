@@ -33,41 +33,51 @@ import {
   DEPOSIT_MANA_REQUEST,
   DEPOSIT_MANA_SUCCESS,
   DEPOSIT_MANA_FAILURE,
-  WithdrawManaFailureAction,
-  WithdrawManaRequestAction,
-  WithdrawManaSuccessAction,
-  WITHDRAW_MANA_FAILURE,
-  WITHDRAW_MANA_REQUEST,
-  WITHDRAW_MANA_SUCCESS,
-  SetWithdrawTransactionStatusAction,
-  SET_WITHDRAW_TRANSACTION_STATUS,
-  WatchWithdrawTransactionRequestAction,
-  WatchWithdrawTransactionFailureAction,
-  WatchWithdrawTransactionSuccessAction,
-  WATCH_WITHDRAW_TRANSACTION_SUCCESS,
-  WATCH_WITHDRAW_TRANSACTION_REQUEST,
-  WATCH_WITHDRAW_TRANSACTION_FAILURE,
+  InitiateWithdrawalFailureAction,
+  InitiateWithdrawalRequestAction,
+  InitiateWithdrawalSuccessAction,
+  INITIATE_WITHDRAWAL_FAILURE,
+  INITIATE_WITHDRAWAL_REQUEST,
+  INITIATE_WITHDRAWAL_SUCCESS,
+  SetWithdrawalStatusAction,
+  SET_WITHDRAWAL_STATUS,
+  WatchWithdrawalStatusRequestAction,
+  WatchWithdrawalStatusFailureAction,
+  WatchWithdrawalStatusSuccessAction,
+  WATCH_WITHDRAWAL_STATUS_SUCCESS,
+  WATCH_WITHDRAWAL_STATUS_REQUEST,
+  WATCH_WITHDRAWAL_STATUS_FAILURE,
+  WatchDepositStatusRequestAction,
+  WatchDepositStatusSuccessAction,
+  WatchDepositStatusFailureAction,
+  SetDepositStatusAction,
+  WATCH_DEPOSIT_STATUS_REQUEST,
+  WATCH_DEPOSIT_STATUS_SUCCESS,
+  SET_DEPOSIT_STATUS,
+  WATCH_DEPOSIT_STATUS_FAILURE,
 } from './actions'
-import { WithdrawTransaction } from './types'
+import { Deposit, Withdrawal } from './types'
 
 export type ManaState = {
   data: {
     allowance: string
     price: number
+    withdrawals: Withdrawal[]
+    deposits: Deposit[]
   }
   loading: LoadingState
   error: string | null
-  withdrawTransactions: WithdrawTransaction[]
 }
 
 const INITAL_STATE: ManaState = {
   data: {
     allowance: '-1',
     price: 0,
+    withdrawals: [],
+    deposits: [],
   },
   loading: [],
   error: null,
-  withdrawTransactions: [],
 }
 
 type ManaReducerAction =
@@ -86,13 +96,17 @@ type ManaReducerAction =
   | DepositManaRequestAction
   | DepositManaSuccessAction
   | DepositManaFailureAction
-  | WithdrawManaRequestAction
-  | WithdrawManaSuccessAction
-  | WithdrawManaFailureAction
-  | WatchWithdrawTransactionRequestAction
-  | WatchWithdrawTransactionSuccessAction
-  | WatchWithdrawTransactionFailureAction
-  | SetWithdrawTransactionStatusAction
+  | InitiateWithdrawalRequestAction
+  | InitiateWithdrawalSuccessAction
+  | InitiateWithdrawalFailureAction
+  | WatchDepositStatusRequestAction
+  | WatchDepositStatusSuccessAction
+  | WatchDepositStatusFailureAction
+  | SetDepositStatusAction
+  | WatchWithdrawalStatusRequestAction
+  | WatchWithdrawalStatusSuccessAction
+  | WatchWithdrawalStatusFailureAction
+  | SetWithdrawalStatusAction
 
 export function manaReducer(
   state = INITAL_STATE,
@@ -104,8 +118,9 @@ export function manaReducer(
     case APPROVE_MANA_REQUEST:
     case GET_APPROVED_MANA_REQUEST:
     case DEPOSIT_MANA_REQUEST:
-    case WITHDRAW_MANA_REQUEST:
-    case WATCH_WITHDRAW_TRANSACTION_REQUEST: {
+    case INITIATE_WITHDRAWAL_REQUEST:
+    case WATCH_DEPOSIT_STATUS_REQUEST:
+    case WATCH_WITHDRAWAL_STATUS_REQUEST: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
@@ -151,41 +166,95 @@ export function manaReducer(
     }
 
     case DEPOSIT_MANA_SUCCESS:
-    case WITHDRAW_MANA_SUCCESS: {
+    case INITIATE_WITHDRAWAL_SUCCESS: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
       }
     }
 
-    case WATCH_WITHDRAW_TRANSACTION_SUCCESS: {
-      const { tx } = action.payload
+    case WATCH_DEPOSIT_STATUS_SUCCESS: {
+      const { deposit } = action.payload
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
-        withdrawTransactions: [
-          ...state.withdrawTransactions.filter((_tx) => _tx.hash !== tx.hash), // remove the tx if it was already added
-          tx,
-        ],
+        data: {
+          ...state.data,
+          deposits: [
+            ...state.data.deposits.filter(
+              (_deposit) => _deposit.hash !== deposit.hash
+            ), // remove it if it was already added
+            deposit,
+          ],
+        },
       }
     }
 
-    case SET_WITHDRAW_TRANSACTION_STATUS: {
+    case WATCH_WITHDRAWAL_STATUS_SUCCESS: {
+      const { withdrawal } = action.payload
+      return {
+        ...state,
+        loading: loadingReducer(state.loading, action),
+        data: {
+          ...state.data,
+          withdrawals: [
+            ...state.data.withdrawals.filter(
+              (_withdraw) => _withdraw.hash !== withdrawal.hash
+            ), // remove it if it was already added
+            withdrawal,
+          ],
+        },
+      }
+    }
+
+    case SET_DEPOSIT_STATUS: {
       const { txHash, status } = action.payload
-      const tx = state.withdrawTransactions.find((tx) => tx.hash === txHash)
-      return tx
+      const deposit = state.data.deposits.find(
+        (deposit) => deposit.hash === txHash
+      )
+      return deposit
         ? {
             ...state,
-            withdrawTransactions: [
-              // replace old tx with new one
-              ...state.withdrawTransactions.filter(
-                (_tx) => tx.hash !== _tx.hash
-              ),
-              {
-                ...tx,
-                status,
-              },
-            ],
+            data: {
+              ...state.data,
+
+              deposits: [
+                // replace old tx with new one
+                ...state.data.deposits.filter(
+                  (_deposit) => deposit.hash !== _deposit.hash
+                ),
+                {
+                  ...deposit,
+                  status,
+                },
+              ],
+            },
+          }
+        : state
+    }
+
+    case SET_WITHDRAWAL_STATUS: {
+      const { txHash, status } = action.payload
+      const withdrawal = state.data.withdrawals.find(
+        (withdrawal) => withdrawal.hash === txHash
+      )
+      return withdrawal
+        ? {
+            ...state,
+            data: {
+              ...state.data,
+
+              withdrawals: [
+                // replace old tx with new one
+                ...state.data.withdrawals.filter(
+                  (_withdrawal) => withdrawal.hash !== _withdrawal.hash
+                ),
+                {
+                  ...withdrawal,
+                  status,
+                },
+              ],
+            },
           }
         : state
     }
@@ -195,8 +264,9 @@ export function manaReducer(
     case APPROVE_MANA_FAILURE:
     case GET_APPROVED_MANA_FAILURE:
     case DEPOSIT_MANA_FAILURE:
-    case WITHDRAW_MANA_FAILURE:
-    case WATCH_WITHDRAW_TRANSACTION_FAILURE: {
+    case INITIATE_WITHDRAWAL_FAILURE:
+    case WATCH_DEPOSIT_STATUS_FAILURE:
+    case WATCH_WITHDRAWAL_STATUS_FAILURE: {
       const { error } = action.payload
       return {
         ...state,

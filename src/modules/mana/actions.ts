@@ -1,6 +1,6 @@
 import { action } from 'typesafe-actions'
 import { buildTransactionPayload } from 'decentraland-dapps/dist/modules/transaction/utils'
-import { WithdrawStatus, WithdrawTransaction } from './types'
+import { WithdrawalStatus, Withdrawal, Deposit, DepositStatus } from './types'
 
 // Get MANA Approved
 export const DEPOSIT_MANA_REQUEST = '[Request] Deposit MANA'
@@ -10,13 +10,45 @@ export const DEPOSIT_MANA_FAILURE = '[Failure] Deposit MANA'
 export const depositManaRequest = (amount: number) =>
   action(DEPOSIT_MANA_REQUEST, { amount })
 export const depositManaSuccess = (amount: number, txHash: string) =>
-  action(DEPOSIT_MANA_SUCCESS, { amount, txHash })
+  action(DEPOSIT_MANA_SUCCESS, {
+    amount,
+    ...buildTransactionPayload(txHash, { amount }),
+  })
 export const depositManaFailure = (amount: number, error: string) =>
   action(DEPOSIT_MANA_FAILURE, { amount, error })
 
 export type DepositManaRequestAction = ReturnType<typeof depositManaRequest>
 export type DepositManaSuccessAction = ReturnType<typeof depositManaSuccess>
 export type DepositManaFailureAction = ReturnType<typeof depositManaFailure>
+
+// Watch Deposit Status
+export const WATCH_DEPOSIT_STATUS_REQUEST = '[Request] Watch Deposit Status'
+export const WATCH_DEPOSIT_STATUS_SUCCESS = '[Success] Watch Deposit Status'
+export const WATCH_DEPOSIT_STATUS_FAILURE = '[Failure] Watch Deposit Status'
+export const watchDepositStatusRequest = (amount: number, txHash: string) =>
+  action(WATCH_DEPOSIT_STATUS_REQUEST, { amount, txHash })
+export const watchDepositStatusSuccess = (deposit: Deposit) =>
+  action(WATCH_DEPOSIT_STATUS_SUCCESS, { deposit })
+export const watchDepositStatusFailure = (
+  amount: number,
+  txHash: string,
+  error: string
+) => action(WATCH_DEPOSIT_STATUS_FAILURE, { amount, txHash, error })
+export type WatchDepositStatusRequestAction = ReturnType<
+  typeof watchDepositStatusRequest
+>
+export type WatchDepositStatusSuccessAction = ReturnType<
+  typeof watchDepositStatusSuccess
+>
+export type WatchDepositStatusFailureAction = ReturnType<
+  typeof watchDepositStatusFailure
+>
+
+// Set Deposit Status
+export const SET_DEPOSIT_STATUS = 'Set Deposit Status'
+export const setDepositStatus = (txHash: string, status: DepositStatus) =>
+  action(SET_DEPOSIT_STATUS, { txHash, status })
+export type SetDepositStatusAction = ReturnType<typeof setDepositStatus>
 
 // Get MANA Approved
 export const GET_APPROVED_MANA_REQUEST = '[Request] Get Approved MANA'
@@ -104,81 +136,84 @@ export type FetchManaPriceFailureAction = ReturnType<
   typeof fetchManaPriceFailure
 >
 
-// Withdraw MANA
-export const WITHDRAW_MANA_REQUEST = '[Request] Withdraw Mana'
-export const WITHDRAW_MANA_SUCCESS = '[Success] Withdraw Mana'
-export const WITHDRAW_MANA_FAILURE = '[Failure] Withdraw Mana'
+// Initialize Withdrawal
+export const INITIATE_WITHDRAWAL_REQUEST = '[Request] Initiate Withdrawal'
+export const INITIATE_WITHDRAWAL_SUCCESS = '[Success] Initiate Withdrawal'
+export const INITIATE_WITHDRAWAL_FAILURE = '[Failure] Initiate Withdrawal'
 
-export const withdrawManaRequest = (amount: number) =>
-  action(WITHDRAW_MANA_REQUEST, { amount })
-export const withdrawManaSuccess = (amount: number, _txHash: string) =>
-  action(WITHDRAW_MANA_SUCCESS, { amount })
-export const withdrawManaFailure = (amount: number, error: string) =>
-  action(WITHDRAW_MANA_FAILURE, { amount, error })
+export const initiateWithdrawalRequest = (amount: number) =>
+  action(INITIATE_WITHDRAWAL_REQUEST, { amount })
+export const initiateWithdrawalSuccess = (amount: number, _txHash: string) =>
+  action(INITIATE_WITHDRAWAL_SUCCESS, { amount })
+export const initiateWithdrawalFailure = (amount: number, error: string) =>
+  action(INITIATE_WITHDRAWAL_FAILURE, { amount, error })
 
-export type WithdrawManaRequestAction = ReturnType<typeof withdrawManaRequest>
-export type WithdrawManaSuccessAction = ReturnType<typeof withdrawManaSuccess>
-export type WithdrawManaFailureAction = ReturnType<typeof withdrawManaFailure>
+export type InitiateWithdrawalRequestAction = ReturnType<
+  typeof initiateWithdrawalRequest
+>
+export type InitiateWithdrawalSuccessAction = ReturnType<
+  typeof initiateWithdrawalSuccess
+>
+export type InitiateWithdrawalFailureAction = ReturnType<
+  typeof initiateWithdrawalFailure
+>
 
-// Watch Withdraw Transaction
-export const WATCH_WITHDRAW_TRANSACTION_REQUEST =
-  '[Request] Watch Withdraw Transaction'
-export const WATCH_WITHDRAW_TRANSACTION_SUCCESS =
-  '[Success] Watch Withdraw Transaction'
-export const WATCH_WITHDRAW_TRANSACTION_FAILURE =
-  '[Failure] Watch Withdraw Transaction'
-export const watchWithdrawTransactionRequest = (
-  txHash: string,
-  amount: number
-) => action(WATCH_WITHDRAW_TRANSACTION_REQUEST, { txHash, amount })
-export const watchWithdrawTransactionSuccess = (tx: WithdrawTransaction) =>
-  action(WATCH_WITHDRAW_TRANSACTION_SUCCESS, { tx })
-export const watchWithdrawTransactionFailure = (
+// Watch Withdrawal Status
+export const WATCH_WITHDRAWAL_STATUS_REQUEST =
+  '[Request] Watch Withdrawal Status'
+export const WATCH_WITHDRAWAL_STATUS_SUCCESS =
+  '[Success] Watch Withdrawal Status'
+export const WATCH_WITHDRAWAL_STATUS_FAILURE =
+  '[Failure] Watch Withdrawal Status'
+export const watchWithdrawalStatusRequest = (amount: number, txHash: string) =>
+  action(WATCH_WITHDRAWAL_STATUS_REQUEST, { txHash, amount })
+export const watchWithdrawalStatusSuccess = (withdrawal: Withdrawal) =>
+  action(WATCH_WITHDRAWAL_STATUS_SUCCESS, { withdrawal })
+export const watchWithdrawalStatusFailure = (
+  amount: number,
   txHash: string,
   error: string
-) => action(WATCH_WITHDRAW_TRANSACTION_FAILURE, { txHash, error })
-export type WatchWithdrawTransactionRequestAction = ReturnType<
-  typeof watchWithdrawTransactionRequest
+) => action(WATCH_WITHDRAWAL_STATUS_FAILURE, { amount, txHash, error })
+export type WatchWithdrawalStatusRequestAction = ReturnType<
+  typeof watchWithdrawalStatusRequest
 >
-export type WatchWithdrawTransactionSuccessAction = ReturnType<
-  typeof watchWithdrawTransactionSuccess
+export type WatchWithdrawalStatusSuccessAction = ReturnType<
+  typeof watchWithdrawalStatusSuccess
 >
-export type WatchWithdrawTransactionFailureAction = ReturnType<
-  typeof watchWithdrawTransactionFailure
->
-
-// Watch Pending Transactions
-export const WATCH_PENDING_TRANSACTIONS = 'Watch Pending Transactions'
-export const watchPendingTransactions = () => action(WATCH_PENDING_TRANSACTIONS)
-export type WatchPendingTransactionsAction = ReturnType<
-  typeof watchPendingTransactions
+export type WatchWithdrawalStatusFailureAction = ReturnType<
+  typeof watchWithdrawalStatusFailure
 >
 
-// Set Withdraw Transaction Status
-export const SET_WITHDRAW_TRANSACTION_STATUS = 'Set Withdraw Transaction Status'
-export const setWithdrawTransactionStatus = (
-  txHash: string,
-  status: WithdrawStatus
-) => action(SET_WITHDRAW_TRANSACTION_STATUS, { txHash, status })
-export type SetWithdrawTransactionStatusAction = ReturnType<
-  typeof setWithdrawTransactionStatus
->
+// Set Withdrawal Status
+export const SET_WITHDRAWAL_STATUS = 'Set Withdrawal Status'
+export const setWithdrawalStatus = (txHash: string, status: WithdrawalStatus) =>
+  action(SET_WITHDRAWAL_STATUS, { txHash, status })
+export type SetWithdrawalStatusAction = ReturnType<typeof setWithdrawalStatus>
 
-// Exit Deposit
-export const EXIT_DEPOSIT_REQUEST = '[Request] Exit Deposit'
-export const EXIT_DEPOSIT_SUCCESS = '[Success] Exit Deposit'
-export const EXIT_DEPOSIT_FAILURE = '[Failure] Exit Deposit'
+// Finish Withdrawal
+export const FINISH_WITHDRAWAL_REQUEST = '[Request] Finish Withdrawal'
+export const FINISH_WITHDRAWAL_SUCCESS = '[Success] Finish Withdrawal'
+export const FINISH_WITHDRAWAL_FAILURE = '[Failure] Finish Withdrawal'
 
-export const exitDepositRequest = (tx: WithdrawTransaction) =>
-  action(EXIT_DEPOSIT_REQUEST, { tx })
-export const exitDepositSuccess = (tx: WithdrawTransaction, txHash: string) =>
-  action(EXIT_DEPOSIT_SUCCESS, {
-    tx,
-    ...buildTransactionPayload(txHash, { tx }),
+export const finishWithdrawalRequest = (withdrawal: Withdrawal) =>
+  action(FINISH_WITHDRAWAL_REQUEST, { withdrawal })
+export const finishWithdrawalSuccess = (
+  withdrawal: Withdrawal,
+  txHash: string
+) =>
+  action(FINISH_WITHDRAWAL_SUCCESS, {
+    withdrawal,
+    ...buildTransactionPayload(txHash, { withdrawal }),
   })
-export const exitDepositFailure = (amount: number, error: string) =>
-  action(EXIT_DEPOSIT_FAILURE, { amount, error })
+export const finishWithdrawalFailure = (amount: number, error: string) =>
+  action(FINISH_WITHDRAWAL_FAILURE, { amount, error })
 
-export type ExitDepositRequestAction = ReturnType<typeof exitDepositRequest>
-export type ExitDepositSuccessAction = ReturnType<typeof exitDepositSuccess>
-export type ExitDepositFailureAction = ReturnType<typeof exitDepositFailure>
+export type FinishWithdrawalRequestAction = ReturnType<
+  typeof finishWithdrawalRequest
+>
+export type FinishWithdrawalSuccessAction = ReturnType<
+  typeof finishWithdrawalSuccess
+>
+export type FinishWithdrawalFailureAction = ReturnType<
+  typeof finishWithdrawalFailure
+>

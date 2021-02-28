@@ -40,18 +40,26 @@ import {
   SendManaRequestAction,
   sendManaSuccess,
   SEND_MANA_REQUEST,
-  withdrawManaFailure,
-  WithdrawManaRequestAction,
-  withdrawManaSuccess,
-  WITHDRAW_MANA_REQUEST,
-  setWithdrawTransactionStatus,
-  WATCH_WITHDRAW_TRANSACTION_REQUEST,
-  WatchWithdrawTransactionRequestAction,
-  watchWithdrawTransactionRequest,
-  WatchWithdrawTransactionSuccessAction,
-  watchWithdrawTransactionSuccess,
-  watchWithdrawTransactionFailure,
-  WATCH_WITHDRAW_TRANSACTION_SUCCESS,
+  initiateWithdrawalFailure,
+  InitiateWithdrawalRequestAction,
+  initiateWithdrawalSuccess,
+  INITIATE_WITHDRAWAL_REQUEST,
+  setWithdrawalStatus,
+  WATCH_WITHDRAWAL_STATUS_REQUEST,
+  WatchWithdrawalStatusRequestAction,
+  watchWithdrawalStatusRequest,
+  WatchWithdrawalStatusSuccessAction,
+  watchWithdrawalStatusSuccess,
+  watchWithdrawalStatusFailure,
+  WATCH_WITHDRAWAL_STATUS_SUCCESS,
+  watchDepositStatusRequest,
+  WatchDepositStatusRequestAction,
+  WatchDepositStatusSuccessAction,
+  watchDepositStatusSuccess,
+  watchDepositStatusFailure,
+  setDepositStatus,
+  WATCH_DEPOSIT_STATUS_REQUEST,
+  WATCH_DEPOSIT_STATUS_SUCCESS,
 } from './actions'
 import { ERC20 } from '../../contracts/ERC20'
 import { RootChainManager } from '../../contracts/RootChainManager'
@@ -60,24 +68,30 @@ import {
   ERC20_PREDICATE_CONTRACT_ADDRESS,
   ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS,
   waitForSync,
-  isWithdrawSynced,
+  isWithdrawalSynced,
+  isDepositSynced,
 } from './utils'
-import { WithdrawStatus, WithdrawTransaction } from './types'
-import { getWithdrawTransactions } from './selectors'
+import { WithdrawalStatus, Withdrawal, Deposit, DepositStatus } from './types'
+import { getWalletDeposits, getWalletWithdrawals } from './selectors'
 
 export function* manaSaga() {
   yield takeEvery(DEPOSIT_MANA_REQUEST, handleDepositManaRequest)
   yield takeEvery(GET_APPROVED_MANA_REQUEST, handleGetApprovedManaRequest)
   yield takeEvery(APPROVE_MANA_REQUEST, handleApproveManaRequest)
+  yield takeEvery(WATCH_DEPOSIT_STATUS_REQUEST, handleWatchDepositStatusRequest)
+  yield takeEvery(WATCH_DEPOSIT_STATUS_SUCCESS, handleWatchDepositStatusSuccess)
   yield takeEvery(
-    WATCH_WITHDRAW_TRANSACTION_REQUEST,
-    handleWatchWithdrawTransactionRequest
+    WATCH_WITHDRAWAL_STATUS_REQUEST,
+    handleWatchWithdrawStatusRequest
   )
   yield takeEvery(
-    WATCH_WITHDRAW_TRANSACTION_SUCCESS,
-    handleWatchWithdrawTransactionSuccess
+    WATCH_WITHDRAWAL_STATUS_SUCCESS,
+    handleWatchWithdrawStatusSuccess
   )
-  yield takeEvery(WITHDRAW_MANA_REQUEST, handleWithdrawManaRequest)
+  yield takeEvery(
+    INITIATE_WITHDRAWAL_REQUEST,
+    handleInitiateWithdrawManaRequest
+  )
   yield takeEvery(SEND_MANA_REQUEST, handleSendManaRequest)
   yield takeEvery(FETCH_MANA_PRICE_REQUEST, handleFetchManaPriceRequest)
   yield takeEvery(CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess)
@@ -110,9 +124,36 @@ function* handleDepositManaRequest(action: DepositManaRequestAction) {
 
     yield put(closeModal('ConvertToMaticManaModal'))
     yield put(depositManaSuccess(amount, txHash))
+    yield put(watchDepositStatusRequest(amount, txHash))
   } catch (error) {
     yield put(depositManaFailure(amount, error))
   }
+}
+
+function* handleWatchDepositStatusRequest(
+  action: WatchDepositStatusRequestAction
+) {
+  const { amount, txHash } = action.payload
+  const address: string | undefined = yield select(getAddress)
+  if (address) {
+    const deposit: Deposit = {
+      hash: txHash,
+      from: address,
+      status: DepositStatus.PENDING,
+      amount,
+    }
+    yield put(watchDepositStatusSuccess(deposit))
+  } else {
+    yield put(watchDepositStatusFailure(amount, txHash, 'Invalid address'))
+  }
+}
+
+function* handleWatchDepositStatusSuccess(
+  action: WatchDepositStatusSuccessAction
+) {
+  const { deposit } = action.payload
+  yield call(() => waitForSync(deposit.hash, isDepositSynced))
+  yield put(setDepositStatus(deposit.hash, DepositStatus.COMPLETE))
 }
 
 function* handleGetApprovedManaRequest(_action: GetApprovedManaRequestAction) {
@@ -171,37 +212,38 @@ function* handleApproveManaRequest(action: ApproveManaRequestAction) {
   }
 }
 
-function* handleWatchWithdrawTransactionRequest(
-  action: WatchWithdrawTransactionRequestAction
+function* handleWatchWithdrawStatusRequest(
+  action: WatchWithdrawalStatusRequestAction
 ) {
-  const { txHash, amount } = action.payload
+  const { amount, txHash } = action.payload
   const address: string | undefined = yield select(getAddress)
   if (address) {
-    const tx: WithdrawTransaction = {
+    const tx: Withdrawal = {
       hash: txHash,
       from: address,
-      status: WithdrawStatus.PENDING,
+      status: WithdrawalStatus.PENDING,
       amount,
     }
-    yield put(watchWithdrawTransactionSuccess(tx))
+    yield put(watchWithdrawalStatusSuccess(tx))
   } else {
-    yield put(watchWithdrawTransactionFailure(txHash, 'Invalid address'))
+    yield put(watchWithdrawalStatusFailure(amount, txHash, 'Invalid address'))
   }
 }
 
-function* handleWatchWithdrawTransactionSuccess(
-  action: WatchWithdrawTransactionSuccessAction
+function* handleWatchWithdrawStatusSuccess(
+  action: WatchWithdrawalStatusSuccessAction
 ) {
-  const { tx } = action.payload
-  yield call(() => waitForSync(tx.hash, isWithdrawSynced))
-  yield put(setWithdrawTransactionStatus(tx.hash, WithdrawStatus.CONFIRMED))
+  const { withdrawal: tx } = action.payload
+  yield call(() => waitForSync(tx.hash, isWithdrawalSynced))
+  yield put(setWithdrawalStatus(tx.hash, WithdrawalStatus.CHECKPOINT))
 }
 
-function* handleWithdrawManaRequest(action: WithdrawManaRequestAction) {
+function* handleInitiateWithdrawManaRequest(
+  action: InitiateWithdrawalRequestAction
+) {
   const { amount } = action.payload
 
   try {
-    // withdraw mana
     const provider = new ethers.providers.JsonRpcProvider(
       'https://rpc-mumbai.matic.today'
     )
@@ -228,10 +270,10 @@ function* handleWithdrawManaRequest(action: WithdrawManaRequestAction) {
       )
     })
 
-    yield put(withdrawManaSuccess(amount, txHash))
-    yield put(watchWithdrawTransactionRequest(txHash, amount))
+    yield put(initiateWithdrawalSuccess(amount, txHash))
+    yield put(watchWithdrawalStatusRequest(amount, txHash))
   } catch (error) {
-    yield put(withdrawManaFailure(amount, error.message))
+    yield put(initiateWithdrawalFailure(amount, error.message))
   }
 }
 
@@ -270,17 +312,22 @@ function* handleFetchManaPriceRequest(_action: FetchManaPriceRequestAction) {
   }
 }
 
-function* handleConnectWalletSuccess(action: ConnectWalletSuccessAction) {
+function* handleConnectWalletSuccess(_action: ConnectWalletSuccessAction) {
   yield put(fetchManaPriceRequest())
 
-  // watch pending withdraw txs
-  const { address } = action.payload.wallet
-  const withdrawTransactions: WithdrawTransaction[] = yield select(
-    getWithdrawTransactions
-  )
-  for (const tx of withdrawTransactions) {
-    if (tx.from === address && tx.status === WithdrawStatus.PENDING) {
-      yield put(watchWithdrawTransactionRequest(tx.hash, tx.amount))
+  // watch pending deposits and withdrawals
+  const deposits: Deposit[] = yield select(getWalletDeposits)
+  for (const deposit of deposits) {
+    if (deposit.status === DepositStatus.PENDING) {
+      yield put(watchDepositStatusRequest(deposit.amount, deposit.hash))
+    }
+  }
+  const withdrawals: Withdrawal[] = yield select(getWalletWithdrawals)
+  for (const withdrawal of withdrawals) {
+    if (withdrawal.status === WithdrawalStatus.PENDING) {
+      yield put(
+        watchWithdrawalStatusRequest(withdrawal.amount, withdrawal.hash)
+      )
     }
   }
 }

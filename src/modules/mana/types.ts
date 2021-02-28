@@ -1,11 +1,24 @@
-export enum WithdrawStatus {
+export enum DepositStatus {
   PENDING = 'pending',
-  CONFIRMED = 'confirmed',
+  COMPLETE = 'complete',
 }
 
-export type WithdrawTransaction = {
+export type Deposit = {
   hash: string
-  status: WithdrawStatus
+  status: DepositStatus
+  from: string
+  amount: number
+}
+
+export enum WithdrawalStatus {
+  PENDING = 'pending',
+  CHECKPOINT = 'checkpoint',
+  COMPLETE = 'complete',
+}
+
+export type Withdrawal = {
+  hash: string
+  status: WithdrawalStatus
   from: string
   amount: number
 }

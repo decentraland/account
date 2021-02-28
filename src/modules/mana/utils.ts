@@ -39,7 +39,7 @@ function instantiateStateReceiver() {
   )
 }
 
-export async function isWithdrawSynced(txHash: string) {
+export async function isWithdrawalSynced(txHash: string) {
   const provider = new ethers.providers.JsonRpcProvider(
     'https://rpc-mumbai.matic.today'
   )
@@ -48,13 +48,13 @@ export async function isWithdrawSynced(txHash: string) {
   if (!tx || !tx.blockNumber) return false
 
   const block = parseInt(tx.blockNumber, 16)
-  console.log('block', block)
   const { checkpoints } = await graphql<{ checkpoints: { id: string }[] }>(
     MATIC_ROOT_CHAIN_SUBGRAPH,
     `{ checkpoints(first: 1, where: { end_gt: ${block} }) { id } }`
   )
 
-  return checkpoints.length > 0
+  const isSynced = checkpoints.length > 0
+  return isSynced
 }
 
 export async function isDepositSynced(txHash: string) {
@@ -74,7 +74,8 @@ export async function isDepositSynced(txHash: string) {
   const childCounter = lastStateId.toNumber()
 
   // check if synced
-  return childCounter >= rootCounter
+  const isSynced = childCounter >= rootCounter
+  return isSynced
 }
 
 export async function waitForSync(
