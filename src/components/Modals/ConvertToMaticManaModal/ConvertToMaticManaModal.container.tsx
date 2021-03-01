@@ -6,7 +6,6 @@ import {
   depositManaRequest,
   DEPOSIT_MANA_REQUEST,
   fetchManaPriceRequest,
-  getApprovedManaRequest,
   GET_APPROVED_MANA_REQUEST,
   SEND_MANA_REQUEST,
 } from '../../../modules/mana/actions'
@@ -33,7 +32,6 @@ const mapState = (state: RootState) => ({
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
   onDepositMana: (amount) => dispatch(depositManaRequest(amount)),
-  onGetApprovedMana: () => dispatch(getApprovedManaRequest()),
   onApproveMana: (allowance) => dispatch(approveManaRequest(allowance)),
   onManaPrice: () => dispatch(fetchManaPriceRequest()),
 })

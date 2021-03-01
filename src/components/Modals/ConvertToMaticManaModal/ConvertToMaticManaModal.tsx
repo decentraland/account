@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { toBN } from 'web3x-es/utils'
+import { fromWei, toBN } from 'web3x-es/utils'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button, Close, Field, Header, Radio, Section } from 'decentraland-ui'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
@@ -14,7 +14,6 @@ const ConvertToMaticManaModal: React.FC<Props> = ({
   manaPrice,
   onManaPrice,
   onApproveMana,
-  onGetApprovedMana,
   onDepositMana,
   isWaitingApprovement,
 }) => {
@@ -42,8 +41,7 @@ const ConvertToMaticManaModal: React.FC<Props> = ({
 
   useEffect(() => {
     onManaPrice()
-    onGetApprovedMana()
-    const amountAllowed = parseInt(allowance, 10)
+    const amountAllowed = parseInt(fromWei(allowance, 'ether'), 10)
     if (!isNaN(amountAllowed) && amountAllowed > 100) {
       setIsApproved(true)
     }

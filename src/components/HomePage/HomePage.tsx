@@ -5,16 +5,11 @@ import { Navbar } from '../Navbar'
 import { AccountHeader } from './AccountHeader'
 import { AccountCard } from './AccountCard'
 import { AccountCardContainer } from './AccountCardContainer'
-import {
-  NetworkType,
-  Props,
-  TransactionStatus,
-  TransactionType,
-} from './HomePage.types'
+import { Props, TransactionStatus, TransactionType } from './HomePage.types'
 import './HomePage.css'
+import { Network } from '@dcl/schemas'
 
-const HomePage: React.FC<Props> = (props) => {
-  const { mana, manaL2 } = props
+const HomePage: React.FC<Props> = () => {
   return (
     <>
       <Navbar />
@@ -22,9 +17,8 @@ const HomePage: React.FC<Props> = (props) => {
         <AccountHeader />
         <AccountCardContainer>
           <AccountCard
-            type={NetworkType.ETHEREUM}
+            type={Network.ETHEREUM}
             title="Mana"
-            amount={mana | 0}
             transactions={[
               {
                 type: TransactionType.DEPOSIT,
@@ -65,9 +59,8 @@ const HomePage: React.FC<Props> = (props) => {
             ]}
           />
           <AccountCard
-            type={NetworkType.MATIC}
+            type={Network.MATIC}
             title="Matic Mana"
-            amount={manaL2 | 0}
             transactions={[
               {
                 type: TransactionType.DEPOSIT,

@@ -4,13 +4,17 @@ import { Eth } from 'web3x-es/eth'
 import { abiCoder } from 'web3x-es/contract/abi-coder'
 import { Address } from 'web3x-es/address'
 import { toWei } from 'web3x-es/utils'
-import { ChainId } from '@dcl/schemas'
+import { ChainId, Network } from '@dcl/schemas'
 import {
   ConnectWalletSuccessAction,
   CONNECT_WALLET_SUCCESS,
 } from 'decentraland-dapps/dist/modules/wallet/actions'
-import { createEth } from 'decentraland-dapps/dist/lib/eth'
-import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { getConnectedProvider } from 'decentraland-dapps/dist/lib/eth'
+import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
+import {
+  getAddress,
+  getChainId,
+} from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { closeModal } from 'decentraland-dapps/dist/modules/modal/actions'
 import {
   ContractName,
@@ -60,6 +64,7 @@ import {
   setDepositStatus,
   WATCH_DEPOSIT_STATUS_REQUEST,
   WATCH_DEPOSIT_STATUS_SUCCESS,
+  getApprovedManaRequest,
 } from './actions'
 import { ERC20 } from '../../contracts/ERC20'
 import { RootChainManager } from '../../contracts/RootChainManager'
@@ -82,16 +87,13 @@ export function* manaSaga() {
   yield takeEvery(WATCH_DEPOSIT_STATUS_SUCCESS, handleWatchDepositStatusSuccess)
   yield takeEvery(
     WATCH_WITHDRAWAL_STATUS_REQUEST,
-    handleWatchWithdrawStatusRequest
+    handleWatchWithdrawalStatusRequest
   )
   yield takeEvery(
     WATCH_WITHDRAWAL_STATUS_SUCCESS,
-    handleWatchWithdrawStatusSuccess
+    handleWatchWithdrawalStatusSuccess
   )
-  yield takeEvery(
-    INITIATE_WITHDRAWAL_REQUEST,
-    handleInitiateWithdrawManaRequest
-  )
+  yield takeEvery(INITIATE_WITHDRAWAL_REQUEST, handleInitiateWithdrawalRequest)
   yield takeEvery(SEND_MANA_REQUEST, handleSendManaRequest)
   yield takeEvery(FETCH_MANA_PRICE_REQUEST, handleFetchManaPriceRequest)
   yield takeEvery(CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess)
@@ -101,10 +103,11 @@ function* handleDepositManaRequest(action: DepositManaRequestAction) {
   const { amount } = action.payload
 
   try {
-    const eth: Eth | null = yield call(createEth)
-    if (!eth) {
-      throw new Error('Could not get Eth')
+    const provider = yield call(getConnectedProvider)
+    if (!provider) {
+      throw new Error(`Could not get connected provider`)
     }
+    const eth = new Eth(provider)
     const from = yield select(getAddress)
     const rootChainContract = new RootChainManager(
       eth,
@@ -123,7 +126,8 @@ function* handleDepositManaRequest(action: DepositManaRequestAction) {
     )
 
     yield put(closeModal('ConvertToMaticManaModal'))
-    yield put(depositManaSuccess(amount, txHash))
+    const chainId = yield select(getChainId)
+    yield put(depositManaSuccess(chainId, amount, txHash))
     yield put(watchDepositStatusRequest(amount, txHash))
   } catch (error) {
     yield put(depositManaFailure(amount, error))
@@ -158,10 +162,11 @@ function* handleWatchDepositStatusSuccess(
 
 function* handleGetApprovedManaRequest(_action: GetApprovedManaRequestAction) {
   try {
-    const eth: Eth | null = yield call(createEth)
-    if (!eth) {
-      throw new Error('Could not get Eth')
+    const provider = yield call(getConnectedProvider)
+    if (!provider) {
+      throw new Error(`Could not get connected provider`)
     }
+    const eth = new Eth(provider)
     const from = yield select(getAddress)
     const manaContract = new ERC20(
       eth,
@@ -185,10 +190,11 @@ function* handleGetApprovedManaRequest(_action: GetApprovedManaRequestAction) {
 function* handleApproveManaRequest(action: ApproveManaRequestAction) {
   const { allowance } = action.payload
   try {
-    const eth: Eth | null = yield call(createEth)
-    if (!eth) {
-      throw new Error('Could not get Eth')
+    const provider = yield call(getConnectedProvider)
+    if (!provider) {
+      throw new Error(`Could not get connected provider`)
     }
+    const eth = new Eth(provider)
     const from = yield select(getAddress)
     const manaContract = new ERC20(
       eth,
@@ -205,14 +211,15 @@ function* handleApproveManaRequest(action: ApproveManaRequestAction) {
         .getTxHash()
     )
 
-    yield put(approveManaSuccess(allowance, from.toString(), txHash))
+    const chainId = yield select(getChainId)
+    yield put(approveManaSuccess(allowance, from.toString(), chainId, txHash))
   } catch (error) {
     yield put(closeModal('ConvertToMaticManaModal'))
     yield put(approveManaFailure(allowance, error))
   }
 }
 
-function* handleWatchWithdrawStatusRequest(
+function* handleWatchWithdrawalStatusRequest(
   action: WatchWithdrawalStatusRequestAction
 ) {
   const { amount, txHash } = action.payload
@@ -230,7 +237,7 @@ function* handleWatchWithdrawStatusRequest(
   }
 }
 
-function* handleWatchWithdrawStatusSuccess(
+function* handleWatchWithdrawalStatusSuccess(
   action: WatchWithdrawalStatusSuccessAction
 ) {
   const { withdrawal: tx } = action.payload
@@ -238,7 +245,7 @@ function* handleWatchWithdrawStatusSuccess(
   yield put(setWithdrawalStatus(tx.hash, WithdrawalStatus.CHECKPOINT))
 }
 
-function* handleInitiateWithdrawManaRequest(
+function* handleInitiateWithdrawalRequest(
   action: InitiateWithdrawalRequestAction
 ) {
   const { amount } = action.payload
@@ -270,7 +277,15 @@ function* handleInitiateWithdrawManaRequest(
       )
     })
 
-    yield put(initiateWithdrawalSuccess(amount, txHash))
+    const chainId = yield select(getChainId)
+    const config = getChainConfiguration(chainId)
+    yield put(
+      initiateWithdrawalSuccess(
+        amount,
+        config.networkMapping[Network.MATIC],
+        txHash
+      )
+    )
     yield put(watchWithdrawalStatusRequest(amount, txHash))
   } catch (error) {
     yield put(initiateWithdrawalFailure(amount, error.message))
@@ -280,10 +295,11 @@ function* handleInitiateWithdrawManaRequest(
 function* handleSendManaRequest(action: SendManaRequestAction) {
   const { to, amount } = action.payload
   try {
-    const eth: Eth | null = yield call(createEth)
-    if (!eth) {
-      throw new Error('Could not get Eth')
+    const provider = yield call(getConnectedProvider)
+    if (!provider) {
+      throw new Error(`Could not get connected provider`)
     }
+    const eth = new Eth(provider)
 
     const address = yield select(getAddress)
 
@@ -297,7 +313,8 @@ function* handleSendManaRequest(action: SendManaRequestAction) {
     )
 
     yield put(closeModal('SendManaModal'))
-    yield put(sendManaSuccess(to, amount, txHash))
+    const chainId = yield select(getChainId)
+    yield put(sendManaSuccess(to, amount, chainId, txHash))
   } catch (error) {
     yield put(sendManaFailure(to, amount, error))
   }
@@ -314,6 +331,7 @@ function* handleFetchManaPriceRequest(_action: FetchManaPriceRequestAction) {
 
 function* handleConnectWalletSuccess(_action: ConnectWalletSuccessAction) {
   yield put(fetchManaPriceRequest())
+  yield put(getApprovedManaRequest())
 
   // watch pending deposits and withdrawals
   const deposits: Deposit[] = yield select(getWalletDeposits)

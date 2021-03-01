@@ -1,6 +1,7 @@
 import { action } from 'typesafe-actions'
 import { buildTransactionPayload } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { WithdrawalStatus, Withdrawal, Deposit, DepositStatus } from './types'
+import { ChainId } from '@dcl/schemas'
 
 // Get MANA Approved
 export const DEPOSIT_MANA_REQUEST = '[Request] Deposit MANA'
@@ -9,10 +10,14 @@ export const DEPOSIT_MANA_FAILURE = '[Failure] Deposit MANA'
 
 export const depositManaRequest = (amount: number) =>
   action(DEPOSIT_MANA_REQUEST, { amount })
-export const depositManaSuccess = (amount: number, txHash: string) =>
+export const depositManaSuccess = (
+  amount: number,
+  chainId: ChainId,
+  txHash: string
+) =>
   action(DEPOSIT_MANA_SUCCESS, {
     amount,
-    ...buildTransactionPayload(txHash, { amount }),
+    ...buildTransactionPayload(chainId, txHash, { amount }),
   })
 export const depositManaFailure = (amount: number, error: string) =>
   action(DEPOSIT_MANA_FAILURE, { amount, error })
@@ -81,12 +86,13 @@ export const approveManaRequest = (allowance: string) =>
 export const approveManaSuccess = (
   allowance: string,
   address: string,
+  chainId: ChainId,
   txHash: string
 ) =>
   action(APPROVE_MANA_SUCCESS, {
-    ...buildTransactionPayload(txHash, { allowance, address }),
     allowance,
     address,
+    ...buildTransactionPayload(chainId, txHash, { allowance, address }),
   })
 export const approveManaFailure = (allowance: string, error: string) =>
   action(APPROVE_MANA_FAILURE, { allowance, error })
@@ -102,11 +108,16 @@ export const SEND_MANA_FAILURE = '[Failure] Send Mana'
 
 export const sendManaRequest = (to: string, amount: number) =>
   action(SEND_MANA_REQUEST, { to, amount })
-export const sendManaSuccess = (to: string, amount: number, txHash: string) =>
+export const sendManaSuccess = (
+  to: string,
+  amount: number,
+  chainId: ChainId,
+  txHash: string
+) =>
   action(SEND_MANA_SUCCESS, {
     to,
     amount,
-    ...buildTransactionPayload(txHash, { to, amount }),
+    ...buildTransactionPayload(chainId, txHash, { to, amount }),
   })
 export const sendManaFailure = (to: string, amount: number, error: string) =>
   action(SEND_MANA_FAILURE, { to, amount, error })
@@ -143,8 +154,15 @@ export const INITIATE_WITHDRAWAL_FAILURE = '[Failure] Initiate Withdrawal'
 
 export const initiateWithdrawalRequest = (amount: number) =>
   action(INITIATE_WITHDRAWAL_REQUEST, { amount })
-export const initiateWithdrawalSuccess = (amount: number, _txHash: string) =>
-  action(INITIATE_WITHDRAWAL_SUCCESS, { amount })
+export const initiateWithdrawalSuccess = (
+  amount: number,
+  chainId: ChainId,
+  txHash: string
+) =>
+  action(INITIATE_WITHDRAWAL_SUCCESS, {
+    amount,
+    ...buildTransactionPayload(chainId, txHash, { amount }),
+  })
 export const initiateWithdrawalFailure = (amount: number, error: string) =>
   action(INITIATE_WITHDRAWAL_FAILURE, { amount, error })
 
@@ -199,11 +217,12 @@ export const finishWithdrawalRequest = (withdrawal: Withdrawal) =>
   action(FINISH_WITHDRAWAL_REQUEST, { withdrawal })
 export const finishWithdrawalSuccess = (
   withdrawal: Withdrawal,
+  chainId: ChainId,
   txHash: string
 ) =>
   action(FINISH_WITHDRAWAL_SUCCESS, {
     withdrawal,
-    ...buildTransactionPayload(txHash, { withdrawal }),
+    ...buildTransactionPayload(chainId, txHash, { withdrawal }),
   })
 export const finishWithdrawalFailure = (amount: number, error: string) =>
   action(FINISH_WITHDRAWAL_FAILURE, { amount, error })

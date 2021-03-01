@@ -1,7 +1,7 @@
 import React from 'react'
+import { Network } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button, Dropdown, Icon } from 'decentraland-ui'
-import { NetworkType } from '../../HomePage.types'
 import { Props } from './AccountCardHeader.types'
 import './AccountCardHeader.css'
 
@@ -45,11 +45,9 @@ const AccountCardHeader = ({
         <div className="funds">
           <div className="amount">
             <div
-              className={
-                type === NetworkType.MATIC ? 'matic-logo' : 'mana-logo'
-              }
+              className={type === Network.MATIC ? 'matic-logo' : 'mana-logo'}
             />
-            {amount}
+            {parseInt(amount.toFixed(0), 10).toLocaleString()}
           </div>
         </div>
         <div className="actions">

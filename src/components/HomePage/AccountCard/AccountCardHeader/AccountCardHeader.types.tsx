@@ -1,10 +1,10 @@
+import { Network } from '@dcl/schemas'
 import { Dispatch } from 'redux'
-import { NetworkType } from '../../HomePage.types'
 import { OpenModalAction } from '../../../../modules/modal/actions'
 
 export type Props = {
   wallet?: string
-  type: NetworkType
+  type: Network
   title: string
   amount: number
   onSendMana: () => void

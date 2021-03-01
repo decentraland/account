@@ -1,14 +1,6 @@
 import { Dispatch } from 'redux'
 
-export type Props = {
-  mana: number
-  manaL2: number
-}
-
-export enum NetworkType {
-  MATIC = 'matic',
-  ETHEREUM = 'ethereum',
-}
+export type Props = {}
 
 export enum TransactionType {
   DEPOSIT = 'deposit',
@@ -27,6 +19,6 @@ export type Transaction = {
   description: string
 }
 
-export type MapStateProps = Pick<Props, 'mana' | 'manaL2'>
+export type MapStateProps = {}
 export type MapDispatchProps = {}
 export type MapDispatch = Dispatch
