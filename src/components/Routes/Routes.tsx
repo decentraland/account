@@ -24,7 +24,6 @@ const Routes = ({ isConnected }: Props) => {
     <>
       <Switch>
         <Route exact path={locations.root()} component={HomePage} />
-        <Route exact path={locations.signIn()} component={SignInPage} />
         <Redirect to={locations.root()} />
       </Switch>
       {APP_ID ? (
