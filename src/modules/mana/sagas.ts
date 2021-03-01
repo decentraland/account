@@ -113,7 +113,6 @@ function* handleDepositManaRequest(action: DepositManaRequestAction) {
       eth,
       Address.fromString(ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS)
     )
-
     const txHash: string = yield call(() =>
       rootChainContract.methods
         .depositFor(
@@ -126,8 +125,8 @@ function* handleDepositManaRequest(action: DepositManaRequestAction) {
     )
 
     yield put(closeModal('ConvertToMaticManaModal'))
-    const chainId = yield select(getChainId)
-    yield put(depositManaSuccess(chainId, amount, txHash))
+    const chainId: ChainId = yield select(getChainId)
+    yield put(depositManaSuccess(amount, chainId, txHash))
     yield put(watchDepositStatusRequest(amount, txHash))
   } catch (error) {
     yield put(depositManaFailure(amount, error))
@@ -211,7 +210,7 @@ function* handleApproveManaRequest(action: ApproveManaRequestAction) {
         .getTxHash()
     )
 
-    const chainId = yield select(getChainId)
+    const chainId: ChainId = yield select(getChainId)
     yield put(approveManaSuccess(allowance, from.toString(), chainId, txHash))
   } catch (error) {
     yield put(closeModal('ConvertToMaticManaModal'))
@@ -277,7 +276,7 @@ function* handleInitiateWithdrawalRequest(
       )
     })
 
-    const chainId = yield select(getChainId)
+    const chainId: ChainId = yield select(getChainId)
     const config = getChainConfiguration(chainId)
     yield put(
       initiateWithdrawalSuccess(
@@ -313,7 +312,7 @@ function* handleSendManaRequest(action: SendManaRequestAction) {
     )
 
     yield put(closeModal('SendManaModal'))
-    const chainId = yield select(getChainId)
+    const chainId: ChainId = yield select(getChainId)
     yield put(sendManaSuccess(to, amount, chainId, txHash))
   } catch (error) {
     yield put(sendManaFailure(to, amount, error))
