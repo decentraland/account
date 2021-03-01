@@ -32,7 +32,7 @@ const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
   storageKey: 'account',
   paths: [
     ['mana', 'data', 'deposits'],
-    ['mana', 'data', 'withdraws'],
+    ['mana', 'data', 'withdrawals'],
   ],
   actions: [
     SET_DEPOSIT_STATUS,
