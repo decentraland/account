@@ -8,6 +8,7 @@ export type Deposit = {
   status: DepositStatus
   from: string
   amount: number
+  timestamp: number
 }
 
 export enum WithdrawalStatus {
@@ -21,4 +22,5 @@ export type Withdrawal = {
   status: WithdrawalStatus
   from: string
   amount: number
+  timestamp: number
 }

@@ -16,7 +16,6 @@ import {
   getAddress,
   getChainId,
 } from 'decentraland-dapps/dist/modules/wallet/selectors'
-import { closeModal } from 'decentraland-dapps/dist/modules/modal/actions'
 import {
   ContractName,
   getContract,
@@ -80,10 +79,10 @@ import {
   waitForSync,
   isWithdrawalSynced,
   isDepositSynced,
-  // getProof,
 } from './utils'
 import { WithdrawalStatus, Withdrawal, Deposit, DepositStatus } from './types'
 import { getWalletDeposits, getWalletWithdrawals } from './selectors'
+import { closeModal } from '../modal/actions'
 
 export function* manaSaga() {
   yield takeEvery(DEPOSIT_MANA_REQUEST, handleDepositManaRequest)
@@ -131,10 +130,10 @@ function* handleDepositManaRequest(action: DepositManaRequestAction) {
         .getTxHash()
     )
 
-    yield put(closeModal('ConvertToMaticManaModal'))
     const chainId: ChainId = yield select(getChainId)
     yield put(depositManaSuccess(amount, chainId, txHash))
     yield put(watchDepositStatusRequest(amount, txHash))
+    yield put(closeModal('ConvertManaModal'))
   } catch (error) {
     yield put(depositManaFailure(amount, error))
   }
@@ -151,6 +150,7 @@ function* handleWatchDepositStatusRequest(
       from: address,
       status: DepositStatus.PENDING,
       amount,
+      timestamp: Date.now(),
     }
     yield put(watchDepositStatusSuccess(deposit))
   } else {
@@ -220,7 +220,7 @@ function* handleApproveManaRequest(action: ApproveManaRequestAction) {
     const chainId: ChainId = yield select(getChainId)
     yield put(approveManaSuccess(allowance, from.toString(), chainId, txHash))
   } catch (error) {
-    yield put(closeModal('ConvertToMaticManaModal'))
+    yield put(closeModal('ConvertManaModal'))
     yield put(approveManaFailure(allowance, error))
   }
 }
@@ -236,6 +236,7 @@ function* handleWatchWithdrawalStatusRequest(
       from: address,
       status: WithdrawalStatus.PENDING,
       amount,
+      timestamp: Date.now(),
     }
     yield put(watchWithdrawalStatusSuccess(tx))
   } else {
@@ -264,6 +265,7 @@ function* handleInitiateWithdrawalRequest(
     )
     yield put(initiateWithdrawalSuccess(amount, chainId, txHash))
     yield put(watchWithdrawalStatusRequest(amount, txHash))
+    yield put(closeModal('ConvertManaModal'))
   } catch (error) {
     yield put(initiateWithdrawalFailure(amount, error.message))
   }
@@ -313,9 +315,7 @@ function* handleSendManaRequest(action: SendManaRequestAction) {
       throw new Error(`Could not get connected provider`)
     }
     const eth = new Eth(provider)
-
     const address = yield select(getAddress)
-
     const mana = new ERC20(eth, Address.fromString(MANA_CONTRACT_ADDRESS))
 
     switch (network) {
@@ -414,7 +414,5 @@ function* sendWalletMetaTransaction(
       contractConfig
     )
   )
-  const result = { txHash, chainId: metaTxChainId }
-  console.log('result', result)
-  return result
+  return { txHash, chainId: metaTxChainId }
 }

@@ -20,7 +20,7 @@
     "tx_pending": "Transacciones Pendientes",
     "see_all": "Ver Todas"
   },
-  "transaction_detail_modal" : {
+  "transaction_detail_modal": {
     "title": "Detalle de Transaction",
     "operation": "Operacion",
     "amount": "Cantidad",
@@ -57,13 +57,16 @@
       "invalid_address": "Billetera inválida"
     }
   },
-  "convert_to_matic_modal": {
+  "convert_mana_modal": {
     "usd": "USD",
     "mana": "MANA",
     "amount_label": "Cantidad",
-    "label_button": "Completar Deposito",
-    "title": "Convertir a Mana Matic",
-    "subtitle": "Convertir Mana en Mana Matic",
+    "label_button_ethereum": "Completar Depósito",
+    "label_button_matic": "Comenzar Retiro",
+    "title_ethereum": "Convertir a Matic MANA",
+    "subtitle_ethereum": "Depositar MANA de Ethereum a Matic",
+    "title_matic": "Convertir a MANA",
+    "subtitle_matic": "Retira MANA de Matic a Ethereum",
     "label_approvement": "MANA Aprobado"
   }
 }
