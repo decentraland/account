@@ -1,5 +1,6 @@
 import { ethers } from 'ethers'
 import { call, put, select, takeEvery } from 'redux-saga/effects'
+import { MaticPOSClient } from '@maticnetwork/maticjs'
 import { Eth } from 'web3x-es/eth'
 import { abiCoder } from 'web3x-es/contract/abi-coder'
 import { Address } from 'web3x-es/address'
@@ -65,6 +66,10 @@ import {
   WATCH_DEPOSIT_STATUS_REQUEST,
   WATCH_DEPOSIT_STATUS_SUCCESS,
   getApprovedManaRequest,
+  FINISH_WITHDRAWAL_REQUEST,
+  FinishWithdrawalRequestAction,
+  finishWithdrawalFailure,
+  finishWithdrawalSuccess,
 } from './actions'
 import { ERC20 } from '../../contracts/ERC20'
 import { RootChainManager } from '../../contracts/RootChainManager'
@@ -75,6 +80,7 @@ import {
   waitForSync,
   isWithdrawalSynced,
   isDepositSynced,
+  // getProof,
 } from './utils'
 import { WithdrawalStatus, Withdrawal, Deposit, DepositStatus } from './types'
 import { getWalletDeposits, getWalletWithdrawals } from './selectors'
@@ -94,6 +100,7 @@ export function* manaSaga() {
     handleWatchWithdrawalStatusSuccess
   )
   yield takeEvery(INITIATE_WITHDRAWAL_REQUEST, handleInitiateWithdrawalRequest)
+  yield takeEvery(FINISH_WITHDRAWAL_REQUEST, handleFinishWithdrawalRequest)
   yield takeEvery(SEND_MANA_REQUEST, handleSendManaRequest)
   yield takeEvery(FETCH_MANA_PRICE_REQUEST, handleFetchManaPriceRequest)
   yield takeEvery(CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess)
@@ -261,13 +268,10 @@ function* handleInitiateWithdrawalRequest(
       provider
     )
 
-    console.log(manaConfig)
-
     const txHash = yield call(async () => {
       const tx = await manaContract.populateTransaction.withdraw(
         toWei(amount.toString(), 'ether')
       )
-      console.log('tx', tx)
       return sendMetaTransaction(
         new ethers.providers.Web3Provider(window.ethereum as any),
         provider,
@@ -288,6 +292,58 @@ function* handleInitiateWithdrawalRequest(
     yield put(watchWithdrawalStatusRequest(amount, txHash))
   } catch (error) {
     yield put(initiateWithdrawalFailure(amount, error.message))
+  }
+}
+
+function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
+  const { withdrawal } = action.payload
+  try {
+    const provider = yield call(getConnectedProvider)
+    if (!provider) {
+      throw new Error(`Could not get connected provider`)
+    }
+
+    const from: string | undefined = yield select(getAddress)
+    if (!from) {
+      throw new Error(`Could not get address`)
+    }
+
+    const chainId: ChainId = yield select(getChainId)
+    const parentConfig = getChainConfiguration(chainId)
+    const maticConfig = getChainConfiguration(
+      parentConfig.networkMapping[Network.MATIC]
+    )
+
+    const matic = new MaticPOSClient({
+      parentProvider: parentConfig.rpcURL,
+      maticProvider: maticConfig.rpcURL,
+      posRootChainManager: ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS,
+      posERC20Predicate: ERC20_PREDICATE_CONTRACT_ADDRESS,
+      parentDefaultOptions: { from },
+      maticDefaultOptions: { from },
+    })
+
+    const data = yield call(() =>
+      matic.exitERC20(withdrawal.hash, { from, encodeAbi: true })
+    )
+
+    const eth = new Eth(provider)
+
+    const rootChainContract = new RootChainManager(
+      eth,
+      Address.fromString(ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS)
+    )
+
+    const txHash: string = yield call(() =>
+      rootChainContract.methods
+        .exit(data)
+        .send({ from: Address.fromString(from) })
+        .getTxHash()
+    )
+
+    yield put(finishWithdrawalSuccess(withdrawal, chainId, txHash))
+  } catch (error) {
+    yield put(finishWithdrawalFailure(withdrawal, error.message))
   }
 }
 

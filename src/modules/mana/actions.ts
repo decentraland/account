@@ -224,8 +224,10 @@ export const finishWithdrawalSuccess = (
     withdrawal,
     ...buildTransactionPayload(chainId, txHash, { withdrawal }),
   })
-export const finishWithdrawalFailure = (amount: number, error: string) =>
-  action(FINISH_WITHDRAWAL_FAILURE, { amount, error })
+export const finishWithdrawalFailure = (
+  withdrawal: Withdrawal,
+  error: string
+) => action(FINISH_WITHDRAWAL_FAILURE, { withdrawal, error })
 
 export type FinishWithdrawalRequestAction = ReturnType<
   typeof finishWithdrawalRequest
