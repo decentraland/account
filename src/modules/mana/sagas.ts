@@ -315,7 +315,7 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
     )
 
     const matic = new MaticPOSClient({
-      parentProvider: parentConfig.rpcURL,
+      parentProvider: provider,
       maticProvider: maticConfig.rpcURL,
       posRootChainManager: ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS,
       posERC20Predicate: ERC20_PREDICATE_CONTRACT_ADDRESS,
@@ -323,25 +323,9 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
       maticDefaultOptions: { from },
     })
 
-    const data = yield call(() =>
-      matic.exitERC20(withdrawal.hash, { from, encodeAbi: true })
-    )
+    const tx = yield call(() => matic.exitERC20(withdrawal.hash, { from }))
 
-    const eth = new Eth(provider)
-
-    const rootChainContract = new RootChainManager(
-      eth,
-      Address.fromString(ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS)
-    )
-
-    const txHash: string = yield call(() =>
-      rootChainContract.methods
-        .exit(data)
-        .send({ from: Address.fromString(from) })
-        .getTxHash()
-    )
-
-    yield put(finishWithdrawalSuccess(withdrawal, chainId, txHash))
+    yield put(finishWithdrawalSuccess(withdrawal, chainId, tx.transactionHash))
   } catch (error) {
     yield put(finishWithdrawalFailure(withdrawal, error.message))
   }
