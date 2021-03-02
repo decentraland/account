@@ -6,18 +6,19 @@ import AccountCardHeader from './AccountCardHeader'
 import {
   MapDispatch,
   MapDispatchProps,
-  MapStateProps
+  MapStateProps,
 } from './AccountCardHeader.types'
 
 const mapState = (state: RootState): MapStateProps => ({
-  wallet: getAddress(state)
+  address: getAddress(state),
 })
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
-  onConvertToMaticMana: () => dispatch(openModal('ConvertToMaticManaModal')),
-  onSendMana: () => dispatch(openModal('SendManaModal')),
-  onReceiveMana: (walletAddress) =>
-    dispatch(openModal('ReceiveManaModal', { walletAddress }))
+  onConvert: (network) =>
+    dispatch(openModal('ConvertToMaticManaModal', { network })),
+  onSend: (network) => dispatch(openModal('SendManaModal', { network })),
+  onReceive: (network, address) =>
+    dispatch(openModal('ReceiveManaModal', { network, address })),
 })
 
 export default connect(mapState, mapDispatch)(AccountCardHeader)

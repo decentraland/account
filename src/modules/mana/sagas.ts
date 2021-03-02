@@ -1,4 +1,4 @@
-import { ethers } from 'ethers'
+import { Contract, ethers } from 'ethers'
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { MaticPOSClient } from '@maticnetwork/maticjs'
 import { Eth } from 'web3x-es/eth'
@@ -257,38 +257,12 @@ function* handleInitiateWithdrawalRequest(
   const { amount } = action.payload
 
   try {
-    const provider = new ethers.providers.JsonRpcProvider(
-      'https://rpc-mumbai.matic.today'
-    )
-
-    const manaConfig = getContract(ContractName.MANAToken, ChainId.MATIC_MUMBAI)
-    const manaContract = new ethers.Contract(
-      manaConfig.address,
-      manaConfig.abi,
-      provider
-    )
-
-    const txHash = yield call(async () => {
-      const tx = await manaContract.populateTransaction.withdraw(
-        toWei(amount.toString(), 'ether')
-      )
-      return sendMetaTransaction(
-        new ethers.providers.Web3Provider(window.ethereum as any),
-        provider,
-        tx.data!,
-        manaConfig
-      )
-    })
-
-    const chainId: ChainId = yield select(getChainId)
-    const config = getChainConfiguration(chainId)
-    yield put(
-      initiateWithdrawalSuccess(
-        amount,
-        config.networkMapping[Network.MATIC],
-        txHash
+    const { chainId, txHash } = yield call(() =>
+      sendWalletMetaTransaction(Network.MATIC, ContractName.MANAToken, (mana) =>
+        mana.withdraw(toWei(amount.toString(), 'ether'))
       )
     )
+    yield put(initiateWithdrawalSuccess(amount, chainId, txHash))
     yield put(watchWithdrawalStatusRequest(amount, txHash))
   } catch (error) {
     yield put(initiateWithdrawalFailure(amount, error.message))
@@ -332,7 +306,7 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
 }
 
 function* handleSendManaRequest(action: SendManaRequestAction) {
-  const { to, amount } = action.payload
+  const { to, amount, network } = action.payload
   try {
     const provider = yield call(getConnectedProvider)
     if (!provider) {
@@ -344,18 +318,37 @@ function* handleSendManaRequest(action: SendManaRequestAction) {
 
     const mana = new ERC20(eth, Address.fromString(MANA_CONTRACT_ADDRESS))
 
-    const txHash = yield call(() =>
-      mana.methods
-        .transfer(Address.fromString(to), toWei(amount.toString(), 'ether'))
-        .send({ from: Address.fromString(address) })
-        .getTxHash()
-    )
+    switch (network) {
+      case Network.ETHEREUM: {
+        const txHash = yield call(() =>
+          mana.methods
+            .transfer(Address.fromString(to), toWei(amount.toString(), 'ether'))
+            .send({ from: Address.fromString(address) })
+            .getTxHash()
+        )
+        const chainId = yield select(getChainId)
+        yield put(sendManaSuccess(to, amount, network, chainId, txHash))
+        break
+      }
+      case Network.MATIC: {
+        const { chainId, txHash } = yield call(() =>
+          sendWalletMetaTransaction(
+            Network.MATIC,
+            ContractName.MANAToken,
+            (mana) => mana.transfer(to, toWei(amount.toString(), 'ether'))
+          )
+        )
+        yield put(sendManaSuccess(to, amount, network, chainId, txHash))
+        break
+      }
+
+      default:
+        throw new Error(`Invalid network "${network}"`)
+    }
 
     yield put(closeModal('SendManaModal'))
-    const chainId: ChainId = yield select(getChainId)
-    yield put(sendManaSuccess(to, amount, chainId, txHash))
   } catch (error) {
-    yield put(sendManaFailure(to, amount, error))
+    yield put(sendManaFailure(to, amount, network, error))
   }
 }
 
@@ -387,4 +380,41 @@ function* handleConnectWalletSuccess(_action: ConnectWalletSuccessAction) {
       )
     }
   }
+}
+
+function* sendWalletMetaTransaction(
+  network: Network,
+  contractName: ContractName,
+  populateTransaction: (
+    populateTransaction: Contract['populateTransaction']
+  ) => Promise<ethers.PopulatedTransaction>
+) {
+  const signerProvider = yield call(getConnectedProvider)
+  const signerChainId = yield select(getChainId)
+  const signerConfig = getChainConfiguration(signerChainId)
+  const metaTxChainId = signerConfig.networkMapping[network]
+  const metaTxChainConfig = getChainConfiguration(metaTxChainId)
+  const metaTxChainProvider = new ethers.providers.JsonRpcProvider(
+    metaTxChainConfig.rpcURL
+  )
+  const contractConfig = getContract(contractName, metaTxChainId)
+  const contractInstance = new ethers.Contract(
+    contractConfig.address,
+    contractConfig.abi,
+    metaTxChainProvider
+  )
+  const tx = yield call(() =>
+    populateTransaction(contractInstance.populateTransaction)
+  )
+  const txHash = yield call(() =>
+    sendMetaTransaction(
+      signerProvider,
+      metaTxChainProvider,
+      tx.data!,
+      contractConfig
+    )
+  )
+  const result = { txHash, chainId: metaTxChainId }
+  console.log('result', result)
+  return result
 }

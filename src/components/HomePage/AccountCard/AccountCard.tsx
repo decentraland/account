@@ -26,7 +26,7 @@ const AccountCard = ({
   const handleOnSeeAll = () => onSeeAll(transactions)
   return (
     <Card className="AccountCard">
-      <AccountCardHeader type={type} title={title} amount={amount} />
+      <AccountCardHeader network={type} title={title} amount={amount} />
       <div className="AccountTransactions">
         <div>
           <div className="see-all" onClick={handleOnSeeAll}>

@@ -5,19 +5,20 @@ import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { Props } from './SendManaModal.types'
 import './SendManaModal.css'
 
-const TransactionDetailModal: React.FC<Props> = ({
+const SendManaModal: React.FC<Props> = ({
   name,
   onClose,
   isLoading,
   manaPrice,
   onManaPrice,
-  onSendMana
+  onSendMana,
+  metadata: { network },
 }) => {
   const [amount, setAmount] = useState(0)
   const [to, setTo] = useState('')
   const [errors, setErrors] = useState({
     amount: { hasError: false, message: '' },
-    to: { hasError: false, message: '' }
+    to: { hasError: false, message: '' },
   })
 
   const handleSetAmount = (e: React.FormEvent<HTMLInputElement>) => {
@@ -35,7 +36,7 @@ const TransactionDetailModal: React.FC<Props> = ({
     if (isValid) {
       setErrors({
         ...errors,
-        to: { hasError: false, message: '' }
+        to: { hasError: false, message: '' },
       })
       setTo(value)
     } else {
@@ -43,8 +44,8 @@ const TransactionDetailModal: React.FC<Props> = ({
         ...errors,
         to: {
           hasError: true,
-          message: t('send_mana_modal.errors.invalid_char')
-        }
+          message: t('send_mana_modal.errors.invalid_char'),
+        },
       })
     }
   }
@@ -52,14 +53,14 @@ const TransactionDetailModal: React.FC<Props> = ({
   const handleSendMana = () => {
     const isValidAddress = /^0x[0-9a-fA-F]{40}$/.test(to)
     if (isValidAddress) {
-      onSendMana(to, amount)
+      onSendMana(to, amount, network)
     } else {
       setErrors({
         ...errors,
         to: {
           hasError: true,
-          message: t('send_mana_modal.errors.invalid_address')
-        }
+          message: t('send_mana_modal.errors.invalid_address'),
+        },
       })
     }
   }
@@ -108,4 +109,4 @@ const TransactionDetailModal: React.FC<Props> = ({
   )
 }
 
-export default React.memo(TransactionDetailModal)
+export default React.memo(SendManaModal)

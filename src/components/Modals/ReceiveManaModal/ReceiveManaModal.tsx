@@ -7,9 +7,9 @@ import './ReceiveManaModal.css'
 
 const ReceiveManaModal = ({ name, onClose, metadata }: ModalProps) => {
   const [isCopied, setIsCopied] = useState(false)
-  const { walletAddress } = metadata
+  const { address } = metadata
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(walletAddress)
+    navigator.clipboard.writeText(address)
     setIsCopied(true)
     setTimeout(() => {
       setIsCopied(false)
@@ -28,7 +28,7 @@ const ReceiveManaModal = ({ name, onClose, metadata }: ModalProps) => {
       <Modal.Content>
         <div className="message"> {t('receive_mana_modal.message')} </div>
         <Field
-          value={`${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`}
+          value={`${address.slice(0, 6)}...${address.slice(-4)}`}
           placeholder="0x0000...0000"
           action={t('receive_mana_modal.copy')}
           onAction={copyToClipboard}

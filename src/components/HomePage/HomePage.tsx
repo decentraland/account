@@ -1,4 +1,5 @@
 import React from 'react'
+import { Network } from '@dcl/schemas'
 import { Page } from 'decentraland-ui'
 import { Footer } from 'decentraland-dapps/dist/containers'
 import { Navbar } from '../Navbar'
@@ -7,7 +8,6 @@ import { AccountCard } from './AccountCard'
 import { AccountCardContainer } from './AccountCardContainer'
 import { Props, TransactionStatus, TransactionType } from './HomePage.types'
 import './HomePage.css'
-import { Network } from '@dcl/schemas'
 
 const HomePage: React.FC<Props> = () => {
   return (

@@ -6,19 +6,19 @@ import { Props } from './AccountCardHeader.types'
 import './AccountCardHeader.css'
 
 const AccountCardHeader = ({
-  wallet,
-  type,
+  address,
+  network,
   title,
   amount,
-  onSendMana,
-  onReceiveMana,
-  onConvertToMaticMana,
+  onSend,
+  onReceive,
+  onConvert,
 }: Props) => {
-  const handleSendMana = () => onSendMana()
+  const handleSendMana = () => onSend(network)
 
   const handleReceiveMana = () => {
-    if (wallet) {
-      onReceiveMana(wallet)
+    if (address) {
+      onReceive(network, address)
     }
   }
 
@@ -45,7 +45,7 @@ const AccountCardHeader = ({
         <div className="funds">
           <div className="amount">
             <div
-              className={type === Network.MATIC ? 'matic-logo' : 'mana-logo'}
+              className={network === Network.MATIC ? 'matic-logo' : 'mana-logo'}
             />
             {parseInt(amount.toFixed(0), 10).toLocaleString()}
           </div>
@@ -54,7 +54,7 @@ const AccountCardHeader = ({
           <Button>
             <Icon name="plus" />
           </Button>
-          <Button onClick={() => onConvertToMaticMana()}>
+          <Button onClick={() => onConvert(network)}>
             {t('account_card_header.convert')}
           </Button>
         </div>
