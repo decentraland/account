@@ -55,8 +55,10 @@ import {
   WATCH_DEPOSIT_STATUS_SUCCESS,
   SET_DEPOSIT_STATUS,
   WATCH_DEPOSIT_STATUS_FAILURE,
+  SetPurchaseAction,
+  SET_PURCHASE,
 } from './actions'
-import { Deposit, Withdrawal } from './types'
+import { Deposit, Withdrawal, Purchase } from './types'
 
 export type ManaState = {
   data: {
@@ -64,6 +66,7 @@ export type ManaState = {
     price: number
     withdrawals: Withdrawal[]
     deposits: Deposit[]
+    purchases: Purchase[]
   }
   loading: LoadingState
   error: string | null
@@ -75,6 +78,7 @@ const INITAL_STATE: ManaState = {
     price: 0,
     withdrawals: [],
     deposits: [],
+    purchases: [],
   },
   loading: [],
   error: null,
@@ -107,6 +111,7 @@ type ManaReducerAction =
   | WatchWithdrawalStatusSuccessAction
   | WatchWithdrawalStatusFailureAction
   | SetWithdrawalStatusAction
+  | SetPurchaseAction
 
 export function manaReducer(
   state = INITAL_STATE,
@@ -185,6 +190,22 @@ export function manaReducer(
               (_deposit) => _deposit.hash !== deposit.hash
             ), // remove it if it was already added
             deposit,
+          ],
+        },
+      }
+    }
+
+    case SET_PURCHASE: {
+      const { purchase } = action.payload
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          purchases: [
+            ...state.data.purchases.filter(
+              (_purchase) => _purchase.id !== purchase.id
+            ),
+            purchase,
           ],
         },
       }

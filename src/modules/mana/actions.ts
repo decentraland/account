@@ -1,7 +1,13 @@
 import { action } from 'typesafe-actions'
 import { ChainId, Network } from '@dcl/schemas'
 import { buildTransactionPayload } from 'decentraland-dapps/dist/modules/transaction/utils'
-import { WithdrawalStatus, Withdrawal, Deposit, DepositStatus } from './types'
+import {
+  WithdrawalStatus,
+  Withdrawal,
+  Deposit,
+  DepositStatus,
+  Purchase,
+} from './types'
 
 // Get MANA Approved
 export const DEPOSIT_MANA_REQUEST = '[Request] Deposit MANA'
@@ -244,3 +250,9 @@ export type FinishWithdrawalSuccessAction = ReturnType<
 export type FinishWithdrawalFailureAction = ReturnType<
   typeof finishWithdrawalFailure
 >
+
+// Set Purchase
+export const SET_PURCHASE = 'Set Purchase'
+export const setPurchase = (purchase: Purchase) =>
+  action(SET_PURCHASE, { purchase })
+export type SetPurchaseAction = ReturnType<typeof setPurchase>

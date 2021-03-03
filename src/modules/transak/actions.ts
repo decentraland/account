@@ -15,3 +15,9 @@ export const transakOrderFailure = (orderData: any) =>
 export type TransakOrderRequestAction = ReturnType<typeof transakOrderRequest>
 export type TransakOrderSuccessAction = ReturnType<typeof transakOrderSuccess>
 export type TransakOrderFailureAction = ReturnType<typeof transakOrderFailure>
+
+// Open Transak
+export const OPEN_TRANSAK = 'Open Transak'
+export const openTransak = (network: 'matic' | 'ethereum') =>
+  action(OPEN_TRANSAK, { network })
+export type OpenTransakAction = ReturnType<typeof openTransak>
