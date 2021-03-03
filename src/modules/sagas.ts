@@ -12,7 +12,7 @@ import * as translations from '../locales'
 const analyticsSaga = createAnalyticsSaga()
 
 const profileSaga = createProfileSaga({
-  peerUrl: process.env.REACT_APP_PEER_URL!
+  peerUrl: process.env.REACT_APP_PEER_URL!,
 })
 
 const translationSaga = createTranslationSaga({ translations })
