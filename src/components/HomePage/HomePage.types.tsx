@@ -1,7 +1,5 @@
 import { Dispatch } from 'redux'
 
-export type Props = {}
-
 export enum TransactionType {
   DEPOSIT = 'deposit',
   WITHDRAWAL = 'withdrawal',

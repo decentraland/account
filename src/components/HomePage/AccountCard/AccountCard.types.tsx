@@ -4,7 +4,7 @@ import { OpenModalAction } from '../../../modules/modal/actions'
 import { Transaction } from '../HomePage.types'
 
 export type Props = {
-  type: Network
+  network: Network
   title: string
   amount: number
   transactions: Transaction[]
@@ -14,4 +14,4 @@ export type Props = {
 export type MapStateProps = Pick<Props, 'amount'>
 export type MapDispatchProps = Pick<Props, 'onSeeAll'>
 export type MapDispatch = Dispatch<OpenModalAction>
-export type OwnProps = Pick<Props, 'type'>
+export type OwnProps = Pick<Props, 'network'>

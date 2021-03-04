@@ -22,6 +22,8 @@ const AccountCardHeader = ({
     }
   }
 
+  const handleConvert = () => onConvert(network)
+
   return (
     <div className="AccountCardHeader">
       <div className="title">
@@ -54,7 +56,7 @@ const AccountCardHeader = ({
           <Button>
             <Icon name="plus" />
           </Button>
-          <Button onClick={() => onConvert(network)}>
+          <Button onClick={handleConvert}>
             {t('account_card_header.convert')}
           </Button>
         </div>

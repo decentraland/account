@@ -6,10 +6,10 @@ import { Navbar } from '../Navbar'
 import { AccountHeader } from './AccountHeader'
 import { AccountCard } from './AccountCard'
 import { AccountCardContainer } from './AccountCardContainer'
-import { Props, TransactionStatus, TransactionType } from './HomePage.types'
+import { TransactionStatus, TransactionType } from './HomePage.types'
 import './HomePage.css'
 
-const HomePage: React.FC<Props> = () => {
+const HomePage: React.FC = () => {
   return (
     <>
       <Navbar />
@@ -17,7 +17,7 @@ const HomePage: React.FC<Props> = () => {
         <AccountHeader />
         <AccountCardContainer>
           <AccountCard
-            type={Network.ETHEREUM}
+            network={Network.ETHEREUM}
             title="Mana"
             transactions={[
               {
@@ -59,7 +59,7 @@ const HomePage: React.FC<Props> = () => {
             ]}
           />
           <AccountCard
-            type={Network.MATIC}
+            network={Network.MATIC}
             title="Matic Mana"
             transactions={[
               {

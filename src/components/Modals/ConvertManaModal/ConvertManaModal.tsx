@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { fromWei, toBN } from 'web3x-es/utils'
+import { fromWei } from 'web3x-es/utils'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button, Close, Field, Header, Radio, Section } from 'decentraland-ui'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { Props } from './ConvertManaModal.types'
 import './ConvertManaModal.css'
 import { Network } from '@dcl/schemas'
+
+const MAX_APPROVAL =
+  '57896044618658097711785492504343953926634992332820282019728792003956564819968'
 
 const ConvertManaModal: React.FC<Props> = ({
   name,
@@ -31,10 +34,9 @@ const ConvertManaModal: React.FC<Props> = ({
       setAmount(intValue)
     }
   }
-  const getMaximumValue = () => toBN(2).pow(toBN(255))
 
   const handleApprove = () => {
-    onApproveMana(getMaximumValue().toString())
+    onApproveMana(MAX_APPROVAL)
     setIsApproved(!isApproved)
   }
 

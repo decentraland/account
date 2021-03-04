@@ -12,7 +12,7 @@ import {
 
 const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
   const networks = getNetworks(state)
-  const amount = networks ? networks[ownProps.type].mana : 0
+  const amount = networks ? networks[ownProps.network].mana : 0
   return {
     amount,
   }

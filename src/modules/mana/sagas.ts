@@ -15,6 +15,7 @@ import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfigur
 import {
   getAddress,
   getChainId,
+  getNetworks,
 } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import {
   ContractName,
@@ -162,7 +163,14 @@ function* handleWatchDepositStatusSuccess(
   action: WatchDepositStatusSuccessAction
 ) {
   const { deposit } = action.payload
-  yield call(() => waitForSync(deposit.hash, isDepositSynced))
+  const networks: ReturnType<typeof getNetworks> = yield select(getNetworks)
+  const ethereum = getChainConfiguration(networks![Network.ETHEREUM].chainId)
+  const matic = getChainConfiguration(networks![Network.MATIC].chainId)
+  yield call(() => {
+    waitForSync(deposit.hash, (txHash) =>
+      isDepositSynced(txHash, ethereum.rpcURL, matic.rpcURL)
+    )
+  })
   yield put(setDepositStatus(deposit.hash, DepositStatus.COMPLETE))
 }
 
@@ -170,7 +178,7 @@ function* handleGetApprovedManaRequest(_action: GetApprovedManaRequestAction) {
   try {
     const provider = yield call(getConnectedProvider)
     if (!provider) {
-      throw new Error(`Could not get connected provider`)
+      throw new Error(`Could not connect to provider`)
     }
     const eth = new Eth(provider)
     const from = yield select(getAddress)
@@ -198,7 +206,7 @@ function* handleApproveManaRequest(action: ApproveManaRequestAction) {
   try {
     const provider = yield call(getConnectedProvider)
     if (!provider) {
-      throw new Error(`Could not get connected provider`)
+      throw new Error(`Could not connect to provider`)
     }
     const eth = new Eth(provider)
     const from = yield select(getAddress)
@@ -248,7 +256,11 @@ function* handleWatchWithdrawalStatusSuccess(
   action: WatchWithdrawalStatusSuccessAction
 ) {
   const { withdrawal: tx } = action.payload
-  yield call(() => waitForSync(tx.hash, isWithdrawalSynced))
+  const networks: ReturnType<typeof getNetworks> = yield select(getNetworks)
+  const matic = getChainConfiguration(networks![Network.MATIC].chainId)
+  yield call(() =>
+    waitForSync(tx.hash, (txHash) => isWithdrawalSynced(txHash, matic.rpcURL))
+  )
   yield put(setWithdrawalStatus(tx.hash, WithdrawalStatus.CHECKPOINT))
 }
 
@@ -276,7 +288,7 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
   try {
     const provider = yield call(getConnectedProvider)
     if (!provider) {
-      throw new Error(`Could not get connected provider`)
+      throw new Error(`Could not connect to provider`)
     }
 
     const from: string | undefined = yield select(getAddress)

@@ -12,10 +12,8 @@ export const MATIC_ROOT_CHAIN_SUBGRAPH = process.env
 
 const POLL_INTERVAL = 30 * 1000 // 30 seconds
 
-function instantiateStateReceiver() {
-  const provider = new ethers.providers.JsonRpcProvider(
-    'https://rpc-mumbai.matic.today'
-  )
+function instantiateStateReceiver(rpcUrl: string) {
+  const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
   return new ethers.Contract(
     '0x0000000000000000000000000000000000001001',
     [
@@ -39,10 +37,8 @@ function instantiateStateReceiver() {
   )
 }
 
-export async function isWithdrawalSynced(txHash: string) {
-  const provider = new ethers.providers.JsonRpcProvider(
-    'https://rpc-mumbai.matic.today'
-  )
+export async function isWithdrawalSynced(txHash: string, maticRpcUrl: string) {
+  const provider = new ethers.providers.JsonRpcProvider(maticRpcUrl)
 
   const tx = await provider.send('eth_getTransactionReceipt', [txHash])
   if (!tx || !tx.blockNumber) return false
@@ -57,11 +53,13 @@ export async function isWithdrawalSynced(txHash: string) {
   return isSynced
 }
 
-export async function isDepositSynced(txHash: string) {
+export async function isDepositSynced(
+  txHash: string,
+  ethereumRpcUrl: string,
+  maticRpcUrl: string
+) {
   // get root counter
-  const provider = new ethers.providers.JsonRpcProvider(
-    'https://goerli.infura.io/v3/faae5316a4604118badb59ee6a01de28'
-  )
+  const provider = new ethers.providers.JsonRpcProvider(ethereumRpcUrl)
   const tx = await provider.send('eth_getTransactionReceipt', [txHash])
   if (!tx) return false
   const { 2: stateSync } = tx.logs
@@ -69,7 +67,7 @@ export async function isDepositSynced(txHash: string) {
   const rootCounter = parseInt(stateSyncId, 16)
 
   // get child counter
-  const stateReceiver = instantiateStateReceiver()
+  const stateReceiver = instantiateStateReceiver(maticRpcUrl)
   const lastStateId: BigNumber = await stateReceiver.lastStateId()
   const childCounter = lastStateId.toNumber()
 
