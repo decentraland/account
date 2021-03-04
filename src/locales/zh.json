@@ -20,7 +20,7 @@
     "tx_pending": "待交易",
     "see_all": "看到所有"
   },
-  "transaction_detail_modal" : {
+  "transaction_detail_modal": {
     "title": "交易明细",
     "operation": "操作方式",
     "amount": "量",
@@ -57,13 +57,16 @@
       "invalid_address": "无效地址"
     }
   },
-  "convert_to_matic_modal": {
+  "convert_mana_modal": {
     "usd": "USD",
     "mana": "MANA",
     "amount_label": "量",
-    "label_button": "完成存款",
-    "title": "转换为魔力法力",
-    "subtitle": "将法力值转换成魔力法力值 ",
-    "label_approvement": "MANA批准"
+    "label_button_ethereum": "完成存款",
+    "label_button_matic": "开始提款",
+    "title_ethereum": "转换为Matic MANA",
+    "subtitle_ethereum": "将MANA从Ethereum存入Matic",
+    "title_matic": "转换为MANA",
+    "subtitle_matic": "将MANA从Matic撤至Ethereum",
+    "label_approvement": "获MANA批准"
   }
 }

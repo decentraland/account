@@ -9,6 +9,12 @@ import { createAnalyticsMiddleware } from 'decentraland-dapps/dist/modules/analy
 
 import { createRootReducer } from './reducer'
 import { rootSaga } from './sagas'
+import {
+  SET_DEPOSIT_STATUS,
+  SET_WITHDRAWAL_STATUS,
+  WATCH_DEPOSIT_STATUS_SUCCESS,
+  WATCH_WITHDRAWAL_STATUS_SUCCESS,
+} from './mana/actions'
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -23,10 +29,18 @@ const loggerMiddleware = createLogger({
 
 const transactionMiddleware = createTransactionMiddleware()
 const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
-  storageKey: 'account', // this is the key used to save the state in localStorage (required)
-  paths: [], // array of paths from state to be persisted (optional)
-  actions: [], // array of actions types that will trigger a SAVE (optional)
-  migrations: {}, // migration object that will migrate your localstorage (optional)
+  storageKey: 'account',
+  paths: [
+    ['mana', 'data', 'deposits'],
+    ['mana', 'data', 'withdrawals'],
+  ],
+  actions: [
+    SET_DEPOSIT_STATUS,
+    SET_WITHDRAWAL_STATUS,
+    WATCH_DEPOSIT_STATUS_SUCCESS,
+    WATCH_WITHDRAWAL_STATUS_SUCCESS,
+  ],
+  migrations: {},
 })
 const analyticsMiddleware = createAnalyticsMiddleware(
   process.env.REACT_APP_SEGMENT_API_KEY || ''
@@ -48,7 +62,7 @@ loadStorageMiddleware(store)
 
 if (isDev) {
   const _window = window as any
-  _window.getState = store.getState
+  _window.store = store
 }
 
 export { store }

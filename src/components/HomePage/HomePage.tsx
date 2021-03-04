@@ -1,20 +1,15 @@
 import React from 'react'
+import { Network } from '@dcl/schemas'
 import { Page } from 'decentraland-ui'
 import { Footer } from 'decentraland-dapps/dist/containers'
 import { Navbar } from '../Navbar'
 import { AccountHeader } from './AccountHeader'
 import { AccountCard } from './AccountCard'
 import { AccountCardContainer } from './AccountCardContainer'
-import {
-  NetworkType,
-  Props,
-  TransactionStatus,
-  TransactionType,
-} from './HomePage.types'
+import { TransactionStatus, TransactionType } from './HomePage.types'
 import './HomePage.css'
 
-const HomePage: React.FC<Props> = (props) => {
-  const { mana, manaL2 } = props
+const HomePage: React.FC = () => {
   return (
     <>
       <Navbar />
@@ -22,9 +17,8 @@ const HomePage: React.FC<Props> = (props) => {
         <AccountHeader />
         <AccountCardContainer>
           <AccountCard
-            type={NetworkType.ETHEREUM}
+            network={Network.ETHEREUM}
             title="Mana"
-            amount={mana | 0}
             transactions={[
               {
                 type: TransactionType.DEPOSIT,
@@ -65,9 +59,8 @@ const HomePage: React.FC<Props> = (props) => {
             ]}
           />
           <AccountCard
-            type={NetworkType.MATIC}
+            network={Network.MATIC}
             title="Matic Mana"
-            amount={manaL2 | 0}
             transactions={[
               {
                 type: TransactionType.DEPOSIT,

@@ -1,19 +1,14 @@
 import { connect } from 'react-redux'
-import { getLocation, push } from 'connected-react-router'
+import { push } from 'connected-react-router'
 import { RootState } from '../../modules/reducer'
 import { locations } from '../../modules/locations'
 import { MapStateProps, MapDispatch, MapDispatchProps } from './UserMenu.types'
 import UserMenu from './UserMenu'
 
-const mapState = (state: RootState): MapStateProps => {
-  return {
-    isActivity: getLocation(state).pathname === locations.signIn(),
-  }
-}
+const mapState = (_state: RootState): MapStateProps => ({})
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
   onClickSettings: () => dispatch(push(locations.settings())),
-  onClickActivity: () => dispatch(push(locations.activity())),
 })
 
 export default connect(mapState, mapDispatch)(UserMenu)

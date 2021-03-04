@@ -16,7 +16,8 @@ const mapState = (state: RootState) => ({
 })
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
-  onSendMana: (to, amount) => dispatch(sendManaRequest(to, amount)),
+  onSendMana: (to, amount, network) =>
+    dispatch(sendManaRequest(to, amount, network)),
   onManaPrice: () => dispatch(fetchManaPriceRequest()),
 })
 

@@ -20,7 +20,7 @@
     "tx_pending": "Pending Transactions",
     "see_all": "See all"
   },
-  "transaction_detail_modal" : {
+  "transaction_detail_modal": {
     "title": "Transaction Detail",
     "operation": "Operation",
     "amount": "Amount",
@@ -57,13 +57,16 @@
       "invalid_address": "Invalid Address"
     }
   },
-  "convert_to_matic_modal": {
+  "convert_mana_modal": {
     "usd": "USD",
     "mana": "MANA",
     "amount_label": "Amount",
-    "label_button": "Complete Deposit",
-    "title": "Convert to Matic Mana",
-    "subtitle": "Convert Mana into Matic Mana",
+    "label_button_ethereum": "Complete Deposit",
+    "label_button_matic": "Start Withdrawal",
+    "title_ethereum": "Convert to Matic MANA",
+    "subtitle_ethereum": "Deposit MANA from Ethereum into Matic",
+    "title_matic": "Convert to MANA",
+    "subtitle_matic": "Withdraw MANA from Matic into Ethereum",
     "label_approvement": "MANA Approved"
   }
 }

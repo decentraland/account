@@ -10,7 +10,7 @@ import './AccountCard.css'
 const MAX_TXS_TO_SHOW_PER_STATUS = 4
 
 const AccountCard = ({
-  type,
+  network,
   title,
   amount,
   transactions,
@@ -26,7 +26,7 @@ const AccountCard = ({
   const handleOnSeeAll = () => onSeeAll(transactions)
   return (
     <Card className="AccountCard">
-      <AccountCardHeader type={type} title={title} amount={amount} />
+      <AccountCardHeader network={network} title={title} amount={amount} />
       <div className="AccountTransactions">
         <div>
           <div className="see-all" onClick={handleOnSeeAll}>
