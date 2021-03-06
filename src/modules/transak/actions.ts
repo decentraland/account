@@ -1,3 +1,4 @@
+import { Network } from '@dcl/schemas'
 import { action } from 'typesafe-actions'
 
 // Get MANA Approved
@@ -18,6 +19,6 @@ export type TransakOrderFailureAction = ReturnType<typeof transakOrderFailure>
 
 // Open Transak
 export const OPEN_TRANSAK = 'Open Transak'
-export const openTransak = (network: 'matic' | 'ethereum') =>
+export const openTransak = (network: Network) =>
   action(OPEN_TRANSAK, { network })
 export type OpenTransakAction = ReturnType<typeof openTransak>

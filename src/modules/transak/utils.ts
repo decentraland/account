@@ -3,12 +3,13 @@ import transakSDK from '@transak/transak-sdk'
 import { Store } from 'redux'
 import { Purchase, PurchaseStatus } from '../mana/types'
 import { setPurchase } from '../mana/actions'
+import { Network } from '@dcl/schemas'
 
 export const TRANSAK_KEY = process.env.REACT_APP_TRANSAK_KEY!
 
 type Transak = EventEmitter & {
   init: () => void
-  partnerData: { defaultNetwork: 'matic' | 'ethereum'; walletAddress: string }
+  partnerData: { defaultNetwork: Network; walletAddress: string }
   EVENTS: Record<string, string>
 }
 
@@ -19,8 +20,8 @@ export function getTransak(address: string): Transak {
     apiKey: TRANSAK_KEY, // Your API Key
     environment: 'STAGING', // STAGING/PRODUCTION
     defaultCryptoCurrency: 'MANA',
-    cyptoCurrencyList: ['MANA'],
-    networks: ['ethereum', 'matic'],
+    cyptoCurrencyList: 'MANA,USDT',
+    networks: 'ETHEREUM,MATIC',
     walletAddress: address, // Your customer's wallet address
     fiatCurrency: '', // INR/GBP
     email: '', // Your customer's email address
@@ -67,10 +68,7 @@ export function initializeTransak(store: Store, address: string) {
   })
 }
 
-export function openTransakWidget(
-  address: string,
-  network: 'matic' | 'ethereum'
-) {
+export function openTransakWidget(address: string, network: Network) {
   const transak = getTransak(address)
   transak.partnerData.walletAddress = address
   transak.partnerData.defaultNetwork = network
