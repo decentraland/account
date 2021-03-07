@@ -51,8 +51,7 @@ export default class WithdrawalStatusModal extends React.PureComponent<ModalProp
             />
           </div>
           <Button primary disabled={isPending}>
-            {' '}
-            {t('global.done')}{' '}
+            {t('global.done')}
           </Button>
         </Modal.Content>
       </Modal>
