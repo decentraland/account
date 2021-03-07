@@ -314,7 +314,6 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
 
     const tx = yield call(() => matic.exitERC20(withdrawal.hash, { from }))
 
-    console.log('hola')
     yield put(finishWithdrawalSuccess(withdrawal, chainId, tx.transactionHash))
   } catch (error) {
     yield put(finishWithdrawalFailure(withdrawal, error.message))
