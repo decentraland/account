@@ -2,7 +2,8 @@
   "global": {
     "guest": "Guest",
     "settings": "Settings",
-    "usd_symbol": "USD"
+    "usd_symbol": "USD",
+    "done": "Done"
   },
   "account_header": {
     "actions": {
@@ -68,5 +69,14 @@
     "title_matic": "Convert to MANA",
     "subtitle_matic": "Withdraw MANA from Matic into Ethereum",
     "label_approvement": "MANA Approved"
+  },
+  "withdrawal_status_modal": {
+    "title": "Convert to Mana",
+    "amount_placeholder": "Amount",
+    "status_placeholder": "Status",
+    "status_initialized": "Withdraw initialized",
+    "status_checkpoint": "Checkpoint",
+    "status_checkpoint_placeholder": "Usually takes 30 minutes",
+    "status_completed": "Complete Withdraw"
   }
 }

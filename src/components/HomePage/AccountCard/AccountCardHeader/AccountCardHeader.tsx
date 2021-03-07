@@ -11,8 +11,8 @@ const AccountCardHeader = ({
   title,
   amount,
   onSend,
-  onReceive,
   onConvert,
+  onReceive,
 }: Props) => {
   const handleSendMana = () => onSend(network)
 

@@ -83,7 +83,7 @@ import {
 } from './utils'
 import { WithdrawalStatus, Withdrawal, Deposit, DepositStatus } from './types'
 import { getWalletDeposits, getWalletWithdrawals } from './selectors'
-import { closeModal } from '../modal/actions'
+import { closeModal, openModal } from '../modal/actions'
 
 export function* manaSaga() {
   yield takeEvery(DEPOSIT_MANA_REQUEST, handleDepositManaRequest)
@@ -246,6 +246,7 @@ function* handleWatchWithdrawalStatusRequest(
       amount,
       timestamp: Date.now(),
     }
+    yield put(openModal('WithdrawalStatusModal', { withdrawal: tx }))
     yield put(watchWithdrawalStatusSuccess(tx))
   } else {
     yield put(watchWithdrawalStatusFailure(amount, txHash, 'Invalid address'))
@@ -313,6 +314,7 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
 
     const tx = yield call(() => matic.exitERC20(withdrawal.hash, { from }))
 
+    console.log('hola')
     yield put(finishWithdrawalSuccess(withdrawal, chainId, tx.transactionHash))
   } catch (error) {
     yield put(finishWithdrawalFailure(withdrawal, error.message))
