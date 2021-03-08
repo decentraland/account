@@ -10,10 +10,17 @@ export default class WithdrawalStatusModal extends React.PureComponent<ModalProp
   render() {
     console.log(this.props)
     const { name, onClose, metadata } = this.props
-    const { withdrawal } = metadata
-    const { amount, status } = withdrawal
+    const { txHash } = metadata
 
+    console.log(txHash)
+    const withdrawal = {
+      status: WithdrawalStatus.PENDING,
+      amount: 5,
+    }
+    const { status, amount } = withdrawal
     const isPending = status === WithdrawalStatus.PENDING
+    const isCheckpoint = status === WithdrawalStatus.CHECKPOINT
+    console.log({ isPending, isCheckpoint, status })
 
     return (
       <Modal
