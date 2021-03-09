@@ -16,14 +16,15 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
       isLoading,
       onFinishWithdrawal,
     } = this.props
-    const { txHash } = metadata
-    const withdrawal = withdrawals.find(({ hash }) => txHash === hash)
+    const withdrawal = withdrawals.find(({ hash }) => metadata.txHash === hash)
     if (!withdrawal) {
       return
     }
     const { status, amount } = withdrawal
     const isPending = status === WithdrawalStatus.PENDING
     const isCheckpoint = status === WithdrawalStatus.CHECKPOINT
+
+    const handleFinishWithdrawal = () => onFinishWithdrawal(withdrawal)
 
     return (
       <Modal
@@ -37,7 +38,7 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
             {t('withdrawal_status_modal.amount_placeholder')}
           </div>
           <div className="amount">
-            {amount} {t('global.usd_symbol')}
+            {amount} {t('global.mana_symbol')}
           </div>
           <div className="status">
             <div className="status_placeholder">
@@ -64,9 +65,7 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
             primary
             disabled={isPending || isLoading}
             loading={isLoading}
-            onclick={() => {
-              onFinishWithdrawal(withdrawal)
-            }}
+            onclick={handleFinishWithdrawal}
           >
             {t('global.done')}
           </Button>
