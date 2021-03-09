@@ -1,2 +1,2 @@
-import WithdrawalStatusModal from './WithdrawalStatusModal'
+import WithdrawalStatusModal from './WithdrawalStatusModal.container'
 export default WithdrawalStatusModal

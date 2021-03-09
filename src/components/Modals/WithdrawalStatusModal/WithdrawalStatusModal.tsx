@@ -1,26 +1,29 @@
 import * as React from 'react'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button, Close, Radio } from 'decentraland-ui'
-import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import './WithdrawalStatusModal.css'
 import { WithdrawalStatus } from '../../../modules/mana/types'
+import { Props } from './WithdrawalStatusModal.types'
 
-export default class WithdrawalStatusModal extends React.PureComponent<ModalProps> {
+export default class WithdrawalStatusModal extends React.PureComponent<Props> {
   render() {
-    console.log(this.props)
-    const { name, onClose, metadata } = this.props
+    const {
+      name,
+      onClose,
+      metadata,
+      withdrawals,
+      isLoading,
+      onFinishWithdrawal,
+    } = this.props
     const { txHash } = metadata
-
-    console.log(txHash)
-    const withdrawal = {
-      status: WithdrawalStatus.PENDING,
-      amount: 5,
+    const withdrawal = withdrawals.find(({ hash }) => txHash === hash)
+    if (!withdrawal) {
+      return
     }
     const { status, amount } = withdrawal
     const isPending = status === WithdrawalStatus.PENDING
     const isCheckpoint = status === WithdrawalStatus.CHECKPOINT
-    console.log({ isPending, isCheckpoint, status })
 
     return (
       <Modal
@@ -46,7 +49,7 @@ export default class WithdrawalStatusModal extends React.PureComponent<ModalProp
             />
             <Radio
               checked={true}
-              className="yellow_check"
+              className={isCheckpoint ? '' : 'yellow_check'}
               label={t('withdrawal_status_modal.status_checkpoint')}
             />
             <div className="status_checkpoint_placeholder">
@@ -57,7 +60,14 @@ export default class WithdrawalStatusModal extends React.PureComponent<ModalProp
               label={t('withdrawal_status_modal.status_completed')}
             />
           </div>
-          <Button primary disabled={isPending}>
+          <Button
+            primary
+            disabled={isPending || isLoading}
+            loading={isLoading}
+            onclick={() => {
+              onFinishWithdrawal(withdrawal)
+            }}
+          >
             {t('global.done')}
           </Button>
         </Modal.Content>
