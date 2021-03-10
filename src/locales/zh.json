@@ -2,7 +2,9 @@
   "global": {
     "guest": "客人",
     "settings": "设定",
-    "usd_symbol": "USD"
+    "usd_symbol": "USD",
+    "mana_symbol": "MANA",
+    "done": "完毕"
   },
   "account_header": {
     "actions": {

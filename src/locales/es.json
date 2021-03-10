@@ -2,7 +2,9 @@
   "global": {
     "guest": "Invitado",
     "settings": "Configuración",
-    "usd_symbol": "USD"
+    "usd_symbol": "USD",
+    "mana_symbol": "MANA",
+    "done": "Hecho"
   },
   "account_header": {
     "actions": {
