@@ -14,7 +14,7 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
       metadata,
       withdrawals,
       isLoading,
-      onFinishWithdrawal
+      onFinishWithdrawal,
     } = this.props
     const withdrawal = withdrawals.find(({ hash }) => metadata.txHash === hash)
     if (!withdrawal) {
@@ -23,6 +23,7 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
     const { status, amount } = withdrawal
     const isPending = status === WithdrawalStatus.PENDING
     const isCheckpoint = status === WithdrawalStatus.CHECKPOINT
+    const isCompleted = status === WithdrawalStatus.COMPLETE
 
     const handleFinishWithdrawal = () => onFinishWithdrawal(withdrawal)
 
@@ -57,7 +58,7 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
               {t('withdrawal_status_modal.status_checkpoint_placeholder')}
             </div>
             <Radio
-              checked={false}
+              checked={isCompleted}
               label={t('withdrawal_status_modal.status_completed')}
             />
           </div>
