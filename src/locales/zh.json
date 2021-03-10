@@ -68,5 +68,14 @@
     "title_matic": "转换为MANA",
     "subtitle_matic": "将MANA从Matic撤至Ethereum",
     "label_approvement": "获MANA批准"
+  },
+  "withdrawal_status_modal": {
+    "title": "转化为法力",
+    "amount_placeholder": "数量",
+    "status_placeholder": "状态",
+    "status_initialized": "提款已初始化",
+    "status_checkpoint": "检查站",
+    "status_checkpoint_placeholder": "通常需要30分钟",
+    "status_completed": "完成提款"
   }
 }
