@@ -78,6 +78,7 @@
     "status_initialized": "提款已初始化",
     "status_checkpoint": "检查站",
     "status_checkpoint_placeholder": "通常需要30分钟",
-    "status_completed": "完成提款"
+    "status_completed": "完成提款",
+    "complete_withdrawal": "完全取款"
   }
 }

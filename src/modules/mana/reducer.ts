@@ -3,6 +3,10 @@ import {
   LoadingState
 } from 'decentraland-dapps/dist/modules/loading/reducer'
 import {
+  FETCH_TRANSACTION_SUCCESS,
+  FetchTransactionSuccessAction
+} from 'decentraland-dapps/dist/modules/transaction/actions'
+import {
   ApproveManaFailureAction,
   ApproveManaRequestAction,
   ApproveManaSuccessAction,
@@ -62,7 +66,7 @@ import {
   FinishWithdrawalRequestAction,
   FinishWithdrawalSuccessAction
 } from './actions'
-import { Deposit, Withdrawal } from './types'
+import { Deposit, Withdrawal, WithdrawalStatus } from './types'
 
 export type ManaState = {
   data: {
@@ -116,6 +120,7 @@ type ManaReducerAction =
   | FinishWithdrawalSuccessAction
   | FinishWithdrawalRequestAction
   | FinishWithdrawalFailureAction
+  | FetchTransactionSuccessAction
 
 export function manaReducer(
   state = INITAL_STATE,
@@ -273,6 +278,32 @@ export function manaReducer(
       return {
         ...state,
         loading: loadingReducer(state.loading, action)
+      }
+    }
+
+    case FETCH_TRANSACTION_SUCCESS: {
+      const { transaction } = action.payload
+      switch (transaction.actionType) {
+        case FINISH_WITHDRAWAL_SUCCESS: {
+          const { withdrawal } = (transaction as any).payload
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              withdrawals: [
+                ...state.data.withdrawals.filter(
+                  (_withdraw) => _withdraw.hash !== withdrawal.hash
+                ),
+                {
+                  ...withdrawal,
+                  status: WithdrawalStatus.COMPLETE
+                }
+              ]
+            }
+          }
+        }
+        default:
+          return state
       }
     }
 

@@ -78,6 +78,7 @@
     "status_initialized": "Withdraw initialized",
     "status_checkpoint": "Checkpoint",
     "status_checkpoint_placeholder": "Usually takes 30 minutes",
-    "status_completed": "Complete Withdraw"
+    "status_completed": "Complete Withdraw",
+    "complete_withdrawal": "Complete Withdrawal"
   }
 }

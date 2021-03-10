@@ -78,6 +78,7 @@
     "status_initialized": "Retirar inicializado",
     "status_checkpoint": "Punto de Control",
     "status_checkpoint_placeholder": "Usualmente toma 30 minutos",
-    "status_completed": "Completar Retiro"
+    "status_completed": "Completar Retiro",
+    "complete_withdrawal": "Completar Retiro"
   }
 }

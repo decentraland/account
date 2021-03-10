@@ -1,10 +1,13 @@
 import * as React from 'react'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button, Close, Radio } from 'decentraland-ui'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
-import './WithdrawalStatusModal.css'
+import { isPending } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { WithdrawalStatus } from '../../../modules/mana/types'
+import { FINISH_WITHDRAWAL_SUCCESS } from '../../../modules/mana/actions'
+import { closeModal } from '../../../modules/modal/actions'
 import { Props } from './WithdrawalStatusModal.types'
+import './WithdrawalStatusModal.css'
 
 export default class WithdrawalStatusModal extends React.PureComponent<Props> {
   render() {
@@ -13,19 +16,27 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
       onClose,
       metadata,
       withdrawals,
+      transactions,
       isLoading,
       onFinishWithdrawal,
     } = this.props
     const withdrawal = withdrawals.find(({ hash }) => metadata.txHash === hash)
+    const isTxPending = transactions.some(
+      (tx) =>
+        tx.actionType === FINISH_WITHDRAWAL_SUCCESS &&
+        tx.payload.withdrawal.hash === metadata.hash &&
+        isPending(tx.status)
+    )
     if (!withdrawal) {
       return
     }
     const { status, amount } = withdrawal
-    const isPending = status === WithdrawalStatus.PENDING
-    const isCheckpoint = status === WithdrawalStatus.CHECKPOINT
-    const isCompleted = status === WithdrawalStatus.COMPLETE
+    const isWithdrawalPending = status === WithdrawalStatus.PENDING
+    const isWithdrawalCheckpoint = status === WithdrawalStatus.CHECKPOINT
+    const isWithdrawalCompleted = status === WithdrawalStatus.COMPLETE
 
     const handleFinishWithdrawal = () => onFinishWithdrawal(withdrawal)
+    const handleCloseModal = () => closeModal('WithdrawalStatusModal')
 
     return (
       <Modal
@@ -51,25 +62,31 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
             />
             <Radio
               checked={true}
-              className={isCheckpoint ? '' : 'yellow_check'}
+              className={isWithdrawalCheckpoint ? '' : 'yellow_check'}
               label={t('withdrawal_status_modal.status_checkpoint')}
             />
             <div className="status_checkpoint_placeholder">
               {t('withdrawal_status_modal.status_checkpoint_placeholder')}
             </div>
             <Radio
-              checked={isCompleted}
+              checked={isWithdrawalCompleted}
               label={t('withdrawal_status_modal.status_completed')}
             />
           </div>
-          <Button
-            primary
-            disabled={isPending || isLoading}
-            loading={isLoading}
-            onClick={handleFinishWithdrawal}
-          >
-            {t('global.done')}
-          </Button>
+          {isWithdrawalCompleted && !isTxPending ? (
+            <Button primary onClick={handleCloseModal}>
+              {t('global.done')}
+            </Button>
+          ) : (
+            <Button
+              primary
+              disabled={isWithdrawalPending || isLoading || isTxPending}
+              loading={isLoading || isTxPending}
+              onClick={handleFinishWithdrawal}
+            >
+              {t('global.complete_withdrawal')}
+            </Button>
+          )}
         </Modal.Content>
       </Modal>
     )
