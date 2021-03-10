@@ -7,6 +7,8 @@ import { getData as getTransactionsData } from 'decentraland-dapps/dist/modules/
 import { isPending } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { Deposit, Withdrawal } from './types'
+import { Network } from '@dcl/schemas'
+import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
 
 export const getState = (state: RootState) => state.mana
 export const getData = (state: RootState) => getState(state).data
@@ -38,6 +40,19 @@ export const getTransactions = createSelector<
     (transaction) => !!address && isEqual(transaction.from, address)
   )
 )
+
+export const getTransactionByNetwork = createSelector<
+  RootState,
+  Transaction[],
+  Record<Network, Transaction[]>
+>(getTransactionsData, (transactions) => {
+  const result: Record<Network, Transaction[]> = { ETHEREUM: [], MATIC: [] }
+  for (const tx of transactions) {
+    const { network }: { network: Network } = getChainConfiguration(tx.chainId)
+    result[network].push(tx)
+  }
+  return result
+})
 
 export const getPendingTransactions = createSelector<
   RootState,

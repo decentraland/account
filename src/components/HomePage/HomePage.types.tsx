@@ -1,4 +1,6 @@
+import { Network } from '@dcl/schemas'
 import { Dispatch } from 'redux'
+import { Transaction as RealTransaction } from 'decentraland-dapps/dist/modules/transaction/types'
 
 export enum TransactionType {
   DEPOSIT = 'deposit',
@@ -17,6 +19,8 @@ export type Transaction = {
   description: string
 }
 
-export type MapStateProps = {}
+export type MapStateProps = {
+  transactionsByNetwork: Record<Network, RealTransaction[]>
+}
 export type MapDispatchProps = {}
 export type MapDispatch = Dispatch

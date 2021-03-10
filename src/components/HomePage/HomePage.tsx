@@ -9,7 +9,8 @@ import { AccountCardContainer } from './AccountCardContainer'
 import { TransactionStatus, TransactionType } from './HomePage.types'
 import './HomePage.css'
 
-const HomePage: React.FC = () => {
+const HomePage: React.FC = ({ transactionsByNetwork }) => {
+  console.log({ transactionsByNetwork })
   return (
     <>
       <Navbar />
