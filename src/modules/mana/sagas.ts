@@ -8,19 +8,19 @@ import { toWei } from 'web3x-es/utils'
 import { ChainId, Network } from '@dcl/schemas'
 import {
   ConnectWalletSuccessAction,
-  CONNECT_WALLET_SUCCESS,
+  CONNECT_WALLET_SUCCESS
 } from 'decentraland-dapps/dist/modules/wallet/actions'
 import { getConnectedProvider } from 'decentraland-dapps/dist/lib/eth'
 import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
 import {
   getAddress,
   getChainId,
-  getNetworks,
+  getNetworks
 } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import {
   ContractName,
   getContract,
-  sendMetaTransaction,
+  sendMetaTransaction
 } from 'decentraland-transactions'
 import { coingecko } from '../../lib/api/coingecko'
 import {
@@ -69,7 +69,7 @@ import {
   FINISH_WITHDRAWAL_REQUEST,
   FinishWithdrawalRequestAction,
   finishWithdrawalFailure,
-  finishWithdrawalSuccess,
+  finishWithdrawalSuccess
 } from './actions'
 import { ERC20 } from '../../contracts/ERC20'
 import { RootChainManager } from '../../contracts/RootChainManager'
@@ -79,7 +79,7 @@ import {
   ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS,
   waitForSync,
   isWithdrawalSynced,
-  isDepositSynced,
+  isDepositSynced
 } from './utils'
 import { WithdrawalStatus, Withdrawal, Deposit, DepositStatus } from './types'
 import { getWalletDeposits, getWalletWithdrawals } from './selectors'
@@ -151,7 +151,7 @@ function* handleWatchDepositStatusRequest(
       from: address,
       status: DepositStatus.PENDING,
       amount,
-      timestamp: Date.now(),
+      timestamp: Date.now()
     }
     yield put(watchDepositStatusSuccess(deposit))
   } else {
@@ -244,7 +244,7 @@ function* handleWatchWithdrawalStatusRequest(
       from: address,
       status: WithdrawalStatus.PENDING,
       amount,
-      timestamp: Date.now(),
+      timestamp: Date.now()
     }
     yield put(watchWithdrawalStatusSuccess(tx))
   } else {
@@ -309,13 +309,12 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
       posRootChainManager: ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS,
       posERC20Predicate: ERC20_PREDICATE_CONTRACT_ADDRESS,
       parentDefaultOptions: { from },
-      maticDefaultOptions: { from },
+      maticDefaultOptions: { from }
     })
 
     const tx = yield call(() => matic.exitERC20(withdrawal.hash, { from }))
 
     yield put(finishWithdrawalSuccess(withdrawal, chainId, tx.transactionHash))
-    yield put(closeModal('WithdrawalStatusModal'))
   } catch (error) {
     yield put(finishWithdrawalFailure(withdrawal, error.message))
   }
