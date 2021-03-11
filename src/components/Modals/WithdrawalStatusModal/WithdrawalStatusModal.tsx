@@ -5,7 +5,6 @@ import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { isPending } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { WithdrawalStatus } from '../../../modules/mana/types'
 import { FINISH_WITHDRAWAL_SUCCESS } from '../../../modules/mana/actions'
-import { closeModal } from '../../../modules/modal/actions'
 import { Props } from './WithdrawalStatusModal.types'
 import './WithdrawalStatusModal.css'
 
@@ -36,7 +35,6 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
     const isWithdrawalCompleted = status === WithdrawalStatus.COMPLETE
 
     const handleFinishWithdrawal = () => onFinishWithdrawal(withdrawal)
-    const handleCloseModal = () => closeModal('WithdrawalStatusModal')
 
     return (
       <Modal
@@ -74,7 +72,7 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
             />
           </div>
           {isWithdrawalCompleted && !isTxPending ? (
-            <Button primary onClick={handleCloseModal}>
+            <Button primary onClick={onClose}>
               {t('global.done')}
             </Button>
           ) : (
