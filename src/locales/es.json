@@ -2,7 +2,9 @@
   "global": {
     "guest": "Invitado",
     "settings": "Configuración",
-    "usd_symbol": "USD"
+    "usd_symbol": "USD",
+    "mana_symbol": "MANA",
+    "done": "Hecho"
   },
   "account_header": {
     "actions": {
@@ -68,5 +70,15 @@
     "title_matic": "Convertir a MANA",
     "subtitle_matic": "Retira MANA de Matic a Ethereum",
     "label_approvement": "MANA Aprobado"
+  },
+  "withdrawal_status_modal": {
+    "title": "Convertir a Mana",
+    "amount_placeholder": "Cantidad",
+    "status_placeholder": "Estado",
+    "status_initialized": "Retirar inicializado",
+    "status_checkpoint": "Punto de Control",
+    "status_checkpoint_placeholder": "Usualmente toma 30 minutos",
+    "status_completed": "Completar Retiro",
+    "complete_withdrawal": "Completar Retiro"
   }
 }

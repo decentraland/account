@@ -3,6 +3,10 @@ import {
   LoadingState,
 } from 'decentraland-dapps/dist/modules/loading/reducer'
 import {
+  FETCH_TRANSACTION_SUCCESS,
+  FetchTransactionSuccessAction,
+} from 'decentraland-dapps/dist/modules/transaction/actions'
+import {
   ApproveManaFailureAction,
   ApproveManaRequestAction,
   ApproveManaSuccessAction,
@@ -55,8 +59,14 @@ import {
   WATCH_DEPOSIT_STATUS_SUCCESS,
   SET_DEPOSIT_STATUS,
   WATCH_DEPOSIT_STATUS_FAILURE,
+  FINISH_WITHDRAWAL_REQUEST,
+  FINISH_WITHDRAWAL_FAILURE,
+  FINISH_WITHDRAWAL_SUCCESS,
+  FinishWithdrawalFailureAction,
+  FinishWithdrawalRequestAction,
+  FinishWithdrawalSuccessAction,
 } from './actions'
-import { Deposit, Withdrawal } from './types'
+import { Deposit, Withdrawal, WithdrawalStatus } from './types'
 
 export type ManaState = {
   data: {
@@ -107,6 +117,10 @@ type ManaReducerAction =
   | WatchWithdrawalStatusSuccessAction
   | WatchWithdrawalStatusFailureAction
   | SetWithdrawalStatusAction
+  | FinishWithdrawalSuccessAction
+  | FinishWithdrawalRequestAction
+  | FinishWithdrawalFailureAction
+  | FetchTransactionSuccessAction
 
 export function manaReducer(
   state = INITAL_STATE,
@@ -120,7 +134,8 @@ export function manaReducer(
     case DEPOSIT_MANA_REQUEST:
     case INITIATE_WITHDRAWAL_REQUEST:
     case WATCH_DEPOSIT_STATUS_REQUEST:
-    case WATCH_WITHDRAWAL_STATUS_REQUEST: {
+    case WATCH_WITHDRAWAL_STATUS_REQUEST:
+    case FINISH_WITHDRAWAL_REQUEST: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
@@ -259,6 +274,39 @@ export function manaReducer(
         : state
     }
 
+    case FINISH_WITHDRAWAL_SUCCESS: {
+      return {
+        ...state,
+        loading: loadingReducer(state.loading, action),
+      }
+    }
+
+    case FETCH_TRANSACTION_SUCCESS: {
+      const { transaction } = action.payload
+      switch (transaction.actionType) {
+        case FINISH_WITHDRAWAL_SUCCESS: {
+          const { withdrawal } = (transaction as any).payload
+          return {
+            ...state,
+            data: {
+              ...state.data,
+              withdrawals: [
+                ...state.data.withdrawals.filter(
+                  (_withdraw) => _withdraw.hash !== withdrawal.hash
+                ),
+                {
+                  ...withdrawal,
+                  status: WithdrawalStatus.COMPLETE,
+                },
+              ],
+            },
+          }
+        }
+        default:
+          return state
+      }
+    }
+
     case SEND_MANA_FAILURE:
     case FETCH_MANA_PRICE_FAILURE:
     case APPROVE_MANA_FAILURE:
@@ -266,7 +314,8 @@ export function manaReducer(
     case DEPOSIT_MANA_FAILURE:
     case INITIATE_WITHDRAWAL_FAILURE:
     case WATCH_DEPOSIT_STATUS_FAILURE:
-    case WATCH_WITHDRAWAL_STATUS_FAILURE: {
+    case WATCH_WITHDRAWAL_STATUS_FAILURE:
+    case FINISH_WITHDRAWAL_FAILURE: {
       const { error } = action.payload
       return {
         ...state,
