@@ -75,10 +75,10 @@
     "title": "Convert to Mana",
     "amount_placeholder": "Amount",
     "status_placeholder": "Status",
-    "status_initialized": "Withdraw initialized",
+    "status_initialized": "Withdrawal initialized",
     "status_checkpoint": "Checkpoint",
     "status_checkpoint_placeholder": "Usually takes 30 minutes",
-    "status_completed": "Complete Withdraw",
+    "status_completed": "Complete Withdrawal",
     "complete_withdrawal": "Complete Withdrawal"
   }
 }

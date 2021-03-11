@@ -18,7 +18,7 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
       withdrawals,
       transactions,
       isLoading,
-      onFinishWithdrawal,
+      onFinishWithdrawal
     } = this.props
     const withdrawal = withdrawals.find(({ hash }) => metadata.txHash === hash)
     const isTxPending = transactions.some(
@@ -84,7 +84,7 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
               loading={isLoading || isTxPending}
               onClick={handleFinishWithdrawal}
             >
-              {t('global.complete_withdrawal')}
+              {t('withdrawal_status_modal.complete_withdrawal')}
             </Button>
           )}
         </Modal.Content>
