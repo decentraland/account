@@ -2,15 +2,35 @@ import React from 'react'
 import { Network } from '@dcl/schemas'
 import { Page } from 'decentraland-ui'
 import { Footer } from 'decentraland-dapps/dist/containers'
+import { TransactionStatus, TransactionType } from '../../modules/mana/types'
 import { Navbar } from '../Navbar'
 import { AccountHeader } from './AccountHeader'
 import { AccountCard } from './AccountCard'
 import { AccountCardContainer } from './AccountCardContainer'
-import { TransactionStatus, TransactionType } from './HomePage.types'
+import { Props } from './HomePage.types'
 import './HomePage.css'
 
-const HomePage: React.FC = ({ transactionsByNetwork }) => {
+const HomePage: React.FC<Props> = ({ transactionsByNetwork }) => {
   console.log({ transactionsByNetwork })
+
+  const ethereumTransactions = transactionsByNetwork.ETHEREUM.map((tx) => {
+    console.log(tx)
+    const type = TransactionType.DEPOSIT
+    const description = 'Added tokens via Transak'
+    const status = TransactionStatus.CONFIRMED
+    const amount = 3000
+    return { type, description, status, amount }
+  })
+
+  const maticTransactions = transactionsByNetwork.MATIC.map((tx) => {
+    console.log(tx)
+    const type = TransactionType.WITHDRAWAL
+    const description = 'Added tokens via Transak'
+    const status = TransactionStatus.CONFIRMED
+    const amount = 3000
+    return { type, description, status, amount }
+  })
+
   return (
     <>
       <Navbar />
@@ -20,68 +40,12 @@ const HomePage: React.FC = ({ transactionsByNetwork }) => {
           <AccountCard
             network={Network.ETHEREUM}
             title="Mana"
-            transactions={[
-              {
-                type: TransactionType.DEPOSIT,
-                description: 'Added tokens via transak',
-                status: TransactionStatus.CONFIRMED,
-                amount: 3000,
-              },
-              {
-                type: TransactionType.WITHDRAWAL,
-                description: 'Added tokens via transak',
-                status: TransactionStatus.CONFIRMED,
-                amount: 3000,
-              },
-              {
-                type: TransactionType.WITHDRAWAL,
-                description: 'Added tokens via transak',
-                status: TransactionStatus.CONFIRMED,
-                amount: 3000,
-              },
-              {
-                type: TransactionType.WITHDRAWAL,
-                description: 'Added tokens via transak',
-                status: TransactionStatus.CONFIRMED,
-                amount: 3000,
-              },
-              {
-                type: TransactionType.WITHDRAWAL,
-                description: 'Added tokens via transak',
-                status: TransactionStatus.CONFIRMED,
-                amount: 3000,
-              },
-              {
-                type: TransactionType.DEPOSIT,
-                description: 'Added tokens via transak',
-                status: TransactionStatus.CONFIRMED,
-                amount: 3000,
-              },
-            ]}
+            transactions={ethereumTransactions}
           />
           <AccountCard
             network={Network.MATIC}
             title="Matic Mana"
-            transactions={[
-              {
-                type: TransactionType.DEPOSIT,
-                description: 'Added tokens via transak',
-                status: TransactionStatus.PENDING,
-                amount: 3000,
-              },
-              {
-                type: TransactionType.WITHDRAWAL,
-                description: 'Added tokens via transak',
-                status: TransactionStatus.CONFIRMED,
-                amount: 3000,
-              },
-              {
-                type: TransactionType.DEPOSIT,
-                description: 'Added tokens via transak',
-                status: TransactionStatus.CONFIRMED,
-                amount: 3000,
-              },
-            ]}
+            transactions={maticTransactions}
           />
         </AccountCardContainer>
       </Page>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Card } from 'decentraland-ui'
-import { TransactionStatus } from '../HomePage.types'
+import { TransactionStatus } from '../../../modules/mana/types'
 import { AccountCardHeader } from './AccountCardHeader'
 import { Props } from './AccountCard.types'
 import { AccountTransactions } from './AccountTransactions'

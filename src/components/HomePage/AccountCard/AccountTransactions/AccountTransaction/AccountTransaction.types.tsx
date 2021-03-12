@@ -1,12 +1,13 @@
 import { Dispatch } from 'redux'
+import {
+  Transaction,
+  TransactionStatus,
+  TransactionType,
+} from '../../../../../modules/mana/types'
 import { OpenModalAction } from '../../../../../modules/modal/actions'
-import { TransactionStatus, TransactionType } from '../../../HomePage.types'
 
 export type Props = {
-  type: TransactionType
-  status: TransactionStatus
-  description: string
-  amount: number
+  transaction: Transaction
   onTransactionDetail: (
     description: string,
     amount: number,
