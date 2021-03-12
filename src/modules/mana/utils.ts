@@ -1,5 +1,6 @@
 import { BigNumber, ethers } from 'ethers'
 import { graphql } from 'decentraland-dapps/dist/lib/graph'
+import { Provider } from 'decentraland-transactions/dist'
 
 export const MANA_CONTRACT_ADDRESS = process.env
   .REACT_APP_MANA_CONTRACT_ADDRESS!
@@ -12,8 +13,7 @@ export const MATIC_ROOT_CHAIN_SUBGRAPH = process.env
 
 const POLL_INTERVAL = 30 * 1000 // 30 seconds
 
-function instantiateStateReceiver(rpcUrl: string) {
-  const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
+function instantiateStateReceiver(provider: Provider) {
   return new ethers.Contract(
     '0x0000000000000000000000000000000000001001',
     [
@@ -33,14 +33,15 @@ function instantiateStateReceiver(rpcUrl: string) {
         type: 'function',
       },
     ] as any,
-    provider
+    new ethers.providers.Web3Provider(provider as any)
   )
 }
 
-export async function isWithdrawalSynced(txHash: string, maticRpcUrl: string) {
-  const provider = new ethers.providers.JsonRpcProvider(maticRpcUrl)
-
-  const tx = await provider.send('eth_getTransactionReceipt', [txHash])
+export async function isWithdrawalSynced(
+  txHash: string,
+  maticProvider: Provider
+) {
+  const tx = await maticProvider.send!('eth_getTransactionReceipt', [txHash])
   if (!tx || !tx.blockNumber) return false
 
   const block = parseInt(tx.blockNumber, 16)
@@ -55,19 +56,18 @@ export async function isWithdrawalSynced(txHash: string, maticRpcUrl: string) {
 
 export async function isDepositSynced(
   txHash: string,
-  ethereumRpcUrl: string,
-  maticRpcUrl: string
+  ethereumProvider: Provider,
+  maticProvider: Provider
 ) {
   // get root counter
-  const provider = new ethers.providers.JsonRpcProvider(ethereumRpcUrl)
-  const tx = await provider.send('eth_getTransactionReceipt', [txHash])
+  const tx = await ethereumProvider.send!('eth_getTransactionReceipt', [txHash])
   if (!tx) return false
   const { 2: stateSync } = tx.logs
   const { 1: stateSyncId } = stateSync.topics
   const rootCounter = parseInt(stateSyncId, 16)
 
   // get child counter
-  const stateReceiver = instantiateStateReceiver(maticRpcUrl)
+  const stateReceiver = instantiateStateReceiver(maticProvider)
   const lastStateId: BigNumber = await stateReceiver.lastStateId()
   const childCounter = lastStateId.toNumber()
 
@@ -86,7 +86,9 @@ export async function waitForSync(
       throw new Error('Not confirmed')
     }
   } catch (error) {
-    await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL))
+    await new Promise((resolve) =>
+      setTimeout(() => resolve(void 0), POLL_INTERVAL)
+    )
     return waitForSync(txHash, isSynced)
   }
 }

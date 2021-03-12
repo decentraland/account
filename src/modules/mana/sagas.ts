@@ -8,19 +8,23 @@ import { toWei } from 'web3x-es/utils'
 import { ChainId, Network } from '@dcl/schemas'
 import {
   ConnectWalletSuccessAction,
-  CONNECT_WALLET_SUCCESS
+  CONNECT_WALLET_SUCCESS,
+  fetchWalletRequest,
 } from 'decentraland-dapps/dist/modules/wallet/actions'
-import { getConnectedProvider } from 'decentraland-dapps/dist/lib/eth'
+import {
+  getNetworkProvider,
+  getConnectedProvider,
+} from 'decentraland-dapps/dist/lib/eth'
 import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
 import {
   getAddress,
   getChainId,
-  getNetworks
+  getNetworks,
 } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import {
   ContractName,
   getContract,
-  sendMetaTransaction
+  sendMetaTransaction,
 } from 'decentraland-transactions'
 import { coingecko } from '../../lib/api/coingecko'
 import {
@@ -69,7 +73,11 @@ import {
   FINISH_WITHDRAWAL_REQUEST,
   FinishWithdrawalRequestAction,
   finishWithdrawalFailure,
-  finishWithdrawalSuccess
+  finishWithdrawalSuccess,
+  SET_DEPOSIT_STATUS,
+  SetDepositStatusAction,
+  SET_WITHDRAWAL_STATUS,
+  SetWithdrawalStatusAction,
 } from './actions'
 import { ERC20 } from '../../contracts/ERC20'
 import { RootChainManager } from '../../contracts/RootChainManager'
@@ -79,13 +87,15 @@ import {
   ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS,
   waitForSync,
   isWithdrawalSynced,
-  isDepositSynced
+  isDepositSynced,
 } from './utils'
 import { WithdrawalStatus, Withdrawal, Deposit, DepositStatus } from './types'
 import { getWalletDeposits, getWalletWithdrawals } from './selectors'
 import { closeModal, openModal } from '../modal/actions'
 
 export function* manaSaga() {
+  yield takeEvery(SET_DEPOSIT_STATUS, handleSetDepositStatus)
+  yield takeEvery(SET_WITHDRAWAL_STATUS, handleSetWithdrawalStatus)
   yield takeEvery(DEPOSIT_MANA_REQUEST, handleDepositManaRequest)
   yield takeEvery(GET_APPROVED_MANA_REQUEST, handleGetApprovedManaRequest)
   yield takeEvery(APPROVE_MANA_REQUEST, handleApproveManaRequest)
@@ -151,7 +161,7 @@ function* handleWatchDepositStatusRequest(
       from: address,
       status: DepositStatus.PENDING,
       amount,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     }
     yield put(watchDepositStatusSuccess(deposit))
   } else {
@@ -164,11 +174,15 @@ function* handleWatchDepositStatusSuccess(
 ) {
   const { deposit } = action.payload
   const networks: ReturnType<typeof getNetworks> = yield select(getNetworks)
-  const ethereum = getChainConfiguration(networks![Network.ETHEREUM].chainId)
-  const matic = getChainConfiguration(networks![Network.MATIC].chainId)
+  const ethereumProvider = yield call(() =>
+    getNetworkProvider(networks![Network.ETHEREUM].chainId)
+  )
+  const maticProvider = yield call(() =>
+    getNetworkProvider(networks![Network.MATIC].chainId)
+  )
   yield call(() => {
-    waitForSync(deposit.hash, (txHash) =>
-      isDepositSynced(txHash, ethereum.rpcURL, matic.rpcURL)
+    return waitForSync(deposit.hash, (txHash) =>
+      isDepositSynced(txHash, ethereumProvider, maticProvider)
     )
   })
   yield put(setDepositStatus(deposit.hash, DepositStatus.COMPLETE))
@@ -244,7 +258,7 @@ function* handleWatchWithdrawalStatusRequest(
       from: address,
       status: WithdrawalStatus.PENDING,
       amount,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     }
     yield put(watchWithdrawalStatusSuccess(tx))
   } else {
@@ -257,10 +271,14 @@ function* handleWatchWithdrawalStatusSuccess(
 ) {
   const { withdrawal: tx } = action.payload
   const networks: ReturnType<typeof getNetworks> = yield select(getNetworks)
-  const matic = getChainConfiguration(networks![Network.MATIC].chainId)
-  yield call(() =>
-    waitForSync(tx.hash, (txHash) => isWithdrawalSynced(txHash, matic.rpcURL))
+  const maticProvider = yield call(() =>
+    getNetworkProvider(networks![Network.MATIC].chainId)
   )
+  yield call(() => {
+    return waitForSync(tx.hash, (txHash) =>
+      isWithdrawalSynced(txHash, maticProvider)
+    )
+  })
   yield put(setWithdrawalStatus(tx.hash, WithdrawalStatus.CHECKPOINT))
 }
 
@@ -309,7 +327,7 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
       posRootChainManager: ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS,
       posERC20Predicate: ERC20_PREDICATE_CONTRACT_ADDRESS,
       parentDefaultOptions: { from },
-      maticDefaultOptions: { from }
+      maticDefaultOptions: { from },
     })
 
     const tx = yield call(() => matic.exitERC20(withdrawal.hash, { from }))
@@ -428,4 +446,18 @@ function* sendWalletMetaTransaction(
     )
   )
   return { txHash, chainId: metaTxChainId }
+}
+
+function* handleSetDepositStatus(action: SetDepositStatusAction) {
+  const { status } = action.payload
+  if (status === DepositStatus.COMPLETE) {
+    yield put(fetchWalletRequest())
+  }
+}
+
+function* handleSetWithdrawalStatus(action: SetWithdrawalStatusAction) {
+  const { status } = action.payload
+  if (status === WithdrawalStatus.COMPLETE) {
+    yield put(fetchWalletRequest())
+  }
 }
