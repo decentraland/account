@@ -13,21 +13,25 @@ import './HomePage.css'
 const HomePage: React.FC<Props> = ({ transactionsByNetwork }) => {
   console.log({ transactionsByNetwork })
 
+  const shortening = (address: string): string =>
+    `${address.slice(0, 4)}...${address.slice(-4)}`
+
   const ethereumTransactions = transactionsByNetwork.ETHEREUM.map((tx) => {
-    console.log(tx)
+    const { payload } = tx
+    const { amount, to } = payload
     const type = TransactionType.DEPOSIT
-    const description = 'Added tokens via Transak'
+    const description = `Sending tokens to ${shortening(to)}`
     const status = TransactionStatus.CONFIRMED
-    const amount = 3000
     return { type, description, status, amount }
   })
 
   const maticTransactions = transactionsByNetwork.MATIC.map((tx) => {
     console.log(tx)
     const type = TransactionType.WITHDRAWAL
-    const description = 'Added tokens via Transak'
+    const { payload } = tx
+    const { amount, to } = payload
+    const description = `Sending tokens to ${shortening(to)}`
     const status = TransactionStatus.CONFIRMED
-    const amount = 3000
     return { type, description, status, amount }
   })
 
