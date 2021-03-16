@@ -38,6 +38,12 @@
     "copy": "Copiar",
     "copied": "Copiado!"
   },
+  "transaction_description": {
+    "deposit": "Deposito a MANA Matic",
+    "withdrawal": "Extracción a MANA Ehereum",
+    "buy": "Compra de Tokens via Transak",
+    "send": "Envio de tokens a"
+  },
   "transaction_type": {
     "deposit": "Deposito",
     "withdrawal": "Extracción"
