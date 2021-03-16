@@ -15,7 +15,7 @@ export type Transaction = {
   type: TransactionType
   status: TransactionStatus
   amount: number
-  description: string
+  to: string
 }
 export enum DepositStatus {
   PENDING = 'pending',

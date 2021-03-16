@@ -1,9 +1,9 @@
-import { Network } from '@dcl/schemas'
 import { Dispatch } from 'redux'
-import { Transaction } from 'decentraland-dapps/dist/modules/transaction/types'
+import { Transaction } from '../../modules/mana/types'
 
 export type Props = {
-  transactionsByNetwork: Record<Network, Transaction[]>
+  ethereumTransactions: Transaction[]
+  maticTransactions: Transaction[]
 }
 export type MapStateProps = Props
 export type MapDispatchProps = {}
