@@ -92,6 +92,7 @@ import {
 import { WithdrawalStatus, Withdrawal, Deposit, DepositStatus } from './types'
 import { getWalletDeposits, getWalletWithdrawals } from './selectors'
 import { closeModal, openModal } from '../modal/actions'
+import { Provider } from 'decentraland-dapps/dist/modules/wallet/types'
 
 export function* manaSaga() {
   yield takeEvery(SET_DEPOSIT_STATUS, handleSetDepositStatus)
@@ -120,12 +121,12 @@ function* handleDepositManaRequest(action: DepositManaRequestAction) {
   const { amount } = action.payload
 
   try {
-    const provider = yield call(getConnectedProvider)
+    const provider: Provider = yield call(getConnectedProvider)
     if (!provider) {
       throw new Error(`Could not get connected provider`)
     }
     const eth = new Eth(provider)
-    const from = yield select(getAddress)
+    const from: string = yield select(getAddress)
     const rootChainContract = new RootChainManager(
       eth,
       Address.fromString(ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS)
@@ -174,10 +175,10 @@ function* handleWatchDepositStatusSuccess(
 ) {
   const { deposit } = action.payload
   const networks: ReturnType<typeof getNetworks> = yield select(getNetworks)
-  const ethereumProvider = yield call(() =>
+  const ethereumProvider: Provider = yield call(() =>
     getNetworkProvider(networks![Network.ETHEREUM].chainId)
   )
-  const maticProvider = yield call(() =>
+  const maticProvider: Provider = yield call(() =>
     getNetworkProvider(networks![Network.MATIC].chainId)
   )
   yield call(() => {
@@ -190,12 +191,12 @@ function* handleWatchDepositStatusSuccess(
 
 function* handleGetApprovedManaRequest(_action: GetApprovedManaRequestAction) {
   try {
-    const provider = yield call(getConnectedProvider)
+    const provider: Provider = yield call(getConnectedProvider)
     if (!provider) {
       throw new Error(`Could not connect to provider`)
     }
     const eth = new Eth(provider)
-    const from = yield select(getAddress)
+    const from: string = yield select(getAddress)
     const manaContract = new ERC20(
       eth,
       Address.fromString(MANA_CONTRACT_ADDRESS)
@@ -218,12 +219,12 @@ function* handleGetApprovedManaRequest(_action: GetApprovedManaRequestAction) {
 function* handleApproveManaRequest(action: ApproveManaRequestAction) {
   const { allowance } = action.payload
   try {
-    const provider = yield call(getConnectedProvider)
+    const provider: Provider = yield call(getConnectedProvider)
     if (!provider) {
       throw new Error(`Could not connect to provider`)
     }
     const eth = new Eth(provider)
-    const from = yield select(getAddress)
+    const from: string = yield select(getAddress)
     const manaContract = new ERC20(
       eth,
       Address.fromString(MANA_CONTRACT_ADDRESS)
@@ -271,7 +272,7 @@ function* handleWatchWithdrawalStatusSuccess(
 ) {
   const { withdrawal: tx } = action.payload
   const networks: ReturnType<typeof getNetworks> = yield select(getNetworks)
-  const maticProvider = yield call(() =>
+  const maticProvider: Provider = yield call(() =>
     getNetworkProvider(networks![Network.MATIC].chainId)
   )
   yield call(() => {
@@ -305,7 +306,7 @@ function* handleInitiateWithdrawalRequest(
 function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
   const { withdrawal } = action.payload
   try {
-    const provider = yield call(getConnectedProvider)
+    const provider: Provider = yield call(getConnectedProvider)
     if (!provider) {
       throw new Error(`Could not connect to provider`)
     }
@@ -330,7 +331,9 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
       maticDefaultOptions: { from },
     })
 
-    const tx = yield call(() => matic.exitERC20(withdrawal.hash, { from }))
+    const tx: { transactionHash: string } = yield call(() =>
+      matic.exitERC20(withdrawal.hash, { from })
+    )
 
     yield put(finishWithdrawalSuccess(withdrawal, chainId, tx.transactionHash))
   } catch (error) {
@@ -341,23 +344,23 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
 function* handleSendManaRequest(action: SendManaRequestAction) {
   const { to, amount, network } = action.payload
   try {
-    const provider = yield call(getConnectedProvider)
+    const provider: Provider = yield call(getConnectedProvider)
     if (!provider) {
       throw new Error(`Could not get connected provider`)
     }
     const eth = new Eth(provider)
-    const address = yield select(getAddress)
+    const address: string = yield select(getAddress)
     const mana = new ERC20(eth, Address.fromString(MANA_CONTRACT_ADDRESS))
 
     switch (network) {
       case Network.ETHEREUM: {
-        const txHash = yield call(() =>
+        const txHash: string = yield call(() =>
           mana.methods
             .transfer(Address.fromString(to), toWei(amount.toString(), 'ether'))
             .send({ from: Address.fromString(address) })
             .getTxHash()
         )
-        const chainId = yield select(getChainId)
+        const chainId: ChainId = yield select(getChainId)
         yield put(sendManaSuccess(to, amount, network, chainId, txHash))
         break
       }
@@ -385,7 +388,7 @@ function* handleSendManaRequest(action: SendManaRequestAction) {
 
 function* handleFetchManaPriceRequest(_action: FetchManaPriceRequestAction) {
   try {
-    const price = yield call(() => coingecko.fetchManaPrice())
+    const price: number = yield call(() => coingecko.fetchManaPrice())
     yield put(fetchManaPriceSuccess(price))
   } catch (error) {
     yield put(fetchManaPriceFailure(error))
@@ -420,8 +423,8 @@ function* sendWalletMetaTransaction(
     populateTransaction: Contract['populateTransaction']
   ) => Promise<ethers.PopulatedTransaction>
 ) {
-  const signerProvider = yield call(getConnectedProvider)
-  const signerChainId = yield select(getChainId)
+  const signerProvider: Provider = yield call(getConnectedProvider)
+  const signerChainId: ChainId = yield select(getChainId)
   const signerConfig = getChainConfiguration(signerChainId)
   const metaTxChainId = signerConfig.networkMapping[network]
   const metaTxChainConfig = getChainConfiguration(metaTxChainId)
@@ -434,10 +437,10 @@ function* sendWalletMetaTransaction(
     contractConfig.abi,
     metaTxChainProvider
   )
-  const tx = yield call(() =>
+  const tx: { data: string } = yield call(() =>
     populateTransaction(contractInstance.populateTransaction)
   )
-  const txHash = yield call(() =>
+  const txHash: string = yield call(() =>
     sendMetaTransaction(
       signerProvider,
       metaTxChainProvider,
