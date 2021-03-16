@@ -1,9 +1,10 @@
 .AccountTransaction {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  padding: 24px 0px;
+  padding: 24px 20px;
   font-size: 17px;
   line-height: 26px;
   letter-spacing: -0.2px;
@@ -14,8 +15,10 @@
   opacity: 0.7;
 }
 
-.AccountTransaction .DescriptionStatus{
+.AccountTransaction .DescriptionStatus {
+  padding: 0px 24px;
   display: flex;
+  flex-grow: 2;
   flex-direction: column;
   justify-content: space-between;
 }
@@ -24,6 +27,10 @@
   font-size: 15px;
   line-height: 24px;
   color: #736E7D;
+}
+
+.AccountTransaction :last-child {
+  margin-right: 20px;
 }
 
 .transaction-logo {

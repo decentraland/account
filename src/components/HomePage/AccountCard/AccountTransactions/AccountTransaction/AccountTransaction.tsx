@@ -16,12 +16,15 @@ const AccountTransaction = ({ transaction, onTransactionDetail }: Props) => {
       <div className="type">
         <div
           className={`transaction-logo ${
-            type === TransactionType.DEPOSIT
+            type === TransactionType.DEPOSIT || type === TransactionType.BUY
               ? 'in-transaction-logo'
-              : type === TransactionType.WITHDRAWAL
+              : type === TransactionType.WITHDRAWAL ||
+                type === TransactionType.SEND
               ? 'out-transaction-logo'
               : status === TransactionStatus.PENDING
               ? 'pending-transaction-logo'
+              : status === TransactionStatus.REJECTED
+              ? 'rejected-transaction-logo'
               : ''
           }`}
         />
@@ -30,7 +33,7 @@ const AccountTransaction = ({ transaction, onTransactionDetail }: Props) => {
         <div> {description} </div>
         <div> {status} </div>
       </div>
-      <div> {amount} </div>
+      <div className="amount"> {amount} </div>
     </div>
   )
 }

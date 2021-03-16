@@ -1,11 +1,14 @@
 export enum TransactionType {
   DEPOSIT = 'deposit',
   WITHDRAWAL = 'withdrawal',
+  SEND = 'send',
+  BUY = 'buy',
 }
 
 export enum TransactionStatus {
   CONFIRMED = 'confirmed',
   PENDING = 'pending',
+  REJECTED = 'rejected',
 }
 
 export type Transaction = {
