@@ -7,7 +7,11 @@ import {
 } from '../../../../../modules/mana/types'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 
-const AccountTransaction = ({ transaction, onTransactionDetail }: Props) => {
+const AccountTransaction = ({
+  transaction,
+  onTransactionDetail,
+  onPendingWithDrawal,
+}: Props) => {
   const { amount, type, status, to } = transaction
   const shortening = (address: string): string =>
     `${address.slice(0, 4)}...${address.slice(-4)}`
@@ -40,7 +44,12 @@ const AccountTransaction = ({ transaction, onTransactionDetail }: Props) => {
   return (
     <div
       className="AccountTransaction"
-      onClick={() => onTransactionDetail(description, amount, status, type)}
+      onClick={() =>
+        type === TransactionType.WITHDRAWAL &&
+        status === TransactionStatus.PENDING
+          ? onPendingWithDrawal(to)
+          : onTransactionDetail(description, amount, status, type)
+      }
     >
       <div className="type">
         <div className={`transaction-logo ${transactionLogo}`} />

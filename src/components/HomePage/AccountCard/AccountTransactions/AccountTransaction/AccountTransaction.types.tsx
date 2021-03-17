@@ -8,6 +8,7 @@ import { OpenModalAction } from '../../../../../modules/modal/actions'
 
 export type Props = {
   transaction: Transaction
+  onPendingWithDrawal: (txHash: string) => void
   onTransactionDetail: (
     description: string,
     amount: number,
@@ -17,5 +18,8 @@ export type Props = {
 }
 
 export type MapStateProps = {}
-export type MapDispatchProps = Pick<Props, 'onTransactionDetail'>
+export type MapDispatchProps = Pick<
+  Props,
+  'onTransactionDetail' | 'onPendingWithDrawal'
+>
 export type MapDispatch = Dispatch<OpenModalAction>
