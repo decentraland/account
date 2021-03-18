@@ -9,10 +9,7 @@ import { AccountCardContainer } from './AccountCardContainer'
 import { Props } from './HomePage.types'
 import './HomePage.css'
 
-const HomePage: React.FC<Props> = ({
-  maticTransactions,
-  ethereumTransactions,
-}) => {
+const HomePage: React.FC<Props> = ({ transactionsByNetwork }) => {
   return (
     <>
       <Navbar />
@@ -22,12 +19,12 @@ const HomePage: React.FC<Props> = ({
           <AccountCard
             network={Network.ETHEREUM}
             title="Mana"
-            transactions={ethereumTransactions}
+            transactions={transactionsByNetwork[Network.ETHEREUM]}
           />
           <AccountCard
             network={Network.MATIC}
             title="Matic Mana"
-            transactions={maticTransactions}
+            transactions={transactionsByNetwork[Network.MATIC]}
           />
         </AccountCardContainer>
       </Page>
