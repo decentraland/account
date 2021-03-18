@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import { getWalletWithdrawals } from '../../../../../modules/mana/selectors'
 import { openModal } from '../../../../../modules/modal/actions'
 import { RootState } from '../../../../../modules/reducer'
 import AccountTransaction from './AccountTransaction'
@@ -9,9 +8,7 @@ import {
   MapStateProps,
 } from './AccountTransaction.types'
 
-const mapState = (state: RootState): MapStateProps => ({
-  withdrawals: getWalletWithdrawals(state),
-})
+const mapState = (_state: RootState): MapStateProps => ({})
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
   onPendingWithDrawal: (txHash) =>

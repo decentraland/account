@@ -1,15 +1,17 @@
 import React from 'react'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Props } from './AccountTransaction.types'
 import './AccountTransaction.css'
 import {
   Deposit,
+  DepositStatus,
   Send,
+  SendStatus,
   TransactionStatus,
   TransactionType,
   Withdrawal,
   WithdrawalStatus,
 } from '../../../../../modules/mana/types'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 
 const AccountTransaction = ({
   transaction,
@@ -17,6 +19,7 @@ const AccountTransaction = ({
   onPendingWithDrawal,
 }: Props) => {
   const { type, status } = transaction
+
   const shortening = (address: string): string =>
     address ? `${address.slice(0, 4)}...${address.slice(-4)}` : ''
 
@@ -52,13 +55,41 @@ const AccountTransaction = ({
   const handleDetailModal = () => {
     if (
       type === TransactionType.WITHDRAWAL &&
-      data.status === WithdrawalStatus.PENDING
+      (data.status === WithdrawalStatus.PENDING ||
+        data.status === WithdrawalStatus.CHECKPOINT)
     ) {
-      onPendingWithDrawal(data.txHash)
+      onPendingWithDrawal(data.hash)
     } else {
       onTransactionDetail(description, data.amount, status, type)
     }
   }
+
+  const getStatus = () => {
+    if (type === TransactionType.WITHDRAWAL) {
+      if (data.status === WithdrawalStatus.COMPLETE) {
+        return t('withdrawal_status.complete')
+      } else if (data.status === WithdrawalStatus.CHECKPOINT) {
+        return t('withdrawal_status.checkpoint')
+      } else {
+        return t('withdrawal_status.pending')
+      }
+    } else if (type === TransactionType.DEPOSIT) {
+      if (data.status === DepositStatus.COMPLETE) {
+        return t('deposit_status.complete')
+      } else if (data.status === DepositStatus.PENDING) {
+        return t('deposit_status.pending')
+      }
+    } else if (type === TransactionType.SEND) {
+      if (data.status === SendStatus.CONFIRMED) {
+        return t('send_status.complete')
+      } else if (data.status === SendStatus.REJECTED) {
+        return t('send_status.rejected')
+      } else {
+        return t('send_status.pending')
+      }
+    }
+  }
+
   return (
     <div className="AccountTransaction" onClick={handleDetailModal}>
       <div className="type">
@@ -66,7 +97,7 @@ const AccountTransaction = ({
       </div>
       <div className="DescriptionStatus">
         <div> {description} </div>
-        <div> {status} </div>
+        <div> {getStatus()} </div>
       </div>
       <div className="amount"> {data?.amount} </div>
     </div>

@@ -7,12 +7,12 @@ import { getData as getTransactionsData } from 'decentraland-dapps/dist/modules/
 import { isPending } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import {
+  Send,
   Deposit,
   Withdrawal,
   Transaction as AccountTransaction,
   TransactionStatus,
   TransactionType,
-  Send,
 } from './types'
 import { Network } from '@dcl/schemas'
 import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
@@ -106,7 +106,6 @@ export const getTransactionByNetwork = createSelector<
       const { network }: { network: Network } = getChainConfiguration(
         tx.chainId
       )
-      // aca deberia armar los Data
       const deposit = deposits.find((deposit) => tx.hash === deposit.hash)
       const withdrawal = withdrawals.find(
         (withdrawal) => tx.hash === withdrawal.hash
@@ -132,7 +131,7 @@ export const getTransactionByNetwork = createSelector<
           hash: tx.hash,
           type: TransactionType.SEND,
           status: mapStatus(tx.status),
-          data: tx.payload.send,
+          data: tx.payload.send || {},
         }
         result[network].push(accountTransaction)
       }
