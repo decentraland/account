@@ -135,7 +135,7 @@ export const getTransactionByNetwork = createSelector<
             hash: tx.hash,
             type: TransactionType.TRANSFER,
             status: mapStatus(tx.status),
-            data: tx.payload.send || {},
+            data: tx.payload.transfer || {},
           }
           result[network].push(accountTransaction)
         }

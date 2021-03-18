@@ -44,7 +44,7 @@ const TransferManaModal: React.FC<Props> = ({
         ...errors,
         to: {
           hasError: true,
-          message: t('send_mana_modal.errors.invalid_char'),
+          message: t('transfer_mana_modal.errors.invalid_char'),
         },
       })
     }
@@ -59,7 +59,7 @@ const TransferManaModal: React.FC<Props> = ({
         ...errors,
         to: {
           hasError: true,
-          message: t('send_mana_modal.errors.invalid_address'),
+          message: t('transfer_mana_modal.errors.invalid_address'),
         },
       })
     }
@@ -76,12 +76,12 @@ const TransferManaModal: React.FC<Props> = ({
       closeIcon={<Close onClick={onClose} />}
     >
       <Modal.Header>
-        <div className="title"> {t('send_mana_modal.send_tokens')} </div>
-        <div className="subtitle"> {t('send_mana_modal.subtitle')} </div>
+        <div className="title"> {t('transfer_mana_modal.send_tokens')} </div>
+        <div className="subtitle"> {t('transfer_mana_modal.subtitle')} </div>
       </Modal.Header>
       <Modal.Content>
         <Field
-          label={t('send_mana_modal.amount_label')}
+          label={t('transfer_mana_modal.amount_label')}
           placeholder="0"
           value={amount}
           onChange={handleSetAmount}
@@ -93,7 +93,7 @@ const TransferManaModal: React.FC<Props> = ({
           {(amount * manaPrice).toFixed(2)} {t('global.usd_symbol')}
         </div>
         <Field
-          label={t('send_mana_modal.wallet_label')}
+          label={t('transfer_mana_modal.wallet_label')}
           placeholder="0x0000...0000"
           value={to}
           onChange={handleSetTo}
@@ -102,7 +102,7 @@ const TransferManaModal: React.FC<Props> = ({
           error={errors.to.hasError}
         />
         <Button primary onClick={handleTransferMana} loading={isLoading}>
-          {t('send_mana_modal.send_tokens')}
+          {t('transfer_mana_modal.send_tokens')}
         </Button>
       </Modal.Content>
     </Modal>

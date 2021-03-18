@@ -52,7 +52,7 @@
     "pending": "待定",
     "confirmed": "已确认"
   },
-  "send_mana_modal": {
+  "transfer_mana_modal": {
     "usd": "USD",
     "mana": "MANA",
     "wallet_label": "钱包",

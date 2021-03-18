@@ -52,7 +52,7 @@
     "pending": "Pendiente",
     "confirmed": "Confirmado"
   },
-  "send_mana_modal": {
+  "transfer_mana_modal": {
     "usd": "USD",
     "mana": "MANA",
     "wallet_label": "Billetera",
