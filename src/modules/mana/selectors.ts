@@ -104,9 +104,7 @@ export const getTransactionByNetwork = createSelector<
       MATIC: [],
     }
     for (const tx of transactions) {
-      const { network }: { network: Network } = getChainConfiguration(
-        tx.chainId
-      )
+      const { network } = getChainConfiguration(tx.chainId)
       const deposit = deposits.find((deposit) => tx.hash === deposit.hash)
       const withdrawal = withdrawals.find(
         (withdrawal) => tx.hash === withdrawal.hash
