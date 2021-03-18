@@ -477,7 +477,7 @@ function* sendWalletMetaTransaction(
     sendMetaTransaction(
       signerProvider,
       metaTxChainProvider,
-      tx.data!,
+      tx.data,
       contractConfig
     )
   )

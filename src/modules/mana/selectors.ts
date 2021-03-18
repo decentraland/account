@@ -91,12 +91,14 @@ export const getTransactionByNetwork = createSelector<
   Transaction[],
   Deposit[],
   Withdrawal[],
+  string | undefined,
   Record<Network, AccountTransaction[]>
 >(
   getTransactionsData,
   getDeposits,
   getWithdrawals,
-  (transactions, deposits, withdrawals) => {
+  getAddress,
+  (transactions, deposits, withdrawals, walletAddress) => {
     const result: Record<Network, AccountTransaction[]> = {
       ETHEREUM: [],
       MATIC: [],
@@ -126,7 +128,11 @@ export const getTransactionByNetwork = createSelector<
         }
         result[network].push(accountTransaction)
       } else {
-        if (tx.actionType === SEND_MANA_SUCCESS) {
+        if (
+          tx.actionType === SEND_MANA_SUCCESS &&
+          walletAddress &&
+          tx.from === walletAddress
+        ) {
           const accountTransaction: AccountTransaction<Send> = {
             hash: tx.hash,
             type: TransactionType.SEND,

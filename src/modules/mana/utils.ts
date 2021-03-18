@@ -3,6 +3,11 @@ import { TransactionStatus as TxStatus } from 'decentraland-dapps/dist/modules/t
 import { graphql } from 'decentraland-dapps/dist/lib/graph'
 import { Provider } from 'decentraland-transactions/dist'
 import { TransactionStatus, WithdrawalStatus } from './types'
+import {
+  hasFailed,
+  hasSucceeded,
+  isPending,
+} from 'decentraland-dapps/dist/modules/transaction/utils'
 
 export const MANA_CONTRACT_ADDRESS = process.env
   .REACT_APP_MANA_CONTRACT_ADDRESS!
@@ -96,29 +101,27 @@ export async function waitForSync(
 }
 
 export const mapStatus = (txStatus: TxStatus | null) => {
-  let resultStatus: TransactionStatus = TransactionStatus.PENDING
-  if (txStatus) {
-    if (txStatus === TxStatus.CONFIRMED) {
-      resultStatus = TransactionStatus.CONFIRMED
-    } else if (
-      txStatus === TxStatus.DROPPED ||
-      txStatus === TxStatus.REVERTED
-    ) {
-      resultStatus = TransactionStatus.REJECTED
-    }
+  if (isPending(txStatus)) {
+    return TransactionStatus.PENDING
+  } else if (hasFailed(txStatus)) {
+    return TransactionStatus.REJECTED
+  } else if (hasSucceeded(txStatus)) {
+    return TransactionStatus.CONFIRMED
+  } else {
+    throw new Error(`Invalid transaction status: ${txStatus}`)
   }
-  return resultStatus
 }
 
 export const mapStatusWithdrawal = (
   status: WithdrawalStatus
 ): TransactionStatus => {
-  let result: TransactionStatus = TransactionStatus.CONFIRMED
-  if (status === WithdrawalStatus.PENDING) {
-    result = TransactionStatus.PENDING
+  switch (status) {
+    case WithdrawalStatus.COMPLETE:
+      return TransactionStatus.CONFIRMED
+    case WithdrawalStatus.PENDING:
+    case WithdrawalStatus.CHECKPOINT:
+      return TransactionStatus.PENDING
+    default:
+      return TransactionStatus.PENDING
   }
-  if (status === WithdrawalStatus.CHECKPOINT) {
-    result = TransactionStatus.PENDING
-  }
-  return result
 }
