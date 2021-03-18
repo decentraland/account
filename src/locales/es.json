@@ -86,5 +86,19 @@
     "status_checkpoint_placeholder": "Usualmente toma 30 minutos",
     "status_completed": "Completar Retiro",
     "complete_withdrawal": "Completar Retiro"
+  },
+  "withdrawal_status": {
+    "pending": "Pendiente",
+    "checkpoint": "Checkpoint",
+    "complete": "Completado"
+  },
+  "deposit_status": {
+    "pending": "Pendiente",
+    "complete": "Completado"
+  },
+  "send_status": {
+    "rejected": "Rechazado",
+    "complete": "Completado",
+    "pending": "Pendiente"
   }
 }

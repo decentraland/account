@@ -86,5 +86,19 @@
     "status_checkpoint_placeholder": "通常需要30分钟",
     "status_completed": "完成提款",
     "complete_withdrawal": "完全取款"
+  },
+  "withdrawal_status": {
+    "pending": "待办的",
+    "checkpoint": "检查站",
+    "complete": "完全的"
+  },
+  "deposit_status": {
+    "pending": "待办的",
+    "complete": "完全的"
+  },
+  "send_status": {
+    "rejected": "拒绝了",
+    "complete": "完全的",
+    "pending": "待办的"
   }
 }
