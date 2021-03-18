@@ -27,6 +27,7 @@
   font-size: 15px;
   line-height: 24px;
   color: #736E7D;
+  text-transform: uppercase;
 }
 
 .AccountTransaction :last-child {

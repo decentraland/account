@@ -89,7 +89,13 @@ import {
   isWithdrawalSynced,
   isDepositSynced,
 } from './utils'
-import { WithdrawalStatus, Withdrawal, Deposit, DepositStatus } from './types'
+import {
+  WithdrawalStatus,
+  Withdrawal,
+  Deposit,
+  DepositStatus,
+  SendStatus,
+} from './types'
 import { getWalletDeposits, getWalletWithdrawals } from './selectors'
 import { closeModal, openModal } from '../modal/actions'
 import { Provider } from 'decentraland-dapps/dist/modules/wallet/types'
@@ -361,7 +367,21 @@ function* handleSendManaRequest(action: SendManaRequestAction) {
             .getTxHash()
         )
         const chainId: ChainId = yield select(getChainId)
-        yield put(sendManaSuccess(to, amount, network, chainId, txHash))
+
+        yield put(
+          sendManaSuccess(
+            {
+              hash: txHash,
+              network,
+              chainId,
+              amount,
+              to,
+              status: SendStatus.CONFIRMED,
+            },
+            chainId,
+            txHash
+          )
+        )
         break
       }
       case Network.MATIC: {
@@ -372,7 +392,20 @@ function* handleSendManaRequest(action: SendManaRequestAction) {
             (mana) => mana.transfer(to, toWei(amount.toString(), 'ether'))
           )
         )
-        yield put(sendManaSuccess(to, amount, network, chainId, txHash))
+        yield put(
+          sendManaSuccess(
+            {
+              hash: txHash,
+              network,
+              chainId,
+              amount,
+              to,
+              status: SendStatus.CONFIRMED,
+            },
+            chainId,
+            txHash
+          )
+        )
         break
       }
 

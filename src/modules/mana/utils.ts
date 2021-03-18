@@ -1,6 +1,8 @@
 import { BigNumber, ethers } from 'ethers'
+import { TransactionStatus as TxStatus } from 'decentraland-dapps/dist/modules/transaction/types'
 import { graphql } from 'decentraland-dapps/dist/lib/graph'
 import { Provider } from 'decentraland-transactions/dist'
+import { TransactionStatus } from './types'
 
 export const MANA_CONTRACT_ADDRESS = process.env
   .REACT_APP_MANA_CONTRACT_ADDRESS!
@@ -91,4 +93,19 @@ export async function waitForSync(
     )
     return waitForSync(txHash, isSynced)
   }
+}
+
+export const mapStatus = (txStatus: TxStatus | null) => {
+  let resultStatus: TransactionStatus = TransactionStatus.PENDING
+  if (txStatus) {
+    if (txStatus === TxStatus.CONFIRMED) {
+      resultStatus = TransactionStatus.CONFIRMED
+    } else if (
+      txStatus === TxStatus.DROPPED ||
+      txStatus === TxStatus.REVERTED
+    ) {
+      resultStatus = TransactionStatus.REJECTED
+    }
+  }
+  return resultStatus
 }

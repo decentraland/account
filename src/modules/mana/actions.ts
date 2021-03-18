@@ -1,7 +1,13 @@
 import { action } from 'typesafe-actions'
 import { ChainId, Network } from '@dcl/schemas'
 import { buildTransactionPayload } from 'decentraland-dapps/dist/modules/transaction/utils'
-import { WithdrawalStatus, Withdrawal, Deposit, DepositStatus } from './types'
+import {
+  WithdrawalStatus,
+  Withdrawal,
+  Deposit,
+  DepositStatus,
+  Send,
+} from './types'
 
 // Get MANA Approved
 export const DEPOSIT_MANA_REQUEST = '[Request] Deposit MANA'
@@ -108,18 +114,10 @@ export const SEND_MANA_FAILURE = '[Failure] Send Mana'
 
 export const sendManaRequest = (to: string, amount: number, network: Network) =>
   action(SEND_MANA_REQUEST, { to, amount, network })
-export const sendManaSuccess = (
-  to: string,
-  amount: number,
-  network: Network,
-  chainId: ChainId,
-  txHash: string
-) =>
+export const sendManaSuccess = (send: Send, chainId: ChainId, txHash: string) =>
   action(SEND_MANA_SUCCESS, {
-    to,
-    amount,
-    network,
-    ...buildTransactionPayload(chainId, txHash, { to, amount, network }),
+    send,
+    ...buildTransactionPayload(chainId, txHash, { send }),
   })
 export const sendManaFailure = (
   to: string,

@@ -3,10 +3,12 @@ import {
   Transaction,
   TransactionStatus,
   TransactionType,
+  Withdrawal,
 } from '../../../../../modules/mana/types'
 import { OpenModalAction } from '../../../../../modules/modal/actions'
 
 export type Props = {
+  withdrawals: Withdrawal[]
   transaction: Transaction
   onPendingWithDrawal: (txHash: string) => void
   onTransactionDetail: (
@@ -17,7 +19,9 @@ export type Props = {
   ) => void
 }
 
-export type MapStateProps = {}
+export type MapStateProps = {
+  withdrawals: Withdrawal[]
+}
 export type MapDispatchProps = Pick<
   Props,
   'onTransactionDetail' | 'onPendingWithDrawal'
