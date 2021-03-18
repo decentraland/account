@@ -20,6 +20,26 @@ const AccountTransaction = ({
 }: Props) => {
   const { type, status } = transaction
 
+  const isPending = () => {
+    if (type === TransactionType.WITHDRAWAL) {
+      if (
+        data.status === WithdrawalStatus.CHECKPOINT ||
+        data.status === WithdrawalStatus.PENDING
+      ) {
+        return true
+      }
+    } else if (type === TransactionType.DEPOSIT) {
+      if (data.status === DepositStatus.PENDING) {
+        return true
+      }
+    } else if (type === TransactionType.SEND) {
+      if (data.status === SendStatus.PENDING) {
+        return true
+      }
+    }
+    return false
+  }
+
   const shortening = (address: string): string =>
     address ? `${address.slice(0, 4)}...${address.slice(-4)}` : ''
 
@@ -39,15 +59,15 @@ const AccountTransaction = ({
   }
 
   let transactionLogo = ''
-  if (type === TransactionType.DEPOSIT || type === TransactionType.BUY) {
+  if (isPending()) {
+    transactionLogo = 'pending-transaction-logo'
+  } else if (type === TransactionType.DEPOSIT || type === TransactionType.BUY) {
     transactionLogo = 'in-transaction-logo'
   } else if (
     type === TransactionType.WITHDRAWAL ||
     type === TransactionType.SEND
   ) {
     transactionLogo = 'out-transaction-logo'
-  } else if (status === TransactionStatus.PENDING) {
-    transactionLogo = 'pending-transaction-logo'
   } else if (status === TransactionStatus.REJECTED) {
     transactionLogo = 'rejected-transaction-logo'
   }

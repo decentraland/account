@@ -2,7 +2,7 @@ import { BigNumber, ethers } from 'ethers'
 import { TransactionStatus as TxStatus } from 'decentraland-dapps/dist/modules/transaction/types'
 import { graphql } from 'decentraland-dapps/dist/lib/graph'
 import { Provider } from 'decentraland-transactions/dist'
-import { TransactionStatus } from './types'
+import { TransactionStatus, WithdrawalStatus } from './types'
 
 export const MANA_CONTRACT_ADDRESS = process.env
   .REACT_APP_MANA_CONTRACT_ADDRESS!
@@ -108,4 +108,17 @@ export const mapStatus = (txStatus: TxStatus | null) => {
     }
   }
   return resultStatus
+}
+
+export const mapStatusWithdrawal = (
+  status: WithdrawalStatus
+): TransactionStatus => {
+  let result: TransactionStatus = TransactionStatus.CONFIRMED
+  if (status === WithdrawalStatus.PENDING) {
+    result = TransactionStatus.PENDING
+  }
+  if (status === WithdrawalStatus.CHECKPOINT) {
+    result = TransactionStatus.PENDING
+  }
+  return result
 }

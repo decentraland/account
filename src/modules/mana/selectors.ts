@@ -1,6 +1,6 @@
 import { RootState } from '../reducer'
 import { Transaction } from 'decentraland-dapps/dist/modules/transaction/types'
-import { APPROVE_MANA_SUCCESS } from './actions'
+import { APPROVE_MANA_SUCCESS, SEND_MANA_SUCCESS } from './actions'
 import { createSelector } from 'reselect'
 
 import { getData as getTransactionsData } from 'decentraland-dapps/dist/modules/transaction/selectors'
@@ -11,12 +11,11 @@ import {
   Deposit,
   Withdrawal,
   Transaction as AccountTransaction,
-  TransactionStatus,
   TransactionType,
 } from './types'
 import { Network } from '@dcl/schemas'
 import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
-import { mapStatus } from './utils'
+import { mapStatus, mapStatusWithdrawal } from './utils'
 
 export const getState = (state: RootState) => state.mana
 export const getData = (state: RootState) => getState(state).data
@@ -114,7 +113,7 @@ export const getTransactionByNetwork = createSelector<
         const accountTransaction: AccountTransaction<Deposit> = {
           hash: tx.hash,
           type: TransactionType.DEPOSIT,
-          status: TransactionStatus.PENDING,
+          status: mapStatus(tx.status),
           data: deposit,
         }
         result[network].push(accountTransaction)
@@ -122,18 +121,20 @@ export const getTransactionByNetwork = createSelector<
         const accountTransaction: AccountTransaction<Withdrawal> = {
           hash: tx.hash,
           type: TransactionType.WITHDRAWAL,
-          status: mapStatus(tx.status),
+          status: mapStatusWithdrawal(withdrawal.status),
           data: withdrawal,
         }
         result[network].push(accountTransaction)
       } else {
-        const accountTransaction: AccountTransaction<Send> = {
-          hash: tx.hash,
-          type: TransactionType.SEND,
-          status: mapStatus(tx.status),
-          data: tx.payload.send || {},
+        if (tx.actionType === SEND_MANA_SUCCESS) {
+          const accountTransaction: AccountTransaction<Send> = {
+            hash: tx.hash,
+            type: TransactionType.SEND,
+            status: mapStatus(tx.status),
+            data: tx.payload.send || {},
+          }
+          result[network].push(accountTransaction)
         }
-        result[network].push(accountTransaction)
       }
     }
     return result
