@@ -30,11 +30,6 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
       return
     }
     const { status, amount } = withdrawal
-    const isWithdrawalPending = status === WithdrawalStatus.PENDING
-    const isWithdrawalCheckpoint =
-      status === WithdrawalStatus.CHECKPOINT ||
-      status === WithdrawalStatus.COMPLETE
-    const isWithdrawalCompleted = status === WithdrawalStatus.COMPLETE
 
     const handleFinishWithdrawal = () => onFinishWithdrawal(withdrawal)
 
@@ -62,25 +57,32 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
             />
             <Radio
               checked={true}
-              className={isWithdrawalCheckpoint ? '' : 'yellow_check'}
+              className={
+                status === WithdrawalStatus.CHECKPOINT ||
+                status === WithdrawalStatus.COMPLETE
+                  ? ''
+                  : 'yellow_check'
+              }
               label={t('withdrawal_status_modal.status_checkpoint')}
             />
             <div className="status_checkpoint_placeholder">
               {t('withdrawal_status_modal.status_checkpoint_placeholder')}
             </div>
             <Radio
-              checked={isWithdrawalCompleted}
+              checked={status === WithdrawalStatus.COMPLETE}
               label={t('withdrawal_status_modal.status_completed')}
             />
           </div>
-          {isWithdrawalCompleted && !isTxPending ? (
+          {status === WithdrawalStatus.COMPLETE && !isTxPending ? (
             <Button primary onClick={onClose}>
               {t('global.done')}
             </Button>
           ) : (
             <Button
               primary
-              disabled={isWithdrawalPending || isLoading || isTxPending}
+              disabled={
+                status === WithdrawalStatus.PENDING || isLoading || isTxPending
+              }
               loading={isLoading || isTxPending}
               onClick={handleFinishWithdrawal}
             >
