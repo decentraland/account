@@ -11,7 +11,9 @@ import {
   Deposit,
   Withdrawal,
   Transaction as AccountTransaction,
+  TransactionStatus as AccountTransactionStatus,
   TransactionType,
+  DepositStatus,
 } from './types'
 import { Network } from '@dcl/schemas'
 import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
@@ -113,7 +115,10 @@ export const getTransactionByNetwork = createSelector<
         const accountTransaction: AccountTransaction<Deposit> = {
           hash: tx.hash,
           type: TransactionType.DEPOSIT,
-          status: mapStatus(tx.status),
+          status:
+            deposit.status === DepositStatus.PENDING
+              ? AccountTransactionStatus.PENDING
+              : mapStatus(tx.status),
           data: deposit,
         }
         result[network].push(accountTransaction)
