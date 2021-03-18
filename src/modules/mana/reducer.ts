@@ -22,12 +22,12 @@ import {
   FETCH_MANA_PRICE_FAILURE,
   FETCH_MANA_PRICE_REQUEST,
   FETCH_MANA_PRICE_SUCCESS,
-  SendManaFailureAction,
-  SendManaRequestAction,
-  SendManaSuccessAction,
-  SEND_MANA_FAILURE,
-  SEND_MANA_REQUEST,
-  SEND_MANA_SUCCESS,
+  TransferManaFailureAction,
+  TransferManaRequestAction,
+  TransferManaSuccessAction,
+  TRANSFER_MANA_FAILURE,
+  TRANSFER_MANA_REQUEST,
+  TRANSFER_MANA_SUCCESS,
   GET_APPROVED_MANA_REQUEST,
   GET_APPROVED_MANA_SUCCESS,
   GET_APPROVED_MANA_FAILURE,
@@ -91,9 +91,9 @@ const INITAL_STATE: ManaState = {
 }
 
 type ManaReducerAction =
-  | SendManaRequestAction
-  | SendManaSuccessAction
-  | SendManaFailureAction
+  | TransferManaRequestAction
+  | TransferManaSuccessAction
+  | TransferManaFailureAction
   | FetchManaPriceRequestAction
   | FetchManaPriceSuccessAction
   | FetchManaPriceFailureAction
@@ -127,7 +127,7 @@ export function manaReducer(
   action: ManaReducerAction
 ): ManaState {
   switch (action.type) {
-    case SEND_MANA_REQUEST:
+    case TRANSFER_MANA_REQUEST:
     case FETCH_MANA_PRICE_REQUEST:
     case APPROVE_MANA_REQUEST:
     case GET_APPROVED_MANA_REQUEST:
@@ -142,7 +142,7 @@ export function manaReducer(
       }
     }
 
-    case SEND_MANA_SUCCESS: {
+    case TRANSFER_MANA_SUCCESS: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
@@ -307,7 +307,7 @@ export function manaReducer(
       }
     }
 
-    case SEND_MANA_FAILURE:
+    case TRANSFER_MANA_FAILURE:
     case FETCH_MANA_PRICE_FAILURE:
     case APPROVE_MANA_FAILURE:
     case GET_APPROVED_MANA_FAILURE:

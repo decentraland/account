@@ -5,8 +5,8 @@ import './AccountTransaction.css'
 import {
   Deposit,
   DepositStatus,
-  Send,
-  SendStatus,
+  Transfer,
+  TransferStatus,
   TransactionStatus,
   TransactionType,
   Withdrawal,
@@ -32,8 +32,8 @@ const AccountTransaction = ({
       if (data.status === DepositStatus.PENDING) {
         return true
       }
-    } else if (type === TransactionType.SEND) {
-      if (data.status === SendStatus.PENDING) {
+    } else if (type === TransactionType.TRANSFER) {
+      if (data.status === TransferStatus.PENDING) {
         return true
       }
     }
@@ -53,8 +53,8 @@ const AccountTransaction = ({
     data = transaction.data as Withdrawal
   } else if (type === TransactionType.BUY) {
     description = t('transaction_description.buy')
-  } else if (type === TransactionType.SEND) {
-    data = transaction.data as Send
+  } else if (type === TransactionType.TRANSFER) {
+    data = transaction.data as Transfer
     description = `${t('transaction_description.send')} ${shortening(data.to)}`
   }
 
@@ -65,7 +65,7 @@ const AccountTransaction = ({
     transactionLogo = 'in-transaction-logo'
   } else if (
     type === TransactionType.WITHDRAWAL ||
-    type === TransactionType.SEND
+    type === TransactionType.TRANSFER
   ) {
     transactionLogo = 'out-transaction-logo'
   } else if (status === TransactionStatus.REJECTED) {
@@ -99,10 +99,10 @@ const AccountTransaction = ({
       } else if (data.status === DepositStatus.PENDING) {
         return t('deposit_status.pending')
       }
-    } else if (type === TransactionType.SEND) {
-      if (data.status === SendStatus.CONFIRMED) {
+    } else if (type === TransactionType.TRANSFER) {
+      if (data.status === TransferStatus.CONFIRMED) {
         return t('send_status.complete')
-      } else if (data.status === SendStatus.REJECTED) {
+      } else if (data.status === TransferStatus.REJECTED) {
         return t('send_status.rejected')
       } else {
         return t('send_status.pending')

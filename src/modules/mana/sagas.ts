@@ -45,10 +45,10 @@ import {
   FetchManaPriceRequestAction,
   fetchManaPriceSuccess,
   FETCH_MANA_PRICE_REQUEST,
-  sendManaFailure,
-  SendManaRequestAction,
-  sendManaSuccess,
-  SEND_MANA_REQUEST,
+  transferManaFailure,
+  transferManaSuccess,
+  TransferManaRequestAction,
+  TRANSFER_MANA_REQUEST,
   initiateWithdrawalFailure,
   InitiateWithdrawalRequestAction,
   initiateWithdrawalSuccess,
@@ -94,7 +94,7 @@ import {
   Withdrawal,
   Deposit,
   DepositStatus,
-  SendStatus,
+  TransferStatus,
 } from './types'
 import { getWalletDeposits, getWalletWithdrawals } from './selectors'
 import { closeModal, openModal } from '../modal/actions'
@@ -118,7 +118,7 @@ export function* manaSaga() {
   )
   yield takeEvery(INITIATE_WITHDRAWAL_REQUEST, handleInitiateWithdrawalRequest)
   yield takeEvery(FINISH_WITHDRAWAL_REQUEST, handleFinishWithdrawalRequest)
-  yield takeEvery(SEND_MANA_REQUEST, handleSendManaRequest)
+  yield takeEvery(TRANSFER_MANA_REQUEST, handleSendManaRequest)
   yield takeEvery(FETCH_MANA_PRICE_REQUEST, handleFetchManaPriceRequest)
   yield takeEvery(CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess)
 }
@@ -347,7 +347,7 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
   }
 }
 
-function* handleSendManaRequest(action: SendManaRequestAction) {
+function* handleSendManaRequest(action: TransferManaRequestAction) {
   const { to, amount, network } = action.payload
   try {
     const provider: Provider = yield call(getConnectedProvider)
@@ -369,14 +369,14 @@ function* handleSendManaRequest(action: SendManaRequestAction) {
         const chainId: ChainId = yield select(getChainId)
 
         yield put(
-          sendManaSuccess(
+          transferManaSuccess(
             {
               hash: txHash,
               network,
               chainId,
               amount,
               to,
-              status: SendStatus.CONFIRMED,
+              status: TransferStatus.CONFIRMED,
             },
             chainId,
             txHash
@@ -393,14 +393,14 @@ function* handleSendManaRequest(action: SendManaRequestAction) {
           )
         )
         yield put(
-          sendManaSuccess(
+          transferManaSuccess(
             {
               hash: txHash,
               network,
               chainId,
               amount,
               to,
-              status: SendStatus.CONFIRMED,
+              status: TransferStatus.CONFIRMED,
             },
             chainId,
             txHash
@@ -415,7 +415,7 @@ function* handleSendManaRequest(action: SendManaRequestAction) {
 
     yield put(closeModal('SendManaModal'))
   } catch (error) {
-    yield put(sendManaFailure(to, amount, network, error))
+    yield put(transferManaFailure(to, amount, network, error))
   }
 }
 

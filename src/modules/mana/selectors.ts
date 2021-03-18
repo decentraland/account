@@ -1,13 +1,13 @@
 import { RootState } from '../reducer'
 import { Transaction } from 'decentraland-dapps/dist/modules/transaction/types'
-import { APPROVE_MANA_SUCCESS, SEND_MANA_SUCCESS } from './actions'
+import { APPROVE_MANA_SUCCESS, TRANSFER_MANA_SUCCESS } from './actions'
 import { createSelector } from 'reselect'
 
 import { getData as getTransactionsData } from 'decentraland-dapps/dist/modules/transaction/selectors'
 import { isPending } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import {
-  Send,
+  Transfer,
   Deposit,
   Withdrawal,
   Transaction as AccountTransaction,
@@ -127,13 +127,13 @@ export const getTransactionByNetwork = createSelector<
         result[network].push(accountTransaction)
       } else {
         if (
-          tx.actionType === SEND_MANA_SUCCESS &&
+          tx.actionType === TRANSFER_MANA_SUCCESS &&
           walletAddress &&
           tx.from === walletAddress
         ) {
-          const accountTransaction: AccountTransaction<Send> = {
+          const accountTransaction: AccountTransaction<Transfer> = {
             hash: tx.hash,
-            type: TransactionType.SEND,
+            type: TransactionType.TRANSFER,
             status: mapStatus(tx.status),
             data: tx.payload.send || {},
           }

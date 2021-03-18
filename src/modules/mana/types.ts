@@ -3,7 +3,7 @@ import { ChainId, Network } from '@dcl/schemas'
 export enum TransactionType {
   DEPOSIT = 'deposit',
   WITHDRAWAL = 'withdrawal',
-  SEND = 'send',
+  TRANSFER = 'transfer',
   BUY = 'buy',
 }
 
@@ -24,19 +24,19 @@ export type Buy = {
   amount: number
 }
 
-export enum SendStatus {
+export enum TransferStatus {
   CONFIRMED = 'confirmed',
   PENDING = 'pending',
   REJECTED = 'rejected',
 }
 
-export type Send = {
+export type Transfer = {
   hash: string
   network: Network
   chainId: ChainId
   amount: number
   to: string
-  status: SendStatus
+  status: TransferStatus
 }
 
 export enum DepositStatus {
