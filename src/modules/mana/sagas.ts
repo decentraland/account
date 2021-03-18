@@ -413,7 +413,7 @@ function* handleSendManaRequest(action: TransferManaRequestAction) {
         throw new Error(`Invalid network "${network}"`)
     }
 
-    yield put(closeModal('SendManaModal'))
+    yield put(closeModal('TransferManaModal'))
   } catch (error) {
     yield put(transferManaFailure(to, amount, network, error))
   }

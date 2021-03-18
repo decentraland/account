@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button, Close, Field } from 'decentraland-ui'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
-import { Props } from './SendManaModal.types'
-import './SendManaModal.css'
+import { Props } from './TransferManaModal.types'
+import './TransferManaModal.css'
 
-const SendManaModal: React.FC<Props> = ({
+const TransferManaModal: React.FC<Props> = ({
   name,
   onClose,
   isLoading,
   manaPrice,
   onManaPrice,
-  onSendMana,
+  onTransferMana,
   metadata: { network },
 }) => {
   const [amount, setAmount] = useState(0)
@@ -50,10 +50,10 @@ const SendManaModal: React.FC<Props> = ({
     }
   }
 
-  const handleSendMana = () => {
+  const handleTransferMana = () => {
     const isValidAddress = /^0x[0-9a-fA-F]{40}$/.test(to)
     if (isValidAddress) {
-      onSendMana(to, amount, network)
+      onTransferMana(to, amount, network)
     } else {
       setErrors({
         ...errors,
@@ -72,7 +72,7 @@ const SendManaModal: React.FC<Props> = ({
   return (
     <Modal
       name={name}
-      className="SendManaModal"
+      className="TransferManaModal"
       closeIcon={<Close onClick={onClose} />}
     >
       <Modal.Header>
@@ -101,7 +101,7 @@ const SendManaModal: React.FC<Props> = ({
           message={errors.to.message}
           error={errors.to.hasError}
         />
-        <Button primary onClick={handleSendMana} loading={isLoading}>
+        <Button primary onClick={handleTransferMana} loading={isLoading}>
           {t('send_mana_modal.send_tokens')}
         </Button>
       </Modal.Content>
@@ -109,4 +109,4 @@ const SendManaModal: React.FC<Props> = ({
   )
 }
 
-export default React.memo(SendManaModal)
+export default React.memo(TransferManaModal)

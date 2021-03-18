@@ -15,7 +15,8 @@ const mapState = (state: RootState): MapStateProps => ({
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
   onConvert: (network) => dispatch(openModal('ConvertManaModal', { network })),
-  onSend: (network) => dispatch(openModal('SendManaModal', { network })),
+  onTransfer: (network) =>
+    dispatch(openModal('TransferManaModal', { network })),
   onReceive: (network, address) =>
     dispatch(openModal('ReceiveManaModal', { network, address })),
 })

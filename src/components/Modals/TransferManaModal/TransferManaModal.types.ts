@@ -8,7 +8,7 @@ import {
 export type Props = ModalProps & {
   isLoading: boolean
   manaPrice: number
-  onSendMana: typeof transferManaRequest
+  onTransferMana: typeof transferManaRequest
   onManaPrice: typeof fetchManaPriceRequest
 }
 
@@ -16,4 +16,4 @@ export type State = {}
 
 export type MapState = Props
 export type MapDispatch = Dispatch
-export type MapDispatchProps = Pick<Props, 'onSendMana' | 'onManaPrice'>
+export type MapDispatchProps = Pick<Props, 'onTransferMana' | 'onManaPrice'>

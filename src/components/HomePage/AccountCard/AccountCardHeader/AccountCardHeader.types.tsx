@@ -7,11 +7,14 @@ export type Props = {
   network: Network
   title: string
   amount: number
-  onSend: (network: Network) => void
+  onTransfer: (network: Network) => void
   onReceive: (network: Network, address: string) => void
   onConvert: (network: Network) => void
 }
 
 export type MapStateProps = Pick<Props, 'address'>
-export type MapDispatchProps = Pick<Props, 'onSend' | 'onReceive' | 'onConvert'>
+export type MapDispatchProps = Pick<
+  Props,
+  'onTransfer' | 'onReceive' | 'onConvert'
+>
 export type MapDispatch = Dispatch<OpenModalAction>

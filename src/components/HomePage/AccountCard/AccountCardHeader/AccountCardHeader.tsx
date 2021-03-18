@@ -10,11 +10,11 @@ const AccountCardHeader = ({
   network,
   title,
   amount,
-  onSend,
+  onTransfer,
   onReceive,
   onConvert,
 }: Props) => {
-  const handleSendMana = () => onSend(network)
+  const handleTransferMana = () => onTransfer(network)
 
   const handleReceiveMana = () => {
     if (address) {
@@ -33,7 +33,7 @@ const AccountCardHeader = ({
             <Dropdown.Menu>
               <Dropdown.Item
                 text={t('account_card_header.send')}
-                onClick={handleSendMana}
+                onClick={handleTransferMana}
               />
               <Dropdown.Item
                 text={t('account_card_header.receive')}

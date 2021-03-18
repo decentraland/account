@@ -7,8 +7,8 @@ import {
 } from '../../../modules/mana/actions'
 import { RootState } from '../../../modules/reducer'
 import { getManaPrice, getLoading } from '../../../modules/mana/selectors'
-import { MapDispatch, MapDispatchProps } from './SendManaModal.types'
-import SendManaModal from './SendManaModal'
+import { MapDispatch, MapDispatchProps } from './TransferManaModal.types'
+import TransferManaModal from './TransferManaModal'
 
 const mapState = (state: RootState) => ({
   manaPrice: getManaPrice(state),
@@ -16,9 +16,9 @@ const mapState = (state: RootState) => ({
 })
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
-  onSendMana: (to, amount, network) =>
+  onTransferMana: (to, amount, network) =>
     dispatch(transferManaRequest(to, amount, network)),
   onManaPrice: () => dispatch(fetchManaPriceRequest()),
 })
 
-export default connect(mapState, mapDispatch)(SendManaModal)
+export default connect(mapState, mapDispatch)(TransferManaModal)
