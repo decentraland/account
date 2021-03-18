@@ -131,6 +131,7 @@ export const getTransactionByNetwork = createSelector<
           walletAddress &&
           tx.from === walletAddress
         ) {
+          console.log(tx.payload.transfer)
           const accountTransaction: AccountTransaction<Transfer> = {
             hash: tx.hash,
             type: TransactionType.TRANSFER,

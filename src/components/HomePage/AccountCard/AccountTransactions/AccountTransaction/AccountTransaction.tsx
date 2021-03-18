@@ -100,9 +100,9 @@ const AccountTransaction = ({
         return t('deposit_status.pending')
       }
     } else if (type === TransactionType.TRANSFER) {
-      if (data.status === TransferStatus.CONFIRMED) {
+      if (status === TransactionStatus.CONFIRMED) {
         return t('send_status.complete')
-      } else if (data.status === TransferStatus.REJECTED) {
+      } else if (status === TransactionStatus.REJECTED) {
         return t('send_status.rejected')
       } else {
         return t('send_status.pending')
