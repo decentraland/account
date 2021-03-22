@@ -80,23 +80,23 @@ const AccountTransaction = ({
     ) {
       onPendingWithDrawal(data.hash)
     } else {
-      onTransactionDetail(description, data.amount, status, type)
+      onTransactionDetail(description, transaction)
     }
   }
 
-  const getStatus = () => {
+  const getStatus = (type: TransactionType, status: any) => {
     if (type === TransactionType.WITHDRAWAL) {
-      if (data.status === WithdrawalStatus.COMPLETE) {
+      if (status === WithdrawalStatus.COMPLETE) {
         return t('withdrawal_status.complete')
-      } else if (data.status === WithdrawalStatus.CHECKPOINT) {
+      } else if (status === WithdrawalStatus.CHECKPOINT) {
         return t('withdrawal_status.checkpoint')
       } else {
         return t('withdrawal_status.pending')
       }
     } else if (type === TransactionType.DEPOSIT) {
-      if (data.status === DepositStatus.COMPLETE) {
+      if (status === DepositStatus.COMPLETE) {
         return t('deposit_status.complete')
-      } else if (data.status === DepositStatus.PENDING) {
+      } else if (status === DepositStatus.PENDING) {
         return t('deposit_status.pending')
       }
     } else if (type === TransactionType.TRANSFER) {
@@ -117,7 +117,7 @@ const AccountTransaction = ({
       </div>
       <div className="DescriptionStatus">
         <div> {description} </div>
-        <div> {getStatus()} </div>
+        <div> {getStatus(type, data.status)} </div>
       </div>
       <div className="amount"> {data?.amount} </div>
     </div>

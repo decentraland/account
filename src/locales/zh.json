@@ -27,7 +27,9 @@
     "operation": "操作方式",
     "amount": "量",
     "type": "类型",
-    "status": "状态"
+    "status": "状态",
+    "datetime": "约会时间",
+    "to": "发送"
   },
   "see_all_transaction_modal": {
     "title": "Eth Mana交易"

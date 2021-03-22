@@ -37,6 +37,7 @@ export type Transfer = {
   amount: number
   to: string
   status: TransferStatus
+  timestamp: number
 }
 
 export enum DepositStatus {

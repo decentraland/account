@@ -13,13 +13,11 @@ const mapState = (_state: RootState): MapStateProps => ({})
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
   onPendingWithDrawal: (txHash) =>
     dispatch(openModal('WithdrawalStatusModal', { txHash })),
-  onTransactionDetail: (description, amount, type, status) =>
+  onTransactionDetail: (description, transaction) =>
     dispatch(
       openModal('TransactionDetailModal', {
         description,
-        amount,
-        type,
-        status,
+        transaction,
       })
     ),
 })

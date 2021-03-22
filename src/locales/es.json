@@ -27,7 +27,9 @@
     "operation": "Operacion",
     "amount": "Cantidad",
     "type": "Tipo",
-    "status": "Estado"
+    "status": "Estado",
+    "datetime": "Operacion realizada en",
+    "to": "Enviado a"
   },
   "see_all_transaction_modal": {
     "title": "Transacciones Eth Mana"

@@ -377,6 +377,7 @@ function* handleSendManaRequest(action: TransferManaRequestAction) {
               amount,
               to,
               status: TransferStatus.CONFIRMED,
+              timestamp: Date.now(),
             },
             chainId,
             txHash
@@ -401,6 +402,7 @@ function* handleSendManaRequest(action: TransferManaRequestAction) {
               amount,
               to,
               status: TransferStatus.CONFIRMED,
+              timestamp: Date.now(),
             },
             chainId,
             txHash

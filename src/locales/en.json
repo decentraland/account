@@ -27,7 +27,9 @@
     "operation": "Operation",
     "amount": "Amount",
     "type": "Type",
-    "status": "Status"
+    "status": "Status",
+    "datetime": "Date time",
+    "to": "Sent to"
   },
   "see_all_transaction_modal": {
     "title": "Eth Mana Transactions"
