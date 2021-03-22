@@ -2,12 +2,18 @@ import { BigNumber, ethers } from 'ethers'
 import { TransactionStatus as TxStatus } from 'decentraland-dapps/dist/modules/transaction/types'
 import { graphql } from 'decentraland-dapps/dist/lib/graph'
 import { Provider } from 'decentraland-transactions/dist'
-import { TransactionStatus, WithdrawalStatus } from './types'
+import {
+  DepositStatus,
+  TransactionStatus,
+  TransactionType,
+  WithdrawalStatus,
+} from './types'
 import {
   hasFailed,
   hasSucceeded,
   isPending,
 } from 'decentraland-dapps/dist/modules/transaction/utils'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 
 export const MANA_CONTRACT_ADDRESS = process.env
   .REACT_APP_MANA_CONTRACT_ADDRESS!
@@ -123,5 +129,31 @@ export const mapStatusWithdrawal = (
       return TransactionStatus.PENDING
     default:
       return TransactionStatus.PENDING
+  }
+}
+
+export const getStatusMessage = (type: TransactionType, status: any) => {
+  if (type === TransactionType.WITHDRAWAL) {
+    if (status === WithdrawalStatus.COMPLETE) {
+      return t('withdrawal_status.complete')
+    } else if (status === WithdrawalStatus.CHECKPOINT) {
+      return t('withdrawal_status.checkpoint')
+    } else {
+      return t('withdrawal_status.pending')
+    }
+  } else if (type === TransactionType.DEPOSIT) {
+    if (status === DepositStatus.COMPLETE) {
+      return t('deposit_status.complete')
+    } else if (status === DepositStatus.PENDING) {
+      return t('deposit_status.pending')
+    }
+  } else if (type === TransactionType.TRANSFER) {
+    if (status === TransactionStatus.CONFIRMED) {
+      return t('send_status.complete')
+    } else if (status === TransactionStatus.REJECTED) {
+      return t('send_status.rejected')
+    } else {
+      return t('send_status.pending')
+    }
   }
 }

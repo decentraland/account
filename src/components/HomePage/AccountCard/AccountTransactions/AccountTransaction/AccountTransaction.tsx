@@ -12,6 +12,7 @@ import {
   Withdrawal,
   WithdrawalStatus,
 } from '../../../../../modules/mana/types'
+import { getStatusMessage } from '../../../../../modules/mana/utils'
 
 const AccountTransaction = ({
   transaction,
@@ -84,32 +85,6 @@ const AccountTransaction = ({
     }
   }
 
-  const getStatus = (type: TransactionType, status: any) => {
-    if (type === TransactionType.WITHDRAWAL) {
-      if (status === WithdrawalStatus.COMPLETE) {
-        return t('withdrawal_status.complete')
-      } else if (status === WithdrawalStatus.CHECKPOINT) {
-        return t('withdrawal_status.checkpoint')
-      } else {
-        return t('withdrawal_status.pending')
-      }
-    } else if (type === TransactionType.DEPOSIT) {
-      if (status === DepositStatus.COMPLETE) {
-        return t('deposit_status.complete')
-      } else if (status === DepositStatus.PENDING) {
-        return t('deposit_status.pending')
-      }
-    } else if (type === TransactionType.TRANSFER) {
-      if (status === TransactionStatus.CONFIRMED) {
-        return t('send_status.complete')
-      } else if (status === TransactionStatus.REJECTED) {
-        return t('send_status.rejected')
-      } else {
-        return t('send_status.pending')
-      }
-    }
-  }
-
   return (
     <div className="AccountTransaction" onClick={handleDetailModal}>
       <div className="type">
@@ -117,7 +92,7 @@ const AccountTransaction = ({
       </div>
       <div className="DescriptionStatus">
         <div> {description} </div>
-        <div> {getStatus(type, data.status)} </div>
+        <div> {getStatusMessage(type, data.status)} </div>
       </div>
       <div className="amount"> {data?.amount} </div>
     </div>

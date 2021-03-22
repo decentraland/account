@@ -5,15 +5,13 @@ import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/Moda
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import {
   Deposit,
-  DepositStatus,
   Transaction,
-  TransactionStatus,
   TransactionType,
   Transfer,
   Withdrawal,
-  WithdrawalStatus,
 } from '../../../modules/mana/types'
 import './TransactionDetailModal.css'
+import { getStatusMessage } from '../../../modules/mana/utils'
 
 const TransactionDetailModal: React.FC<ModalProps> = ({
   name,
@@ -69,32 +67,6 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
     ? new Date(data?.timestamp).toLocaleString()
     : ''
 
-  const getStatus = (type: TransactionType, status: any) => {
-    if (type === TransactionType.WITHDRAWAL) {
-      if (status === WithdrawalStatus.COMPLETE) {
-        return t('withdrawal_status.complete')
-      } else if (status === WithdrawalStatus.CHECKPOINT) {
-        return t('withdrawal_status.checkpoint')
-      } else {
-        return t('withdrawal_status.pending')
-      }
-    } else if (type === TransactionType.DEPOSIT) {
-      if (status === DepositStatus.COMPLETE) {
-        return t('deposit_status.complete')
-      } else if (status === DepositStatus.PENDING) {
-        return t('deposit_status.pending')
-      }
-    } else if (type === TransactionType.TRANSFER) {
-      if (status === TransactionStatus.CONFIRMED) {
-        return t('send_status.complete')
-      } else if (status === TransactionStatus.REJECTED) {
-        return t('send_status.rejected')
-      } else {
-        return t('send_status.pending')
-      }
-    }
-  }
-
   return (
     <Modal
       name={name}
@@ -115,7 +87,7 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
         {dataComponent}
         <div className="status">
           <div> {t('transaction_detail_modal.status')} </div>
-          <div> {data ? getStatus(type, data.status) : ''}</div>
+          <div> {data ? getStatusMessage(type, data.status) : ''}</div>
         </div>
       </Modal.Content>
     </Modal>
