@@ -42,7 +42,7 @@
   },
   "transaction_description": {
     "deposit": "Deposit to MANA Matic",
-    "withdrawal": "Withdrawal to MANA Ehereum",
+    "withdrawal": "Withdrawal to MANA Ethereum",
     "buy": "Add tokens via Transak",
     "send": "Send tokens to"
   },

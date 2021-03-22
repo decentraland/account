@@ -42,7 +42,7 @@
   },
   "transaction_description": {
     "deposit": "Deposito a MANA Matic",
-    "withdrawal": "Extracción a MANA Ehereum",
+    "withdrawal": "Extracción a MANA Ethereum",
     "buy": "Compra de Tokens via Transak",
     "send": "Envio de tokens a"
   },
