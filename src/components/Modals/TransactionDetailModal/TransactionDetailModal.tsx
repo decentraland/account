@@ -10,8 +10,8 @@ import {
   Transfer,
   Withdrawal,
 } from '../../../modules/mana/types'
-import './TransactionDetailModal.css'
 import { getStatusMessage } from '../../../modules/mana/utils'
+import './TransactionDetailModal.css'
 
 const TransactionDetailModal: React.FC<ModalProps> = ({
   name,
@@ -23,7 +23,7 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
     transaction,
   }: { description: string; transaction: Transaction } = metadata
 
-  const { type } = transaction
+  const { type, status } = transaction
   let data
   let dataComponent
   switch (transaction.type) {
@@ -85,9 +85,9 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
         </div>
 
         {dataComponent}
-        <div className="status">
+        <div className="data">
           <div> {t('transaction_detail_modal.status')} </div>
-          <div> {data ? getStatusMessage(type, data.status) : ''}</div>
+          <div> {data ? getStatusMessage(type, status, data.status) : ''}</div>
         </div>
       </Modal.Content>
     </Modal>

@@ -6,6 +6,7 @@ import {
   DepositStatus,
   TransactionStatus,
   TransactionType,
+  TransferStatus,
   WithdrawalStatus,
 } from './types'
 import {
@@ -132,28 +133,37 @@ export const mapStatusWithdrawal = (
   }
 }
 
-export const getStatusMessage = (type: TransactionType, status: any) => {
+export const getStatusMessage = (
+  type: TransactionType,
+  parentStatus: TransactionStatus,
+  childStatus: any
+) => {
   if (type === TransactionType.WITHDRAWAL) {
-    if (status === WithdrawalStatus.COMPLETE) {
+    if (childStatus === WithdrawalStatus.COMPLETE) {
       return t('withdrawal_status.complete')
-    } else if (status === WithdrawalStatus.CHECKPOINT) {
+    }
+    if (childStatus === WithdrawalStatus.CHECKPOINT) {
       return t('withdrawal_status.checkpoint')
-    } else {
-      return t('withdrawal_status.pending')
     }
-  } else if (type === TransactionType.DEPOSIT) {
-    if (status === DepositStatus.COMPLETE) {
+    return t('withdrawal_status.pending')
+  }
+  if (type === TransactionType.DEPOSIT) {
+    if (childStatus === DepositStatus.COMPLETE) {
       return t('deposit_status.complete')
-    } else if (status === DepositStatus.PENDING) {
-      return t('deposit_status.pending')
     }
-  } else if (type === TransactionType.TRANSFER) {
-    if (status === TransactionStatus.CONFIRMED) {
-      return t('send_status.complete')
-    } else if (status === TransactionStatus.REJECTED) {
-      return t('send_status.rejected')
-    } else {
+    return t('deposit_status.pending')
+  }
+  if (type === TransactionType.TRANSFER) {
+    if (parentStatus === TransactionStatus.PENDING) {
       return t('send_status.pending')
     }
+    if (childStatus === TransferStatus.CONFIRMED) {
+      return t('send_status.complete')
+    }
+    if (childStatus === TransferStatus.REJECTED) {
+      return t('send_status.rejected')
+    }
+    return t('send_status.pending')
   }
+  return t('transaction_status.pending')
 }

@@ -4,9 +4,7 @@ import { Props } from './AccountTransaction.types'
 import './AccountTransaction.css'
 import {
   Deposit,
-  DepositStatus,
   Transfer,
-  TransferStatus,
   TransactionStatus,
   TransactionType,
   Withdrawal,
@@ -20,26 +18,6 @@ const AccountTransaction = ({
   onPendingWithDrawal,
 }: Props) => {
   const { type, status } = transaction
-
-  const isPending = () => {
-    if (type === TransactionType.WITHDRAWAL) {
-      if (
-        data.status === WithdrawalStatus.CHECKPOINT ||
-        data.status === WithdrawalStatus.PENDING
-      ) {
-        return true
-      }
-    } else if (type === TransactionType.DEPOSIT) {
-      if (data.status === DepositStatus.PENDING) {
-        return true
-      }
-    } else if (type === TransactionType.TRANSFER) {
-      if (data.status === TransferStatus.PENDING) {
-        return true
-      }
-    }
-    return false
-  }
 
   const shortening = (address: string): string =>
     address ? `${address.slice(0, 4)}...${address.slice(-4)}` : ''
@@ -60,9 +38,7 @@ const AccountTransaction = ({
   }
 
   let transactionLogo = ''
-  if (isPending()) {
-    transactionLogo = 'pending-transaction-logo'
-  } else if (type === TransactionType.DEPOSIT || type === TransactionType.BUY) {
+  if (type === TransactionType.DEPOSIT || type === TransactionType.BUY) {
     transactionLogo = 'in-transaction-logo'
   } else if (
     type === TransactionType.WITHDRAWAL ||
@@ -92,7 +68,7 @@ const AccountTransaction = ({
       </div>
       <div className="DescriptionStatus">
         <div> {description} </div>
-        <div> {getStatusMessage(type, data.status)} </div>
+        <div> {getStatusMessage(type, status, data.status)} </div>
       </div>
       <div className="amount"> {data?.amount} </div>
     </div>
