@@ -27,7 +27,6 @@
   font-size: 15px;
   line-height: 24px;
   color: #736E7D;
-  text-transform: uppercase;
 }
 
 .AccountTransaction :last-child {
@@ -47,6 +46,10 @@
   background-image: url('../../../../../images/out-transaction.svg'); 
 }
 
-.AccountTransaction .pending-transaction-logo {
-  background-image: url('../../../../../images/pending-transaction.svg'); 
+.AccountTransaction .out-pending-transaction-logo {
+  background-image: url('../../../../../images/out-pending-transaction.svg'); 
+}
+
+.AccountTransaction .in-pending-transaction-logo {
+  background-image: url('../../../../../images/in-pending-transaction.svg'); 
 }

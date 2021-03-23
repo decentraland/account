@@ -1,7 +1,6 @@
 import React from 'react'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Props } from './AccountTransaction.types'
-import './AccountTransaction.css'
+import { distanceInWordsToNow } from 'decentraland-dapps/dist/lib/utils'
 import {
   Deposit,
   Transfer,
@@ -10,7 +9,12 @@ import {
   Withdrawal,
   WithdrawalStatus,
 } from '../../../../../modules/mana/types'
-import { getStatusMessage } from '../../../../../modules/mana/utils'
+import {
+  getStatusMessage,
+  isPendingAccountTransaction,
+} from '../../../../../modules/mana/utils'
+import { Props } from './AccountTransaction.types'
+import './AccountTransaction.css'
 
 const AccountTransaction = ({
   transaction,
@@ -38,7 +42,13 @@ const AccountTransaction = ({
   }
 
   let transactionLogo = ''
-  if (type === TransactionType.DEPOSIT || type === TransactionType.BUY) {
+  if (isPendingAccountTransaction(type, status, data.status)) {
+    if (type === TransactionType.DEPOSIT || type === TransactionType.BUY) {
+      transactionLogo = 'in-pending-transaction-logo'
+    } else {
+      transactionLogo = 'out-pending-transaction-logo'
+    }
+  } else if (type === TransactionType.DEPOSIT || type === TransactionType.BUY) {
     transactionLogo = 'in-transaction-logo'
   } else if (
     type === TransactionType.WITHDRAWAL ||
@@ -68,9 +78,12 @@ const AccountTransaction = ({
       </div>
       <div className="DescriptionStatus">
         <div> {description} </div>
-        <div> {getStatusMessage(type, status, data.status)} </div>
+        <div>
+          {getStatusMessage(type, status, data.status)} -{' '}
+          {distanceInWordsToNow(transaction.data.timestamp)}
+        </div>
       </div>
-      <div className="amount"> {data?.amount} </div>
+      <div className="amount">{data?.amount}</div>
     </div>
   )
 }

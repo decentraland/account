@@ -167,3 +167,30 @@ export const getStatusMessage = (
   }
   return t('transaction_status.pending')
 }
+
+export const isPendingAccountTransaction = (
+  type: TransactionType,
+  parentStatus: TransactionStatus,
+  childStatus: any
+) => {
+  if (parentStatus === TransactionStatus.PENDING) {
+    return true
+  }
+  if (type === TransactionType.WITHDRAWAL) {
+    if (
+      childStatus === WithdrawalStatus.CHECKPOINT ||
+      childStatus === WithdrawalStatus.PENDING
+    ) {
+      return true
+    }
+  } else if (type === TransactionType.DEPOSIT) {
+    if (childStatus === DepositStatus.PENDING) {
+      return true
+    }
+  } else if (type === TransactionType.TRANSFER) {
+    if (childStatus === TransferStatus.PENDING) {
+      return true
+    }
+  }
+  return false
+}
