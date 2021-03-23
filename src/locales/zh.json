@@ -32,7 +32,8 @@
     "to": "发送"
   },
   "see_all_transaction_modal": {
-    "title": "Eth Mana交易"
+    "title_ethereum": "Ethereum 交易",
+    "title_matic": "Matic 交易"
   },
   "receive_mana_modal": {
     "title": "接收令牌",

@@ -32,7 +32,8 @@
     "to": "Sent to"
   },
   "see_all_transaction_modal": {
-    "title": "Eth Mana Transactions"
+    "title_ethereum": "Ethereum Transactions",
+    "title_matic": "Matic Transactions"
   },
   "receive_mana_modal": {
     "title": "Receive Tokens",

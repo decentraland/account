@@ -28,7 +28,7 @@ const AccountCard = ({
     )
     .slice(0, MAX_TXS_TO_SHOW_PER_STATUS)
 
-  const handleOnSeeAll = () => onSeeAll(transactions)
+  const handleOnSeeAll = () => onSeeAll(transactions, network)
   return (
     <Card className="AccountCard">
       <AccountCardHeader network={network} title={title} amount={amount} />
