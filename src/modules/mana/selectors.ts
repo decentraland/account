@@ -1,12 +1,23 @@
 import { RootState } from '../reducer'
 import { Transaction } from 'decentraland-dapps/dist/modules/transaction/types'
-import { APPROVE_MANA_SUCCESS } from './actions'
+import { APPROVE_MANA_SUCCESS, TRANSFER_MANA_SUCCESS } from './actions'
 import { createSelector } from 'reselect'
 
 import { getData as getTransactionsData } from 'decentraland-dapps/dist/modules/transaction/selectors'
 import { isPending } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
-import { Deposit, Withdrawal } from './types'
+import {
+  Transfer,
+  Deposit,
+  Withdrawal,
+  Transaction as AccountTransaction,
+  TransactionStatus as AccountTransactionStatus,
+  TransactionType,
+  DepositStatus,
+} from './types'
+import { Network } from '@dcl/schemas'
+import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
+import { mapStatus, mapStatusWithdrawal } from './utils'
 
 export const getState = (state: RootState) => state.mana
 export const getData = (state: RootState) => getState(state).data
@@ -75,4 +86,66 @@ export const getWalletWithdrawals = createSelector<
   Withdrawal[]
 >(getWithdrawals, getAddress, (withdrawals, address) =>
   address ? withdrawals.filter((withdrawal) => withdrawal.from === address) : []
+)
+
+export const getTransactionByNetwork = createSelector<
+  RootState,
+  Transaction[],
+  Deposit[],
+  Withdrawal[],
+  string | undefined,
+  Record<Network, AccountTransaction[]>
+>(
+  getTransactionsData,
+  getDeposits,
+  getWithdrawals,
+  getAddress,
+  (transactions, deposits, withdrawals, walletAddress) => {
+    const result: Record<Network, AccountTransaction[]> = {
+      ETHEREUM: [],
+      MATIC: [],
+    }
+    for (const tx of transactions) {
+      const { network } = getChainConfiguration(tx.chainId)
+      const deposit = deposits.find((deposit) => tx.hash === deposit.hash)
+      const withdrawal = withdrawals.find(
+        (withdrawal) => tx.hash === withdrawal.hash
+      )
+      if (deposit) {
+        const accountTransaction: AccountTransaction<Deposit> = {
+          hash: tx.hash,
+          type: TransactionType.DEPOSIT,
+          status:
+            deposit.status === DepositStatus.PENDING
+              ? AccountTransactionStatus.PENDING
+              : mapStatus(tx.status),
+          data: deposit,
+        }
+        result[network].unshift(accountTransaction)
+      } else if (withdrawal) {
+        const accountTransaction: AccountTransaction<Withdrawal> = {
+          hash: tx.hash,
+          type: TransactionType.WITHDRAWAL,
+          status: mapStatusWithdrawal(withdrawal.status),
+          data: withdrawal,
+        }
+        result[network].unshift(accountTransaction)
+      } else {
+        if (
+          tx.actionType === TRANSFER_MANA_SUCCESS &&
+          walletAddress &&
+          tx.from === walletAddress
+        ) {
+          const accountTransaction: AccountTransaction<Transfer> = {
+            hash: tx.hash,
+            type: TransactionType.TRANSFER,
+            status: mapStatus(tx.status),
+            data: tx.payload.transfer || {},
+          }
+          result[network].unshift(accountTransaction)
+        }
+      }
+    }
+    return result
+  }
 )

@@ -1,4 +1,4 @@
-import { Transaction } from '../../HomePage.types'
+import { Transaction } from '../../../../modules/mana/types'
 
 export type Props = {
   transactions: Transaction[]

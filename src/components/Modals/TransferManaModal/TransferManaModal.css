@@ -1,8 +1,8 @@
-.ui.modal.SendManaModal {
+.ui.modal.TransferManaModal {
   padding: 26px;
   width: 520px;
 }
-.SendManaModal .title {
+.TransferManaModal .title {
   text-align: center;
   font-weight: 600;
   font-size: 21px;
@@ -10,7 +10,7 @@
 letter-spacing: 0.3px;
 }
 
-.SendManaModal .subtitle {
+.TransferManaModal .subtitle {
   margin-top: 10px;
   font-style: normal;
   font-weight: normal;
@@ -22,7 +22,7 @@ letter-spacing: 0.3px;
   letter-spacing: -0.2px;
 }
 
-.SendManaModal .usd-amount {
+.TransferManaModal .usd-amount {
 font-style: normal;
 font-weight: normal;
 font-size: 15px;
@@ -37,30 +37,30 @@ color: #736E7D;
 
 }
 
-.SendManaModal .dcl.close, .ui.modal > .dcl.close {
+.TransferManaModal .dcl.close, .ui.modal > .dcl.close {
   margin:10px;
   padding: 10px;
   background-color: white;
 }
 
-.SendManaModal .ui.sub.header {
+.TransferManaModal .ui.sub.header {
   text-transform: none;
   font-size: 15px;
   line-height: 24px;
 }
 
-.SendManaModal .price {
+.TransferManaModal .price {
   padding-top: 10px;
   text-align: center;
 }
 
-.SendManaModal .button-group {
+.TransferManaModal .button-group {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.SendManaModal .dcl.field {
+.TransferManaModal .dcl.field {
   width: 100%;
   min-width: 100%;
   margin-top: 30px;
@@ -70,7 +70,7 @@ color: #736E7D;
   letter-spacing: 0.4px;
 }
 
-.SendManaModal .dcl.field .ui.input.amount input, .SendManaModal .ui.form .dcl.field .ui.input.amount input
+.TransferManaModal .dcl.field .ui.input.amount input, .TransferManaModal .ui.form .dcl.field .ui.input.amount input
 {
   text-align:center;
   font-weight: 600;
@@ -78,7 +78,7 @@ color: #736E7D;
   line-height: 48px;
 }
 
-.SendManaModal .dcl.field .ui.input.wallet input, .SendManaModal .ui.form .dcl.field .ui.input.wallet input
+.TransferManaModal .dcl.field .ui.input.wallet input, .TransferManaModal .ui.form .dcl.field .ui.input.wallet input
 {
   text-align:center;
   font-weight: 600;
@@ -86,7 +86,7 @@ color: #736E7D;
   line-height: 26px;
 }
 
-.SendManaModal button.ui.primary {
+.TransferManaModal button.ui.primary {
   margin-top: 20px;
   width: 100%;
 }

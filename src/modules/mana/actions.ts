@@ -1,7 +1,13 @@
 import { action } from 'typesafe-actions'
 import { ChainId, Network } from '@dcl/schemas'
 import { buildTransactionPayload } from 'decentraland-dapps/dist/modules/transaction/utils'
-import { WithdrawalStatus, Withdrawal, Deposit, DepositStatus } from './types'
+import {
+  WithdrawalStatus,
+  Withdrawal,
+  Deposit,
+  DepositStatus,
+  Transfer,
+} from './types'
 
 // Get MANA Approved
 export const DEPOSIT_MANA_REQUEST = '[Request] Deposit MANA'
@@ -101,36 +107,36 @@ export type ApproveManaRequestAction = ReturnType<typeof approveManaRequest>
 export type ApproveManaSuccessAction = ReturnType<typeof approveManaSuccess>
 export type ApproveManaFailureAction = ReturnType<typeof approveManaFailure>
 
-// Send MANA
-export const SEND_MANA_REQUEST = '[Request] Send Mana'
-export const SEND_MANA_SUCCESS = '[Success] Send Mana'
-export const SEND_MANA_FAILURE = '[Failure] Send Mana'
+// Transfer MANA
+export const TRANSFER_MANA_REQUEST = '[Request] Transfer Mana'
+export const TRANSFER_MANA_SUCCESS = '[Success] Transfer Mana'
+export const TRANSFER_MANA_FAILURE = '[Failure] Transfer Mana'
 
-export const sendManaRequest = (to: string, amount: number, network: Network) =>
-  action(SEND_MANA_REQUEST, { to, amount, network })
-export const sendManaSuccess = (
+export const transferManaRequest = (
   to: string,
   amount: number,
-  network: Network,
+  network: Network
+) => action(TRANSFER_MANA_REQUEST, { to, amount, network })
+
+export const transferManaSuccess = (
+  transfer: Transfer,
   chainId: ChainId,
   txHash: string
 ) =>
-  action(SEND_MANA_SUCCESS, {
-    to,
-    amount,
-    network,
-    ...buildTransactionPayload(chainId, txHash, { to, amount, network }),
+  action(TRANSFER_MANA_SUCCESS, {
+    transfer,
+    ...buildTransactionPayload(chainId, txHash, { transfer }),
   })
-export const sendManaFailure = (
+export const transferManaFailure = (
   to: string,
   amount: number,
   network: Network,
   error: string
-) => action(SEND_MANA_FAILURE, { to, amount, network, error })
+) => action(TRANSFER_MANA_FAILURE, { to, amount, network, error })
 
-export type SendManaRequestAction = ReturnType<typeof sendManaRequest>
-export type SendManaSuccessAction = ReturnType<typeof sendManaSuccess>
-export type SendManaFailureAction = ReturnType<typeof sendManaFailure>
+export type TransferManaRequestAction = ReturnType<typeof transferManaRequest>
+export type TransferManaSuccessAction = ReturnType<typeof transferManaSuccess>
+export type TransferManaFailureAction = ReturnType<typeof transferManaFailure>
 
 // Fetch MANA Price
 export const FETCH_MANA_PRICE_REQUEST = '[Request] Fetch MANA Price'

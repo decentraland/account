@@ -9,7 +9,7 @@ import {
   GET_APPROVED_MANA_REQUEST,
   initiateWithdrawalRequest,
   INITIATE_WITHDRAWAL_REQUEST,
-  SEND_MANA_REQUEST,
+  TRANSFER_MANA_REQUEST,
 } from '../../../modules/mana/actions'
 import { RootState } from '../../../modules/reducer'
 import {
@@ -27,7 +27,7 @@ const mapState = (state: RootState) => ({
   isWaitingForApproval: isWaitingForApproval(state),
   isLoading:
     isLoadingType(getLoading(state), DEPOSIT_MANA_REQUEST) ||
-    isLoadingType(getLoading(state), SEND_MANA_REQUEST) ||
+    isLoadingType(getLoading(state), TRANSFER_MANA_REQUEST) ||
     isLoadingType(getLoading(state), APPROVE_MANA_REQUEST) ||
     isLoadingType(getLoading(state), GET_APPROVED_MANA_REQUEST) ||
     isLoadingType(getLoading(state), INITIATE_WITHDRAWAL_REQUEST),

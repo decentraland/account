@@ -27,16 +27,25 @@
     "operation": "Operacion",
     "amount": "Cantidad",
     "type": "Tipo",
-    "status": "Estado"
+    "status": "Estado",
+    "datetime": "Operacion realizada en",
+    "to": "Enviado a"
   },
   "see_all_transaction_modal": {
-    "title": "Transacciones Eth Mana"
+    "title_ethereum": "Transacciones Ethereum",
+    "title_matic": "Transacciones Matic"
   },
   "receive_mana_modal": {
     "title": "Recibir Tokens",
     "message": "Si quieres recibir tokens in esta billetera puedes hacerlo compartiendo tu dirección",
     "copy": "Copiar",
     "copied": "Copiado!"
+  },
+  "transaction_description": {
+    "deposit": "Deposito a MANA Matic",
+    "withdrawal": "Extracción a MANA Ethereum",
+    "buy": "Compra de Tokens via Transak",
+    "send": "Envio de tokens a"
   },
   "transaction_type": {
     "deposit": "Deposito",
@@ -46,7 +55,7 @@
     "pending": "Pendiente",
     "confirmed": "Confirmado"
   },
-  "send_mana_modal": {
+  "transfer_mana_modal": {
     "usd": "USD",
     "mana": "MANA",
     "wallet_label": "Billetera",
@@ -80,5 +89,19 @@
     "status_checkpoint_placeholder": "Usualmente toma 30 minutos",
     "status_completed": "Completar Retiro",
     "complete_withdrawal": "Completar Retiro"
+  },
+  "withdrawal_status": {
+    "pending": "Pendiente",
+    "checkpoint": "Checkpoint",
+    "complete": "Completado"
+  },
+  "deposit_status": {
+    "pending": "Pendiente",
+    "complete": "Completado"
+  },
+  "send_status": {
+    "rejected": "Rechazado",
+    "complete": "Completado",
+    "pending": "Pendiente"
   }
 }

@@ -1,14 +1,14 @@
 import { Network } from '@dcl/schemas'
 import { Dispatch } from 'redux'
+import { Transaction } from '../../../modules/mana/types'
 import { OpenModalAction } from '../../../modules/modal/actions'
-import { Transaction } from '../HomePage.types'
 
 export type Props = {
   network: Network
   title: string
   amount: number
   transactions: Transaction[]
-  onSeeAll: (transactions: Transaction[]) => void
+  onSeeAll: (transactions: Transaction[], network: Network) => void
 }
 
 export type MapStateProps = Pick<Props, 'amount'>

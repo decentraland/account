@@ -27,16 +27,25 @@
     "operation": "操作方式",
     "amount": "量",
     "type": "类型",
-    "status": "状态"
+    "status": "状态",
+    "datetime": "约会时间",
+    "to": "发送"
   },
   "see_all_transaction_modal": {
-    "title": "Eth Mana交易"
+    "title_ethereum": "Ethereum 交易",
+    "title_matic": "Matic 交易"
   },
   "receive_mana_modal": {
     "title": "接收令牌",
     "message": "如果您想在此钱包中接收令牌，可以通过共享您的地址来完成",
     "copy": "复制",
     "copied": "复制！"
+  },
+  "transaction_description": {
+    "deposit": "存入MANA Matic",
+    "withdrawal": "提款至MANA Ethereum" ,
+    "buy": "通过Transak添加令牌",
+    "send": "将令牌发送到"
   },
   "transaction_type": {
     "deposit": "存款",
@@ -46,7 +55,7 @@
     "pending": "待定",
     "confirmed": "已确认"
   },
-  "send_mana_modal": {
+  "transfer_mana_modal": {
     "usd": "USD",
     "mana": "MANA",
     "wallet_label": "钱包",
@@ -80,5 +89,19 @@
     "status_checkpoint_placeholder": "通常需要30分钟",
     "status_completed": "完成提款",
     "complete_withdrawal": "完全取款"
+  },
+  "withdrawal_status": {
+    "pending": "待办的",
+    "checkpoint": "检查站",
+    "complete": "完全的"
+  },
+  "deposit_status": {
+    "pending": "待办的",
+    "complete": "完全的"
+  },
+  "send_status": {
+    "rejected": "拒绝了",
+    "complete": "完全的",
+    "pending": "待办的"
   }
 }

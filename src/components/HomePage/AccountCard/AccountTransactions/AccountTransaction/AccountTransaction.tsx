@@ -1,38 +1,91 @@
 import React from 'react'
-import { TransactionStatus, TransactionType } from '../../../HomePage.types'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { distanceInWordsToNow } from 'decentraland-dapps/dist/lib/utils'
+import {
+  Deposit,
+  Transfer,
+  TransactionStatus,
+  TransactionType,
+  Withdrawal,
+  WithdrawalStatus,
+} from '../../../../../modules/mana/types'
+import {
+  getStatusMessage,
+  isPendingAccountTransaction,
+} from '../../../../../modules/mana/utils'
 import { Props } from './AccountTransaction.types'
 import './AccountTransaction.css'
 
 const AccountTransaction = ({
-  amount,
-  type,
-  status,
-  description,
+  transaction,
   onTransactionDetail,
-}: Props) => (
-  <div
-    className="AccountTransaction"
-    onClick={() => onTransactionDetail(description, amount, status, type)}
-  >
-    <div className="type">
-      <div
-        className={`transaction-logo ${
-          type === TransactionType.DEPOSIT
-            ? 'in-transaction-logo'
-            : type === TransactionType.WITHDRAWAL
-            ? 'out-transaction-logo'
-            : status === TransactionStatus.PENDING
-            ? 'pending-transaction-logo'
-            : ''
-        }`}
-      />
+  onPendingWithDrawal,
+}: Props) => {
+  const { type, status } = transaction
+
+  const shortening = (address: string): string =>
+    address ? `${address.slice(0, 4)}...${address.slice(-4)}` : ''
+
+  let data: any
+  let description = ''
+  if (type === TransactionType.DEPOSIT) {
+    description = t('transaction_description.deposit')
+    data = transaction.data as Deposit
+  } else if (type === TransactionType.WITHDRAWAL) {
+    description = t('transaction_description.withdrawal')
+    data = transaction.data as Withdrawal
+  } else if (type === TransactionType.BUY) {
+    description = t('transaction_description.buy')
+  } else if (type === TransactionType.TRANSFER) {
+    data = transaction.data as Transfer
+    description = `${t('transaction_description.send')} ${shortening(data.to)}`
+  }
+
+  let transactionLogo = ''
+  if (isPendingAccountTransaction(type, status, data.status)) {
+    if (type === TransactionType.DEPOSIT || type === TransactionType.BUY) {
+      transactionLogo = 'in-pending-transaction-logo'
+    } else {
+      transactionLogo = 'out-pending-transaction-logo'
+    }
+  } else if (type === TransactionType.DEPOSIT || type === TransactionType.BUY) {
+    transactionLogo = 'in-transaction-logo'
+  } else if (
+    type === TransactionType.WITHDRAWAL ||
+    type === TransactionType.TRANSFER
+  ) {
+    transactionLogo = 'out-transaction-logo'
+  } else if (status === TransactionStatus.REJECTED) {
+    transactionLogo = 'rejected-transaction-logo'
+  }
+
+  const handleDetailModal = () => {
+    if (
+      type === TransactionType.WITHDRAWAL &&
+      (data.status === WithdrawalStatus.PENDING ||
+        data.status === WithdrawalStatus.CHECKPOINT)
+    ) {
+      onPendingWithDrawal(data.hash)
+    } else {
+      onTransactionDetail(description, transaction)
+    }
+  }
+
+  return (
+    <div className="AccountTransaction" onClick={handleDetailModal}>
+      <div className="type">
+        <div className={`transaction-logo ${transactionLogo}`} />
+      </div>
+      <div className="DescriptionStatus">
+        <div> {description} </div>
+        <div>
+          {getStatusMessage(type, status, data.status)} -{' '}
+          {distanceInWordsToNow(transaction.data.timestamp)}
+        </div>
+      </div>
+      <div className="amount">{data?.amount}</div>
     </div>
-    <div className="DescriptionStatus">
-      <div> {description} </div>
-      <div> {status} </div>
-    </div>
-    <div> {amount} </div>
-  </div>
-)
+  )
+}
 
 export default React.memo(AccountTransaction)

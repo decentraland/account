@@ -1,6 +1,20 @@
 import { BigNumber, ethers } from 'ethers'
+import { TransactionStatus as TxStatus } from 'decentraland-dapps/dist/modules/transaction/types'
 import { graphql } from 'decentraland-dapps/dist/lib/graph'
 import { Provider } from 'decentraland-transactions/dist'
+import {
+  DepositStatus,
+  TransactionStatus,
+  TransactionType,
+  TransferStatus,
+  WithdrawalStatus,
+} from './types'
+import {
+  hasFailed,
+  hasSucceeded,
+  isPending,
+} from 'decentraland-dapps/dist/modules/transaction/utils'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 
 export const MANA_CONTRACT_ADDRESS = process.env
   .REACT_APP_MANA_CONTRACT_ADDRESS!
@@ -91,4 +105,92 @@ export async function waitForSync(
     )
     return waitForSync(txHash, isSynced)
   }
+}
+
+export const mapStatus = (txStatus: TxStatus | null) => {
+  if (isPending(txStatus)) {
+    return TransactionStatus.PENDING
+  } else if (hasFailed(txStatus)) {
+    return TransactionStatus.REJECTED
+  } else if (hasSucceeded(txStatus)) {
+    return TransactionStatus.CONFIRMED
+  } else {
+    throw new Error(`Invalid transaction status: ${txStatus}`)
+  }
+}
+
+export const mapStatusWithdrawal = (
+  status: WithdrawalStatus
+): TransactionStatus => {
+  switch (status) {
+    case WithdrawalStatus.COMPLETE:
+      return TransactionStatus.CONFIRMED
+    case WithdrawalStatus.PENDING:
+    case WithdrawalStatus.CHECKPOINT:
+      return TransactionStatus.PENDING
+    default:
+      return TransactionStatus.PENDING
+  }
+}
+
+export const getStatusMessage = (
+  type: TransactionType,
+  parentStatus: TransactionStatus,
+  childStatus: any
+) => {
+  if (type === TransactionType.WITHDRAWAL) {
+    if (childStatus === WithdrawalStatus.COMPLETE) {
+      return t('withdrawal_status.complete')
+    }
+    if (childStatus === WithdrawalStatus.CHECKPOINT) {
+      return t('withdrawal_status.checkpoint')
+    }
+    return t('withdrawal_status.pending')
+  }
+  if (type === TransactionType.DEPOSIT) {
+    if (childStatus === DepositStatus.COMPLETE) {
+      return t('deposit_status.complete')
+    }
+    return t('deposit_status.pending')
+  }
+  if (type === TransactionType.TRANSFER) {
+    if (parentStatus === TransactionStatus.PENDING) {
+      return t('send_status.pending')
+    }
+    if (childStatus === TransferStatus.CONFIRMED) {
+      return t('send_status.complete')
+    }
+    if (childStatus === TransferStatus.REJECTED) {
+      return t('send_status.rejected')
+    }
+    return t('send_status.pending')
+  }
+  return t('transaction_status.pending')
+}
+
+export const isPendingAccountTransaction = (
+  type: TransactionType,
+  parentStatus: TransactionStatus,
+  childStatus: any
+) => {
+  if (parentStatus === TransactionStatus.PENDING) {
+    return true
+  }
+  if (type === TransactionType.WITHDRAWAL) {
+    if (
+      childStatus === WithdrawalStatus.CHECKPOINT ||
+      childStatus === WithdrawalStatus.PENDING
+    ) {
+      return true
+    }
+  } else if (type === TransactionType.DEPOSIT) {
+    if (childStatus === DepositStatus.PENDING) {
+      return true
+    }
+  } else if (type === TransactionType.TRANSFER) {
+    if (childStatus === TransferStatus.PENDING) {
+      return true
+    }
+  }
+  return false
 }

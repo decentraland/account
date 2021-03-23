@@ -27,16 +27,25 @@
     "operation": "Operation",
     "amount": "Amount",
     "type": "Type",
-    "status": "Status"
+    "status": "Status",
+    "datetime": "Date time",
+    "to": "Sent to"
   },
   "see_all_transaction_modal": {
-    "title": "Eth Mana Transactions"
+    "title_ethereum": "Ethereum Transactions",
+    "title_matic": "Matic Transactions"
   },
   "receive_mana_modal": {
     "title": "Receive Tokens",
     "message": "If you want to receive tokens in this wallet you can do it by sharing your address",
     "copy": "Copy",
     "copied": "Copied!"
+  },
+  "transaction_description": {
+    "deposit": "Deposit to MANA Matic",
+    "withdrawal": "Withdrawal to MANA Ethereum",
+    "buy": "Add tokens via Transak",
+    "send": "Send tokens to"
   },
   "transaction_type": {
     "deposit": "Deposit",
@@ -46,7 +55,7 @@
     "pending": "Pending",
     "confirmed": "Confirmed"
   },
-  "send_mana_modal": {
+  "transfer_mana_modal": {
     "usd": "USD",
     "mana": "MANA",
     "amount_label": "Amount",
@@ -80,5 +89,19 @@
     "status_checkpoint_placeholder": "Usually takes 30 minutes",
     "status_completed": "Complete Withdrawal",
     "complete_withdrawal": "Complete Withdrawal"
+  },
+  "withdrawal_status": {
+    "pending": "Pending",
+    "checkpoint": "Checkpoint",
+    "complete": "Complete"
+  },
+  "deposit_status": {
+    "pending": "Pending",
+    "complete": "Complete"
+  },
+  "send_status": {
+    "rejected": "Rejected",
+    "complete": "Complete",
+    "pending": "Pending"
   }
 }

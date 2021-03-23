@@ -5,21 +5,21 @@ import AccountTransaction from './AccountTransaction'
 import {
   MapDispatch,
   MapDispatchProps,
-  MapStateProps
+  MapStateProps,
 } from './AccountTransaction.types'
 
 const mapState = (_state: RootState): MapStateProps => ({})
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
-  onTransactionDetail: (description, amount, type, status) =>
+  onPendingWithDrawal: (txHash) =>
+    dispatch(openModal('WithdrawalStatusModal', { txHash })),
+  onTransactionDetail: (description, transaction) =>
     dispatch(
       openModal('TransactionDetailModal', {
         description,
-        amount,
-        type,
-        status
+        transaction,
       })
-    )
+    ),
 })
 
 export default connect(mapState, mapDispatch)(AccountTransaction)

@@ -5,14 +5,8 @@ import './AccountTransactions.css'
 
 const AccountTransactions = ({ transactions }: Props) => (
   <div className="TransactionData">
-    {transactions.map(({ type, status, description, amount }, index) => (
-      <AccountTransaction
-        type={type}
-        status={status}
-        description={description}
-        amount={amount}
-        key={index}
-      />
+    {transactions.map((transaction, index) => (
+      <AccountTransaction transaction={transaction} key={index} />
     ))}
   </div>
 )

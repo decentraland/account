@@ -6,10 +6,10 @@ import { Navbar } from '../Navbar'
 import { AccountHeader } from './AccountHeader'
 import { AccountCard } from './AccountCard'
 import { AccountCardContainer } from './AccountCardContainer'
-import { TransactionStatus, TransactionType } from './HomePage.types'
+import { Props } from './HomePage.types'
 import './HomePage.css'
 
-const HomePage: React.FC = () => {
+const HomePage: React.FC<Props> = ({ transactionsByNetwork }) => {
   return (
     <>
       <Navbar />
@@ -19,68 +19,12 @@ const HomePage: React.FC = () => {
           <AccountCard
             network={Network.ETHEREUM}
             title="Mana"
-            transactions={[
-              {
-                type: TransactionType.DEPOSIT,
-                description: 'Added tokens via transak',
-                status: TransactionStatus.CONFIRMED,
-                amount: 3000,
-              },
-              {
-                type: TransactionType.WITHDRAWAL,
-                description: 'Added tokens via transak',
-                status: TransactionStatus.CONFIRMED,
-                amount: 3000,
-              },
-              {
-                type: TransactionType.WITHDRAWAL,
-                description: 'Added tokens via transak',
-                status: TransactionStatus.CONFIRMED,
-                amount: 3000,
-              },
-              {
-                type: TransactionType.WITHDRAWAL,
-                description: 'Added tokens via transak',
-                status: TransactionStatus.CONFIRMED,
-                amount: 3000,
-              },
-              {
-                type: TransactionType.WITHDRAWAL,
-                description: 'Added tokens via transak',
-                status: TransactionStatus.CONFIRMED,
-                amount: 3000,
-              },
-              {
-                type: TransactionType.DEPOSIT,
-                description: 'Added tokens via transak',
-                status: TransactionStatus.CONFIRMED,
-                amount: 3000,
-              },
-            ]}
+            transactions={transactionsByNetwork[Network.ETHEREUM]}
           />
           <AccountCard
             network={Network.MATIC}
             title="Matic Mana"
-            transactions={[
-              {
-                type: TransactionType.DEPOSIT,
-                description: 'Added tokens via transak',
-                status: TransactionStatus.PENDING,
-                amount: 3000,
-              },
-              {
-                type: TransactionType.WITHDRAWAL,
-                description: 'Added tokens via transak',
-                status: TransactionStatus.CONFIRMED,
-                amount: 3000,
-              },
-              {
-                type: TransactionType.DEPOSIT,
-                description: 'Added tokens via transak',
-                status: TransactionStatus.CONFIRMED,
-                amount: 3000,
-              },
-            ]}
+            transactions={transactionsByNetwork[Network.MATIC]}
           />
         </AccountCardContainer>
       </Page>
