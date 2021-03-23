@@ -121,7 +121,7 @@ export const getTransactionByNetwork = createSelector<
               : mapStatus(tx.status),
           data: deposit,
         }
-        result[network].push(accountTransaction)
+        result[network].unshift(accountTransaction)
       } else if (withdrawal) {
         const accountTransaction: AccountTransaction<Withdrawal> = {
           hash: tx.hash,
@@ -129,7 +129,7 @@ export const getTransactionByNetwork = createSelector<
           status: mapStatusWithdrawal(withdrawal.status),
           data: withdrawal,
         }
-        result[network].push(accountTransaction)
+        result[network].unshift(accountTransaction)
       } else {
         if (
           tx.actionType === TRANSFER_MANA_SUCCESS &&
@@ -142,7 +142,7 @@ export const getTransactionByNetwork = createSelector<
             status: mapStatus(tx.status),
             data: tx.payload.transfer || {},
           }
-          result[network].push(accountTransaction)
+          result[network].unshift(accountTransaction)
         }
       }
     }
