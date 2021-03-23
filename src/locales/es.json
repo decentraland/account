@@ -103,5 +103,11 @@
     "rejected": "Rechazado",
     "complete": "Completado",
     "pending": "Pendiente"
+  },
+  "purchase_status": {
+    "failed": "Fallido",
+    "cancelled": "Cancelado",
+    "complete": "Completado",
+    "pending": "Pendiente"
   }
 }

@@ -4,6 +4,7 @@ import { graphql } from 'decentraland-dapps/dist/lib/graph'
 import { Provider } from 'decentraland-transactions/dist'
 import {
   DepositStatus,
+  PurchaseStatus,
   TransactionStatus,
   TransactionType,
   TransferStatus,
@@ -165,6 +166,26 @@ export const getStatusMessage = (
     }
     return t('send_status.pending')
   }
+  if (type === TransactionType.PURCHASE) {
+    if (
+      parentStatus === TransactionStatus.PENDING ||
+      childStatus === PurchaseStatus.PENDING
+    ) {
+      return t('purchase_status.pending')
+    }
+    if (childStatus === PurchaseStatus.COMPLETE) {
+      return t('purchase_status.complete')
+    }
+    if (childStatus === PurchaseStatus.FAILED) {
+      return t('purchase_status.failed')
+    }
+    if (childStatus === PurchaseStatus.CANCELLED) {
+      return t('purchase_status.cancelled')
+    }
+
+    return t('send_status.pending')
+  }
+
   return t('transaction_status.pending')
 }
 

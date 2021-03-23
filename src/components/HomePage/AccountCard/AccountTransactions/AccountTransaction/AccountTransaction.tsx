@@ -34,7 +34,7 @@ const AccountTransaction = ({
   } else if (type === TransactionType.WITHDRAWAL) {
     description = t('transaction_description.withdrawal')
     data = transaction.data as Withdrawal
-  } else if (type === TransactionType.BUY) {
+  } else if (type === TransactionType.PURCHASE) {
     description = t('transaction_description.buy')
   } else if (type === TransactionType.TRANSFER) {
     data = transaction.data as Transfer
@@ -43,12 +43,15 @@ const AccountTransaction = ({
 
   let transactionLogo = ''
   if (isPendingAccountTransaction(type, status, data.status)) {
-    if (type === TransactionType.DEPOSIT || type === TransactionType.BUY) {
+    if (type === TransactionType.DEPOSIT || type === TransactionType.PURCHASE) {
       transactionLogo = 'in-pending-transaction-logo'
     } else {
       transactionLogo = 'out-pending-transaction-logo'
     }
-  } else if (type === TransactionType.DEPOSIT || type === TransactionType.BUY) {
+  } else if (
+    type === TransactionType.DEPOSIT ||
+    type === TransactionType.PURCHASE
+  ) {
     transactionLogo = 'in-transaction-logo'
   } else if (
     type === TransactionType.WITHDRAWAL ||

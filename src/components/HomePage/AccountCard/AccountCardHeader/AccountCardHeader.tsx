@@ -2,6 +2,7 @@ import React from 'react'
 import { Network } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button, Dropdown, Icon } from 'decentraland-ui'
+import { openTransakWidget } from '../../../../modules/transak/utils'
 import { Props } from './AccountCardHeader.types'
 import './AccountCardHeader.css'
 
@@ -19,6 +20,12 @@ const AccountCardHeader = ({
   const handleReceiveMana = () => {
     if (address) {
       onReceive(network, address)
+    }
+  }
+
+  const handleAddTokens = () => {
+    if (address) {
+      openTransakWidget(address, network)
     }
   }
 
@@ -53,7 +60,7 @@ const AccountCardHeader = ({
           </div>
         </div>
         <div className="actions">
-          <Button>
+          <Button onClick={handleAddTokens}>
             <Icon name="plus" />
           </Button>
           <Button onClick={handleConvert}>
