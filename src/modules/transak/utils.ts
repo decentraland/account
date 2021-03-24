@@ -6,10 +6,44 @@ import { setPurchase } from '../mana/actions'
 import { Network } from '@dcl/schemas'
 
 export const TRANSAK_KEY = process.env.REACT_APP_TRANSAK_KEY!
+export const TRANSAK_ENV = process.env.REACT_APP_TRANSAK_ENV!
+
+type OrderData = {
+  eventName: string
+  status: {
+    id: string
+    autoExpiresAt: string
+    conversionPrice: number
+    convertedFiatAmount: number
+    convertedFiatCurrency: string
+    createdAt: string
+    cryptoAmount: number
+    cryptoCurrency: string
+    cryptocurrency: string
+    envName: string
+    fiatAmount: number
+    fiatCurrency: string
+    fromWalletAddress: string
+    isBuyOrSell: 'BUY' | 'SELL'
+    network: 'ethereum' | 'matic'
+    paymentOptionId: string
+    quoteId: string
+    referenceCode: number
+    reservationId: string
+    status: string
+    totalFeeInFiat: number
+    walletAddress: string
+    walletLink: string
+  }
+}
 
 type Transak = EventEmitter & {
   init: () => void
-  partnerData: { defaultNetwork: Network; walletAddress: string }
+  partnerData: {
+    defaultNetwork: Network
+    walletAddress: string
+    partnerOrderId: string
+  }
   EVENTS: Record<string, string>
 }
 
@@ -18,7 +52,7 @@ export function getTransak(address: string): Transak {
   if (transak) return transak
   transak = new transakSDK({
     apiKey: TRANSAK_KEY, // Your API Key
-    environment: 'STAGING', // STAGING/PRODUCTION
+    environment: TRANSAK_ENV || 'STAGING', // STAGING/PRODUCTION
     defaultCryptoCurrency: 'MANA',
     cyptoCurrencyList: 'MANA,USDT',
     networks: 'ETHEREUM,MATIC',
@@ -33,14 +67,34 @@ export function getTransak(address: string): Transak {
   return transak as Transak
 }
 
-function createPurchase(orderData: any, status: PurchaseStatus): Purchase {
+function getNetwork(networkName: string) {
+  const networks = Object.values(Network).filter(
+    (value) => typeof value === 'string'
+  ) as Network[]
+  for (const network of networks) {
+    if (network.toLowerCase() === networkName.toLowerCase()) {
+      return network
+    }
+  }
+  throw new Error(
+    `Invalid network "${networkName}" is not part of the supported networks: ${networks.join(
+      ', '
+    )}`
+  )
+}
+
+function createPurchase(
+  orderData: OrderData,
+  status: PurchaseStatus
+): Purchase {
+  console.log(orderData)
+  const network = getNetwork(orderData.status.network)
   return {
-    id: orderData.id,
-    amount: orderData.cryptoAmount,
-    network: orderData.network,
-    timestamp: +new Date(orderData.createAt),
-    status: status,
-    orderData,
+    id: orderData.status.id,
+    amount: orderData.status.cryptoAmount,
+    network,
+    timestamp: +new Date(orderData.status.createdAt),
+    status,
   }
 }
 
@@ -68,8 +122,16 @@ export function initializeTransak(store: Store, address: string) {
   })
 }
 
-export function openTransakWidget(address: string, network: Network) {
+export function openTransakWidget(
+  address: string,
+  network: Network,
+  id?: string
+) {
   const transak = getTransak(address)
+  if (id) {
+    // TODO: this does not open the widget with the selected order, we need to reach to the Transak folks and ask if this is possible some way.
+    transak.partnerData.partnerOrderId = id
+  }
   transak.partnerData.walletAddress = address
   transak.partnerData.defaultNetwork = network
   transak.init()

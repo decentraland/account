@@ -8,6 +8,7 @@ import {
   TransactionType,
   Withdrawal,
   WithdrawalStatus,
+  Purchase,
 } from '../../../../../modules/mana/types'
 import {
   getStatusMessage,
@@ -19,14 +20,15 @@ import './AccountTransaction.css'
 const AccountTransaction = ({
   transaction,
   onTransactionDetail,
-  onPendingWithDrawal,
+  onPendingWithdrawal,
+  onPendingPurchase,
 }: Props) => {
   const { type, status } = transaction
 
   const shortening = (address: string): string =>
     address ? `${address.slice(0, 4)}...${address.slice(-4)}` : ''
 
-  let data: any
+  let data: any = null
   let description = ''
   if (type === TransactionType.DEPOSIT) {
     description = t('transaction_description.deposit')
@@ -35,6 +37,7 @@ const AccountTransaction = ({
     description = t('transaction_description.withdrawal')
     data = transaction.data as Withdrawal
   } else if (type === TransactionType.PURCHASE) {
+    data = transaction.data as Purchase
     description = t('transaction_description.buy')
   } else if (type === TransactionType.TRANSFER) {
     data = transaction.data as Transfer
@@ -42,7 +45,7 @@ const AccountTransaction = ({
   }
 
   let transactionLogo = ''
-  if (isPendingAccountTransaction(type, status, data.status)) {
+  if (data != null && isPendingAccountTransaction(type, status, data.status)) {
     if (type === TransactionType.DEPOSIT || type === TransactionType.PURCHASE) {
       transactionLogo = 'in-pending-transaction-logo'
     } else {
@@ -68,7 +71,13 @@ const AccountTransaction = ({
       (data.status === WithdrawalStatus.PENDING ||
         data.status === WithdrawalStatus.CHECKPOINT)
     ) {
-      onPendingWithDrawal(data.hash)
+      onPendingWithdrawal(data.hash)
+    } else if (
+      type === TransactionType.PURCHASE &&
+      status === TransactionStatus.PENDING
+    ) {
+      const { id, network } = data as Purchase
+      onPendingPurchase(network, id)
     } else {
       onTransactionDetail(description, transaction)
     }

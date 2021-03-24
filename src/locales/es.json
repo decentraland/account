@@ -108,6 +108,7 @@
     "failed": "Fallido",
     "cancelled": "Cancelado",
     "complete": "Completado",
-    "pending": "Pendiente"
+    "pending": "Pendiente",
+    "expired": "Expirada"
   }
 }

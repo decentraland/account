@@ -7,6 +7,7 @@ import { createWalletSaga } from 'decentraland-dapps/dist/modules/wallet/sagas'
 import { modalSaga } from './modal/sagas'
 import { locationSaga } from './location/sagas'
 import { manaSaga } from './mana/sagas'
+import { transakSaga } from './transak/sagas'
 import * as translations from '../locales'
 
 const analyticsSaga = createAnalyticsSaga()
@@ -31,5 +32,6 @@ export function* rootSaga() {
     modalSaga(),
     locationSaga(),
     manaSaga(),
+    transakSaga(),
   ])
 }

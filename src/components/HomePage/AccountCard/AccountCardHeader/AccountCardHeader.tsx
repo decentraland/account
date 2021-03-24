@@ -2,7 +2,6 @@ import React from 'react'
 import { Network } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button, Dropdown, Icon } from 'decentraland-ui'
-import { openTransakWidget } from '../../../../modules/transak/utils'
 import { Props } from './AccountCardHeader.types'
 import './AccountCardHeader.css'
 
@@ -14,6 +13,7 @@ const AccountCardHeader = ({
   onTransfer,
   onReceive,
   onConvert,
+  onPurchase,
 }: Props) => {
   const handleTransferMana = () => onTransfer(network)
 
@@ -24,9 +24,7 @@ const AccountCardHeader = ({
   }
 
   const handleAddTokens = () => {
-    if (address) {
-      openTransakWidget(address, network)
-    }
+    onPurchase(network)
   }
 
   const handleConvert = () => onConvert(network)

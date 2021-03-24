@@ -80,5 +80,4 @@ export type Purchase = {
   network: Network // si fue en MANA de ethereum o de matic, para saber despues en que columna mostrarlo
   timestamp: number // el momento en que se hizo
   status: PurchaseStatus // un enum con los posibles estados
-  orderData: any // aca metemos todo el order data
 }

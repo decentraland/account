@@ -5,6 +5,7 @@ import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/Moda
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import {
   Deposit,
+  Purchase,
   Transaction,
   TransactionType,
   Transfer,
@@ -54,6 +55,15 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
       break
     case TransactionType.WITHDRAWAL:
       data = transaction.data as Withdrawal
+      dataComponent = (
+        <div className="data">
+          <div> {t('transaction_detail_modal.amount')} </div>
+          <div> {data.amount} </div>
+        </div>
+      )
+      break
+    case TransactionType.PURCHASE:
+      data = transaction.data as Purchase
       dataComponent = (
         <div className="data">
           <div> {t('transaction_detail_modal.amount')} </div>

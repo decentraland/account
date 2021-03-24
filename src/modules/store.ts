@@ -11,6 +11,7 @@ import { createRootReducer } from './reducer'
 import { rootSaga } from './sagas'
 import {
   SET_DEPOSIT_STATUS,
+  SET_PURCHASE,
   SET_WITHDRAWAL_STATUS,
   WATCH_DEPOSIT_STATUS_SUCCESS,
   WATCH_WITHDRAWAL_STATUS_SUCCESS,
@@ -33,12 +34,14 @@ const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
   paths: [
     ['mana', 'data', 'deposits'],
     ['mana', 'data', 'withdrawals'],
+    ['mana', 'data', 'purchases'],
   ],
   actions: [
     SET_DEPOSIT_STATUS,
     SET_WITHDRAWAL_STATUS,
     WATCH_DEPOSIT_STATUS_SUCCESS,
     WATCH_WITHDRAWAL_STATUS_SUCCESS,
+    SET_PURCHASE,
   ],
   migrations: {},
 })

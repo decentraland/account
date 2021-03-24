@@ -152,13 +152,17 @@ export const getTransactionByNetwork = createSelector<
         }
       }
     }
+
+    const ONE_HOUR = 60 * 60 * 1000
     for (const purchase of purchases) {
       const accountTransaction: AccountTransaction<Purchase> = {
         hash: '',
         type: TransactionType.PURCHASE,
         status:
           purchase.status === PurchaseStatus.FAILED ||
-          purchase.status === PurchaseStatus.CANCELLED
+          purchase.status === PurchaseStatus.CANCELLED ||
+          (purchase.status === PurchaseStatus.PENDING &&
+            purchase.timestamp + ONE_HOUR < Date.now())
             ? TransactionStatus.REJECTED
             : purchase.status === PurchaseStatus.COMPLETE
             ? TransactionStatus.CONFIRMED

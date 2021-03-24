@@ -43,7 +43,7 @@
   },
   "transaction_description": {
     "deposit": "存入MANA Matic",
-    "withdrawal": "提款至MANA Ethereum" ,
+    "withdrawal": "提款至MANA Ethereum",
     "buy": "通过Transak添加令牌",
     "send": "将令牌发送到"
   },
@@ -108,6 +108,7 @@
     "failed": "失败的",
     "cancelled": "取消",
     "complete": "完全的",
-    "pending": "待办的"
+    "pending": "待办的",
+    "expired": "已到期"
   }
 }

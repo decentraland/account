@@ -167,10 +167,8 @@ export const getStatusMessage = (
     return t('send_status.pending')
   }
   if (type === TransactionType.PURCHASE) {
-    if (
-      parentStatus === TransactionStatus.PENDING ||
-      childStatus === PurchaseStatus.PENDING
-    ) {
+    console.log(parentStatus, childStatus)
+    if (parentStatus === TransactionStatus.PENDING) {
       return t('purchase_status.pending')
     }
     if (childStatus === PurchaseStatus.COMPLETE) {
@@ -181,6 +179,12 @@ export const getStatusMessage = (
     }
     if (childStatus === PurchaseStatus.CANCELLED) {
       return t('purchase_status.cancelled')
+    }
+    if (
+      parentStatus === TransactionStatus.REJECTED &&
+      childStatus === PurchaseStatus.PENDING
+    ) {
+      return t('purchase_status.expired')
     }
 
     return t('send_status.pending')

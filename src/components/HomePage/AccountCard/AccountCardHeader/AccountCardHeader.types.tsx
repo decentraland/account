@@ -1,6 +1,7 @@
 import { Network } from '@dcl/schemas'
 import { Dispatch } from 'redux'
 import { OpenModalAction } from '../../../../modules/modal/actions'
+import { OpenTransakAction } from '../../../../modules/transak/actions'
 
 export type Props = {
   address?: string
@@ -10,11 +11,12 @@ export type Props = {
   onTransfer: (network: Network) => void
   onReceive: (network: Network, address: string) => void
   onConvert: (network: Network) => void
+  onPurchase: (network: Network) => void
 }
 
 export type MapStateProps = Pick<Props, 'address'>
 export type MapDispatchProps = Pick<
   Props,
-  'onTransfer' | 'onReceive' | 'onConvert'
+  'onTransfer' | 'onReceive' | 'onConvert' | 'onPurchase'
 >
-export type MapDispatch = Dispatch<OpenModalAction>
+export type MapDispatch = Dispatch<OpenModalAction | OpenTransakAction>
