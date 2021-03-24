@@ -7,11 +7,23 @@
   font-weight: 600;
   line-height: 18px;
   text-transform: uppercase;
-  color: #736E7D;
+  color: #736e7d;
 }
 
 .AccountTransactions .TransactionData {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.AccountTransactions .no-transactions-message {
+  padding: 24px;
+}
+
+.AccountTransactions .no-transactions-message p {
+  margin-top: 160px;
+  font-size: 16px;
+  line-height: 18px;
+  color: var(--secondary-text);
+  text-align: center;
 }

@@ -20,7 +20,8 @@
   "account_card": {
     "tx_latests": "最新交易",
     "tx_pending": "待交易",
-    "see_all": "看到所有"
+    "see_all": "看到所有",
+    "empty": "您尚未进行任何交易..."
   },
   "transaction_detail_modal": {
     "title": "交易明细",

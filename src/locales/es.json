@@ -20,7 +20,8 @@
   "account_card": {
     "tx_latests": "Ultimas Transacciones",
     "tx_pending": "Transacciones Pendientes",
-    "see_all": "Ver Todas"
+    "see_all": "Ver Todas",
+    "empty": "No hubo transacciones aún..."
   },
   "transaction_detail_modal": {
     "title": "Detalle de Transaction",
