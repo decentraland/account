@@ -12,6 +12,7 @@
 .AccountCardHeader .operation-menu {
   font-size: 24px;
   float: right;
+  margin-top: -13px;
 }
 
 .AccountCardHeader .fundsContainer {
@@ -22,7 +23,6 @@
 .AccountCardHeader .funds {
   flex-grow: 1;
 }
-
 
 .AccountCardHeader .funds .amount {
   display: flex;

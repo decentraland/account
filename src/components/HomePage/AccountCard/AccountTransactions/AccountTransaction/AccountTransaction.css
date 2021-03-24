@@ -16,7 +16,7 @@
 }
 
 .AccountTransaction .DescriptionStatus {
-  padding: 0px 24px;
+  padding: 0px 0px;
   display: flex;
   flex-grow: 2;
   flex-direction: column;
@@ -26,7 +26,7 @@
 .AccountTransaction .DescriptionStatus :last-child {
   font-size: 15px;
   line-height: 24px;
-  color: #736E7D;
+  color: #736e7d;
 }
 
 .AccountTransaction :last-child {
@@ -39,17 +39,17 @@
 }
 
 .AccountTransaction .in-transaction-logo {
-  background-image: url('../../../../../images/in-transaction.svg'); 
+  background-image: url('../../../../../images/in-transaction.svg');
 }
 
 .AccountTransaction .out-transaction-logo {
-  background-image: url('../../../../../images/out-transaction.svg'); 
+  background-image: url('../../../../../images/out-transaction.svg');
 }
 
 .AccountTransaction .out-pending-transaction-logo {
-  background-image: url('../../../../../images/out-pending-transaction.svg'); 
+  background-image: url('../../../../../images/out-pending-transaction.svg');
 }
 
 .AccountTransaction .in-pending-transaction-logo {
-  background-image: url('../../../../../images/in-pending-transaction.svg'); 
+  background-image: url('../../../../../images/in-pending-transaction.svg');
 }
