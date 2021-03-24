@@ -5,9 +5,15 @@ import './AccountTransactions.css'
 
 const AccountTransactions = ({ transactions }: Props) => (
   <div className="TransactionData">
-    {transactions.map((transaction, index) => (
-      <AccountTransaction transaction={transaction} key={index} />
-    ))}
+    {transactions.length > 0 ? (
+      transactions.map((transaction, index) => (
+        <AccountTransaction transaction={transaction} key={index} />
+      ))
+    ) : (
+      <div className="no-transactions-message">
+        <p> No transactions yet </p>
+      </div>
+    )}
   </div>
 )
 

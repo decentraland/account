@@ -15,3 +15,13 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
+.AccountTransactions .no-transactions-message {  
+  padding: 24px;
+}
+
+.AccountTransactions .no-transactions-message p {  
+  font-size: 16px;
+  line-height: 18px;
+  color: #736E7D;
+}
