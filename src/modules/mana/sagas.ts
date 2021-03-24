@@ -88,6 +88,7 @@ import {
   waitForSync,
   isWithdrawalSynced,
   isDepositSynced,
+  TRANSACTIONS_API_URL,
 } from './utils'
 import {
   WithdrawalStatus,
@@ -480,7 +481,10 @@ function* sendWalletMetaTransaction(
       signerProvider,
       metaTxChainProvider,
       tx.data,
-      contractConfig
+      contractConfig,
+      {
+        serverURL: TRANSACTIONS_API_URL,
+      }
     )
   )
   return { txHash, chainId: metaTxChainId }
