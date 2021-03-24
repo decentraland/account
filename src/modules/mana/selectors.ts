@@ -173,10 +173,10 @@ export const getTransactionByNetwork = createSelector<
     }
 
     result[Network.MATIC].sort(
-      (t1, t2) => t1.data.timestamp - t2.data.timestamp
+      (t1, t2) => t2.data.timestamp - t1.data.timestamp
     )
     result[Network.ETHEREUM].sort(
-      (t1, t2) => t1.data.timestamp - t2.data.timestamp
+      (t1, t2) => t2.data.timestamp - t1.data.timestamp
     )
 
     return result
