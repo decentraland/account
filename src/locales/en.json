@@ -20,7 +20,8 @@
   "account_card": {
     "tx_latests": "Latests Transactions",
     "tx_pending": "Pending Transactions",
-    "see_all": "See all"
+    "see_all": "See all",
+    "empty": "No transactions yet..."
   },
   "transaction_detail_modal": {
     "title": "Transaction Detail",

@@ -1,4 +1,5 @@
 import React from 'react'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Props } from './AccountTransactions.types'
 import { AccountTransaction } from './AccountTransaction'
 import './AccountTransactions.css'
@@ -11,7 +12,7 @@ const AccountTransactions = ({ transactions }: Props) => (
       ))
     ) : (
       <div className="no-transactions-message">
-        <p> No transactions yet </p>
+        <p>{t('account_card.empty')}</p>
       </div>
     )}
   </div>
