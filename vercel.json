@@ -20,7 +20,9 @@
       "REACT_APP_ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS": "0xBbD7cBFA79faee899Eaf900F13C9065bF03B1A74",
       "REACT_APP_MATIC_ROOT_CHAIN_SUBGRAPH": "https://api.thegraph.com/subgraphs/name/maticnetwork/mumbai-root-subgraphs",
       "REACT_APP_TRANSAK_KEY": "273ac855-3472-40eb-8ee8-840e317f98e6",
-      "REACT_APP_TRANSAK_ENV": "STAGING"
+      "REACT_APP_TRANSAK_ENV": "STAGING",
+      "REACT_APP_SEGMENT_API_KEY": "I2fojSHbvc856pZqoLYXZrfwxsKJ24WG",
+      "REACT_APP_INTERCOM_APP_ID": "z0h94kay"
     }
   }
 }
