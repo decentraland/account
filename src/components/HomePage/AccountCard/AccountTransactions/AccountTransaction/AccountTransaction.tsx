@@ -92,10 +92,10 @@ const AccountTransaction = ({
         <div> {description} </div>
         <div>
           {getStatusMessage(type, status, data.status)} -{' '}
-          {distanceInWordsToNow(transaction.data.timestamp)}
+          {distanceInWordsToNow(transaction.timestamp)}
         </div>
       </div>
-      <div className="amount">{data?.amount}</div>
+      <div className="amount">{transaction.amount.toLocaleString()}</div>
     </div>
   )
 }

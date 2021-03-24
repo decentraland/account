@@ -4,12 +4,9 @@ import { Close } from 'decentraland-ui'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import {
-  Deposit,
-  Purchase,
   Transaction,
   TransactionType,
   Transfer,
-  Withdrawal,
 } from '../../../modules/mana/types'
 import { getStatusMessage } from '../../../modules/mana/utils'
 import './TransactionDetailModal.css'
@@ -24,52 +21,19 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
     transaction,
   }: { description: string; transaction: Transaction } = metadata
 
-  const { type, status } = transaction
+  const { type, status, amount } = transaction
   let data
   let dataComponent
   switch (transaction.type) {
-    case TransactionType.DEPOSIT:
-      data = transaction.data as Deposit
-      dataComponent = (
-        <div className="data">
-          <div> {t('transaction_detail_modal.amount')} </div>
-          <div> {data.amount} </div>
-        </div>
-      )
-      break
     case TransactionType.TRANSFER:
       data = transaction.data as Transfer
       dataComponent = (
-        <>
-          <div className="data">
-            <div> {t('transaction_detail_modal.amount')} </div>
-            <div> {data.amount} </div>
-          </div>
-          <div className="data">
-            <div> {t('transaction_detail_modal.to')} </div>
-            <div> {data.to} </div>
-          </div>
-        </>
+        <div className="data">
+          <div> {t('transaction_detail_modal.to')} </div>
+          <div> {data.to} </div>
+        </div>
       )
 
-      break
-    case TransactionType.WITHDRAWAL:
-      data = transaction.data as Withdrawal
-      dataComponent = (
-        <div className="data">
-          <div> {t('transaction_detail_modal.amount')} </div>
-          <div> {data.amount} </div>
-        </div>
-      )
-      break
-    case TransactionType.PURCHASE:
-      data = transaction.data as Purchase
-      dataComponent = (
-        <div className="data">
-          <div> {t('transaction_detail_modal.amount')} </div>
-          <div> {data.amount} </div>
-        </div>
-      )
       break
   }
 
@@ -93,7 +57,10 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
           <div> {t('transaction_detail_modal.datetime')} </div>
           <div> {datetime} </div>
         </div>
-
+        <div className="data">
+          <div> {t('transaction_detail_modal.amount')} </div>
+          <div>{amount.toLocaleString()} </div>
+        </div>
         {dataComponent}
         <div className="data">
           <div> {t('transaction_detail_modal.status')} </div>

@@ -1,6 +1,10 @@
 import { RootState } from '../reducer'
 import { Transaction } from 'decentraland-dapps/dist/modules/transaction/types'
-import { APPROVE_MANA_SUCCESS, TRANSFER_MANA_SUCCESS } from './actions'
+import {
+  APPROVE_MANA_SUCCESS,
+  TransferManaSuccessAction,
+  TRANSFER_MANA_SUCCESS,
+} from './actions'
 import { createSelector } from 'reselect'
 
 import { getData as getTransactionsData } from 'decentraland-dapps/dist/modules/transaction/selectors'
@@ -126,6 +130,8 @@ export const getTransactionByNetwork = createSelector<
               ? AccountTransactionStatus.PENDING
               : mapStatus(tx.status),
           data: deposit,
+          amount: deposit.amount,
+          timestamp: tx.timestamp,
         }
         result[network].unshift(accountTransaction)
       } else if (withdrawal) {
@@ -134,6 +140,8 @@ export const getTransactionByNetwork = createSelector<
           type: TransactionType.WITHDRAWAL,
           status: mapStatusWithdrawal(withdrawal.status),
           data: withdrawal,
+          amount: withdrawal.amount,
+          timestamp: tx.timestamp,
         }
         result[network].unshift(accountTransaction)
       } else {
@@ -142,11 +150,14 @@ export const getTransactionByNetwork = createSelector<
           walletAddress &&
           tx.from === walletAddress
         ) {
+          const payload = tx.payload as TransferManaSuccessAction['payload']
           const accountTransaction: AccountTransaction<Transfer> = {
             hash: tx.hash,
             type: TransactionType.TRANSFER,
             status: mapStatus(tx.status),
-            data: tx.payload.transfer || {},
+            data: payload.transfer,
+            timestamp: tx.timestamp,
+            amount: payload.transfer.amount,
           }
           result[network].unshift(accountTransaction)
         }
@@ -168,6 +179,8 @@ export const getTransactionByNetwork = createSelector<
             ? TransactionStatus.CONFIRMED
             : TransactionStatus.PENDING,
         data: purchase,
+        amount: purchase.amount,
+        timestamp: purchase.timestamp,
       }
       result[purchase.network].unshift(accountTransaction)
     }

@@ -17,6 +17,8 @@ export type Transaction<T = any> = {
   hash: string
   type: TransactionType
   status: TransactionStatus
+  timestamp: number
+  amount: number
   data: T
 }
 export type Buy = {
