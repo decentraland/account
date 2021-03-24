@@ -14,6 +14,9 @@ import {
   TransactionStatus as AccountTransactionStatus,
   TransactionType,
   DepositStatus,
+  Purchase,
+  PurchaseStatus,
+  TransactionStatus,
 } from './types'
 import { Network } from '@dcl/schemas'
 import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
@@ -69,6 +72,7 @@ export const isWaitingForApproval = createSelector<
 
 export const getDeposits = (state: RootState) => getData(state).deposits
 export const getWithdrawals = (state: RootState) => getData(state).withdrawals
+export const getPurchases = (state: RootState) => getData(state).purchases
 
 export const getWalletDeposits = createSelector<
   RootState,
@@ -93,14 +97,16 @@ export const getTransactionByNetwork = createSelector<
   Transaction[],
   Deposit[],
   Withdrawal[],
+  Purchase[],
   string | undefined,
   Record<Network, AccountTransaction[]>
 >(
   getTransactionsData,
   getDeposits,
   getWithdrawals,
+  getPurchases,
   getAddress,
-  (transactions, deposits, withdrawals, walletAddress) => {
+  (transactions, deposits, withdrawals, purchases, walletAddress) => {
     const result: Record<Network, AccountTransaction[]> = {
       ETHEREUM: [],
       MATIC: [],
@@ -146,6 +152,33 @@ export const getTransactionByNetwork = createSelector<
         }
       }
     }
+
+    const ONE_HOUR = 60 * 60 * 1000
+    for (const purchase of purchases) {
+      const accountTransaction: AccountTransaction<Purchase> = {
+        hash: '',
+        type: TransactionType.PURCHASE,
+        status:
+          purchase.status === PurchaseStatus.FAILED ||
+          purchase.status === PurchaseStatus.CANCELLED ||
+          (purchase.status === PurchaseStatus.PENDING &&
+            purchase.timestamp + ONE_HOUR < Date.now())
+            ? TransactionStatus.REJECTED
+            : purchase.status === PurchaseStatus.COMPLETE
+            ? TransactionStatus.CONFIRMED
+            : TransactionStatus.PENDING,
+        data: purchase,
+      }
+      result[purchase.network].unshift(accountTransaction)
+    }
+
+    result[Network.MATIC].sort(
+      (t1, t2) => t1.data.timestamp - t2.data.timestamp
+    )
+    result[Network.ETHEREUM].sort(
+      (t1, t2) => t1.data.timestamp - t2.data.timestamp
+    )
+
     return result
   }
 )

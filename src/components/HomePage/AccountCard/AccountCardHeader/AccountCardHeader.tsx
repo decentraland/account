@@ -13,6 +13,7 @@ const AccountCardHeader = ({
   onTransfer,
   onReceive,
   onConvert,
+  onPurchase,
 }: Props) => {
   const handleTransferMana = () => onTransfer(network)
 
@@ -20,6 +21,10 @@ const AccountCardHeader = ({
     if (address) {
       onReceive(network, address)
     }
+  }
+
+  const handleAddTokens = () => {
+    onPurchase(network)
   }
 
   const handleConvert = () => onConvert(network)
@@ -53,7 +58,7 @@ const AccountCardHeader = ({
           </div>
         </div>
         <div className="actions">
-          <Button>
+          <Button onClick={handleAddTokens}>
             <Icon name="plus" />
           </Button>
           <Button onClick={handleConvert}>

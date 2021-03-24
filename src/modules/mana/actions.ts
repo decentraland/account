@@ -7,6 +7,7 @@ import {
   Deposit,
   DepositStatus,
   Transfer,
+  Purchase,
 } from './types'
 
 // Get MANA Approved
@@ -250,3 +251,9 @@ export type FinishWithdrawalSuccessAction = ReturnType<
 export type FinishWithdrawalFailureAction = ReturnType<
   typeof finishWithdrawalFailure
 >
+
+// Set Purchase
+export const SET_PURCHASE = 'Set Purchase'
+export const setPurchase = (purchase: Purchase) =>
+  action(SET_PURCHASE, { purchase })
+export type SetPurchaseAction = ReturnType<typeof setPurchase>
