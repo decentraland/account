@@ -17,7 +17,8 @@
       "REACT_APP_MANA_CONTRACT_ADDRESS": "0xe7fDae84ACaba2A5Ba817B6E6D8A2d415DBFEdbe",
       "REACT_APP_ERC20_PREDICATE_CONTRACT_ADDRESS": "0xdD6596F2029e6233DEFfaCa316e6A95217d4Dc34",
       "REACT_APP_ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS": "0xBbD7cBFA79faee899Eaf900F13C9065bF03B1A74",
-      "REACT_APP_MATIC_ROOT_CHAIN_SUBGRAPH": "https://api.thegraph.com/subgraphs/name/maticnetwork/mumbai-root-subgraphs"
+      "REACT_APP_MATIC_ROOT_CHAIN_SUBGRAPH": "https://api.thegraph.com/subgraphs/name/maticnetwork/mumbai-root-subgraphs",
+      "REACT_APP_TRANSAK_KEY": "273ac855-3472-40eb-8ee8-840e317f98e6"
     }
   }
 }
