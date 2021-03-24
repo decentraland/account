@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { distanceInWordsToNow } from 'decentraland-dapps/dist/lib/utils'
 import {
@@ -24,6 +24,12 @@ const AccountTransaction = ({
   onPendingPurchase,
 }: Props) => {
   const { type, status } = transaction
+
+  // This forces a re-render every minute, to keep the "time ago" of the detail updated
+  const [now, setNow] = useState(Date.now())
+  useEffect(() => {
+    setTimeout(() => setNow(Date.now()), 60000)
+  }, [now])
 
   const shortening = (address: string): string =>
     address ? `${address.slice(0, 4)}...${address.slice(-4)}` : ''
