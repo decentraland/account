@@ -77,9 +77,10 @@ export enum PurchaseStatus {
 }
 
 export type Purchase = {
-  id: string // el id del order data,
-  amount: number // cantidad de mana que compro
-  network: Network // si fue en MANA de ethereum o de matic, para saber despues en que columna mostrarlo
-  timestamp: number // el momento en que se hizo
-  status: PurchaseStatus // un enum con los posibles estados
+  id: string
+  amount: number
+  network: Network
+  timestamp: number
+  status: PurchaseStatus
+  address: string
 }

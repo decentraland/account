@@ -87,7 +87,6 @@ function createPurchase(
   orderData: OrderData,
   status: PurchaseStatus
 ): Purchase {
-  console.log(orderData)
   const network = getNetwork(orderData.status.network)
   return {
     id: orderData.status.id,
@@ -95,6 +94,7 @@ function createPurchase(
     network,
     timestamp: +new Date(orderData.status.createdAt),
     status,
+    address: orderData.status.walletAddress,
   }
 }
 

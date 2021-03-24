@@ -165,7 +165,10 @@ export const getTransactionByNetwork = createSelector<
     }
 
     const ONE_HOUR = 60 * 60 * 1000
-    for (const purchase of purchases) {
+    for (const purchase of purchases.filter(
+      (purchase) =>
+        purchase.address.toLowerCase() === walletAddress?.toLowerCase()
+    )) {
       const accountTransaction: AccountTransaction<Purchase> = {
         hash: '',
         type: TransactionType.PURCHASE,
