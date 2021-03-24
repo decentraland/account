@@ -33,6 +33,10 @@
   margin-right: 20px;
 }
 
+.AccountTransaction .amount {
+  font-weight: 600;
+}
+
 .transaction-logo {
   width: 34px;
   height: 34px;

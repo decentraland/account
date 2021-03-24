@@ -45,9 +45,20 @@
 }
 
 .AccountCardHeader .actions button:first-child {
-  min-width: 44px;
+  min-width: 50px;
+  padding: 0px;
 }
 
 .AccountCardHeader i.icon.dropdown {
   display: none;
+}
+
+.AccountCardHeader .add-mana-icon {
+  background-image: url(../../../../images/add-mana-icon.svg);
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-top: 4px;
 }

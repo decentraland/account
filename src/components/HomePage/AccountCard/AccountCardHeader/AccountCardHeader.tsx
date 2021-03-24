@@ -1,7 +1,7 @@
 import React from 'react'
 import { Network } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Button, Dropdown, Icon } from 'decentraland-ui'
+import { Button, Dropdown } from 'decentraland-ui'
 import { Props } from './AccountCardHeader.types'
 import './AccountCardHeader.css'
 
@@ -59,7 +59,7 @@ const AccountCardHeader = ({
         </div>
         <div className="actions">
           <Button onClick={handleAddTokens}>
-            <Icon name="plus" />
+            <i className="add-mana-icon" />
           </Button>
           <Button onClick={handleConvert}>
             {t('account_card_header.convert')}
