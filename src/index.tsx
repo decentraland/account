@@ -6,6 +6,8 @@ import WalletProvider from 'decentraland-dapps/dist/providers/WalletProvider'
 import ModalProvider from 'decentraland-dapps/dist/providers/ModalProvider'
 import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
 
+import './modules/analytics/track'
+
 import './setup'
 import './themes'
 

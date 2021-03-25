@@ -32,6 +32,11 @@ import {
   FINISH_WITHDRAWAL_FAILURE,
   SetPurchaseAction,
   SET_PURCHASE,
+  GetApprovedManaRequestAction,
+  GET_APPROVED_MANA_SUCCESS,
+  GetApprovedManaSuccessAction,
+  GetApprovedManaFailureAction,
+  GET_APPROVED_MANA_FAILURE,
 } from '../mana/actions'
 
 function track<T extends PayloadAction<string, any>>(
@@ -110,4 +115,16 @@ track<SetPurchaseAction>(
   SET_PURCHASE,
   'Set Purchase',
   (action) => action.payload.purchase
+)
+
+track<GetApprovedManaSuccessAction>(
+  GET_APPROVED_MANA_SUCCESS,
+  'Get Approved Mana',
+  (action) => action.payload.allowance
+)
+
+track<GetApprovedManaFailureAction>(
+  GET_APPROVED_MANA_FAILURE,
+  'Get Approved Mana Error',
+  (action) => ({ error: action.payload.error })
 )
