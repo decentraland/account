@@ -168,7 +168,6 @@ export const getStatusMessage = (
     return t('send_status.pending')
   }
   if (type === TransactionType.PURCHASE) {
-    console.log(parentStatus, childStatus)
     if (parentStatus === TransactionStatus.PENDING) {
       return t('purchase_status.pending')
     }
