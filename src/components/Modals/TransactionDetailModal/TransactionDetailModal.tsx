@@ -4,9 +4,12 @@ import { Close } from 'decentraland-ui'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import {
+  Deposit,
+  Purchase,
   Transaction,
   TransactionType,
   Transfer,
+  Withdrawal,
 } from '../../../modules/mana/types'
 import { getStatusMessage } from '../../../modules/mana/utils'
 import './TransactionDetailModal.css'
@@ -25,6 +28,15 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
   let data
   let dataComponent
   switch (transaction.type) {
+    case TransactionType.DEPOSIT:
+      data = transaction.data as Deposit
+      break
+    case TransactionType.WITHDRAWAL:
+      data = transaction.data as Withdrawal
+      break
+    case TransactionType.PURCHASE:
+      data = transaction.data as Purchase
+      break
     case TransactionType.TRANSFER:
       data = transaction.data as Transfer
       dataComponent = (
@@ -33,7 +45,6 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
           <div> {data.to} </div>
         </div>
       )
-
       break
   }
 
