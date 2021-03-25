@@ -1,7 +1,7 @@
 import { BigNumber, ethers } from 'ethers'
 import { TransactionStatus as TxStatus } from 'decentraland-dapps/dist/modules/transaction/types'
 import { graphql } from 'decentraland-dapps/dist/lib/graph'
-import { Provider } from 'decentraland-transactions/dist'
+import { Provider } from 'decentraland-transactions'
 import {
   DepositStatus,
   PurchaseStatus,

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@dcl/schemas": "^0.2.0",
+    "@dcl/schemas": "^1.1.1",
     "@maticnetwork/maticjs": "^2.0.34",
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.2",
@@ -15,7 +15,7 @@
     "@types/react-dom": "^16.9.10",
     "connected-react-router": "^6.8.0",
     "decentraland-dapps": "^10.0.0",
-    "decentraland-transactions": "^1.5.0",
+    "decentraland-transactions": "^1.5.2",
     "decentraland-ui": "^3.1.1",
     "ethers": "^5.0.31",
     "history": "4.10.1",
