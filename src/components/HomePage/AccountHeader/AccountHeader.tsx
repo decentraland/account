@@ -17,9 +17,9 @@ const AccountHeader = (props: Props) => {
         <div className="profile-name">
           {avatar ? avatar.name : t('global.guest')}
         </div>
-        <div className="profile-description">
-          {avatar ? avatar.description : null}
-        </div>
+        {avatar && avatar.description ? (
+          <div className="profile-description">{avatar.description}</div>
+        ) : null}
       </div>
       <div className="actions">
         <Button primary inverted href={`${BUILDER_URL}/names`} target="_blank">
