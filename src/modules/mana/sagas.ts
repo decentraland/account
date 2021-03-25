@@ -78,6 +78,7 @@ import {
   SetDepositStatusAction,
   SET_WITHDRAWAL_STATUS,
   SetWithdrawalStatusAction,
+  TRANSFER_MANA_SUCCESS,
 } from './actions'
 import { ERC20 } from '../../contracts/ERC20'
 import { RootChainManager } from '../../contracts/RootChainManager'
@@ -100,10 +101,15 @@ import {
 import { getWalletDeposits, getWalletWithdrawals } from './selectors'
 import { closeModal, openModal } from '../modal/actions'
 import { Provider } from 'decentraland-dapps/dist/modules/wallet/types'
+import {
+  FetchTransactionSuccessAction,
+  FETCH_TRANSACTION_SUCCESS,
+} from 'decentraland-dapps/dist/modules/transaction/actions'
 
 export function* manaSaga() {
   yield takeEvery(SET_DEPOSIT_STATUS, handleSetDepositStatus)
   yield takeEvery(SET_WITHDRAWAL_STATUS, handleSetWithdrawalStatus)
+  yield takeEvery(FETCH_TRANSACTION_SUCCESS, handleFetchTransactionSuccess)
   yield takeEvery(DEPOSIT_MANA_REQUEST, handleDepositManaRequest)
   yield takeEvery(GET_APPROVED_MANA_REQUEST, handleGetApprovedManaRequest)
   yield takeEvery(APPROVE_MANA_REQUEST, handleApproveManaRequest)
@@ -500,6 +506,13 @@ function* handleSetDepositStatus(action: SetDepositStatusAction) {
 function* handleSetWithdrawalStatus(action: SetWithdrawalStatusAction) {
   const { status } = action.payload
   if (status === WithdrawalStatus.COMPLETE) {
+    yield put(fetchWalletRequest())
+  }
+}
+
+function* handleFetchTransactionSuccess(action: FetchTransactionSuccessAction) {
+  const { transaction } = action.payload
+  if (transaction.actionType === TRANSFER_MANA_SUCCESS) {
     yield put(fetchWalletRequest())
   }
 }
