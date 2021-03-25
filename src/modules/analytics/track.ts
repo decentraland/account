@@ -32,10 +32,10 @@ import {
   FINISH_WITHDRAWAL_FAILURE,
   SetPurchaseAction,
   SET_PURCHASE,
-  GET_APPROVED_MANA_SUCCESS,
-  GetApprovedManaSuccessAction,
-  GetApprovedManaFailureAction,
-  GET_APPROVED_MANA_FAILURE,
+  APPROVE_MANA_SUCCESS,
+  APPROVE_MANA_FAILURE,
+  ApproveManaSuccessAction,
+  ApproveManaFailureAction,
 } from '../mana/actions'
 import { PurchaseStatus } from '../mana/types'
 
@@ -124,14 +124,14 @@ track<SetPurchaseAction>(
   (action) => action.payload.purchase
 )
 
-track<GetApprovedManaSuccessAction>(
-  GET_APPROVED_MANA_SUCCESS,
-  'Get Approved Mana',
-  (action) => action.payload.allowance
+track<ApproveManaSuccessAction>(
+  APPROVE_MANA_SUCCESS,
+  'Approve Mana',
+  (action) => ({ allowance: action.payload.allowance })
 )
 
-track<GetApprovedManaFailureAction>(
-  GET_APPROVED_MANA_FAILURE,
-  'Get Approved Mana Error',
+track<ApproveManaFailureAction>(
+  APPROVE_MANA_FAILURE,
+  'Approve Mana Error',
   (action) => ({ error: action.payload.error })
 )
