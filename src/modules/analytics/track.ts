@@ -37,6 +37,7 @@ import {
   GetApprovedManaFailureAction,
   GET_APPROVED_MANA_FAILURE,
 } from '../mana/actions'
+import { PurchaseStatus } from '../mana/types'
 
 function track<T extends PayloadAction<string, any>>(
   actionType: string,
@@ -112,7 +113,14 @@ track<FinishWithdrawalFailureAction>(
 
 track<SetPurchaseAction>(
   SET_PURCHASE,
-  'Set Purchase',
+  (action) =>
+    action.payload.purchase.status === PurchaseStatus.CANCELLED
+      ? 'Purchase Cancelled'
+      : action.payload.purchase.status === PurchaseStatus.COMPLETE
+      ? 'Purchase Complete'
+      : action.payload.purchase.status === PurchaseStatus.FAILED
+      ? 'Purchase Failed'
+      : 'Purchase Pending',
   (action) => action.payload.purchase
 )
 
