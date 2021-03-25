@@ -120,7 +120,7 @@ track<SetPurchaseAction>(
       ? 'Purchase Complete'
       : action.payload.purchase.status === PurchaseStatus.FAILED
       ? 'Purchase Failed'
-      : 'Purchase Pending',
+      : 'Purchase Started',
   (action) => action.payload.purchase
 )
 
