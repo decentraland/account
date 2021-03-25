@@ -32,7 +32,6 @@ import {
   FINISH_WITHDRAWAL_FAILURE,
   SetPurchaseAction,
   SET_PURCHASE,
-  GetApprovedManaRequestAction,
   GET_APPROVED_MANA_SUCCESS,
   GetApprovedManaSuccessAction,
   GetApprovedManaFailureAction,
