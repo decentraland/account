@@ -115,7 +115,9 @@ export const getTransactionByNetwork = createSelector<
       ETHEREUM: [],
       MATIC: [],
     }
-    for (const tx of transactions) {
+    for (const tx of transactions.filter(
+      (tx) => tx.from.toLowerCase() === walletAddress?.toLowerCase()
+    )) {
       const { network } = getChainConfiguration(tx.chainId)
       const deposit = deposits.find((deposit) => tx.hash === deposit.hash)
       const withdrawal = withdrawals.find(
