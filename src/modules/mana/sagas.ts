@@ -11,6 +11,11 @@ import {
   CONNECT_WALLET_SUCCESS,
   fetchWalletRequest,
 } from 'decentraland-dapps/dist/modules/wallet/actions'
+import { Provider } from 'decentraland-dapps/dist/modules/wallet/types'
+import {
+  FetchTransactionSuccessAction,
+  FETCH_TRANSACTION_SUCCESS,
+} from 'decentraland-dapps/dist/modules/transaction/actions'
 import {
   getNetworkProvider,
   getConnectedProvider,
@@ -90,6 +95,7 @@ import {
   isWithdrawalSynced,
   isDepositSynced,
   TRANSACTIONS_API_URL,
+  MATIC_ENV,
 } from './utils'
 import {
   WithdrawalStatus,
@@ -97,14 +103,10 @@ import {
   Deposit,
   DepositStatus,
   TransferStatus,
+  MaticEnv,
 } from './types'
 import { getWalletDeposits, getWalletWithdrawals } from './selectors'
 import { closeModal, openModal } from '../modal/actions'
-import { Provider } from 'decentraland-dapps/dist/modules/wallet/types'
-import {
-  FetchTransactionSuccessAction,
-  FETCH_TRANSACTION_SUCCESS,
-} from 'decentraland-dapps/dist/modules/transaction/actions'
 
 export function* manaSaga() {
   yield takeEvery(SET_DEPOSIT_STATUS, handleSetDepositStatus)
@@ -335,14 +337,16 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
       parentConfig.networkMapping[Network.MATIC]
     )
 
-    const matic = new MaticPOSClient({
+    const config = {
+      network: MATIC_ENV,
+      version: MATIC_ENV === MaticEnv.MAINNET ? 'v1' : 'mumbai',
       parentProvider: provider,
       maticProvider: maticConfig.rpcURL,
-      posRootChainManager: ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS,
-      posERC20Predicate: ERC20_PREDICATE_CONTRACT_ADDRESS,
       parentDefaultOptions: { from },
       maticDefaultOptions: { from },
-    })
+    }
+
+    const matic = new MaticPOSClient(config)
 
     const tx: { transactionHash: string } = yield call(() =>
       matic.exitERC20(withdrawal.hash, { from })

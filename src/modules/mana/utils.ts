@@ -4,6 +4,7 @@ import { graphql } from 'decentraland-dapps/dist/lib/graph'
 import { Provider } from 'decentraland-transactions'
 import {
   DepositStatus,
+  MaticEnv,
   PurchaseStatus,
   TransactionStatus,
   TransactionType,
@@ -25,6 +26,7 @@ export const ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS = process.env
   .REACT_APP_ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS!
 export const MATIC_ROOT_CHAIN_SUBGRAPH = process.env
   .REACT_APP_MATIC_ROOT_CHAIN_SUBGRAPH!
+export const MATIC_ENV: MaticEnv = getMaticEnv(process.env.REACT_APP_MATIC_ENV)
 export const TRANSACTIONS_API_URL = process.env.REACT_APP_TRANSACTIONS_API_URL!
 
 const POLL_INTERVAL = 30 * 1000 // 30 seconds
@@ -218,4 +220,12 @@ export const isPendingAccountTransaction = (
     }
   }
   return false
+}
+
+function getMaticEnv(env?: string) {
+  if (env && env.toLowerCase() === MaticEnv.MAINNET) {
+    return MaticEnv.MAINNET
+  } else {
+    return MaticEnv.TESTNET
+  }
 }

@@ -1,5 +1,10 @@
 import { ChainId, Network } from '@dcl/schemas'
 
+export enum MaticEnv {
+  MAINNET = 'mainnet',
+  TESTNET = 'testnet',
+}
+
 export enum TransactionType {
   DEPOSIT = 'deposit',
   WITHDRAWAL = 'withdrawal',
