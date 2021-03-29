@@ -43,8 +43,8 @@
     "copied": "Copied!"
   },
   "transaction_description": {
-    "deposit": "Deposit to MANA Matic",
-    "withdrawal": "Withdrawal to MANA Ethereum",
+    "deposit": "Deposit to Matic MANA",
+    "withdrawal": "Withdrawal to Ethereum MANA",
     "buy": "Add tokens via Transak",
     "send": "Send tokens to"
   },

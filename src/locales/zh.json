@@ -20,8 +20,7 @@
   "account_card": {
     "tx_latests": "最新交易",
     "tx_pending": "待交易",
-    "see_all": "看到所有",
-    "empty": "您尚未进行任何交易..."
+    "see_all": "看到所有"
   },
   "transaction_detail_modal": {
     "title": "交易明细",
@@ -43,8 +42,8 @@
     "copied": "复制！"
   },
   "transaction_description": {
-    "deposit": "存入MANA Matic",
-    "withdrawal": "提款至MANA Ethereum",
+    "deposit": "存入Matic MANA",
+    "withdrawal": "提款至Ethereum MANA",
     "buy": "通过Transak添加令牌",
     "send": "将令牌发送到"
   },
