@@ -1,7 +1,7 @@
 import React from 'react'
 import { Network } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Button, Dropdown } from 'decentraland-ui'
+import { Button, Dropdown, Popup } from 'decentraland-ui'
 import { Props } from './AccountCardHeader.types'
 import './AccountCardHeader.css'
 
@@ -28,11 +28,25 @@ const AccountCardHeader = ({
   }
 
   const handleConvert = () => onConvert(network)
+  let tooltipMessage = ''
+  if (network === Network.MATIC) {
+    tooltipMessage = t('account_card_header.tooltip_matic')
+  } else {
+    tooltipMessage = t('account_card_header.tooltip_ethereum')
+  }
 
   return (
     <div className="AccountCardHeader">
       <div className="title">
-        {title}
+        <div className="title-text-container">
+          {title}
+          <Popup
+            content={tooltipMessage}
+            position="top center"
+            trigger={<div className="info-logo" />}
+            on="hover"
+          />
+        </div>
         <div className="operation-menu">
           <Dropdown text="..." direction="left">
             <Dropdown.Menu>

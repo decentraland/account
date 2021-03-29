@@ -15,7 +15,9 @@
   "account_card_header": {
     "convert": "改造",
     "receive": "接收",
-    "send": "发送"
+    "send": "发送",
+    "tooltip_ethereum": "这是Ethereum Mana",
+    "tooltip_matic": "这是Matic Mana"
   },
   "account_card": {
     "tx_latests": "最新交易",
