@@ -67,10 +67,6 @@
   display: flex;
 }
 
-.AccountCardHeader:hover .title-text-container {
-  display: flex;
-}
-
 .AccountCardHeader:hover .info-logo {
   opacity: 1;
 }
