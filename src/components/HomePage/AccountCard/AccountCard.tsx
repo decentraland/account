@@ -28,30 +28,35 @@ const AccountCard = ({
     )
     .slice(0, MAX_TXS_TO_SHOW_PER_STATUS)
 
-  const isEmpty = transactions.length === 0
-
   const handleOnSeeAll = () => onSeeAll(transactions, network)
   return (
     <Card className="AccountCard">
       <AccountCardHeader network={network} title={title} amount={amount} />
       <div className="AccountTransactions">
         <div>
-          <div className="see-all" onClick={handleOnSeeAll}>
-            {t('account_card.see_all')}
-          </div>
+          {transactions.length > 0 ? (
+            <div className="see-all" onClick={handleOnSeeAll}>
+              {t('account_card.see_all')}
+            </div>
+          ) : null}
         </div>
         {pending.length > 0 ? (
           <>
             <div className="description">
               <div> {t('account_card.tx_pending')} </div>
             </div>
-            <AccountTransactions transactions={pending} isEmpty={isEmpty} />
+            <AccountTransactions transactions={pending} />
           </>
         ) : null}
-        <div className="description">
-          <div> {t('account_card.tx_latests')} </div>
-        </div>
-        <AccountTransactions transactions={latest} isEmpty={isEmpty} />
+        {latest.length > 0 ? (
+          <>
+            <div className="description">
+              <div> {t('account_card.tx_latests')} </div>
+            </div>
+            <AccountTransactions transactions={latest} />
+          </>
+        ) : null}
+        {transactions.length === 0 ? <div className="empty" /> : null}
       </div>
     </Card>
   )

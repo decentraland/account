@@ -1,3 +1,8 @@
+.AccountTransactions {
+  position: relative;
+  min-height: 512px;
+}
+
 .AccountTransactions .description {
   display: flex;
   flex-direction: row;
@@ -26,4 +31,17 @@
   line-height: 18px;
   color: var(--secondary-text);
   text-align: center;
+}
+
+.AccountTransactions .empty {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-image: url(../../../../images/dark.png);
+  background-position: center;
+  background-size: 160px;
+  background-repeat: no-repeat;
+  opacity: 0.05;
 }

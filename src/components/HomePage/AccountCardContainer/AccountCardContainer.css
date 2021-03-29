@@ -1,5 +1,4 @@
 .AccountCardContainer {
   display: flex;
-  flex-align: row;
-  min-height: 640px;
+  flex-direction: row;
 }
