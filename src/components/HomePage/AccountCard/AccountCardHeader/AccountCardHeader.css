@@ -62,3 +62,16 @@
   background-repeat: no-repeat;
   margin-top: 4px;
 }
+
+.AccountCardHeader .title-text-container {
+  display: flex;
+}
+
+.AccountCardHeader .info-logo {
+  margin: 2px;
+  width: 24px;
+  height: 24px;
+  background-image: url('../../../../images/info.svg'); 
+}
+
+

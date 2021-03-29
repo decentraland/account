@@ -15,7 +15,9 @@
   "account_card_header": {
     "convert": "Convertir",
     "receive": "Recibir",
-    "send": "Enviar"
+    "send": "Enviar",
+    "tooltip_ethereum": "Esto es Ethereum Mana",
+    "tooltip_matic": "Esto es Matic Mana"
   },
   "account_card": {
     "tx_latests": "Ultimas Transacciones",
