@@ -54,8 +54,7 @@ export function getTransak(address: string): Transak {
     apiKey: TRANSAK_KEY, // Your API Key
     environment: TRANSAK_ENV || 'STAGING', // STAGING/PRODUCTION
     defaultCryptoCurrency: 'MANA',
-    cyptoCurrencyList: 'MANA,USDT',
-    networks: 'ETHEREUM,MATIC',
+    cyptoCurrencyList: 'MANA',
     walletAddress: address, // Your customer's wallet address
     fiatCurrency: '', // INR/GBP
     email: '', // Your customer's email address
