@@ -43,6 +43,7 @@ type Transak = EventEmitter & {
     defaultNetwork: Network
     walletAddress: string
     partnerOrderId: string
+    networks: string
   }
   EVENTS: Record<string, string>
 }
@@ -55,6 +56,7 @@ export function getTransak(address: string): Transak {
     environment: TRANSAK_ENV || 'STAGING', // STAGING/PRODUCTION
     defaultCryptoCurrency: 'MANA',
     cyptoCurrencyList: 'MANA',
+    networks: 'ethereum,matic',
     walletAddress: address, // Your customer's wallet address
     fiatCurrency: '', // INR/GBP
     email: '', // Your customer's email address
@@ -125,5 +127,6 @@ export function openTransakWidget(address: string, network: Network) {
   const transak = getTransak(address)
   transak.partnerData.walletAddress = address
   transak.partnerData.defaultNetwork = network
+  transak.partnerData.networks = network.toLowerCase()
   transak.init()
 }
