@@ -17,7 +17,7 @@
     "receive": "接收",
     "send": "发送",
     "tooltip_ethereum": "这是Ethereum Mana",
-    "tooltip_matic": "这是Matic Mana"
+    "tooltip_matic": "这是Polygon Mana"
   },
   "account_card": {
     "tx_latests": "最新交易",
@@ -35,7 +35,7 @@
   },
   "see_all_transaction_modal": {
     "title_ethereum": "Ethereum 交易",
-    "title_matic": "Matic 交易"
+    "title_matic": "Polygon 交易"
   },
   "receive_mana_modal": {
     "title": "接收令牌",
@@ -44,7 +44,7 @@
     "copied": "复制！"
   },
   "transaction_description": {
-    "deposit": "存入Matic MANA",
+    "deposit": "存入Polygon MANA",
     "withdrawal": "提款至Ethereum MANA",
     "buy": "通过Transak添加令牌",
     "send": "将令牌发送到"
@@ -76,10 +76,10 @@
     "amount_label": "量",
     "label_button_ethereum": "完成存款",
     "label_button_matic": "开始提款",
-    "title_ethereum": "转换为Matic MANA",
-    "subtitle_ethereum": "将MANA从Ethereum存入Matic",
+    "title_ethereum": "转换为Polygon MANA",
+    "subtitle_ethereum": "将MANA从Ethereum存入Polygon",
     "title_matic": "转换为MANA",
-    "subtitle_matic": "将MANA从Matic撤至Ethereum",
+    "subtitle_matic": "将MANA从Polygon撤至Ethereum",
     "label_approvement": "获MANA批准"
   },
   "withdrawal_status_modal": {

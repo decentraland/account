@@ -18,12 +18,12 @@ const HomePage: React.FC<Props> = ({ transactionsByNetwork }) => {
         <AccountCardContainer>
           <AccountCard
             network={Network.ETHEREUM}
-            title="Mana"
+            title="Ethereum MANA"
             transactions={transactionsByNetwork[Network.ETHEREUM]}
           />
           <AccountCard
             network={Network.MATIC}
-            title="Matic Mana"
+            title="Polygon MANA"
             transactions={transactionsByNetwork[Network.MATIC]}
           />
         </AccountCardContainer>

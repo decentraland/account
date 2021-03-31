@@ -16,8 +16,8 @@
     "convert": "Convertir",
     "receive": "Recibir",
     "send": "Enviar",
-    "tooltip_ethereum": "Esto es Ethereum Mana",
-    "tooltip_matic": "Esto es Matic Mana"
+    "tooltip_ethereum": "Este es tu balance de MANA en Ethereum",
+    "tooltip_matic": "Este es tu balance de MANA en Polygon (antes llamado Matic)"
   },
   "account_card": {
     "tx_latests": "Ultimas Transacciones",
@@ -35,8 +35,8 @@
     "to": "Enviado a"
   },
   "see_all_transaction_modal": {
-    "title_ethereum": "Transacciones Ethereum",
-    "title_matic": "Transacciones Matic"
+    "title_ethereum": "Transacciones en Ethereum",
+    "title_matic": "Transacciones en Polygon"
   },
   "receive_mana_modal": {
     "title": "Recibir Tokens",
@@ -45,8 +45,8 @@
     "copied": "Copiado!"
   },
   "transaction_description": {
-    "deposit": "Deposito a Matic MANA",
-    "withdrawal": "Extracción a Ethereum MANA",
+    "deposit": "Depósito de MANA en Polygon",
+    "withdrawal": "Extracción de MANA a Ethereum",
     "buy": "Compra de Tokens via Transak",
     "send": "Envio de tokens a"
   },
@@ -77,10 +77,10 @@
     "amount_label": "Cantidad",
     "label_button_ethereum": "Completar Depósito",
     "label_button_matic": "Comenzar Retiro",
-    "title_ethereum": "Convertir a Matic MANA",
-    "subtitle_ethereum": "Depositar MANA de Ethereum a Matic",
-    "title_matic": "Convertir a MANA",
-    "subtitle_matic": "Retira MANA de Matic a Ethereum",
+    "title_ethereum": "Convertir a MANA en Polygon",
+    "subtitle_ethereum": "Depositar MANA de Ethereum a Polygon",
+    "title_matic": "Convertir a MANA en Ethereum",
+    "subtitle_matic": "Retira MANA de Polygon a Ethereum",
     "label_approvement": "MANA Aprobado"
   },
   "withdrawal_status_modal": {
