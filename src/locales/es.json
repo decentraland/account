@@ -88,14 +88,14 @@
     "amount_placeholder": "Cantidad",
     "status_placeholder": "Estado",
     "status_initialized": "Retirar inicializado",
-    "status_checkpoint": "Punto de Control",
+    "status_checkpoint": "Listo para retirar",
     "status_checkpoint_placeholder": "Usualmente toma 30 minutos",
     "status_completed": "Completar Retiro",
     "complete_withdrawal": "Completar Retiro"
   },
   "withdrawal_status": {
     "pending": "Pendiente",
-    "checkpoint": "Checkpoint",
+    "checkpoint": "Listo para retirar",
     "complete": "Completado"
   },
   "deposit_status": {

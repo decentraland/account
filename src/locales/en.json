@@ -88,14 +88,14 @@
     "amount_placeholder": "Amount",
     "status_placeholder": "Status",
     "status_initialized": "Withdrawal initialized",
-    "status_checkpoint": "Checkpoint",
+    "status_checkpoint": "Ready to withdraw",
     "status_checkpoint_placeholder": "Usually takes 30 minutes",
-    "status_completed": "Complete Withdrawal",
+    "status_completed": "Complete withdrawal",
     "complete_withdrawal": "Complete Withdrawal"
   },
   "withdrawal_status": {
     "pending": "Pending",
-    "checkpoint": "Checkpoint",
+    "checkpoint": "Ready to withdraw",
     "complete": "Complete"
   },
   "deposit_status": {

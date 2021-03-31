@@ -23,13 +23,15 @@
   justify-content: space-between;
 }
 
-.AccountTransaction .DescriptionStatus :last-child {
+.AccountTransaction .DescriptionStatus .status {
   font-size: 15px;
   line-height: 24px;
   color: #736e7d;
 }
 
-.AccountTransaction :last-child {
+.AccountTransaction .DescriptionStatus,
+.AccountTransaction .amount,
+.AccountTransaction .type {
   margin-right: 20px;
 }
 
@@ -56,4 +58,9 @@
 
 .AccountTransaction .in-pending-transaction-logo {
   background-image: url('../../../../../images/in-pending-transaction.svg');
+}
+
+.AccountTransaction .withdrawal-checkpoint {
+  color: #069f5e;
+  font-weight: 600;
 }
