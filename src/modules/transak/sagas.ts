@@ -14,9 +14,9 @@ export function* transakSaga() {
 }
 
 function* handleOpenTransak(action: OpenTransakAction) {
-  const { network, id } = action.payload
+  const { network } = action.payload
   const address: string = yield select(getAddress)
-  openTransakWidget(address, network, id)
+  openTransakWidget(address, network)
 }
 
 function* handleConnectWalletSuccess(action: ConnectWalletSuccessAction) {

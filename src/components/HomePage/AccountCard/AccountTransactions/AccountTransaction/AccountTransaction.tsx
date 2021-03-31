@@ -82,8 +82,8 @@ const AccountTransaction = ({
       type === TransactionType.PURCHASE &&
       status === TransactionStatus.PENDING
     ) {
-      const { id, network } = data as Purchase
-      onPendingPurchase(network, id)
+      const { network } = data as Purchase
+      onPendingPurchase(network)
     } else {
       onTransactionDetail(description, transaction)
     }

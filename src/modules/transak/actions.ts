@@ -19,6 +19,6 @@ export type TransakOrderFailureAction = ReturnType<typeof transakOrderFailure>
 
 // Open Transak
 export const OPEN_TRANSAK = 'Open Transak'
-export const openTransak = (network: Network, id?: string) =>
-  action(OPEN_TRANSAK, { network, id })
+export const openTransak = (network: Network) =>
+  action(OPEN_TRANSAK, { network })
 export type OpenTransakAction = ReturnType<typeof openTransak>

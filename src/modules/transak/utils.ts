@@ -122,16 +122,8 @@ export function initializeTransak(store: Store, address: string) {
   })
 }
 
-export function openTransakWidget(
-  address: string,
-  network: Network,
-  id?: string
-) {
+export function openTransakWidget(address: string, network: Network) {
   const transak = getTransak(address)
-  if (id) {
-    // TODO: this does not open the widget with the selected order, we need to reach to the Transak folks and ask if this is possible some way.
-    transak.partnerData.partnerOrderId = id
-  }
   transak.partnerData.walletAddress = address
   transak.partnerData.defaultNetwork = network
   transak.init()
