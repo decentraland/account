@@ -40,7 +40,7 @@ type OrderData = {
 type Transak = EventEmitter & {
   init: () => void
   partnerData: {
-    defaultNetwork: Network
+    defaultNetwork: string
     walletAddress: string
     partnerOrderId: string
     networks: string
@@ -126,7 +126,7 @@ export function initializeTransak(store: Store, address: string) {
 export function openTransakWidget(address: string, network: Network) {
   const transak = getTransak(address)
   transak.partnerData.walletAddress = address
-  transak.partnerData.defaultNetwork = network
+  transak.partnerData.defaultNetwork = network.toLowerCase()
   transak.partnerData.networks = network.toLowerCase()
   transak.init()
 }
