@@ -56,7 +56,12 @@ const AccountCard = ({
             <AccountTransactions transactions={latest} />
           </>
         ) : null}
-        {transactions.length === 0 ? <div className="empty" /> : null}
+        {transactions.length === 0 ? (
+          <div className="empty">
+            <div className="watermelon" />
+            <div className="secondary-text">{t('account_card.empty')}</div>
+          </div>
+        ) : null}
       </div>
     </Card>
   )

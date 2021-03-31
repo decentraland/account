@@ -24,7 +24,7 @@
     "tx_latests": "Ultimas Transacciones",
     "tx_pending": "Transacciones Pendientes",
     "see_all": "Ver Todas",
-    "empty": "No hubo transacciones aún..."
+    "empty": "No haz realizado transacciones."
   },
   "transaction_detail_modal": {
     "title": "Detalle de Transaction",
