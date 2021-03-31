@@ -73,7 +73,7 @@ const AccountCardHeader = ({
         </div>
         <div className="actions">
           <Button onClick={handleAddTokens}>
-            <i className="add-mana-icon" />
+            {t('account_card_header.add')}
           </Button>
           <Button onClick={handleConvert}>
             {t('account_card_header.convert')}

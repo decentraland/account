@@ -13,7 +13,8 @@
     }
   },
   "account_card_header": {
-    "convert": "Convert",
+    "add": "Buy",
+    "convert": "Swap",
     "receive": "Receive",
     "send": "Send",
     "tooltip_ethereum": "This is your MANA balance on Ethereum",

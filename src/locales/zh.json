@@ -13,6 +13,7 @@
     }
   },
   "account_card_header": {
+    "add": "买",
     "convert": "改造",
     "receive": "接收",
     "send": "发送",
