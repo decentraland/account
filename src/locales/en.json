@@ -17,8 +17,8 @@
     "convert": "Swap",
     "receive": "Receive",
     "send": "Send",
-    "tooltip_ethereum": "This is your MANA balance on Ethereum",
-    "tooltip_matic": "This is your MANA balance on Polygon (formerly Matic Network)"
+    "tooltip_ethereum": "Your MANA balance on the main Ethereum blockchain. You can swap MANA from this balance to Polygon.",
+    "tooltip_matic": "Your MANA balance on Polygon's sidechain. You can use Polygon MANA for transactions in any scene currently supporting Polygon, with no transaction fees. You can withdraw MANA from Polygon's sidechain at any time."
   },
   "account_card": {
     "tx_latests": "Latests Transactions",
