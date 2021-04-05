@@ -4,7 +4,6 @@ import Tooltip from '../Tooltip'
 import './WithdrawalTooltip.css'
 
 export default class WithdrawalTooltip extends React.PureComponent {
-  handleGotit = () => alert('Got it')
   render() {
     return (
       <Tooltip className="WithdrawalTooltip">
