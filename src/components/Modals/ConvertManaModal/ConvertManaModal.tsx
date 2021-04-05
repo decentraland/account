@@ -55,6 +55,14 @@ const ConvertManaModal: React.FC<Props> = ({
     }
   }
 
+  const handleMax = () => {
+    if (network === Network.MATIC) {
+      setAmount(manaMatic)
+    } else {
+      setAmount(manaEth)
+    }
+  }
+
   useEffect(() => {
     onManaPrice()
     const amountAllowed = parseInt(fromWei(allowance, 'ether'), 10)
@@ -102,6 +110,8 @@ const ConvertManaModal: React.FC<Props> = ({
           value={amount}
           onChange={handleSetAmount}
           className="amount"
+          action={t('global.max')}
+          onAction={handleMax}
         />
         <div className="usd-amount">
           {(amount * manaPrice).toFixed(2)} {t('global.usd_symbol')}

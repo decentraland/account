@@ -88,3 +88,9 @@
   margin-top: 20px;
   width: 100%;
 }
+
+.ConvertManaModal .dcl.field .ui.basic.button {
+  padding-bottom: 40px;
+}
+
+
