@@ -114,5 +114,16 @@
     "complete": "Complete",
     "pending": "Pending",
     "expired": "Expired"
+  },
+  "tooltip": {
+    "button": "Got it"
+  },
+  "deposit_tooltip": {
+    "header": "Deposit initialized",
+    "text": "This will be a text explaining that this process could take more than 20 minutes."
+  },
+  "withdrawal_tooltip": {
+    "header": "Withdrawal initialized",
+    "text": "This will be a text explaining that this is a 2 step process, and when the checkpoint stage is done, you can finish the withdraw."
   }
 }

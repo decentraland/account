@@ -8,6 +8,10 @@
   border-radius: 12px;
 }
 
+.Tooltip.tooltip-hidden {
+  display: none;
+}
+
 .Tooltip .tooltip-content {
   margin: 24px;
 }
@@ -33,4 +37,8 @@
   line-height: 30px;
   letter-spacing: 0.3px;
   color: #FFFFFF;
+}
+
+.Tooltip .ui.button {
+  margin-left: -8px;
 }
