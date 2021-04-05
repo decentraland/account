@@ -4,7 +4,8 @@
     "settings": "Settings",
     "usd_symbol": "USD",
     "mana_symbol": "MANA",
-    "done": "Done"
+    "done": "Done",
+    "max": "Max"
   },
   "account_header": {
     "actions": {

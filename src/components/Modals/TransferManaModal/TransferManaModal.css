@@ -86,6 +86,10 @@ color: #736E7D;
   line-height: 26px;
 }
 
+.TransferManaModal .dcl.field .ui.basic.button {
+  padding-bottom: 40px;
+}
+
 .TransferManaModal button.ui.primary {
   margin-top: 20px;
   width: 100%;

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button, Close, Field } from 'decentraland-ui'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
+import { Network } from '@dcl/schemas'
 import { Props } from './TransferManaModal.types'
 import './TransferManaModal.css'
-import { Network } from '@dcl/schemas'
 
 const TransferManaModal: React.FC<Props> = ({
   name,
@@ -68,6 +68,14 @@ const TransferManaModal: React.FC<Props> = ({
     }
   }
 
+  const handleMax = () => {
+    if (network === Network.MATIC) {
+      setAmount(manaMatic)
+    } else {
+      setAmount(manaEth)
+    }
+  }
+
   useEffect(() => {
     onManaPrice()
   }, [])
@@ -94,6 +102,8 @@ const TransferManaModal: React.FC<Props> = ({
           className="amount"
           message={errors.amount.message}
           error={errors.amount.hasError}
+          action={t('global.max')}
+          onAction={handleMax}
         />
         <div className="usd-amount">
           {(amount * manaPrice).toFixed(2)} {t('global.usd_symbol')}

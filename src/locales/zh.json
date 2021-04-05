@@ -4,7 +4,8 @@
     "settings": "设定",
     "usd_symbol": "USD",
     "mana_symbol": "MANA",
-    "done": "完毕"
+    "done": "完毕",
+    "max": "最大"
   },
   "account_header": {
     "actions": {
