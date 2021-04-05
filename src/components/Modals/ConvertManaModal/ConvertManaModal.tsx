@@ -113,9 +113,15 @@ const ConvertManaModal: React.FC<Props> = ({
           action={t('global.max')}
           onAction={handleMax}
         />
-        <div className="usd-amount">
-          {(amount * manaPrice).toFixed(2)} {t('global.usd_symbol')}
-        </div>
+        {isDisabledByAmount ? (
+          <div className="amount-error">
+            {t('convert_mana_modal.no_balance')}
+          </div>
+        ) : (
+          <div className="usd-amount">
+            {(amount * manaPrice).toFixed(2)} {t('global.usd_symbol')}
+          </div>
+        )}
         {network === Network.ETHEREUM ? (
           <Section className="field">
             <Header sub={true}>

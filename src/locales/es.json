@@ -68,6 +68,7 @@
     "send_tokens": "Enviar Tokens",
     "title": "Enviar Tokens",
     "subtitle": "Enviar Tokens a la billetera deseada",
+    "no_balance": "No tiene suficientes fondos",
     "errors": {
       "invalid_char": "Caracter invalido para una Billetera",
       "invalid_address": "Billetera inválida"
@@ -83,7 +84,8 @@
     "subtitle_ethereum": "Depositar MANA de Ethereum a Polygon",
     "title_matic": "Convertir a MANA en Ethereum",
     "subtitle_matic": "Retira MANA de Polygon a Ethereum",
-    "label_approvement": "MANA Aprobado"
+    "label_approvement": "MANA Aprobado",
+    "no_balance": "No tiene suficientes fondos"
   },
   "withdrawal_status_modal": {
     "title": "Convertir a Mana",

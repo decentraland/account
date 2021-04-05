@@ -80,7 +80,7 @@ const TransferManaModal: React.FC<Props> = ({
     onManaPrice()
   }, [])
 
-  const isButtonDisabled =
+  const isDisabledByAmount =
     network === Network.MATIC ? manaMatic < amount : manaEth < amount
 
   return (
@@ -105,9 +105,15 @@ const TransferManaModal: React.FC<Props> = ({
           action={t('global.max')}
           onAction={handleMax}
         />
-        <div className="usd-amount">
-          {(amount * manaPrice).toFixed(2)} {t('global.usd_symbol')}
-        </div>
+        {isDisabledByAmount ? (
+          <div className="amount-error">
+            {t('transfer_mana_modal.no_balance')}
+          </div>
+        ) : (
+          <div className="usd-amount">
+            {(amount * manaPrice).toFixed(2)} {t('global.usd_symbol')}
+          </div>
+        )}
         <Field
           label={t('transfer_mana_modal.wallet_label')}
           placeholder="0x0000...0000"
@@ -121,7 +127,7 @@ const TransferManaModal: React.FC<Props> = ({
           primary
           onClick={handleTransferMana}
           loading={isLoading}
-          disabled={isButtonDisabled}
+          disabled={isDisabledByAmount}
         >
           {t('transfer_mana_modal.send_tokens')}
         </Button>
