@@ -13,9 +13,9 @@ import WithdrawalTooltip from '../Tooltips/WithdrawalTooltip'
 import { TransactionStatus, TransactionType } from '../../modules/mana/types'
 
 const HomePage: React.FC<Props> = ({ transactionsByNetwork }) => {
-  console.log(transactionsByNetwork)
   const ethereumTransactions = transactionsByNetwork[Network.ETHEREUM]
   const maticTransactions = transactionsByNetwork[Network.MATIC]
+
   const deposits = ethereumTransactions.filter(
     (t) => t.type === TransactionType.DEPOSIT
   )
