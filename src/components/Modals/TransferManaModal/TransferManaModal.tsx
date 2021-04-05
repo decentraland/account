@@ -4,9 +4,12 @@ import { Button, Close, Field } from 'decentraland-ui'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { Props } from './TransferManaModal.types'
 import './TransferManaModal.css'
+import { Network } from '@dcl/schemas'
 
 const TransferManaModal: React.FC<Props> = ({
   name,
+  manaEth,
+  manaMatic,
   onClose,
   isLoading,
   manaPrice,
@@ -69,6 +72,9 @@ const TransferManaModal: React.FC<Props> = ({
     onManaPrice()
   }, [])
 
+  const isButtonDisabled =
+    network === Network.MATIC ? manaMatic < amount : manaEth < amount
+
   return (
     <Modal
       name={name}
@@ -101,7 +107,12 @@ const TransferManaModal: React.FC<Props> = ({
           message={errors.to.message}
           error={errors.to.hasError}
         />
-        <Button primary onClick={handleTransferMana} loading={isLoading}>
+        <Button
+          primary
+          onClick={handleTransferMana}
+          loading={isLoading}
+          disabled={isButtonDisabled}
+        >
           {t('transfer_mana_modal.send_tokens')}
         </Button>
       </Modal.Content>

@@ -12,6 +12,8 @@ const MAX_APPROVAL =
 
 const ConvertManaModal: React.FC<Props> = ({
   name,
+  manaEth,
+  manaMatic,
   onClose,
   isLoading,
   allowance,
@@ -62,8 +64,12 @@ const ConvertManaModal: React.FC<Props> = ({
   }, [allowance])
 
   const isButtonLoading = isLoading || isWaitingForApproval
+  const isDisabledByAmount =
+    network === Network.MATIC ? manaMatic < amount : manaEth < amount
   const isButtonDisabled =
-    isButtonLoading || (network === Network.ETHEREUM && !isApproved)
+    isButtonLoading ||
+    (network === Network.ETHEREUM && !isApproved) ||
+    isDisabledByAmount
 
   return (
     <Modal

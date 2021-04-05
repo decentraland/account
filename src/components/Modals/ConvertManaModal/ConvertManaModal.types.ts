@@ -11,6 +11,8 @@ export type Props = ModalProps & {
   isLoading: boolean
   isWaitingForApproval: boolean
   allowance: string
+  manaEth: number
+  manaMatic: number
   manaPrice: number
   onApproveMana: typeof approveManaRequest
   onManaPrice: typeof fetchManaPriceRequest

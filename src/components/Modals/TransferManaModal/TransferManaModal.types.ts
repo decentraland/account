@@ -7,6 +7,8 @@ import {
 
 export type Props = ModalProps & {
   isLoading: boolean
+  manaEth: number
+  manaMatic: number
   manaPrice: number
   onTransferMana: typeof transferManaRequest
   onManaPrice: typeof fetchManaPriceRequest
