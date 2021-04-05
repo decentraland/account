@@ -1,0 +1,36 @@
+.Tooltip {
+  position: absolute;
+  width: 420px;
+  min-height: 206px;
+  right: 16px;
+  bottom: 16px;
+  background: #16141A;
+  border-radius: 12px;
+}
+
+.Tooltip .tooltip-content {
+  margin: 24px;
+}
+
+.Tooltip .tooltip-content > p {
+  font-size: 17px;
+  line-height: 26px;
+  letter-spacing: -0.2px;
+  color: #FFFFFF;
+}
+
+.Tooltip .tooltip-content > h1 {
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: 0.3px;
+  color: #FFFFFF;
+}
+
+.Tooltip .tooltip-content > h1 {
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: 0.3px;
+  color: #FFFFFF;
+}
