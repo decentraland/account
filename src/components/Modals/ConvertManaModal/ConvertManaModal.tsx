@@ -77,7 +77,8 @@ const ConvertManaModal: React.FC<Props> = ({
   const isButtonDisabled =
     isButtonLoading ||
     (network === Network.ETHEREUM && !isApproved) ||
-    isDisabledByAmount
+    isDisabledByAmount ||
+    amount <= 0
 
   return (
     <Modal

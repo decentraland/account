@@ -127,7 +127,7 @@ const TransferManaModal: React.FC<Props> = ({
           primary
           onClick={handleTransferMana}
           loading={isLoading}
-          disabled={isDisabledByAmount}
+          disabled={amount <= 0 || isDisabledByAmount}
         >
           {t('transfer_mana_modal.send_tokens')}
         </Button>
