@@ -1,5 +1,5 @@
 .Tooltip {
-  position: absolute;
+  position: fixed;
   width: 420px;
   min-height: 206px;
   right: 16px;
