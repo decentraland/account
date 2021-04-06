@@ -120,10 +120,10 @@
   },
   "deposit_tooltip": {
     "header": "Deposit initialized",
-    "text": "This will be a text explaining that this process could take more than 20 minutes."
+    "text": "Remember, any transaction that moves assets within, to, or from the Ethereum blockchain will incur gas fees. Only transactions conducted exclusively on Polygon are gas-less. After initializing your deposit, there is a 30 minute delay before your assets will be transferred to Polygon"
   },
   "withdrawal_tooltip": {
     "header": "Withdrawal initialized",
-    "text": "This will be a text explaining that this is a 2 step process, and when the checkpoint stage is done, you can finish the withdraw."
+    "text": "After initializing your withdrawal, you must wait 30 minutes before reaching a checkpoint. After the checkpoint is reached, a transaction will be triggered in your Ethereum wallet that you must sign to complete the withdrawal"
   }
 }
