@@ -114,5 +114,16 @@
     "complete": "Completado",
     "pending": "Pendiente",
     "expired": "Expirada"
+  },
+  "tooltip": {
+    "button": "Ejecutar"
+  },
+  "deposit_tooltip": {
+    "header": "Deposito initializado",
+    "text": "Recuerde, cualquier transacción que mueva activos dentro, hacia o desde la cadena de bloques Ethereum incurrirá en tarifas de gas. Solo las transacciones realizadas exclusivamente en Polygon son sin gas. Después de inicializar su depósito, hay un retraso de 30 minutos antes de que sus activos se transfieran a Polygon"
+  },
+  "withdrawal_tooltip": {
+    "header": "Retiro initializado",
+    "text": "Después de inicializar su retiro, debe esperar 30 minutos antes de llegar a un punto de control. Una vez que se alcanza el punto de control, se activará una transacción en su billetera Ethereum que debe firmar para completar el retiro"
   }
 }
