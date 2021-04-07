@@ -5,7 +5,8 @@
     "usd_symbol": "USD",
     "mana_symbol": "MANA",
     "done": "Hecho",
-    "max": "Max"
+    "max": "Max",
+    "fees_warning": "Recuerde, cualquier transacción que mueva activos dentro, hacia o desde la cadena de bloques Ethereum incurrirá en tarifas de gas. Solo las transacciones realizadas exclusivamente en Polygon son sin gas." 
   },
   "account_header": {
     "actions": {

@@ -123,6 +123,9 @@ const TransferManaModal: React.FC<Props> = ({
           message={errors.to.message}
           error={errors.to.hasError}
         />
+        <div className="fees-warning">
+          {network === Network.ETHEREUM ? t('global.fees_warning') : null}
+        </div>
         <Button
           primary
           onClick={handleTransferMana}

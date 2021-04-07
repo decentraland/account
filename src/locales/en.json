@@ -5,7 +5,8 @@
     "usd_symbol": "USD",
     "mana_symbol": "MANA",
     "done": "Done",
-    "max": "Max"
+    "max": "Max",
+    "fees_warning": "Remember, any transaction that moves assets within, to, or from the Ethereum blockchain will incur gas fees. Only transactions conducted exclusively on Polygon are gas-less."
   },
   "account_header": {
     "actions": {
