@@ -12,6 +12,8 @@ const MAX_APPROVAL =
 
 const ConvertManaModal: React.FC<Props> = ({
   name,
+  manaEth,
+  manaMatic,
   onClose,
   isLoading,
   allowance,
@@ -53,6 +55,14 @@ const ConvertManaModal: React.FC<Props> = ({
     }
   }
 
+  const handleMax = () => {
+    if (network === Network.MATIC) {
+      setAmount(manaMatic)
+    } else {
+      setAmount(manaEth)
+    }
+  }
+
   useEffect(() => {
     onManaPrice()
     const amountAllowed = parseInt(fromWei(allowance, 'ether'), 10)
@@ -62,8 +72,13 @@ const ConvertManaModal: React.FC<Props> = ({
   }, [allowance])
 
   const isButtonLoading = isLoading || isWaitingForApproval
+  const isDisabledByAmount =
+    network === Network.MATIC ? manaMatic < amount : manaEth < amount
   const isButtonDisabled =
-    isButtonLoading || (network === Network.ETHEREUM && !isApproved)
+    isButtonLoading ||
+    (network === Network.ETHEREUM && !isApproved) ||
+    isDisabledByAmount ||
+    amount <= 0
 
   return (
     <Modal
@@ -73,7 +88,6 @@ const ConvertManaModal: React.FC<Props> = ({
     >
       <Modal.Header>
         <div className="title">
-          {' '}
           {t(
             network === Network.ETHEREUM
               ? 'convert_mana_modal.title_ethereum'
@@ -81,7 +95,6 @@ const ConvertManaModal: React.FC<Props> = ({
           )}
         </div>
         <div className="subtitle">
-          {' '}
           {t(
             network === Network.ETHEREUM
               ? 'convert_mana_modal.subtitle_ethereum'
@@ -96,10 +109,18 @@ const ConvertManaModal: React.FC<Props> = ({
           value={amount}
           onChange={handleSetAmount}
           className="amount"
+          action={t('global.max')}
+          onAction={handleMax}
         />
-        <div className="usd-amount">
-          {(amount * manaPrice).toFixed(2)} {t('global.usd_symbol')}
-        </div>
+        {isDisabledByAmount ? (
+          <div className="amount-error">
+            {t('convert_mana_modal.no_balance')}
+          </div>
+        ) : (
+          <div className="usd-amount">
+            {(amount * manaPrice).toFixed(2)} {t('global.usd_symbol')}
+          </div>
+        )}
         {network === Network.ETHEREUM ? (
           <Section className="field">
             <Header sub={true}>

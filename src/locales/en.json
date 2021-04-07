@@ -4,7 +4,8 @@
     "settings": "Settings",
     "usd_symbol": "USD",
     "mana_symbol": "MANA",
-    "done": "Done"
+    "done": "Done",
+    "max": "Max"
   },
   "account_header": {
     "actions": {
@@ -67,6 +68,7 @@
     "send_tokens": "Send Tokens",
     "title": "Send Tokens",
     "subtitle": "Send Tokens to the desired Wallet",
+    "no_balance": "You don't have enough balance",
     "errors": {
       "invalid_char": "Invalid character for an Address",
       "invalid_address": "Invalid Address"
@@ -82,7 +84,8 @@
     "subtitle_ethereum": "Deposit MANA from Ethereum into Polygon",
     "title_matic": "Convert to Ethereum MANA",
     "subtitle_matic": "Withdraw MANA from Polygon into Ethereum",
-    "label_approvement": "MANA Approved"
+    "label_approvement": "MANA Approved",
+    "no_balance": "You don't have enough balance"
   },
   "withdrawal_status_modal": {
     "title": "Convert to Mana",

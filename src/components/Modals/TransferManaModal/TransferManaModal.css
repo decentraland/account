@@ -22,19 +22,27 @@ letter-spacing: 0.3px;
   letter-spacing: -0.2px;
 }
 
+.TransferManaModal .amount-error {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 24px;
+  margin-top: -15px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: red;
+}
 .TransferManaModal .usd-amount {
-font-style: normal;
-font-weight: normal;
-font-size: 15px;
-line-height: 24px;
-margin-top: -15px;
-margin-bottom: 10px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 24px;
+  margin-top: -15px;
+  margin-bottom: 10px;
 
-/* identical to box height, or 160% */
-text-align: center;
-
-color: #736E7D;
-
+  /* identical to box height, or 160% */
+  text-align: center;
+  color: #736E7D;
 }
 
 .TransferManaModal .dcl.close, .ui.modal > .dcl.close {
@@ -84,6 +92,10 @@ color: #736E7D;
   font-weight: 600;
   font-size: 17px;
   line-height: 26px;
+}
+
+.TransferManaModal .dcl.field .ui.basic.button {
+  padding-bottom: 40px;
 }
 
 .TransferManaModal button.ui.primary {

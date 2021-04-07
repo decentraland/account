@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button, Close, Field } from 'decentraland-ui'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
+import { Network } from '@dcl/schemas'
 import { Props } from './TransferManaModal.types'
 import './TransferManaModal.css'
 
 const TransferManaModal: React.FC<Props> = ({
   name,
+  manaEth,
+  manaMatic,
   onClose,
   isLoading,
   manaPrice,
@@ -65,9 +68,20 @@ const TransferManaModal: React.FC<Props> = ({
     }
   }
 
+  const handleMax = () => {
+    if (network === Network.MATIC) {
+      setAmount(manaMatic)
+    } else {
+      setAmount(manaEth)
+    }
+  }
+
   useEffect(() => {
     onManaPrice()
   }, [])
+
+  const isDisabledByAmount =
+    network === Network.MATIC ? manaMatic < amount : manaEth < amount
 
   return (
     <Modal
@@ -88,10 +102,18 @@ const TransferManaModal: React.FC<Props> = ({
           className="amount"
           message={errors.amount.message}
           error={errors.amount.hasError}
+          action={t('global.max')}
+          onAction={handleMax}
         />
-        <div className="usd-amount">
-          {(amount * manaPrice).toFixed(2)} {t('global.usd_symbol')}
-        </div>
+        {isDisabledByAmount ? (
+          <div className="amount-error">
+            {t('transfer_mana_modal.no_balance')}
+          </div>
+        ) : (
+          <div className="usd-amount">
+            {(amount * manaPrice).toFixed(2)} {t('global.usd_symbol')}
+          </div>
+        )}
         <Field
           label={t('transfer_mana_modal.wallet_label')}
           placeholder="0x0000...0000"
@@ -101,7 +123,12 @@ const TransferManaModal: React.FC<Props> = ({
           message={errors.to.message}
           error={errors.to.hasError}
         />
-        <Button primary onClick={handleTransferMana} loading={isLoading}>
+        <Button
+          primary
+          onClick={handleTransferMana}
+          loading={isLoading}
+          disabled={amount <= 0 || isDisabledByAmount}
+        >
           {t('transfer_mana_modal.send_tokens')}
         </Button>
       </Modal.Content>
