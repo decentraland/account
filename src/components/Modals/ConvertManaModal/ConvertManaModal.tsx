@@ -88,7 +88,6 @@ const ConvertManaModal: React.FC<Props> = ({
     >
       <Modal.Header>
         <div className="title">
-          {' '}
           {t(
             network === Network.ETHEREUM
               ? 'convert_mana_modal.title_ethereum'
@@ -96,7 +95,6 @@ const ConvertManaModal: React.FC<Props> = ({
           )}
         </div>
         <div className="subtitle">
-          {' '}
           {t(
             network === Network.ETHEREUM
               ? 'convert_mana_modal.subtitle_ethereum'
