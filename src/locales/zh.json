@@ -5,7 +5,8 @@
     "usd_symbol": "USD",
     "mana_symbol": "MANA",
     "done": "完毕",
-    "max": "最大"
+    "max": "最大",
+    "fees_warning": "请记住，将资产移入以太坊区块链或从以太坊区块链移出的任何交易都将产生汽油费。 仅在Polygon上专门进行的交易是无耗油的"
   },
   "account_header": {
     "actions": {

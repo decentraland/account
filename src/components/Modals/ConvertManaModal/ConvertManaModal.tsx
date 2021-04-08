@@ -134,7 +134,7 @@ const ConvertManaModal: React.FC<Props> = ({
             />
           </Section>
         ) : null}
-
+        <div className="fees-warning">{t('global.fees_warning')}</div>
         <Button
           primary
           onClick={handleConvert}
