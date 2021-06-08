@@ -2,8 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
-import WalletProvider from 'decentraland-dapps/dist/providers/WalletProvider'
 import ModalProvider from 'decentraland-dapps/dist/providers/ModalProvider'
+import WalletProvider from 'decentraland-dapps/dist/providers/WalletProvider'
+import ToastProvider from 'decentraland-dapps/dist/providers/ToastProvider'
 import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
 
 import './modules/analytics/track'
@@ -23,13 +24,15 @@ import reportWebVitals from './reportWebVitals'
 const component = (
   <Provider store={store}>
     <TranslationProvider locales={Object.keys(locales)}>
-      <WalletProvider>
-        <ModalProvider components={modals}>
-          <ConnectedRouter history={history}>
-            <Routes />
-          </ConnectedRouter>
-        </ModalProvider>
-      </WalletProvider>
+      <ToastProvider>
+        <WalletProvider>
+          <ModalProvider components={modals}>
+            <ConnectedRouter history={history}>
+              <Routes />
+            </ConnectedRouter>
+          </ModalProvider>
+        </WalletProvider>
+      </ToastProvider>
     </TranslationProvider>
   </Provider>
 )
