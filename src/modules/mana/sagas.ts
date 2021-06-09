@@ -162,7 +162,7 @@ function* handleDepositManaRequest(action: DepositManaRequestAction) {
     yield put(watchDepositStatusRequest(amount, txHash))
     yield put(closeModal('ConvertManaModal'))
   } catch (error) {
-    yield put(depositManaFailure(amount, error))
+    yield put(depositManaFailure(amount, error.message))
   }
 }
 
@@ -227,7 +227,7 @@ function* handleGetApprovedManaRequest(_action: GetApprovedManaRequestAction) {
     )
     yield put(getApprovedManaSuccess(allowance))
   } catch (error) {
-    yield put(getApprovedManaFailure(error))
+    yield put(getApprovedManaFailure(error.message))
   }
 }
 
@@ -428,7 +428,7 @@ function* handleSendManaRequest(action: TransferManaRequestAction) {
 
     yield put(closeModal('TransferManaModal'))
   } catch (error) {
-    yield put(transferManaFailure(to, amount, network, error))
+    yield put(transferManaFailure(to, amount, network, error.message))
   }
 }
 

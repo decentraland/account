@@ -128,5 +128,11 @@
   "withdrawal_tooltip": {
     "header": "提款已初始化",
     "text": "初始化提款后，您必须等待30分钟才能到达检查站。 到达检查点后，将在您的以太坊钱包中触发一笔交易，您必须签名以完成提款"
+  },
+  "toast": {
+    "meta_transaction_failure": {
+      "title": "元交易",
+      "body": "发送元交易时出错。{br}请重试或加入我们的{discord_link}以获取支持。"
+    }
   }
 }

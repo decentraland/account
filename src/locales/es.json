@@ -6,7 +6,7 @@
     "mana_symbol": "MANA",
     "done": "Hecho",
     "max": "Max",
-    "fees_warning": "Recuerde, cualquier transacción que mueva activos dentro, hacia o desde la cadena de bloques Ethereum incurrirá en tarifas de gas. Solo las transacciones realizadas exclusivamente en Polygon son sin gas." 
+    "fees_warning": "Recuerde, cualquier transacción que mueva activos dentro, hacia o desde la cadena de bloques Ethereum incurrirá en tarifas de gas. Solo las transacciones realizadas exclusivamente en Polygon son sin gas."
   },
   "account_header": {
     "actions": {
@@ -129,5 +129,11 @@
   "withdrawal_tooltip": {
     "header": "Retiro initializado",
     "text": "Después de inicializar su retiro, debe esperar 30 minutos antes de llegar a un punto de control. Una vez que se alcanza el punto de control, se activará una transacción en su billetera Ethereum que debe firmar para completar el retiro"
+  },
+  "toast": {
+    "meta_transaction_failure": {
+      "title": "Meta transacción",
+      "body": "Ocurrió un error publicando la meta transacción.{br}Intentelo de nuevo o ingrese a nuestro {discord_link} para obtener más información."
+    }
   }
 }

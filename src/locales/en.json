@@ -129,5 +129,11 @@
   "withdrawal_tooltip": {
     "header": "Withdrawal initialized",
     "text": "After initializing your withdrawal, you must wait 30 minutes before reaching a checkpoint. After the checkpoint is reached, a transaction will be triggered in your Ethereum wallet that you must sign to complete the withdrawal"
+  },
+  "toast": {
+    "meta_transaction_failure": {
+      "title": "Meta transaction",
+      "body": "There was an error sending the meta transaction.{br}Please try again or join our {discord_link} to get support."
+    }
   }
 }

@@ -8,6 +8,7 @@ import { modalSaga } from './modal/sagas'
 import { locationSaga } from './location/sagas'
 import { manaSaga } from './mana/sagas'
 import { transakSaga } from './transak/sagas'
+import { toastSaga } from './toast/sagas'
 import * as translations from '../locales'
 
 const analyticsSaga = createAnalyticsSaga()
@@ -32,6 +33,7 @@ export function* rootSaga() {
     modalSaga(),
     locationSaga(),
     manaSaga(),
+    toastSaga(),
     transakSaga(),
   ])
 }
