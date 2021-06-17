@@ -84,7 +84,11 @@ export const getWalletDeposits = createSelector<
   string | undefined,
   Deposit[]
 >(getDeposits, getAddress, (deposits, address) =>
-  address ? deposits.filter((deposit) => deposit.from === address) : []
+  address
+    ? deposits.filter(
+        (deposit) => deposit.from.toLowerCase() === address.toLowerCase()
+      )
+    : []
 )
 
 export const getWalletWithdrawals = createSelector<
@@ -93,7 +97,11 @@ export const getWalletWithdrawals = createSelector<
   string | undefined,
   Withdrawal[]
 >(getWithdrawals, getAddress, (withdrawals, address) =>
-  address ? withdrawals.filter((withdrawal) => withdrawal.from === address) : []
+  address
+    ? withdrawals.filter(
+        (withdrawal) => withdrawal.from.toLowerCase() === address.toLowerCase()
+      )
+    : []
 )
 
 export const getTransactionByNetwork = createSelector<
