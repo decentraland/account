@@ -68,7 +68,7 @@ const AccountCardHeader = ({
             <div
               className={network === Network.MATIC ? 'matic-logo' : 'mana-logo'}
             />
-            {parseInt(amount.toFixed(0), 10).toLocaleString()}
+            {(amount | 0).toLocaleString()}
           </div>
         </div>
         <div className="actions">
