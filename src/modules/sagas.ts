@@ -21,6 +21,7 @@ const translationSaga = createTranslationSaga({ translations })
 
 const walletSaga = createWalletSaga({
   CHAIN_ID: +(process.env.REACT_APP_CHAIN_ID || 1),
+  POLL_INTERVAL: 0,
 })
 
 export function* rootSaga() {
