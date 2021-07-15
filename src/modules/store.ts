@@ -16,8 +16,8 @@ import {
   WATCH_DEPOSIT_STATUS_SUCCESS,
   WATCH_WITHDRAWAL_STATUS_SUCCESS,
 } from './mana/actions'
+import { isDevelopment } from '../lib/environment'
 
-const isDev = process.env.NODE_ENV === 'development'
 
 export const history = require('history').createBrowserHistory()
 const rootReducer = storageReducerWrapper(createRootReducer(history))
@@ -25,7 +25,7 @@ const rootReducer = storageReducerWrapper(createRootReducer(history))
 const sagasMiddleware = createSagasMiddleware()
 const loggerMiddleware = createLogger({
   collapsed: () => true,
-  predicate: (_: any, action) => isDev || action.type.includes('Failure'),
+  predicate: (_: any, action) => isDevelopment || action.type.includes('Failure'),
 })
 
 const transactionMiddleware = createTransactionMiddleware()
@@ -63,7 +63,7 @@ const store = createStore(rootReducer, enhancer)
 sagasMiddleware.run(rootSaga)
 loadStorageMiddleware(store)
 
-if (isDev) {
+if (isDevelopment) {
   const _window = window as any
   _window.store = store
 }
