@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import { environment, isStaging, isDevelopment } from '../../lib/environment'
+import { environment, isProduction } from '../../lib/environment'
 
 let _rollbarConfig = {
   accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN || '',
@@ -10,7 +10,7 @@ let _rollbarConfig = {
     environment,
   },
   checkIgnore: function () {
-    if (isDevelopment || isStaging) {
+    if (!isProduction) {
       // Ignore development
       return true
     }
