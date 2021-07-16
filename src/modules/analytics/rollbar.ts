@@ -3,13 +3,13 @@
 import { isDevelopment } from '../../lib/environment'
 
 let _rollbarConfig = {
-  accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN ||  '',
+  accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN || '',
   captureUncaught: true,
   captureUnhandledRejections: true,
   payload: {
-    environment: process.env.NODE_ENV
+    environment: process.env.REACT_APP_ENVIRONMENT,
   },
-  checkIgnore: function() {
+  checkIgnore: function () {
     if (window.location.hostname === 'localhost' || isDevelopment) {
       // Ignore development
       return true
@@ -17,7 +17,7 @@ let _rollbarConfig = {
 
     // no other ignores
     return false
-  }
+  },
 }
 
 // prettier-ignore
