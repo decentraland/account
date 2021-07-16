@@ -3,10 +3,9 @@ import { Dispatch, AnyAction } from 'redux'
 
 export type Props = {
   avatar: Avatar | null
-  onChangeAlias: () => void
-  onEditAvatar: () => void
+  onOpenEditProfileAvatarModal: () => void
 }
 
 export type MapStateProps = Pick<Props, 'avatar'>
-export type MapDispatchProps = Pick<Props, 'onChangeAlias' | 'onEditAvatar'>
+export type MapDispatchProps = Pick<Props, 'onOpenEditProfileAvatarModal'>
 export type MapDispatch = Dispatch<AnyAction>

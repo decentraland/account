@@ -16,6 +16,10 @@
   align-items: center;
 }
 
+.AccountHeader .avatar-face {
+  flex: 0 0 auto;
+}
+
 .AccountHeader .profile-text {
   color: white;
   padding-left: 27px;
@@ -33,10 +37,27 @@
   font-size: 21px;
   font-weight: 700;
   line-height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.AccountHeader
+  .profile-text
+  .profile-description:hover
+  .profile-description-edit-icon {
+  visibility: visible;
+}
+
+.AccountHeader
+  .profile-text
+  .profile-description
+  .profile-description-edit-icon {
+  visibility: hidden;
+  margin-left: 15px;
 }
 
 .AccountHeader .actions {
-  flex-grow: 1;
+  flex: 1 0 auto;
   text-align: right;
 }
 

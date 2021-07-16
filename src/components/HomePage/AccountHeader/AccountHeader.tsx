@@ -1,6 +1,6 @@
 import React from 'react'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { AvatarFace, Button, Header } from 'decentraland-ui'
+import { AvatarFace, Button, Header, Icon } from 'decentraland-ui'
 import { Props } from './AccountHeader.types'
 import './AccountHeader.css'
 
@@ -8,7 +8,7 @@ const BUILDER_URL = process.env.REACT_APP_BUILDER_URL!
 const EXPLORER_URL = process.env.REACT_APP_EXPLORER_URL!
 
 const AccountHeader = (props: Props) => {
-  const { avatar } = props
+  const { avatar, onOpenEditProfileAvatarModal } = props
 
   return (
     <Header size="large" className="AccountHeader">
@@ -17,9 +17,21 @@ const AccountHeader = (props: Props) => {
         <div className="profile-name">
           {avatar ? avatar.name : t('global.guest')}
         </div>
-        {avatar && avatar.description ? (
-          <div className="profile-description">{avatar.description}</div>
-        ) : null}
+        {avatar && (
+          <div
+            onClick={onOpenEditProfileAvatarModal}
+            className="profile-description"
+          >
+            {avatar.description
+              ? avatar.description
+              : t('account_header.actions.set_description')}
+            <Icon
+              className="profile-description-edit-icon"
+              size="small"
+              name="pencil"
+            />
+          </div>
+        )}
       </div>
       <div className="actions">
         <Button primary inverted href={`${BUILDER_URL}/names`} target="_blank">

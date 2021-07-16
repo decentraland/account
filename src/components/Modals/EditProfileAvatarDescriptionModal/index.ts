@@ -1,0 +1,2 @@
+import EditProfileAvatarDescriptionModal from './EditProfileAvatarDescriptionModal'
+export default EditProfileAvatarDescriptionModal

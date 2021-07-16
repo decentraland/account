@@ -11,7 +11,8 @@
   "account_header": {
     "actions": {
       "change_alias": "更改别名",
-      "edit_avatar": "编辑头像"
+      "edit_avatar": "编辑头像",
+      "set_description": "单击此处设置说明..."
     }
   },
   "account_card_header": {
@@ -73,6 +74,12 @@
       "invalid_char": "地址的无效字符",
       "invalid_address": "无效地址"
     }
+  },
+  "edit_profile_avatar_description_modal": {
+    "title": "编辑个人资料描述",
+    "subtitle": "为这个配置文件设置一个新的描述",
+    "submit": "保存",
+    "description": "描述"
   },
   "convert_mana_modal": {
     "usd": "USD",

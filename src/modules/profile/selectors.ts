@@ -2,7 +2,7 @@ import { getData as getProfiles } from 'decentraland-dapps/dist/modules/profile/
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { createSelector } from 'reselect'
 
-export const getProfile = createSelector(
+export const getProfileAvatar = createSelector(
   getAddress,
   getProfiles,
   (address, profiles) => {

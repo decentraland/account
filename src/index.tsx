@@ -21,6 +21,8 @@ import './index.css'
 
 import reportWebVitals from './reportWebVitals'
 
+console.log(modals)
+
 const component = (
   <Provider store={store}>
     <TranslationProvider locales={Object.keys(locales)}>
