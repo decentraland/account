@@ -23,7 +23,8 @@
       "REACT_APP_TRANSAK_ENV": "STAGING",
       "REACT_APP_MATIC_ENV": "testnet",
       "REACT_APP_SEGMENT_API_KEY": "I2fojSHbvc856pZqoLYXZrfwxsKJ24WG",
-      "REACT_APP_INTERCOM_APP_ID": "z0h94kay"
+      "REACT_APP_INTERCOM_APP_ID": "z0h94kay",
+      "REACT_APP_ENVIRONMENT": "development"
     }
   }
 }
