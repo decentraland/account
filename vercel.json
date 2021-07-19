@@ -24,7 +24,8 @@
       "REACT_APP_MATIC_ENV": "testnet",
       "REACT_APP_SEGMENT_API_KEY": "I2fojSHbvc856pZqoLYXZrfwxsKJ24WG",
       "REACT_APP_INTERCOM_APP_ID": "z0h94kay",
-      "REACT_APP_ENVIRONMENT": "development"
+      "REACT_APP_ENVIRONMENT": "development",
+      "REACT_APP_ROLLBAR_ACCESS_TOKEN": "a12a0a402dda4bc588d4893db656ef6b"
     }
   }
 }
