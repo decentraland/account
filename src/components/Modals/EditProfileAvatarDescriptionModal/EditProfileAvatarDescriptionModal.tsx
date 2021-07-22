@@ -4,6 +4,7 @@ import {
   Field,
   Form,
   InputOnChangeData,
+  Message,
   ModalActions,
   ModalContent,
   ModalNavigation,
@@ -13,7 +14,7 @@ import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { Props } from './EditProfileAvatarDescriptionModal.types'
 
 const EditProfileAvatarDescriptionModal = (props: Props) => {
-  const { name, avatar, isLoading, onSubmit, onClose } = props
+  const { name, avatar, address, error, isLoading, onSubmit, onClose } = props
   const [editableDescription, setEditableDescription] = useState(
     avatar?.description ?? ''
   )
@@ -22,15 +23,16 @@ const EditProfileAvatarDescriptionModal = (props: Props) => {
     [setEditableDescription]
   )
 
-  const handleSubmit = useCallback(() => onSubmit(editableDescription), [
-    editableDescription,
-  ])
+  const handleSubmit = useCallback(
+    () => onSubmit(address, editableDescription),
+    [editableDescription, onSubmit, address]
+  )
   return (
-    <Modal name={name} onClose={onClose} size="tiny">
+    <Modal name={name} onClose={isLoading ? undefined : onClose} size="tiny">
       <ModalNavigation
         title={t('edit_profile_avatar_description_modal.title')}
         subtitle={t('edit_profile_avatar_description_modal.subtitle')}
-        onClose={onClose}
+        onClose={isLoading ? undefined : onClose}
       />
       <Form onSubmit={handleSubmit}>
         <ModalContent>
@@ -39,12 +41,20 @@ const EditProfileAvatarDescriptionModal = (props: Props) => {
             value={editableDescription}
             onChange={handleDescriptionChange}
           />
+          {error !== null && (
+            <Message
+              error
+              visible={true}
+              header={t('edit_profile_avatar_description_modal.error_header')}
+              content={error}
+            />
+          )}
         </ModalContent>
         <ModalActions>
           <Button
             primary
             loading={isLoading}
-            disabled={editableDescription === ''}
+            disabled={editableDescription === '' || isLoading}
           >
             {t('edit_profile_avatar_description_modal.submit')}
           </Button>

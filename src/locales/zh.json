@@ -79,6 +79,7 @@
     "title": "编辑个人资料描述",
     "subtitle": "为这个配置文件设置一个新的描述",
     "submit": "保存",
+    "error_header": "保存描述时出错",
     "description": "描述"
   },
   "convert_mana_modal": {

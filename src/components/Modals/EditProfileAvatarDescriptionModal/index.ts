@@ -1,2 +1,2 @@
-import EditProfileAvatarDescriptionModal from './EditProfileAvatarDescriptionModal'
+import EditProfileAvatarDescriptionModal from './EditProfileAvatarDescriptionModal.container'
 export default EditProfileAvatarDescriptionModal

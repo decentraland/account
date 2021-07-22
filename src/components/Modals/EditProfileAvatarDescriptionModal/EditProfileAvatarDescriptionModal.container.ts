@@ -1,32 +1,57 @@
 import { connect } from 'react-redux'
-// import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import {
+  clearProfileError,
+  setProfileAvatarDescriptionRequest,
+} from 'decentraland-dapps/dist/modules/profile/actions'
+import {
+  getProfileError,
+  isLoadingSetProfileAvatarDescription,
+} from 'decentraland-dapps/dist/modules/profile/selectors'
 import { RootState } from '../../../modules/reducer'
 import { getProfileAvatar } from '../../../modules/profile/selectors'
 import EditProfileAvatarDescriptionModal from './EditProfileAvatarDescriptionModal'
 import {
-  // MapDispatch,
   MapState,
   MapDispatchProps,
+  MapDispatch,
+  OwnProps,
+  Props,
 } from './EditProfileAvatarDescriptionModal.types'
 
 const mapState = (state: RootState): MapState => {
+  console.log(getProfileError(state))
   return {
-    avatar: getProfileAvatar(state),
-    isLoading: false,
+    avatar: getProfileAvatar(state)!,
+    address: getAddress(state)!,
+    isLoading: isLoadingSetProfileAvatarDescription(state),
+    error: getProfileError(state),
   }
 }
 
-const mapDispatch = (): MapDispatchProps => ({
-  onSubmit: () => undefined,
+const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
+  onSubmit: (address: string, description: string) => {
+    dispatch(setProfileAvatarDescriptionRequest(address, description))
+  },
+  clearError: () => dispatch(clearProfileError()),
 })
 
-// const mapDispatch = (
-//   dispatch: MapDispatch,
-//   _: any,
-//   state: RootState
-// ): MapDispatchProps => ({
-//   onSubmit: (description: string) =>
-//     dispatch(setProfileAvatarDescription(getAddress(state), description)),
-// })
+const mergeProps = (
+  stateProps: MapState,
+  dispatchProps: MapDispatchProps,
+  ownProps: OwnProps
+): Props => ({
+  ...stateProps,
+  ...dispatchProps,
+  ...ownProps,
+  onClose: () => {
+    ownProps.onClose()
+    dispatchProps.clearError()
+  },
+})
 
-export default connect(mapState, mapDispatch)(EditProfileAvatarDescriptionModal)
+export default connect(
+  mapState,
+  mapDispatch,
+  mergeProps
+)(EditProfileAvatarDescriptionModal)

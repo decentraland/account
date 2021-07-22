@@ -77,9 +77,10 @@
     }
   },
   "edit_profile_avatar_description_modal": {
-    "title": "Editar descripción del perfil",
-    "subtitle": "Establecer una nueva descripción para este perfil",
+    "title": "Editar descripción del avatar del perfil",
+    "subtitle": "Establecer una nueva descripción para el avatar de este perfil",
     "submit": "Salvar",
+    "error_header": "Un error ocurrió cuando se salvaba la descripción",
     "description": "Descripción"
   },
   "convert_mana_modal": {
