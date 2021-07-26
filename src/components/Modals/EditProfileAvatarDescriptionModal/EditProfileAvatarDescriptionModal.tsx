@@ -36,11 +36,6 @@ const EditProfileAvatarDescriptionModal = (props: Props) => {
       />
       <Form onSubmit={handleSubmit}>
         <ModalContent>
-          <Field
-            label={t('edit_profile_avatar_description_modal.description')}
-            value={editableDescription}
-            onChange={handleDescriptionChange}
-          />
           {error !== null && (
             <Message
               error
@@ -49,6 +44,11 @@ const EditProfileAvatarDescriptionModal = (props: Props) => {
               content={error}
             />
           )}
+          <Field
+            label={t('edit_profile_avatar_description_modal.description')}
+            value={editableDescription}
+            onChange={handleDescriptionChange}
+          />
         </ModalContent>
         <ModalActions>
           <Button
