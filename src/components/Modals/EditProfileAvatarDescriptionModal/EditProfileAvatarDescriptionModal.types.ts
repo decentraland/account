@@ -3,7 +3,7 @@ import { Avatar } from 'decentraland-ui'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import {
   ClearProfileErrorAction,
-  SetProfileDescriptionRequestAction,
+  SetProfileAvatarDescriptionRequestAction,
 } from 'decentraland-dapps/dist/modules/profile/actions'
 
 export type Props = Omit<ModalProps, 'onClose'> & {
@@ -21,5 +21,5 @@ export type MapDispatchProps = Pick<Props, 'onSubmit'> & {
   clearError: () => void
 }
 export type MapDispatch = Dispatch<
-  SetProfileDescriptionRequestAction | ClearProfileErrorAction
+  SetProfileAvatarDescriptionRequestAction | ClearProfileErrorAction
 >

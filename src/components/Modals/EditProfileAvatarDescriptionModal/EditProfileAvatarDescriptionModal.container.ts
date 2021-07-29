@@ -19,15 +19,12 @@ import {
   Props,
 } from './EditProfileAvatarDescriptionModal.types'
 
-const mapState = (state: RootState): MapState => {
-  console.log(getProfileError(state))
-  return {
-    avatar: getProfileAvatar(state)!,
-    address: getAddress(state)!,
-    isLoading: isLoadingSetProfileAvatarDescription(state),
-    error: getProfileError(state),
-  }
-}
+const mapState = (state: RootState): MapState => ({
+  avatar: getProfileAvatar(state)!,
+  address: getAddress(state)!,
+  isLoading: isLoadingSetProfileAvatarDescription(state),
+  error: getProfileError(state),
+})
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
   onSubmit: (address: string, description: string) => {

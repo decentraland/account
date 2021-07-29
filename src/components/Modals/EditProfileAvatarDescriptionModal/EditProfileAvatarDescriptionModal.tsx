@@ -1,13 +1,13 @@
 import React, { useState, useCallback } from 'react'
 import {
   Button,
-  Field,
   Form,
-  InputOnChangeData,
   Message,
   ModalActions,
   ModalContent,
   ModalNavigation,
+  TextAreaField,
+  TextAreaProps,
 } from 'decentraland-ui'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
@@ -19,7 +19,8 @@ const EditProfileAvatarDescriptionModal = (props: Props) => {
     avatar?.description ?? ''
   )
   const handleDescriptionChange = useCallback(
-    (_: unknown, data: InputOnChangeData) => setEditableDescription(data.value),
+    (_: unknown, data: TextAreaProps) =>
+      setEditableDescription(data.value?.toString() ?? ''),
     [setEditableDescription]
   )
 
@@ -44,9 +45,10 @@ const EditProfileAvatarDescriptionModal = (props: Props) => {
               content={error}
             />
           )}
-          <Field
+          <TextAreaField
             label={t('edit_profile_avatar_description_modal.description')}
             value={editableDescription}
+            maxLength={150}
             onChange={handleDescriptionChange}
           />
         </ModalContent>
