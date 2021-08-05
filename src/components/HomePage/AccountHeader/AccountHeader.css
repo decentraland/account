@@ -38,7 +38,7 @@
   line-height: 30px;
   display: flex;
   align-items: center;
-  word-break: break-word;
+  word-break: break-all;
   cursor: pointer;
 }
 
@@ -55,6 +55,7 @@
   .profile-description-edit-icon {
   visibility: hidden;
   margin-left: 15px;
+  margin-right: 24px;
 }
 
 .AccountHeader .actions {
