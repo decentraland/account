@@ -13,9 +13,9 @@ const mapState = (state: RootState): MapStateProps => ({
   avatar: getProfileAvatar(state),
 })
 
-const mapDispatch = (_dispatch: MapDispatch): MapDispatchProps => ({
+const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
   onOpenEditProfileAvatarModal: () =>
-    _dispatch(openModal('EditProfileAvatarDescriptionModal')),
+    dispatch(openModal('EditProfileAvatarDescriptionModal')),
 })
 
 export default connect(mapState, mapDispatch)(AccountHeader)
