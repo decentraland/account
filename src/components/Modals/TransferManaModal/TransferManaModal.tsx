@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import { Close, Field } from 'decentraland-ui'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Button, Close, Field } from 'decentraland-ui'
+import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
+import { ChainButton } from 'decentraland-dapps/dist/containers'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { Network } from '@dcl/schemas'
 import { Props } from './TransferManaModal.types'
@@ -126,14 +128,15 @@ const TransferManaModal: React.FC<Props> = ({
         <div className="fees-warning">
           {network === Network.ETHEREUM ? t('global.fees_warning') : null}
         </div>
-        <Button
+        <ChainButton
           primary
           onClick={handleTransferMana}
           loading={isLoading}
           disabled={amount <= 0 || isDisabledByAmount}
+          chainId={getChainIdByNetwork(network as Network)}
         >
           {t('transfer_mana_modal.send_tokens')}
-        </Button>
+        </ChainButton>
       </Modal.Content>
     </Modal>
   )

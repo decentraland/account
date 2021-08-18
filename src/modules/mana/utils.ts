@@ -3,6 +3,12 @@ import { TransactionStatus as TxStatus } from 'decentraland-dapps/dist/modules/t
 import { graphql } from 'decentraland-dapps/dist/lib/graph'
 import { Provider } from 'decentraland-transactions'
 import {
+  hasFailed,
+  hasSucceeded,
+  isPending,
+} from 'decentraland-dapps/dist/modules/transaction/utils'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import {
   DepositStatus,
   MaticEnv,
   PurchaseStatus,
@@ -11,12 +17,6 @@ import {
   TransferStatus,
   WithdrawalStatus,
 } from './types'
-import {
-  hasFailed,
-  hasSucceeded,
-  isPending,
-} from 'decentraland-dapps/dist/modules/transaction/utils'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 
 export const MANA_CONTRACT_ADDRESS = process.env
   .REACT_APP_MANA_CONTRACT_ADDRESS!
