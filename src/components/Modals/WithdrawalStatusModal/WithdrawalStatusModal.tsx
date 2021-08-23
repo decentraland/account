@@ -3,6 +3,9 @@ import { Button, Close, Radio } from 'decentraland-ui'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { isPending } from 'decentraland-dapps/dist/modules/transaction/utils'
+import { ChainButton } from 'decentraland-dapps/dist/containers'
+import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
+import { Network } from '@dcl/schemas'
 import { WithdrawalStatus } from '../../../modules/mana/types'
 import { FINISH_WITHDRAWAL_SUCCESS } from '../../../modules/mana/actions'
 import { Props } from './WithdrawalStatusModal.types'
@@ -59,7 +62,7 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
               checked={true}
               className={
                 status === WithdrawalStatus.CHECKPOINT ||
-                status === WithdrawalStatus.COMPLETE
+                  status === WithdrawalStatus.COMPLETE
                   ? ''
                   : 'yellow_check'
               }
@@ -78,16 +81,17 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
               {t('global.done')}
             </Button>
           ) : (
-            <Button
+            <ChainButton
               primary
               disabled={
                 status === WithdrawalStatus.PENDING || isLoading || isTxPending
               }
               loading={isLoading || isTxPending}
               onClick={handleFinishWithdrawal}
+              chainId={getChainIdByNetwork(Network.ETHEREUM)}
             >
               {t('withdrawal_status_modal.complete_withdrawal')}
-            </Button>
+            </ChainButton>
           )}
         </Modal.Content>
       </Modal>

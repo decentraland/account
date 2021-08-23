@@ -1,4 +1,3 @@
-import { Contract, ethers } from 'ethers'
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { MaticPOSClient } from '@maticnetwork/maticjs'
 import { Eth } from 'web3x-es/eth'
@@ -12,6 +11,7 @@ import {
   fetchWalletRequest,
 } from 'decentraland-dapps/dist/modules/wallet/actions'
 import { Provider } from 'decentraland-dapps/dist/modules/wallet/types'
+import { sendWalletTransaction } from 'decentraland-dapps/dist/modules/wallet/utils'
 import {
   FetchTransactionSuccessAction,
   FETCH_TRANSACTION_SUCCESS,
@@ -19,6 +19,7 @@ import {
 import {
   getNetworkProvider,
   getConnectedProvider,
+  getChainIdByNetwork,
 } from 'decentraland-dapps/dist/lib/eth'
 import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
 import {
@@ -26,11 +27,7 @@ import {
   getChainId,
   getNetworks,
 } from 'decentraland-dapps/dist/modules/wallet/selectors'
-import {
-  ContractName,
-  getContract,
-  sendMetaTransaction,
-} from 'decentraland-transactions'
+import { ContractName, getContract } from 'decentraland-transactions'
 import { coingecko } from '../../lib/api/coingecko'
 import {
   depositManaSuccess,
@@ -94,7 +91,6 @@ import {
   waitForSync,
   isWithdrawalSynced,
   isDepositSynced,
-  TRANSACTIONS_API_URL,
   MATIC_ENV,
 } from './utils'
 import {
@@ -206,7 +202,8 @@ function* handleWatchDepositStatusSuccess(
 
 function* handleGetApprovedManaRequest(_action: GetApprovedManaRequestAction) {
   try {
-    const provider: Provider = yield call(getConnectedProvider)
+    const chainId = getChainIdByNetwork(Network.ETHEREUM)
+    const provider: Provider = yield call(getNetworkProvider, chainId)
     if (!provider) {
       throw new Error(`Could not connect to provider`)
     }
@@ -304,8 +301,10 @@ function* handleInitiateWithdrawalRequest(
   const { amount } = action.payload
 
   try {
-    const { chainId, txHash } = yield call(() =>
-      sendWalletMetaTransaction(Network.MATIC, ContractName.MANAToken, (mana) =>
+    const chainId = getChainIdByNetwork(Network.MATIC)
+    const contract = getContract(ContractName.MANAToken, chainId)
+    const txHash: string = yield call(() =>
+      sendWalletTransaction(contract, (mana) =>
         mana.withdraw(toWei(amount.toString(), 'ether'))
       )
     )
@@ -397,11 +396,11 @@ function* handleSendManaRequest(action: TransferManaRequestAction) {
         break
       }
       case Network.MATIC: {
-        const { chainId, txHash } = yield call(() =>
-          sendWalletMetaTransaction(
-            Network.MATIC,
-            ContractName.MANAToken,
-            (mana) => mana.transfer(to, toWei(amount.toString(), 'ether'))
+        const chainId = getChainIdByNetwork(network)
+        const contract = getContract(ContractName.MANAToken, chainId)
+        const txHash: string = yield call(() =>
+          sendWalletTransaction(contract, (mana) =>
+            mana.transfer(to, toWei(amount.toString(), 'ether'))
           )
         )
         yield put(
@@ -460,44 +459,6 @@ function* handleConnectWalletSuccess(_action: ConnectWalletSuccessAction) {
       )
     }
   }
-}
-
-function* sendWalletMetaTransaction(
-  network: Network,
-  contractName: ContractName,
-  populateTransaction: (
-    populateTransaction: Contract['populateTransaction']
-  ) => Promise<ethers.PopulatedTransaction>
-) {
-  const signerProvider: Provider = yield call(getConnectedProvider)
-  const signerChainId: ChainId = yield select(getChainId)
-  const signerConfig = getChainConfiguration(signerChainId)
-  const metaTxChainId = signerConfig.networkMapping[network]
-  const metaTxChainConfig = getChainConfiguration(metaTxChainId)
-  const metaTxChainProvider = new ethers.providers.JsonRpcProvider(
-    metaTxChainConfig.rpcURL
-  )
-  const contractConfig = getContract(contractName, metaTxChainId)
-  const contractInstance = new ethers.Contract(
-    contractConfig.address,
-    contractConfig.abi,
-    metaTxChainProvider
-  )
-  const tx: { data: string } = yield call(() =>
-    populateTransaction(contractInstance.populateTransaction)
-  )
-  const txHash: string = yield call(() =>
-    sendMetaTransaction(
-      signerProvider,
-      metaTxChainProvider,
-      tx.data,
-      contractConfig,
-      {
-        serverURL: TRANSACTIONS_API_URL,
-      }
-    )
-  )
-  return { txHash, chainId: metaTxChainId }
 }
 
 function* handleSetDepositStatus(action: SetDepositStatusAction) {

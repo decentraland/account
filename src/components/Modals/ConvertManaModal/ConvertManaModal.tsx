@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { fromWei } from 'web3x-es/utils'
+import { Close, Field, Header, Radio, Section } from 'decentraland-ui'
+import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
+import { ChainButton } from 'decentraland-dapps/dist/containers'
+import ChainCheck from 'decentraland-dapps/dist/containers/ChainCheck'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Button, Close, Field, Header, Radio, Section } from 'decentraland-ui'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
+import { Network } from '@dcl/schemas'
 import { Props } from './ConvertManaModal.types'
 import './ConvertManaModal.css'
-import { Network } from '@dcl/schemas'
 
 const MAX_APPROVAL =
   '57896044618658097711785492504343953926634992332820282019728792003956564819968'
@@ -71,6 +74,8 @@ const ConvertManaModal: React.FC<Props> = ({
     }
   }, [allowance])
 
+  const chainId = getChainIdByNetwork(network)
+
   const isButtonLoading = isLoading || isWaitingForApproval
   const isDisabledByAmount =
     network === Network.MATIC ? manaMatic < amount : manaEth < amount
@@ -126,27 +131,32 @@ const ConvertManaModal: React.FC<Props> = ({
             <Header sub={true}>
               {t('convert_mana_modal.label_approvement')}
             </Header>
-            <Radio
-              toggle
-              checked={isApproved}
-              onChange={handleApprove}
-              disabled={isApproved}
-            />
+            <ChainCheck chainId={chainId}>
+              {isEnabled => (
+                <Radio
+                  toggle
+                  checked={isApproved}
+                  onChange={handleApprove}
+                  disabled={isApproved || !isEnabled}
+                />
+              )}
+            </ChainCheck>
           </Section>
         ) : null}
         <div className="fees-warning">{t('global.fees_warning')}</div>
-        <Button
+        <ChainButton
           primary
           onClick={handleConvert}
           loading={isButtonLoading}
           disabled={isButtonDisabled}
+          chainId={chainId}
         >
           {t(
             network === Network.ETHEREUM
               ? 'convert_mana_modal.label_button_ethereum'
               : 'convert_mana_modal.label_button_matic'
           )}
-        </Button>
+        </ChainButton>
       </Modal.Content>
     </Modal>
   )

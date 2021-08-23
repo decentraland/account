@@ -37,5 +37,8 @@ function* handleInitiateWithdrawalFailure(
 }
 
 function isUserDeniedSignature(message: string) {
-  return message.indexOf('User denied message signature') !== -1
+  // checking both for rejected signatures and transactions
+  return /User (denied|rejected the) (transaction|message) signature/.test(
+    message
+  )
 }
