@@ -72,7 +72,7 @@ const ConvertManaModal: React.FC<Props> = ({
     if (!isNaN(amountAllowed) && amountAllowed > 100) {
       setIsApproved(true)
     }
-  }, [allowance])
+  }, [allowance, onManaPrice])
 
   const chainId = getChainIdByNetwork(network)
 
