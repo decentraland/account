@@ -1,23 +1,32 @@
-.TransactionDetailModal .data :first-child {
+.TransactionDetailModal .data > :first-child {
   font-size: 13px;
   line-height: 18px;
   text-transform: uppercase;
-  color: #736E7D;
+  color: #736e7d;
 }
 
 .TransactionDetailModal.ui.modal .dcl.close {
   margin-top: -5px;
 }
 
-.TransactionDetailModal .data :last-child {
+.TransactionDetailModal .data > :last-child {
   font-weight: 600;
   font-size: 21px;
   line-height: 30px;
   letter-spacing: 0.315px;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .TransactionDetailModal .data {
   margin-bottom: 40px;
+}
+
+.TransactionDetailModal .external-link-icon {
+  position: relative;
+  bottom: .5rem;
+  margin-left: .5rem;
+  color: var(--primary);
 }
 
 .TransactionDetailModal.ui.modal > .header {
@@ -26,4 +35,3 @@
   margin: 0;
   padding: 20px 32px 28px 32px;
 }
-

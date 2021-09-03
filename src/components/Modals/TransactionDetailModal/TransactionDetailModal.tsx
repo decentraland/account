@@ -13,6 +13,8 @@ import {
 } from '../../../modules/mana/types'
 import { getStatusMessage } from '../../../modules/mana/utils'
 import './TransactionDetailModal.css'
+import { getTransactionHref } from 'decentraland-dapps/dist/modules/transaction/utils'
+import { Icon } from 'decentraland-ui'
 
 const TransactionDetailModal: React.FC<ModalProps> = ({
   name,
@@ -40,10 +42,26 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
     case TransactionType.TRANSFER:
       data = transaction.data as Transfer
       dataComponent = (
-        <div className="data">
-          <div> {t('transaction_detail_modal.to')} </div>
-          <div> {data.to} </div>
-        </div>
+        <>
+          <div className="data">
+            <div>{t('transaction_detail_modal.to')}</div>
+            <div>{data.to}</div>
+          </div>
+          <div className="data">
+            <div>{t('transaction_detail_modal.tx')}</div>
+            <a
+              target="_blank"
+              href={getTransactionHref({ txHash: data.hash }, data.chainId)}
+            >
+              {data.hash}
+              <Icon
+                className="external-link-icon"
+                size="tiny"
+                name="external"
+              />
+            </a>
+          </div>
+        </>
       )
       break
   }
@@ -61,21 +79,21 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
       <Modal.Header>{t('transaction_detail_modal.title')}</Modal.Header>
       <Modal.Content>
         <div className="data">
-          <div> {t('transaction_detail_modal.operation')} </div>
-          <div> {description} </div>
+          <div>{t('transaction_detail_modal.operation')}</div>
+          <div>{description}</div>
         </div>
         <div className="data">
-          <div> {t('transaction_detail_modal.datetime')} </div>
-          <div> {datetime} </div>
+          <div>{t('transaction_detail_modal.datetime')}</div>
+          <div>{datetime}</div>
         </div>
         <div className="data">
-          <div> {t('transaction_detail_modal.amount')} </div>
-          <div>{amount.toLocaleString()} </div>
+          <div>{t('transaction_detail_modal.amount')}</div>
+          <div>{amount.toLocaleString()}</div>
         </div>
         {dataComponent}
         <div className="data">
-          <div> {t('transaction_detail_modal.status')} </div>
-          <div> {data ? getStatusMessage(type, status, data.status) : ''}</div>
+          <div>{t('transaction_detail_modal.status')}</div>
+          <div>{data ? getStatusMessage(type, status, data.status) : ''}</div>
         </div>
       </Modal.Content>
     </Modal>
