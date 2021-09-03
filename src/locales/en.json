@@ -36,7 +36,8 @@
     "type": "Type",
     "status": "Status",
     "datetime": "Date time",
-    "to": "Sent to"
+    "to": "Sent to",
+    "tx": "Tx Hash"
   },
   "see_all_transaction_modal": {
     "title_ethereum": "Ethereum Transactions",

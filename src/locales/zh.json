@@ -35,7 +35,8 @@
     "type": "类型",
     "status": "状态",
     "datetime": "约会时间",
-    "to": "发送"
+    "to": "发送",
+    "tx": "交易哈希"
   },
   "see_all_transaction_modal": {
     "title_ethereum": "Ethereum 交易",
