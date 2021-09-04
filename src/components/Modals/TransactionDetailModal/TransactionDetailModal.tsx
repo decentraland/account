@@ -50,8 +50,9 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
           <div className="data">
             <div>{t('transaction_detail_modal.tx')}</div>
             <a
-              target="_blank"
               href={getTransactionHref({ txHash: data.hash }, data.chainId)}
+              target="_blank"
+              rel="noreferrer"
             >
               {data.hash}
               <Icon
