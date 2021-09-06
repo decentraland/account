@@ -16,7 +16,7 @@ import {
   WATCH_WITHDRAWAL_STATUS_SUCCESS,
 } from './mana/actions'
 import { isDevelopment } from '../lib/environment'
-
+import { Withdrawal } from './mana/types'
 
 export const history = require('history').createBrowserHistory()
 const rootReducer = storageReducerWrapper(createRootReducer(history))
@@ -24,7 +24,8 @@ const rootReducer = storageReducerWrapper(createRootReducer(history))
 const sagasMiddleware = createSagasMiddleware()
 const loggerMiddleware = createLogger({
   collapsed: () => true,
-  predicate: (_: any, action) => isDevelopment || action.type.includes('Failure'),
+  predicate: (_: any, action) =>
+    isDevelopment || action.type.includes('Failure'),
 })
 
 const transactionMiddleware = createTransactionMiddleware()
@@ -44,18 +45,44 @@ const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
   ],
   migrations: {
     '2': (state: RootState) => {
-      const withdrawals = state.mana.data.withdrawals
+      const oldWithdrawals = state.mana.data.withdrawals
+      const oldTransactions = state.transaction.data
 
-      state.mana.data.withdrawals = withdrawals.map((w) => {
-        //@ts-ignore
-        w.initializeHash = w.hash
-        w.finalizeHash = null
-        //@ts-ignore
-        delete w.hash
-        return w
+      const mapOldWithdrawal = (withdrawal: any): Withdrawal => ({
+        amount: withdrawal.amount,
+        from: withdrawal.from,
+        status: withdrawal.status,
+        timestamp: withdrawal.timestamp,
+        finalizeHash: null,
+        initializeHash: (withdrawal as any).hash,
       })
 
-      return state
+      const updatedWithdrawals = oldWithdrawals.map(mapOldWithdrawal)
+      const updatedTransactions = oldTransactions.map((transaction) => ({
+        ...transaction,
+        payload:
+          transaction.payload && transaction.payload.withdrawal
+            ? {
+                ...transaction.payload,
+                withdrawal: mapOldWithdrawal(transaction.payload.withdrawal),
+              }
+            : transaction.payload,
+      }))
+
+      return {
+        ...state,
+        mana: {
+          ...state.mana,
+          data: {
+            ...state.mana.data,
+            withdrawals: updatedWithdrawals,
+          },
+        },
+        transaction: {
+          ...state.transaction,
+          data: updatedTransactions,
+        },
+      }
     },
   },
 })
