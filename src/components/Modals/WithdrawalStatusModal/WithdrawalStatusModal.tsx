@@ -25,7 +25,7 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
       isLoading,
       onFinishWithdrawal,
     } = this.props
-    const withdrawal = withdrawals.find(({ hash }) => metadata.txHash === hash)
+    const withdrawal = withdrawals.find(({ initializeHash }) => metadata.txHash === initializeHash)
     const finalizeTransaction = transactions.find(
       (tx) =>
         tx.actionType === FINISH_WITHDRAWAL_SUCCESS &&
@@ -44,7 +44,7 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
     const handleFinishWithdrawal = () => onFinishWithdrawal(withdrawal)
 
     const initializeHref = getTransactionHref(
-      { txHash: withdrawal.hash },
+      { txHash: withdrawal.initializeHash },
       getChainIdByNetwork(Network.MATIC)
     )
 

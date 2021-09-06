@@ -273,7 +273,7 @@ function* handleWatchWithdrawalStatusRequest(
   const address: string | undefined = yield select(getAddress)
   if (address) {
     const tx: Withdrawal = {
-      hash: txHash,
+      initializeHash: txHash,
       finalizeHash: null,
       from: address,
       status: WithdrawalStatus.PENDING,
@@ -295,11 +295,11 @@ function* handleWatchWithdrawalStatusSuccess(
     getNetworkProvider(networks![Network.MATIC].chainId)
   )
   yield call(() => {
-    return waitForSync(tx.hash, (txHash) =>
+    return waitForSync(tx.initializeHash, (txHash) =>
       isWithdrawalSynced(txHash, maticProvider)
     )
   })
-  yield put(setWithdrawalStatus(tx.hash, WithdrawalStatus.CHECKPOINT))
+  yield put(setWithdrawalStatus(tx.initializeHash, WithdrawalStatus.CHECKPOINT))
 }
 
 function* handleInitiateWithdrawalRequest(
@@ -356,7 +356,7 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
     const matic = new MaticPOSClient(config)
 
     const tx: { transactionHash: string } = yield call(() =>
-      matic.exitERC20(withdrawal.hash, {
+      matic.exitERC20(withdrawal.initializeHash, {
         from,
         onTransactionHash: (hash: string) => {
           store.dispatch(setWithdrawalFinalizeHash(withdrawal, hash))
@@ -365,7 +365,7 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
     )
 
     const storeWithdrawal: Withdrawal = yield getStoreWithdrawalByHash(
-      withdrawal.hash
+      withdrawal.initializeHash
     )
 
     yield put(
@@ -373,9 +373,9 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
     )
   } catch (error) {
     const storeWithdrawal: Withdrawal = yield getStoreWithdrawalByHash(
-      withdrawal.hash
+      withdrawal.initializeHash
     )
-    
+
     yield put(finishWithdrawalFailure(storeWithdrawal!, error.message))
   }
 }
@@ -478,7 +478,10 @@ function* handleConnectWalletSuccess(_action: ConnectWalletSuccessAction) {
   for (const withdrawal of withdrawals) {
     if (withdrawal.status === WithdrawalStatus.PENDING) {
       yield put(
-        watchWithdrawalStatusRequest(withdrawal.amount, withdrawal.hash)
+        watchWithdrawalStatusRequest(
+          withdrawal.amount,
+          withdrawal.initializeHash
+        )
       )
     }
   }
@@ -507,5 +510,5 @@ function* handleFetchTransactionSuccess(action: FetchTransactionSuccessAction) {
 
 function* getStoreWithdrawalByHash(hash: string) {
   const withdrawals: Withdrawal[] = yield select(getWithdrawals)
-  return withdrawals.find((w) => w.hash === hash)
+  return withdrawals.find((w) => w.initializeHash === hash)
 }

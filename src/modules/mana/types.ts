@@ -67,7 +67,7 @@ export enum WithdrawalStatus {
 }
 
 export type Withdrawal = {
-  hash: string
+  initializeHash: string
   finalizeHash: string | null
   status: WithdrawalStatus
   from: string

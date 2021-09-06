@@ -6,8 +6,7 @@ import { createStorageMiddleware } from 'decentraland-dapps/dist/modules/storage
 import { storageReducerWrapper } from 'decentraland-dapps/dist/modules/storage/reducer'
 import { createTransactionMiddleware } from 'decentraland-dapps/dist/modules/transaction/middleware'
 import { createAnalyticsMiddleware } from 'decentraland-dapps/dist/modules/analytics/middleware'
-
-import { createRootReducer } from './reducer'
+import { createRootReducer, RootState } from './reducer'
 import { rootSaga } from './sagas'
 import {
   SET_DEPOSIT_STATUS,
@@ -43,7 +42,22 @@ const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
     WATCH_WITHDRAWAL_STATUS_SUCCESS,
     SET_PURCHASE,
   ],
-  migrations: {},
+  migrations: {
+    '2': (state: RootState) => {
+      const withdrawals = state.mana.data.withdrawals
+
+      state.mana.data.withdrawals = withdrawals.map((w) => {
+        //@ts-ignore
+        w.initializeHash = w.hash
+        w.finalizeHash = null
+        //@ts-ignore
+        delete w.hash
+        return w
+      })
+
+      return state
+    },
+  },
 })
 const analyticsMiddleware = createAnalyticsMiddleware(
   process.env.REACT_APP_SEGMENT_API_KEY || ''

@@ -108,22 +108,22 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
 
 const WithdrawalDataComponent = ({ data }: { data: Transaction['data'] }) => {
   const withdrawals = useSelector(getWithdrawals)
-  const withdrawal = withdrawals.find((w) => w.hash === data.hash)
+  const withdrawal = withdrawals.find((w) => w.initializeHash === data.hash)
 
   return (
     <>
-      {withdrawal?.hash && (
+      {withdrawal?.initializeHash && (
         <div className="data">
           <div>{t('transaction_detail_modal.matic_tx')}</div>
           <a
             href={getTransactionHref(
-              { txHash: withdrawal.hash },
+              { txHash: withdrawal.initializeHash },
               getChainIdByNetwork(Network.MATIC)
             )}
             target="_blank"
             rel="noreferrer"
           >
-            {withdrawal.hash}
+            {withdrawal.initializeHash}
             <Icon className="external-link-icon" size="tiny" name="external" />
           </a>
         </div>
