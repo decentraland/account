@@ -11,7 +11,7 @@ import {
   fetchWalletRequest,
 } from 'decentraland-dapps/dist/modules/wallet/actions'
 import { Provider } from 'decentraland-dapps/dist/modules/wallet/types'
-import { sendWalletTransaction } from 'decentraland-dapps/dist/modules/wallet/utils'
+import { sendTransaction } from 'decentraland-dapps/dist/modules/wallet/utils'
 import {
   FetchTransactionSuccessAction,
   FETCH_TRANSACTION_SUCCESS,
@@ -310,10 +310,8 @@ function* handleInitiateWithdrawalRequest(
   try {
     const chainId = getChainIdByNetwork(Network.MATIC)
     const contract = getContract(ContractName.MANAToken, chainId)
-    const txHash: string = yield call(() =>
-      sendWalletTransaction(contract, (mana) =>
-        mana.withdraw(toWei(amount.toString(), 'ether'))
-      )
+    const txHash: string = yield call(sendTransaction, contract, (mana) =>
+      mana.withdraw(toWei(amount.toString(), 'ether'))
     )
     yield put(initiateWithdrawalSuccess(amount, chainId, txHash))
     yield put(watchWithdrawalStatusRequest(amount, txHash))
@@ -421,11 +419,10 @@ function* handleSendManaRequest(action: TransferManaRequestAction) {
       case Network.MATIC: {
         const chainId = getChainIdByNetwork(network)
         const contract = getContract(ContractName.MANAToken, chainId)
-        const txHash: string = yield call(() =>
-          sendWalletTransaction(contract, (mana) =>
-            mana.transfer(to, toWei(amount.toString(), 'ether'))
-          )
+        const txHash: string = yield call(sendTransaction, contract, (mana) =>
+          mana.transfer(to, toWei(amount.toString(), 'ether'))
         )
+
         yield put(
           transferManaSuccess(
             {

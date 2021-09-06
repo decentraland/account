@@ -80,7 +80,7 @@ const TransferManaModal: React.FC<Props> = ({
 
   useEffect(() => {
     onManaPrice()
-  }, [])
+  }, [onManaPrice])
 
   const isDisabledByAmount =
     network === Network.MATIC ? manaMatic < amount : manaEth < amount
