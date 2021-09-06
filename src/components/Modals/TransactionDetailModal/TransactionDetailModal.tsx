@@ -3,6 +3,10 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Close } from 'decentraland-ui'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
+import { getTransactionHref } from 'decentraland-dapps/dist/modules/transaction/utils'
+import { Icon } from 'decentraland-ui'
+import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
+import { Network } from '@dcl/schemas'
 import {
   Deposit,
   Purchase,
@@ -13,8 +17,8 @@ import {
 } from '../../../modules/mana/types'
 import { getStatusMessage } from '../../../modules/mana/utils'
 import './TransactionDetailModal.css'
-import { getTransactionHref } from 'decentraland-dapps/dist/modules/transaction/utils'
-import { Icon } from 'decentraland-ui'
+import { useSelector } from 'react-redux'
+import { getWithdrawals } from '../../../modules/mana/selectors'
 
 const TransactionDetailModal: React.FC<ModalProps> = ({
   name,
@@ -35,6 +39,7 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
       break
     case TransactionType.WITHDRAWAL:
       data = transaction.data as Withdrawal
+      dataComponent = <WithdrawalDataComponent data={transaction.data} />
       break
     case TransactionType.PURCHASE:
       data = transaction.data as Purchase
@@ -98,6 +103,48 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
         </div>
       </Modal.Content>
     </Modal>
+  )
+}
+
+const WithdrawalDataComponent = ({ data }: { data: Transaction['data'] }) => {
+  const withdrawals = useSelector(getWithdrawals)
+  const withdrawal = withdrawals.find((w) => w.hash === data.hash)
+
+  return (
+    <>
+      {withdrawal?.hash && (
+        <div className="data">
+          <div>{t('transaction_detail_modal.matic_tx')}</div>
+          <a
+            href={getTransactionHref(
+              { txHash: withdrawal.hash },
+              getChainIdByNetwork(Network.MATIC)
+            )}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {withdrawal.hash}
+            <Icon className="external-link-icon" size="tiny" name="external" />
+          </a>
+        </div>
+      )}
+      {withdrawal?.finalizeHash && (
+        <div className="data">
+          <div>{t('transaction_detail_modal.eth_tx')}</div>
+          <a
+            href={getTransactionHref(
+              { txHash: withdrawal.finalizeHash },
+              getChainIdByNetwork(Network.ETHEREUM)
+            )}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {withdrawal.finalizeHash}
+            <Icon className="external-link-icon" size="tiny" name="external" />
+          </a>
+        </div>
+      )}
+    </>
   )
 }
 

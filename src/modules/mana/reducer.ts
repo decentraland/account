@@ -44,6 +44,7 @@ import {
   INITIATE_WITHDRAWAL_REQUEST,
   INITIATE_WITHDRAWAL_SUCCESS,
   SetWithdrawalStatusAction,
+  SetWithdrawalFinalizeHashAction,
   SET_WITHDRAWAL_STATUS,
   WatchWithdrawalStatusRequestAction,
   WatchWithdrawalStatusFailureAction,
@@ -67,6 +68,7 @@ import {
   FinishWithdrawalSuccessAction,
   SetPurchaseAction,
   SET_PURCHASE,
+  SET_WITHDRAWAL_FINALIZE_HASH,
 } from './actions'
 import { Deposit, Withdrawal, WithdrawalStatus, Purchase } from './types'
 
@@ -121,6 +123,7 @@ type ManaReducerAction =
   | WatchWithdrawalStatusSuccessAction
   | WatchWithdrawalStatusFailureAction
   | SetWithdrawalStatusAction
+  | SetWithdrawalFinalizeHashAction
   | FinishWithdrawalSuccessAction
   | FinishWithdrawalRequestAction
   | FinishWithdrawalFailureAction
@@ -293,6 +296,27 @@ export function manaReducer(
             },
           }
         : state
+    }
+
+    case SET_WITHDRAWAL_FINALIZE_HASH: {
+      const { withdrawal: providedWithdrawal, finalizeHash } = action.payload
+      const { withdrawals } = state.data
+
+      const updatedWithdrawals = withdrawals.map((withdrawal) => {
+        if (withdrawal.hash === providedWithdrawal.hash) {
+          return { ...withdrawal, finalizeHash: finalizeHash }
+        }
+
+        return withdrawal
+      })
+
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          withdrawals: updatedWithdrawals,
+        },
+      }
     }
 
     case FINISH_WITHDRAWAL_SUCCESS: {
