@@ -108,7 +108,7 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
 
 const WithdrawalDataComponent = ({ data }: { data: Transaction['data'] }) => {
   const withdrawals = useSelector(getWithdrawals)
-  const withdrawal = withdrawals.find((w) => w.initializeHash === data.hash)
+  const withdrawal = withdrawals.find((w) => w.initializeHash === data.initializeHash)
 
   return (
     <>

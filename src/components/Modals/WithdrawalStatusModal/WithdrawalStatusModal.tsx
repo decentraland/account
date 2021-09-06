@@ -29,7 +29,7 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
     const finalizeTransaction = transactions.find(
       (tx) =>
         tx.actionType === FINISH_WITHDRAWAL_SUCCESS &&
-        tx.payload.withdrawal.hash === metadata.txHash
+        tx.payload.withdrawal.initializeHash === metadata.txHash
     )
     const isTxPending = Boolean(
       finalizeTransaction && isPending(finalizeTransaction.status)
