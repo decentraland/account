@@ -36,7 +36,7 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
     case TransactionType.DEPOSIT:
       data = transaction.data as Deposit
       dataComponent = (
-        <Data label={'initialize_tx'}>
+        <Data label={'tx'}>
           <ExplorerLink network={Network.ETHEREUM} txHash={data.hash} />
         </Data>
       )
