@@ -77,7 +77,7 @@ const AccountTransaction = ({
       (data.status === WithdrawalStatus.PENDING ||
         data.status === WithdrawalStatus.CHECKPOINT)
     ) {
-      onPendingWithdrawal(data.hash)
+      onPendingWithdrawal(data.initializeHash)
     } else if (
       type === TransactionType.PURCHASE &&
       status === TransactionStatus.PENDING

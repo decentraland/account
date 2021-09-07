@@ -339,7 +339,7 @@ export function manaReducer(
               ...state.data,
               withdrawals: [
                 ...state.data.withdrawals.filter(
-                  (_withdraw) => _withdraw.initializeHash !== withdrawal.hash
+                  (_withdraw) => _withdraw.initializeHash !== withdrawal.initializeHash
                 ),
                 {
                   ...withdrawal,
