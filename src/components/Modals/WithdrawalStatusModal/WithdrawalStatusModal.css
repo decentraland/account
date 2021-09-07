@@ -41,6 +41,12 @@
   padding-bottom: 40px;
 }
 
+/* Overwrites some <a> styles that are affecting the component */
+.WithdrawalStatusModal .scan_link {
+  font-weight: unset;
+  color: unset;
+}
+
 .WithdrawalStatusModal .status {
   display: flex;
   flex-direction: column;

@@ -25,7 +25,9 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
       isLoading,
       onFinishWithdrawal,
     } = this.props
-    const withdrawal = withdrawals.find(({ initializeHash }) => metadata.txHash === initializeHash)
+    const withdrawal = withdrawals.find(
+      ({ initializeHash }) => metadata.txHash === initializeHash
+    )
     const finalizeTransaction = transactions.find(
       (tx) =>
         tx.actionType === FINISH_WITHDRAWAL_SUCCESS &&
@@ -74,7 +76,7 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
               {t('withdrawal_status_modal.status_placeholder')}
             </div>
             <a
-              style={{ fontWeight: 'unset', color: 'unset' }}
+              className="scan_link"
               href={initializeHref}
               target="_blank"
               rel="noreferrer"
@@ -99,7 +101,7 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
             </div>
             {finalizeHref ? (
               <a
-                style={{ fontWeight: 'unset' }}
+                className="scan_link"
                 href={finalizeHref}
                 target="_blank"
                 rel="noreferrer"
