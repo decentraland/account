@@ -66,7 +66,7 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
       className="TransactionDetailModal"
       closeIcon={<Close onClick={onClose} />}
     >
-      <Modal.Header>{'title'}</Modal.Header>
+      <Modal.Header>{t('transaction_detail_modal.title')}</Modal.Header>
       <Modal.Content>
         <Data label={'operation'}>{description}</Data>
         <Data label={'datetime'}>{datetime}</Data>
