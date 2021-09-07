@@ -37,7 +37,9 @@
     "status": "Status",
     "datetime": "Date time",
     "to": "Sent to",
-    "tx": "Tx Hash"
+    "tx": "Tx Hash",
+    "initialize_tx": "Tx Hash (Initialize withdrawal)",
+    "finalize_tx": "Tx Hash (Complete withdrawal)"
   },
   "see_all_transaction_modal": {
     "title_ethereum": "Ethereum Transactions",

@@ -37,7 +37,9 @@
     "status": "Estado",
     "datetime": "Operacion realizada en",
     "to": "Enviado a",
-    "tx": "Hash de la Transacción"
+    "tx": "Hash de la Transacción",
+    "initialize_tx": "Hash de la Transacción (Inicio del retiro)",
+    "finalize_tx": "Hash de la Transacción (Completado del retiro)"
   },
   "see_all_transaction_modal": {
     "title_ethereum": "Transacciones en Ethereum",

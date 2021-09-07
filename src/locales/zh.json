@@ -36,7 +36,9 @@
     "status": "状态",
     "datetime": "约会时间",
     "to": "发送",
-    "tx": "交易哈希"
+    "tx": "交易哈希",
+    "initialize_tx": "交易哈希（初始取款）",
+    "finalize_tx": "交易哈希（完全取款）"
   },
   "see_all_transaction_modal": {
     "title_ethereum": "Ethereum 交易",
