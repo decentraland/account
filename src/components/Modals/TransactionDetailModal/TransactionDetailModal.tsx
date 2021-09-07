@@ -4,9 +4,9 @@ import { Close } from 'decentraland-ui'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { getTransactionHref } from 'decentraland-dapps/dist/modules/transaction/utils'
-import { Icon } from 'decentraland-ui'
 import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
-import { Network } from '@dcl/schemas'
+import { ChainId, Network } from '@dcl/schemas'
+import { useSelector } from 'react-redux'
 import {
   Deposit,
   Purchase,
@@ -16,9 +16,8 @@ import {
   Withdrawal,
 } from '../../../modules/mana/types'
 import { getStatusMessage } from '../../../modules/mana/utils'
-import './TransactionDetailModal.css'
-import { useSelector } from 'react-redux'
 import { getWithdrawals } from '../../../modules/mana/selectors'
+import './TransactionDetailModal.css'
 
 const TransactionDetailModal: React.FC<ModalProps> = ({
   name,
@@ -48,25 +47,10 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
       data = transaction.data as Transfer
       dataComponent = (
         <>
-          <div className="data">
-            <div>{t('transaction_detail_modal.to')}</div>
-            <div>{data.to}</div>
-          </div>
-          <div className="data">
-            <div>{t('transaction_detail_modal.tx')}</div>
-            <a
-              href={getTransactionHref({ txHash: data.hash }, data.chainId)}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {data.hash}
-              <Icon
-                className="external-link-icon"
-                size="tiny"
-                name="external"
-              />
-            </a>
-          </div>
+          <Data label={'to'}>{data.to}</Data>
+          <Data label={'tx'}>
+            <ExplorerLink chainId={data.chainId} txHash={data.hash} />
+          </Data>
         </>
       )
       break
@@ -82,69 +66,83 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
       className="TransactionDetailModal"
       closeIcon={<Close onClick={onClose} />}
     >
-      <Modal.Header>{t('transaction_detail_modal.title')}</Modal.Header>
+      <Modal.Header>{'title'}</Modal.Header>
       <Modal.Content>
-        <div className="data">
-          <div>{t('transaction_detail_modal.operation')}</div>
-          <div>{description}</div>
-        </div>
-        <div className="data">
-          <div>{t('transaction_detail_modal.datetime')}</div>
-          <div>{datetime}</div>
-        </div>
-        <div className="data">
-          <div>{t('transaction_detail_modal.amount')}</div>
-          <div>{amount.toLocaleString()}</div>
-        </div>
+        <Data label={'operation'}>{description}</Data>
+        <Data label={'datetime'}>{datetime}</Data>
+        <Data label={'amount'}>{amount.toLocaleString()}</Data>
         {dataComponent}
-        <div className="data">
-          <div>{t('transaction_detail_modal.status')}</div>
-          <div>{data ? getStatusMessage(type, status, data.status) : ''}</div>
-        </div>
+        <Data label={'status'}>
+          {data ? getStatusMessage(type, status, data.status) : ''}
+        </Data>
       </Modal.Content>
     </Modal>
   )
 }
 
+type DataProps = {
+  label: string
+  children: React.ReactNode
+}
+
+const Data = ({ label, children }: DataProps) => {
+  return (
+    <div className="data">
+      <div>{t(`transaction_detail_modal.${label}`)}</div>
+      <div>{children}</div>
+    </div>
+  )
+}
+
 const WithdrawalDataComponent = ({ data }: { data: Transaction['data'] }) => {
   const withdrawals = useSelector(getWithdrawals)
-  const withdrawal = withdrawals.find((w) => w.initializeHash === data.initializeHash)
+
+  const withdrawal = React.useMemo(
+    () => withdrawals.find((w) => w.initializeHash === data.initializeHash),
+    [data, withdrawals]
+  )
+
+  if (!withdrawal) {
+    return null
+  }
+
+  const { initializeHash, finalizeHash } = withdrawal
 
   return (
     <>
-      {withdrawal?.initializeHash && (
-        <div className="data">
-          <div>{t('transaction_detail_modal.matic_tx')}</div>
-          <a
-            href={getTransactionHref(
-              { txHash: withdrawal.initializeHash },
-              getChainIdByNetwork(Network.MATIC)
-            )}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {withdrawal.initializeHash}
-            <Icon className="external-link-icon" size="tiny" name="external" />
-          </a>
-        </div>
-      )}
-      {withdrawal?.finalizeHash && (
-        <div className="data">
-          <div>{t('transaction_detail_modal.eth_tx')}</div>
-          <a
-            href={getTransactionHref(
-              { txHash: withdrawal.finalizeHash },
-              getChainIdByNetwork(Network.ETHEREUM)
-            )}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {withdrawal.finalizeHash}
-            <Icon className="external-link-icon" size="tiny" name="external" />
-          </a>
-        </div>
+      <Data label={t('transaction_detail_modal.initialize_tx')}>
+        <ExplorerLink network={Network.MATIC} txHash={initializeHash} />
+      </Data>
+      {finalizeHash && (
+        <Data label={t('transaction_detail_modal.finalize_tx')}>
+          <ExplorerLink network={Network.ETHEREUM} txHash={finalizeHash} />
+        </Data>
       )}
     </>
+  )
+}
+
+type ExplorerLinkProps = {
+  network?: Network
+  chainId?: ChainId
+  txHash: string
+}
+
+const ExplorerLink = ({ network, chainId, txHash }: ExplorerLinkProps) => {
+  const resolvedChainId = chainId || (network && getChainIdByNetwork(network))
+
+  if (!resolvedChainId) {
+    throw new Error(
+      'At least one of network or chainId must be provided as props'
+    )
+  }
+
+  const href = getTransactionHref({ txHash }, resolvedChainId)
+
+  return (
+    <a href={href} target="_blank" rel="noreferrer">
+      {txHash}
+    </a>
   )
 }
 
