@@ -47,6 +47,13 @@
   color: unset;
 }
 
+.WithdrawalStatusModal .scan_link > i {
+  position: relative;
+  bottom: 2px;
+  margin-left: .5rem;
+  color: var(--primary);
+}
+
 .WithdrawalStatusModal .status {
   display: flex;
   flex-direction: column;

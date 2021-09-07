@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Close, Radio } from 'decentraland-ui'
+import { Button, Close, Radio, Icon } from 'decentraland-ui'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import {
@@ -103,12 +103,12 @@ const WithdrawInitialized = ({ withdrawal }: StatusProps) => {
   )
 
   return (
-    <a className="scan_link" href={href} target="_blank" rel="noreferrer">
+    <LinkWrapper href={href}>
       <Radio
         checked={true}
         label={t('withdrawal_status_modal.status_initialized')}
       />
-    </a>
+    </LinkWrapper>
   )
 }
 
@@ -153,11 +153,19 @@ const CompleteWithdrawal = ({ withdrawal }: StatusProps) => {
     />
   )
 
-  return href ? (
+  return href ? <LinkWrapper href={href}>{radio}</LinkWrapper> : radio
+}
+
+type LinkWrapperProps = {
+  href: string
+  children: React.ReactNode
+}
+
+const LinkWrapper = ({ href, children }: LinkWrapperProps) => {
+  return (
     <a className="scan_link" href={href} target="_blank" rel="noreferrer">
-      {radio}
+      {children}
+      <Icon name="external" size="small" />
     </a>
-  ) : (
-    radio
   )
 }
