@@ -1,7 +1,7 @@
 import { Withdrawal } from '../mana/types'
 import { RootState } from '../reducer'
 
-export default (state: RootState) => {
+const v2 = (state: RootState) => {
   const oldWithdrawals = state.mana.data.withdrawals
   const oldTransactions = state.transaction.data
   const updatedWithdrawals = oldWithdrawals.map(mapOldWithdrawal)
@@ -41,3 +41,5 @@ const mapOldTransactions = (transaction: any) => ({
       }
     : transaction.payload,
 })
+
+export default v2

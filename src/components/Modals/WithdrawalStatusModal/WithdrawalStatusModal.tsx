@@ -125,7 +125,7 @@ const ReadyToWithdraw = ({ withdrawal }: StatusProps) => {
     <>
       <Radio
         checked={true}
-        className={statusClassName + ' ' + 'default_cursor'}
+        className={`${statusClassName} default_cursor`}
         label={t('withdrawal_status_modal.status_checkpoint')}
       />
       <div className="status_checkpoint_placeholder">
