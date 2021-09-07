@@ -51,6 +51,14 @@
   display: flex;
   flex-direction: column;
 }
+
+.WithdrawalStatusModal .default_cursor.ui.checkbox,
+.WithdrawalStatusModal .default_cursor.ui.checkbox input.hidden + label, 
+.WithdrawalStatusModal .default_cursor.ui.checkbox input.hidden:focus + label, 
+.WithdrawalStatusModal .default_cursor.ui.checkbox input.hidden:active + label {
+  cursor: default;
+}
+
 .ui.checkbox input.hidden + label, 
 .ui.checkbox input.hidden:focus + label, 
 .ui.checkbox input.hidden:active + label {

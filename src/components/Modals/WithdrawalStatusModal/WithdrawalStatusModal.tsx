@@ -115,16 +115,17 @@ const WithdrawInitialized = ({ withdrawal }: StatusProps) => {
 const ReadyToWithdraw = ({ withdrawal }: StatusProps) => {
   const { status } = withdrawal
 
+  const statusClassName =
+    status === WithdrawalStatus.CHECKPOINT ||
+    status === WithdrawalStatus.COMPLETE
+      ? ''
+      : 'yellow_check'
+
   return (
     <>
       <Radio
         checked={true}
-        className={
-          status === WithdrawalStatus.CHECKPOINT ||
-          status === WithdrawalStatus.COMPLETE
-            ? ''
-            : 'yellow_check'
-        }
+        className={statusClassName + ' ' + 'default_cursor'}
         label={t('withdrawal_status_modal.status_checkpoint')}
       />
       <div className="status_checkpoint_placeholder">
@@ -137,19 +138,20 @@ const ReadyToWithdraw = ({ withdrawal }: StatusProps) => {
 const CompleteWithdrawal = ({ withdrawal }: StatusProps) => {
   const { status, finalizeHash } = withdrawal
 
-  const radio = (
-    <Radio
-      checked={status === WithdrawalStatus.COMPLETE}
-      label={t('withdrawal_status_modal.status_completed')}
-    />
-  )
-
   const href =
     finalizeHash &&
     getTransactionHref(
       { txHash: finalizeHash },
       getChainIdByNetwork(Network.ETHEREUM)
     )
+
+  const radio = (
+    <Radio
+      className={!href ? 'default_cursor' : undefined}
+      checked={status === WithdrawalStatus.COMPLETE}
+      label={t('withdrawal_status_modal.status_completed')}
+    />
+  )
 
   return href ? (
     <a className="scan_link" href={href} target="_blank" rel="noreferrer">
