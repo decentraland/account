@@ -9,7 +9,7 @@ import {
 import { ChainButton } from 'decentraland-dapps/dist/containers'
 import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
 import { Network } from '@dcl/schemas'
-import { WithdrawalStatus } from '../../../modules/mana/types'
+import { Withdrawal, WithdrawalStatus } from '../../../modules/mana/types'
 import { FINISH_WITHDRAWAL_SUCCESS } from '../../../modules/mana/actions'
 import { Props } from './WithdrawalStatusModal.types'
 import './WithdrawalStatusModal.css'
@@ -45,18 +45,6 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
 
     const handleFinishWithdrawal = () => onFinishWithdrawal(withdrawal)
 
-    const initializeHref = getTransactionHref(
-      { txHash: withdrawal.initializeHash },
-      getChainIdByNetwork(Network.MATIC)
-    )
-
-    const finalizeHref =
-      withdrawal.finalizeHash &&
-      getTransactionHref(
-        { txHash: withdrawal.finalizeHash },
-        getChainIdByNetwork(Network.ETHEREUM)
-      )
-
     return (
       <Modal
         name={name}
@@ -75,48 +63,9 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
             <div className="status_placeholder">
               {t('withdrawal_status_modal.status_placeholder')}
             </div>
-            <a
-              className="scan_link"
-              href={initializeHref}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Radio
-                checked={true}
-                label={t('withdrawal_status_modal.status_initialized')}
-              />
-            </a>
-            <Radio
-              checked={true}
-              className={
-                status === WithdrawalStatus.CHECKPOINT ||
-                status === WithdrawalStatus.COMPLETE
-                  ? ''
-                  : 'yellow_check'
-              }
-              label={t('withdrawal_status_modal.status_checkpoint')}
-            />
-            <div className="status_checkpoint_placeholder">
-              {t('withdrawal_status_modal.status_checkpoint_placeholder')}
-            </div>
-            {finalizeHref ? (
-              <a
-                className="scan_link"
-                href={finalizeHref}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Radio
-                  checked={status === WithdrawalStatus.COMPLETE}
-                  label={t('withdrawal_status_modal.status_completed')}
-                />
-              </a>
-            ) : (
-              <Radio
-                checked={status === WithdrawalStatus.COMPLETE}
-                label={t('withdrawal_status_modal.status_completed')}
-              />
-            )}
+            <WithdrawInitialized withdrawal={withdrawal} />
+            <ReadyToWithdraw withdrawal={withdrawal} />
+            <CompleteWithdrawal withdrawal={withdrawal} />
           </div>
           {status === WithdrawalStatus.COMPLETE && !isTxPending ? (
             <Button primary onClick={onClose}>
@@ -139,4 +88,74 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
       </Modal>
     )
   }
+}
+
+type StatusProps = {
+  withdrawal: Withdrawal
+}
+
+const WithdrawInitialized = ({ withdrawal }: StatusProps) => {
+  const { initializeHash } = withdrawal
+
+  const href = getTransactionHref(
+    { txHash: initializeHash },
+    getChainIdByNetwork(Network.MATIC)
+  )
+
+  return (
+    <a className="scan_link" href={href} target="_blank" rel="noreferrer">
+      <Radio
+        checked={true}
+        label={t('withdrawal_status_modal.status_initialized')}
+      />
+    </a>
+  )
+}
+
+const ReadyToWithdraw = ({ withdrawal }: StatusProps) => {
+  const { status } = withdrawal
+
+  return (
+    <>
+      <Radio
+        checked={true}
+        className={
+          status === WithdrawalStatus.CHECKPOINT ||
+          status === WithdrawalStatus.COMPLETE
+            ? ''
+            : 'yellow_check'
+        }
+        label={t('withdrawal_status_modal.status_checkpoint')}
+      />
+      <div className="status_checkpoint_placeholder">
+        {t('withdrawal_status_modal.status_checkpoint_placeholder')}
+      </div>
+    </>
+  )
+}
+
+const CompleteWithdrawal = ({ withdrawal }: StatusProps) => {
+  const { status, finalizeHash } = withdrawal
+
+  const radio = (
+    <Radio
+      checked={status === WithdrawalStatus.COMPLETE}
+      label={t('withdrawal_status_modal.status_completed')}
+    />
+  )
+
+  const href =
+    finalizeHash &&
+    getTransactionHref(
+      { txHash: finalizeHash },
+      getChainIdByNetwork(Network.ETHEREUM)
+    )
+
+  return href ? (
+    <a className="scan_link" href={href} target="_blank" rel="noreferrer">
+      {radio}
+    </a>
+  ) : (
+    radio
+  )
 }
