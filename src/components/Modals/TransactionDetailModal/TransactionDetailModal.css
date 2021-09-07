@@ -22,13 +22,6 @@
   margin-bottom: 40px;
 }
 
-.TransactionDetailModal .external-link-icon {
-  position: relative;
-  bottom: .5rem;
-  margin-left: .5rem;
-  color: var(--primary);
-}
-
 .TransactionDetailModal.ui.modal > .header {
   text-align: center;
   border-bottom: 1px solid #ccc;
