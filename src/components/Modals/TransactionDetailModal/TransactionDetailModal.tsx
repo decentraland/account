@@ -110,11 +110,11 @@ const WithdrawalDataComponent = ({ data }: { data: Transaction['data'] }) => {
 
   return (
     <>
-      <Data label={t('transaction_detail_modal.initialize_tx')}>
+      <Data label={'initialize_tx'}>
         <ExplorerLink network={Network.MATIC} txHash={initializeHash} />
       </Data>
       {finalizeHash && (
-        <Data label={t('transaction_detail_modal.finalize_tx')}>
+        <Data label={'finalize_tx'}>
           <ExplorerLink network={Network.ETHEREUM} txHash={finalizeHash} />
         </Data>
       )}
