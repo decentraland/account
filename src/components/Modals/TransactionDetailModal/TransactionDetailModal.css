@@ -1,25 +1,5 @@
-.TransactionDetailModal .data > :first-child {
-  font-size: 13px;
-  line-height: 18px;
-  text-transform: uppercase;
-  color: #736E7D;
-}
-
 .TransactionDetailModal.ui.modal .dcl.close {
   margin-top: -5px;
-}
-
-.TransactionDetailModal .data > :last-child {
-  font-weight: 600;
-  font-size: 21px;
-  line-height: 30px;
-  letter-spacing: 0.315px;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-.TransactionDetailModal .data {
-  margin-bottom: 40px;
 }
 
 .TransactionDetailModal.ui.modal > .header {

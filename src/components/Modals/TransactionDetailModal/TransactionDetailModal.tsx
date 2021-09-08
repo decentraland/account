@@ -3,10 +3,7 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Close } from 'decentraland-ui'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
-import { getTransactionHref } from 'decentraland-dapps/dist/modules/transaction/utils'
-import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
-import { ChainId, Network } from '@dcl/schemas'
-import { useSelector } from 'react-redux'
+import { Network } from '@dcl/schemas'
 import {
   Deposit,
   Purchase,
@@ -16,7 +13,9 @@ import {
   Withdrawal,
 } from '../../../modules/mana/types'
 import { getStatusMessage } from '../../../modules/mana/utils'
-import { getWithdrawals } from '../../../modules/mana/selectors'
+import Data from './Data'
+import ExplorerLink from './ExplorerLink'
+import WithdrawalDataComponent from './WithdrawalDataComponent'
 import './TransactionDetailModal.css'
 
 const TransactionDetailModal: React.FC<ModalProps> = ({
@@ -82,72 +81,6 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
         </Data>
       </Modal.Content>
     </Modal>
-  )
-}
-
-type DataProps = {
-  label: string
-  children: React.ReactNode
-}
-
-const Data = ({ label, children }: DataProps) => {
-  return (
-    <div className="data">
-      <div>{t(`transaction_detail_modal.${label}`)}</div>
-      <div>{children}</div>
-    </div>
-  )
-}
-
-const WithdrawalDataComponent = ({ data }: { data: Transaction['data'] }) => {
-  const withdrawals = useSelector(getWithdrawals)
-
-  const withdrawal = React.useMemo(
-    () => withdrawals.find((w) => w.initializeHash === data.initializeHash),
-    [data, withdrawals]
-  )
-
-  if (!withdrawal) {
-    return null
-  }
-
-  const { initializeHash, finalizeHash } = withdrawal
-
-  return (
-    <>
-      <Data label={'initialize_tx'}>
-        <ExplorerLink network={Network.MATIC} txHash={initializeHash} />
-      </Data>
-      {finalizeHash && (
-        <Data label={'finalize_tx'}>
-          <ExplorerLink network={Network.ETHEREUM} txHash={finalizeHash} />
-        </Data>
-      )}
-    </>
-  )
-}
-
-type ExplorerLinkProps = {
-  network?: Network
-  chainId?: ChainId
-  txHash: string
-}
-
-const ExplorerLink = ({ network, chainId, txHash }: ExplorerLinkProps) => {
-  const resolvedChainId = chainId || (network && getChainIdByNetwork(network))
-
-  if (!resolvedChainId) {
-    throw new Error(
-      'At least one of network or chainId must be provided as props'
-    )
-  }
-
-  const href = getTransactionHref({ txHash }, resolvedChainId)
-
-  return (
-    <a href={href} target="_blank" rel="noreferrer">
-      {txHash}
-    </a>
   )
 }
 

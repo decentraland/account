@@ -1,0 +1,19 @@
+.Data > :first-child {
+  font-size: 13px;
+  line-height: 18px;
+  text-transform: uppercase;
+  color: #736e7d;
+}
+
+.Data > :last-child {
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 30px;
+  letter-spacing: 0.315px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.Data {
+  margin-bottom: 40px;
+}
