@@ -14,6 +14,7 @@ const AccountCardHeader = ({
   onReceive,
   onConvert,
   onPurchase,
+  onImportWithdrawal,
 }: Props) => {
   const handleTransferMana = () => onTransfer(network)
 
@@ -21,6 +22,10 @@ const AccountCardHeader = ({
     if (address) {
       onReceive(network, address)
     }
+  }
+
+  const handleImportWithdrawal = () => {
+    onImportWithdrawal()
   }
 
   const handleAddTokens = () => {
@@ -58,6 +63,12 @@ const AccountCardHeader = ({
                 text={t('account_card_header.receive')}
                 onClick={handleReceiveMana}
               />
+              {network === Network.MATIC && (
+                <Dropdown.Item
+                  text={t('account_card_header.import_withdrawal')}
+                  onClick={handleImportWithdrawal}
+                />
+              )}
             </Dropdown.Menu>
           </Dropdown>
         </div>

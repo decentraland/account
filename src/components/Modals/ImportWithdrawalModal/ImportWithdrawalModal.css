@@ -1,0 +1,55 @@
+.ImportWithdrawalModal.ui.modal {
+  width: 520px;
+}
+
+.ImportWithdrawalModal .title {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 30px;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+
+.ImportWithdrawalModal.ui.modal > .content {
+  text-align: center;
+  padding: 0px 40px;
+}
+
+.ImportWithdrawalModal .description {
+  text-align: justify;
+  margin-bottom: 4rem;
+}
+
+/* Transaction Input Field */
+
+.ImportWithdrawalModal .dcl.field {
+  width: 100%;
+  min-width: 100%;
+  margin-top: 30px;
+  text-align: center;
+  font-size: 20px;
+  line-height: 20px;
+  letter-spacing: 0.4px;
+}
+
+.ImportWithdrawalModal .dcl.field .ui.input.wallet input,
+.ImportWithdrawalModal .ui.form .dcl.field .ui.input.wallet input {
+  text-align: center;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 26px;
+}
+
+/* Button */
+
+.ImportWithdrawalModal button.ui.primary {
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* Field and Button */
+
+.ImportWithdrawalModal .dcl.field .ui.basic.button {
+  padding-bottom: 40px;
+}
