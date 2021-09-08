@@ -19,9 +19,11 @@ import {
   // Props,
 } from './ImportWithdrawalModal.types'
 import ImportWithdrawalModal from './ImportWithdrawalModal'
+import { getWithdrawals } from '../../../modules/mana/selectors'
 
 const mapState = (state: RootState): MapState => ({
   address: getAddress(state)!,
+  withdrawals: getWithdrawals(state),
 })
 
 // const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({

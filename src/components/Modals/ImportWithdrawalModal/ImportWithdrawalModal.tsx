@@ -1,14 +1,16 @@
 import React, { ComponentProps, useState } from 'react'
 import { Close, Button, Field } from 'decentraland-ui'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
-import { Props } from './ImportWithdrawalModal.types'
 import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
-import './ImportWithdrawalModal.css'
 import { getTransactionOrigin } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
 import { Network } from '@dcl/schemas'
+import { Props } from './ImportWithdrawalModal.types'
+
+import './ImportWithdrawalModal.css'
 
 const ImportWithdrawalModal = ({
+  withdrawals,
   address,
   name,
   isLoading,
@@ -24,13 +26,17 @@ const ImportWithdrawalModal = ({
 
   const handleTxChange: ComponentProps<typeof Field>['onChange'] = (e) => {
     const { value } = e.target
-    if (/^[0-9a-fA-Fx]{0,42}$/.test(value)) {
-      setTxError(undefined)
-      setTx(value)
+    setTx(value)
+  }
+
+  const validate = () => {
+    if (!tx) {
+      return t('import_withdrawal_modal.errors.required_field')
+    } else if (withdrawals.some((w) => w.initializeHash === tx)) {
+      return t('import_withdrawal_modal.errors.duplicate')
     } else {
-      setTxError(t('import_withdrawal_modal.errors.invalid_tx'))
+      return undefined
     }
-    setTx(e.target.value)
   }
 
   const handleImport = () => {}
@@ -69,7 +75,15 @@ const ImportWithdrawalModal = ({
         <Button
           className="button"
           primary
-          onClick={handleImport}
+          onClick={() => {
+            const error = validate()
+            if (error) {
+              setTxError(error)
+            } else {
+              setTxError(undefined)
+              handleImport()
+            }
+          }}
           loading={isLoading}
           disabled={isLoading}
         >

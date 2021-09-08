@@ -46,10 +46,5 @@
 .ImportWithdrawalModal button.ui.primary {
   margin-top: 20px;
   width: 100%;
-}
-
-/* Field and Button */
-
-.ImportWithdrawalModal .dcl.field .ui.basic.button {
-  padding-bottom: 40px;
+  margin-bottom: 20px;
 }
