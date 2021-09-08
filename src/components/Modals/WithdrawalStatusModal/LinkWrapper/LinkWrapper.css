@@ -1,0 +1,12 @@
+/* Overwrites some <a> styles that are affecting the component */
+.LinkWrapper {
+  font-weight: unset;
+  color: unset;
+}
+
+.LinkWrapper > i {
+  position: relative;
+  bottom: 2px;
+  margin-left: 0.5rem;
+  color: var(--primary);
+}

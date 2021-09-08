@@ -23,15 +23,6 @@
   color: #736E7D;
 }
 
-.WithdrawalStatusModal .status_checkpoint_placeholder {
-  font-size: 15px;
-  line-height: 18px;
-  color: #736E7D;
-  margin-left: 34px;
-  margin-top: -5px;
-  margin-bottom: 10px;
-}
-
 .WithdrawalStatusModal .amount {
   font-weight: 600;
   font-size: 21px;
@@ -39,19 +30,6 @@
   letter-spacing: 0.315px;
   color: #16141A;
   padding-bottom: 40px;
-}
-
-/* Overwrites some <a> styles that are affecting the component */
-.WithdrawalStatusModal .scan_link {
-  font-weight: unset;
-  color: unset;
-}
-
-.WithdrawalStatusModal .scan_link > i {
-  position: relative;
-  bottom: 2px;
-  margin-left: .5rem;
-  color: var(--primary);
 }
 
 .WithdrawalStatusModal .status {
@@ -77,10 +55,6 @@
   padding: 0px 0px 0px 34px
 }
 
-.ui.radio.checkbox.yellow_check.checked input.hidden + label::before, .ui.radio.checkbox.yellow_check.checked input.hidden:focus + label::before, .ui.radio.checkbox.yellow_check.checked input.hidden + label::after, .ui.radio.checkbox.yellow_check.checked input.hidden:focus + label::after {
-    background-color: var(--danger);
-    border: 2px solid var(--danger);
-}
 .WithdrawalStatusModal .ui.button.primary {
   margin-top: 48px;
   width: 100%;

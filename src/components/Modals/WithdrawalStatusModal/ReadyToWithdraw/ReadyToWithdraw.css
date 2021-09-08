@@ -1,0 +1,16 @@
+.ReadyToWithdraw .status_checkpoint_placeholder {
+  font-size: 15px;
+  line-height: 18px;
+  color: #736e7d;
+  margin-left: 34px;
+  margin-top: -5px;
+  margin-bottom: 10px;
+}
+
+.ReadyToWithdraw .ui.radio.checkbox.yellow_check.checked input.hidden + label::before,
+.ReadyToWithdraw .ui.radio.checkbox.yellow_check.checked input.hidden:focus + label::before,
+.ReadyToWithdraw .ui.radio.checkbox.yellow_check.checked input.hidden + label::after,
+.ReadyToWithdraw .ui.radio.checkbox.yellow_check.checked input.hidden:focus + label::after {
+  background-color: var(--danger);
+  border: 2px solid var(--danger);
+}
