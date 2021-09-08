@@ -81,6 +81,7 @@ import {
   SET_WITHDRAWAL_STATUS,
   SetWithdrawalStatusAction,
   TRANSFER_MANA_SUCCESS,
+  setWithdrawalFinalizeHash,
 } from './actions'
 import { ERC20 } from '../../contracts/ERC20'
 import { RootChainManager } from '../../contracts/RootChainManager'
@@ -101,8 +102,13 @@ import {
   TransferStatus,
   MaticEnv,
 } from './types'
-import { getWalletDeposits, getWalletWithdrawals } from './selectors'
+import {
+  getWalletDeposits,
+  getWalletWithdrawals,
+  getWithdrawals,
+} from './selectors'
 import { closeModal, openModal } from '../modal/actions'
+import { store } from '../store'
 
 export function* manaSaga() {
   yield takeEvery(SET_DEPOSIT_STATUS, handleSetDepositStatus)
@@ -267,7 +273,8 @@ function* handleWatchWithdrawalStatusRequest(
   const address: string | undefined = yield select(getAddress)
   if (address) {
     const tx: Withdrawal = {
-      hash: txHash,
+      initializeHash: txHash,
+      finalizeHash: null,
       from: address,
       status: WithdrawalStatus.PENDING,
       amount,
@@ -288,11 +295,11 @@ function* handleWatchWithdrawalStatusSuccess(
     getNetworkProvider(networks![Network.MATIC].chainId)
   )
   yield call(() => {
-    return waitForSync(tx.hash, (txHash) =>
+    return waitForSync(tx.initializeHash, (txHash) =>
       isWithdrawalSynced(txHash, maticProvider)
     )
   })
-  yield put(setWithdrawalStatus(tx.hash, WithdrawalStatus.CHECKPOINT))
+  yield put(setWithdrawalStatus(tx.initializeHash, WithdrawalStatus.CHECKPOINT))
 }
 
 function* handleInitiateWithdrawalRequest(
@@ -317,6 +324,7 @@ function* handleInitiateWithdrawalRequest(
 
 function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
   const { withdrawal } = action.payload
+
   try {
     const provider: Provider = yield call(getConnectedProvider)
     if (!provider) {
@@ -346,12 +354,27 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
     const matic = new MaticPOSClient(config)
 
     const tx: { transactionHash: string } = yield call(() =>
-      matic.exitERC20(withdrawal.hash, { from })
+      matic.exitERC20(withdrawal.initializeHash, {
+        from,
+        onTransactionHash: (hash: string) => {
+          store.dispatch(setWithdrawalFinalizeHash(withdrawal, hash))
+        },
+      })
     )
 
-    yield put(finishWithdrawalSuccess(withdrawal, chainId, tx.transactionHash))
+    const storeWithdrawal: Withdrawal = yield getStoreWithdrawalByHash(
+      withdrawal.initializeHash
+    )
+
+    yield put(
+      finishWithdrawalSuccess(storeWithdrawal!, chainId, tx.transactionHash)
+    )
   } catch (error) {
-    yield put(finishWithdrawalFailure(withdrawal, error.message))
+    const storeWithdrawal: Withdrawal = yield getStoreWithdrawalByHash(
+      withdrawal.initializeHash
+    )
+
+    yield put(finishWithdrawalFailure(storeWithdrawal!, error.message))
   }
 }
 
@@ -452,7 +475,10 @@ function* handleConnectWalletSuccess(_action: ConnectWalletSuccessAction) {
   for (const withdrawal of withdrawals) {
     if (withdrawal.status === WithdrawalStatus.PENDING) {
       yield put(
-        watchWithdrawalStatusRequest(withdrawal.amount, withdrawal.hash)
+        watchWithdrawalStatusRequest(
+          withdrawal.amount,
+          withdrawal.initializeHash
+        )
       )
     }
   }
@@ -477,4 +503,9 @@ function* handleFetchTransactionSuccess(action: FetchTransactionSuccessAction) {
   if (transaction.actionType === TRANSFER_MANA_SUCCESS) {
     yield put(fetchWalletRequest())
   }
+}
+
+function* getStoreWithdrawalByHash(hash: string) {
+  const withdrawals: Withdrawal[] = yield select(getWithdrawals)
+  return withdrawals.find((w) => w.initializeHash === hash)
 }

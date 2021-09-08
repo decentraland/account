@@ -221,6 +221,14 @@ export const setWithdrawalStatus = (txHash: string, status: WithdrawalStatus) =>
   action(SET_WITHDRAWAL_STATUS, { txHash, status })
 export type SetWithdrawalStatusAction = ReturnType<typeof setWithdrawalStatus>
 
+// Set Withdrawal Finalize Hash
+export const SET_WITHDRAWAL_FINALIZE_HASH = 'Set Withdrawal Finalize Hash'
+export const setWithdrawalFinalizeHash = (
+  withdrawal: Withdrawal,
+  finalizeHash: string
+) => action(SET_WITHDRAWAL_FINALIZE_HASH, { withdrawal, finalizeHash })
+export type SetWithdrawalFinalizeHashAction = ReturnType<typeof setWithdrawalFinalizeHash>
+
 // Finish Withdrawal
 export const FINISH_WITHDRAWAL_REQUEST = '[Request] Finish Withdrawal'
 export const FINISH_WITHDRAWAL_SUCCESS = '[Success] Finish Withdrawal'

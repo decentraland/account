@@ -129,7 +129,7 @@ export const getTransactionByNetwork = createSelector<
       const { network } = getChainConfiguration(tx.chainId)
       const deposit = deposits.find((deposit) => tx.hash === deposit.hash)
       const withdrawal = withdrawals.find(
-        (withdrawal) => tx.hash === withdrawal.hash
+        (withdrawal) => tx.hash === withdrawal.initializeHash
       )
       if (deposit) {
         const accountTransaction: AccountTransaction<Deposit> = {

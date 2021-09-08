@@ -44,6 +44,7 @@ import {
   INITIATE_WITHDRAWAL_REQUEST,
   INITIATE_WITHDRAWAL_SUCCESS,
   SetWithdrawalStatusAction,
+  SetWithdrawalFinalizeHashAction,
   SET_WITHDRAWAL_STATUS,
   WatchWithdrawalStatusRequestAction,
   WatchWithdrawalStatusFailureAction,
@@ -67,6 +68,7 @@ import {
   FinishWithdrawalSuccessAction,
   SetPurchaseAction,
   SET_PURCHASE,
+  SET_WITHDRAWAL_FINALIZE_HASH,
 } from './actions'
 import { Deposit, Withdrawal, WithdrawalStatus, Purchase } from './types'
 
@@ -121,6 +123,7 @@ type ManaReducerAction =
   | WatchWithdrawalStatusSuccessAction
   | WatchWithdrawalStatusFailureAction
   | SetWithdrawalStatusAction
+  | SetWithdrawalFinalizeHashAction
   | FinishWithdrawalSuccessAction
   | FinishWithdrawalRequestAction
   | FinishWithdrawalFailureAction
@@ -235,7 +238,8 @@ export function manaReducer(
           ...state.data,
           withdrawals: [
             ...state.data.withdrawals.filter(
-              (_withdraw) => _withdraw.hash !== withdrawal.hash
+              (_withdraw) =>
+                _withdraw.initializeHash !== withdrawal.initializeHash
             ), // remove it if it was already added
             withdrawal,
           ],
@@ -272,7 +276,7 @@ export function manaReducer(
     case SET_WITHDRAWAL_STATUS: {
       const { txHash, status } = action.payload
       const withdrawal = state.data.withdrawals.find(
-        (withdrawal) => withdrawal.hash === txHash
+        (withdrawal) => withdrawal.initializeHash === txHash
       )
       return withdrawal
         ? {
@@ -283,7 +287,8 @@ export function manaReducer(
               withdrawals: [
                 // replace old tx with new one
                 ...state.data.withdrawals.filter(
-                  (_withdrawal) => withdrawal.hash !== _withdrawal.hash
+                  (_withdrawal) =>
+                    withdrawal.initializeHash !== _withdrawal.initializeHash
                 ),
                 {
                   ...withdrawal,
@@ -293,6 +298,27 @@ export function manaReducer(
             },
           }
         : state
+    }
+
+    case SET_WITHDRAWAL_FINALIZE_HASH: {
+      const { withdrawal: providedWithdrawal, finalizeHash } = action.payload
+      const { withdrawals } = state.data
+
+      const updatedWithdrawals = withdrawals.map((withdrawal) => {
+        if (withdrawal.initializeHash === providedWithdrawal.initializeHash) {
+          return { ...withdrawal, finalizeHash: finalizeHash }
+        }
+
+        return withdrawal
+      })
+
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          withdrawals: updatedWithdrawals,
+        },
+      }
     }
 
     case FINISH_WITHDRAWAL_SUCCESS: {
@@ -313,7 +339,7 @@ export function manaReducer(
               ...state.data,
               withdrawals: [
                 ...state.data.withdrawals.filter(
-                  (_withdraw) => _withdraw.hash !== withdrawal.hash
+                  (_withdraw) => _withdraw.initializeHash !== withdrawal.initializeHash
                 ),
                 {
                   ...withdrawal,

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Close, Radio } from 'decentraland-ui'
+import { Button, Close } from 'decentraland-ui'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { isPending } from 'decentraland-dapps/dist/modules/transaction/utils'
@@ -9,6 +9,9 @@ import { Network } from '@dcl/schemas'
 import { WithdrawalStatus } from '../../../modules/mana/types'
 import { FINISH_WITHDRAWAL_SUCCESS } from '../../../modules/mana/actions'
 import { Props } from './WithdrawalStatusModal.types'
+import WithdrawInitialized from './WithdrawInitialized'
+import ReadyToWithdraw from './ReadyToWithdraw'
+import CompleteWithdrawal from './CompleteWithdrawal'
 import './WithdrawalStatusModal.css'
 
 export default class WithdrawalStatusModal extends React.PureComponent<Props> {
@@ -22,16 +25,22 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
       isLoading,
       onFinishWithdrawal,
     } = this.props
-    const withdrawal = withdrawals.find(({ hash }) => metadata.txHash === hash)
-    const isTxPending = transactions.some(
+    const withdrawal = withdrawals.find(
+      ({ initializeHash }) => metadata.txHash === initializeHash
+    )
+    const finalizeTransaction = transactions.find(
       (tx) =>
         tx.actionType === FINISH_WITHDRAWAL_SUCCESS &&
-        tx.payload.withdrawal.hash === metadata.hash &&
-        isPending(tx.status)
+        tx.payload.withdrawal.initializeHash === metadata.txHash
     )
+    const isTxPending = Boolean(
+      finalizeTransaction && isPending(finalizeTransaction.status)
+    )
+
     if (!withdrawal) {
       return
     }
+
     const { status, amount } = withdrawal
 
     const handleFinishWithdrawal = () => onFinishWithdrawal(withdrawal)
@@ -54,27 +63,9 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
             <div className="status_placeholder">
               {t('withdrawal_status_modal.status_placeholder')}
             </div>
-            <Radio
-              checked={true}
-              label={t('withdrawal_status_modal.status_initialized')}
-            />
-            <Radio
-              checked={true}
-              className={
-                status === WithdrawalStatus.CHECKPOINT ||
-                  status === WithdrawalStatus.COMPLETE
-                  ? ''
-                  : 'yellow_check'
-              }
-              label={t('withdrawal_status_modal.status_checkpoint')}
-            />
-            <div className="status_checkpoint_placeholder">
-              {t('withdrawal_status_modal.status_checkpoint_placeholder')}
-            </div>
-            <Radio
-              checked={status === WithdrawalStatus.COMPLETE}
-              label={t('withdrawal_status_modal.status_completed')}
-            />
+            <WithdrawInitialized withdrawal={withdrawal} />
+            <ReadyToWithdraw withdrawal={withdrawal} />
+            <CompleteWithdrawal withdrawal={withdrawal} />
           </div>
           {status === WithdrawalStatus.COMPLETE && !isTxPending ? (
             <Button primary onClick={onClose}>

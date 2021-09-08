@@ -6,7 +6,6 @@ import { createStorageMiddleware } from 'decentraland-dapps/dist/modules/storage
 import { storageReducerWrapper } from 'decentraland-dapps/dist/modules/storage/reducer'
 import { createTransactionMiddleware } from 'decentraland-dapps/dist/modules/transaction/middleware'
 import { createAnalyticsMiddleware } from 'decentraland-dapps/dist/modules/analytics/middleware'
-
 import { createRootReducer } from './reducer'
 import { rootSaga } from './sagas'
 import {
@@ -17,7 +16,7 @@ import {
   WATCH_WITHDRAWAL_STATUS_SUCCESS,
 } from './mana/actions'
 import { isDevelopment } from '../lib/environment'
-
+import migrations from './migrations'
 
 export const history = require('history').createBrowserHistory()
 const rootReducer = storageReducerWrapper(createRootReducer(history))
@@ -43,7 +42,7 @@ const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
     WATCH_WITHDRAWAL_STATUS_SUCCESS,
     SET_PURCHASE,
   ],
-  migrations: {},
+  migrations,
 })
 const analyticsMiddleware = createAnalyticsMiddleware(
   process.env.REACT_APP_SEGMENT_API_KEY || ''

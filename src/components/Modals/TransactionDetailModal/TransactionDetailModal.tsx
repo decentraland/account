@@ -3,6 +3,7 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Close } from 'decentraland-ui'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
+import { Network } from '@dcl/schemas'
 import {
   Deposit,
   Purchase,
@@ -12,6 +13,9 @@ import {
   Withdrawal,
 } from '../../../modules/mana/types'
 import { getStatusMessage } from '../../../modules/mana/utils'
+import Data from './Data'
+import ExplorerLink from './ExplorerLink'
+import WithdrawalDataComponent from './WithdrawalDataComponent'
 import './TransactionDetailModal.css'
 
 const TransactionDetailModal: React.FC<ModalProps> = ({
@@ -30,9 +34,15 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
   switch (transaction.type) {
     case TransactionType.DEPOSIT:
       data = transaction.data as Deposit
+      dataComponent = (
+        <Data label={'tx'}>
+          <ExplorerLink network={Network.ETHEREUM} txHash={data.hash} />
+        </Data>
+      )
       break
     case TransactionType.WITHDRAWAL:
       data = transaction.data as Withdrawal
+      dataComponent = <WithdrawalDataComponent data={transaction.data} />
       break
     case TransactionType.PURCHASE:
       data = transaction.data as Purchase
@@ -40,10 +50,12 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
     case TransactionType.TRANSFER:
       data = transaction.data as Transfer
       dataComponent = (
-        <div className="data">
-          <div> {t('transaction_detail_modal.to')} </div>
-          <div> {data.to} </div>
-        </div>
+        <>
+          <Data label={'to'}>{data.to}</Data>
+          <Data label={'tx'}>
+            <ExplorerLink chainId={data.chainId} txHash={data.hash} />
+          </Data>
+        </>
       )
       break
   }
@@ -60,23 +72,13 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
     >
       <Modal.Header>{t('transaction_detail_modal.title')}</Modal.Header>
       <Modal.Content>
-        <div className="data">
-          <div> {t('transaction_detail_modal.operation')} </div>
-          <div> {description} </div>
-        </div>
-        <div className="data">
-          <div> {t('transaction_detail_modal.datetime')} </div>
-          <div> {datetime} </div>
-        </div>
-        <div className="data">
-          <div> {t('transaction_detail_modal.amount')} </div>
-          <div>{amount.toLocaleString()} </div>
-        </div>
+        <Data label={'operation'}>{description}</Data>
+        <Data label={'datetime'}>{datetime}</Data>
+        <Data label={'amount'}>{amount.toLocaleString()}</Data>
         {dataComponent}
-        <div className="data">
-          <div> {t('transaction_detail_modal.status')} </div>
-          <div> {data ? getStatusMessage(type, status, data.status) : ''}</div>
-        </div>
+        <Data label={'status'}>
+          {data ? getStatusMessage(type, status, data.status) : ''}
+        </Data>
       </Modal.Content>
     </Modal>
   )
