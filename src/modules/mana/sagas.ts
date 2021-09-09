@@ -55,6 +55,7 @@ import {
   InitiateWithdrawalRequestAction,
   initiateWithdrawalSuccess,
   INITIATE_WITHDRAWAL_REQUEST,
+  INITIATE_WITHDRAWAL_SUCCESS,
   setWithdrawalStatus,
   WATCH_WITHDRAWAL_STATUS_REQUEST,
   WatchWithdrawalStatusRequestAction,
@@ -86,7 +87,6 @@ import {
   IMPORT_WITHDRAWAL_REQUEST,
   importWithdrawalSuccess,
   importWithdrawalFailure,
-  FINISH_WITHDRAWAL_SUCCESS,
 } from './actions'
 import { ERC20 } from '../../contracts/ERC20'
 import { RootChainManager } from '../../contracts/RootChainManager'
@@ -115,6 +115,7 @@ import {
 import { closeModal, openModal } from '../modal/actions'
 import { store } from '../store'
 import { insertTransaction } from '../transaction/action'
+import { TransactionStatus } from 'decentraland-dapps/dist/modules/transaction/types'
 
 export function* manaSaga() {
   yield takeEvery(SET_DEPOSIT_STATUS, handleSetDepositStatus)
@@ -564,12 +565,17 @@ function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
     yield put(importWithdrawalSuccess(withdrawal))
     yield put(watchWithdrawalStatusSuccess(withdrawal))
     yield put(
-      insertTransaction(
-        txHash,
-        address!,
-        parseInt(nonce),
-        FINISH_WITHDRAWAL_SUCCESS
-      )
+      insertTransaction({
+        chainId: getChainIdByNetwork(Network.MATIC),
+        hash: txHash,
+        from: address!,
+        status: TransactionStatus.CONFIRMED,
+        timestamp: Date.now(),
+        replacedBy: null,
+        actionType: INITIATE_WITHDRAWAL_SUCCESS,
+        events: [],
+        nonce: parseInt(nonce, 10),
+      })
     )
   } catch (error) {
     yield put(
