@@ -3,7 +3,7 @@ import { MaticPOSClient } from '@maticnetwork/maticjs'
 import { Eth } from 'web3x-es/eth'
 import { abiCoder } from 'web3x-es/contract/abi-coder'
 import { Address } from 'web3x-es/address'
-import { toWei } from 'web3x-es/utils'
+import { toBN, toWei } from 'web3x-es/utils'
 import { ChainId, Network } from '@dcl/schemas'
 import {
   ConnectWalletSuccessAction,
@@ -82,6 +82,11 @@ import {
   SetWithdrawalStatusAction,
   TRANSFER_MANA_SUCCESS,
   setWithdrawalFinalizeHash,
+  ImportWithdrawalRequestAction,
+  IMPORT_WITHDRAWAL_REQUEST,
+  importWithdrawalSuccess,
+  importWithdrawalFailure,
+  FINISH_WITHDRAWAL_SUCCESS,
 } from './actions'
 import { ERC20 } from '../../contracts/ERC20'
 import { RootChainManager } from '../../contracts/RootChainManager'
@@ -109,6 +114,7 @@ import {
 } from './selectors'
 import { closeModal, openModal } from '../modal/actions'
 import { store } from '../store'
+import { insertTransaction } from '../transaction/action'
 
 export function* manaSaga() {
   yield takeEvery(SET_DEPOSIT_STATUS, handleSetDepositStatus)
@@ -132,6 +138,7 @@ export function* manaSaga() {
   yield takeEvery(TRANSFER_MANA_REQUEST, handleSendManaRequest)
   yield takeEvery(FETCH_MANA_PRICE_REQUEST, handleFetchManaPriceRequest)
   yield takeEvery(CONNECT_WALLET_SUCCESS, handleConnectWalletSuccess)
+  yield takeEvery(IMPORT_WITHDRAWAL_REQUEST, handleImportWithdrawalRequest)
 }
 
 function* handleDepositManaRequest(action: DepositManaRequestAction) {
@@ -326,32 +333,13 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
   const { withdrawal } = action.payload
 
   try {
-    const provider: Provider = yield call(getConnectedProvider)
-    if (!provider) {
-      throw new Error(`Could not connect to provider`)
-    }
-
     const from: string | undefined = yield select(getAddress)
     if (!from) {
       throw new Error(`Could not get address`)
     }
 
     const chainId: ChainId = yield select(getChainId)
-    const parentConfig = getChainConfiguration(chainId)
-    const maticConfig = getChainConfiguration(
-      parentConfig.networkMapping[Network.MATIC]
-    )
-
-    const config = {
-      network: MATIC_ENV,
-      version: MATIC_ENV === MaticEnv.MAINNET ? 'v1' : 'mumbai',
-      parentProvider: provider,
-      maticProvider: maticConfig.rpcURL,
-      parentDefaultOptions: { from },
-      maticDefaultOptions: { from },
-    }
-
-    const matic = new MaticPOSClient(config)
+    const matic: MaticPOSClient = yield getMaticPOSClient()
 
     const tx: { transactionHash: string } = yield call(() =>
       matic.exitERC20(withdrawal.initializeHash, {
@@ -484,6 +472,80 @@ function* handleConnectWalletSuccess(_action: ConnectWalletSuccessAction) {
   }
 }
 
+function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
+  const {
+    payload: { txHash },
+  } = action
+
+  const formatError = (msg: string) => `${IMPORT_WITHDRAWAL_REQUEST} - ${msg}`
+
+  const networks: ReturnType<typeof getNetworks> = yield select(getNetworks)
+
+  const childProvider: Provider = yield call(() =>
+    getNetworkProvider(networks![Network.MATIC].chainId)
+  )
+
+  try {
+    const transaction:
+      | { input: string; nonce: string }
+      | undefined = yield call(childProvider.send, 'eth_getTransactionByHash', [
+      txHash,
+    ])
+
+    if (!transaction) {
+      yield put(
+        importWithdrawalFailure(txHash, formatError('Transaction not found'))
+      )
+      return
+    }
+    const { input, nonce } = transaction
+
+    const method = '2e1a7d4d'
+    const methodIndex = input.indexOf(method)
+
+    if (methodIndex === -1) {
+      yield put(importWithdrawalFailure(txHash, formatError('Not a withdrawal')))
+      return
+    }
+
+    const matic: MaticPOSClient = yield getMaticPOSClient()
+
+    let isProcessed: boolean
+
+    try {
+      isProcessed = yield call(() => matic.isERC20ExitProcessed(txHash))
+    } catch (e) {
+      isProcessed = false
+    }
+
+    if (isProcessed) {
+      yield put(importWithdrawalFailure(txHash, formatError('Already processed')))
+      return
+    }
+
+    const methodEndIndex = methodIndex + method.length
+    const amountHex = input.slice(methodEndIndex, methodEndIndex + 64)
+    const amountDec = toBN(amountHex).div(toBN(1e18)).toNumber()
+    const address: string | undefined = yield select(getAddress)
+
+    const withdrawal = {
+      amount: amountDec,
+      initializeHash: txHash,
+      status: WithdrawalStatus.PENDING,
+      finalizeHash: null,
+      from: address!,
+      timestamp: Date.now(),
+    }
+
+    yield put(importWithdrawalSuccess(withdrawal))
+    yield put(watchWithdrawalStatusSuccess(withdrawal))
+    yield put(insertTransaction(txHash, address!, parseInt(nonce), FINISH_WITHDRAWAL_SUCCESS))
+  } catch (error) {
+    console.log(error)
+    yield put(importWithdrawalFailure(txHash, formatError(error.message)))
+  }
+}
+
 function* handleSetDepositStatus(action: SetDepositStatusAction) {
   const { status } = action.payload
   if (status === DepositStatus.COMPLETE) {
@@ -508,4 +570,35 @@ function* handleFetchTransactionSuccess(action: FetchTransactionSuccessAction) {
 function* getStoreWithdrawalByHash(hash: string) {
   const withdrawals: Withdrawal[] = yield select(getWithdrawals)
   return withdrawals.find((w) => w.initializeHash === hash)
+}
+
+function* getMaticPOSClient() {
+  const provider: Provider = yield call(getConnectedProvider)
+
+  if (!provider) {
+    throw new Error(`Could not connect to provider`)
+  }
+
+  const from: string | undefined = yield select(getAddress)
+
+  if (!from) {
+    throw new Error(`Could not get address`)
+  }
+
+  const chainId: ChainId = yield select(getChainId)
+  const parentConfig = getChainConfiguration(chainId)
+  const maticConfig = getChainConfiguration(
+    parentConfig.networkMapping[Network.MATIC]
+  )
+
+  const config = {
+    network: MATIC_ENV,
+    version: MATIC_ENV === MaticEnv.MAINNET ? 'v1' : 'mumbai',
+    parentProvider: provider,
+    maticProvider: maticConfig.rpcURL,
+    parentDefaultOptions: { from },
+    maticDefaultOptions: { from },
+  }
+
+  return new MaticPOSClient(config)
 }

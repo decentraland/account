@@ -227,7 +227,31 @@ export const setWithdrawalFinalizeHash = (
   withdrawal: Withdrawal,
   finalizeHash: string
 ) => action(SET_WITHDRAWAL_FINALIZE_HASH, { withdrawal, finalizeHash })
-export type SetWithdrawalFinalizeHashAction = ReturnType<typeof setWithdrawalFinalizeHash>
+export type SetWithdrawalFinalizeHashAction = ReturnType<
+  typeof setWithdrawalFinalizeHash
+>
+
+// Import Withdrawal
+export const IMPORT_WITHDRAWAL_REQUEST = '[Request] Import Withdrawal'
+export const IMPORT_WITHDRAWAL_SUCCESS = '[Success] Import Withdrawal'
+export const IMPORT_WITHDRAWAL_FAILURE = '[Failure] Import Withdrawal'
+
+export const importWithdrawalRequest = (txHash: string) =>
+  action(IMPORT_WITHDRAWAL_REQUEST, { txHash })
+export const importWithdrawalSuccess = (withdrawal: Withdrawal) =>
+  action(IMPORT_WITHDRAWAL_SUCCESS, { withdrawal })
+export const importWithdrawalFailure = (txHash: string, error: string) =>
+  action(IMPORT_WITHDRAWAL_FAILURE, { txHash, error })
+
+export type ImportWithdrawalRequestAction = ReturnType<
+  typeof importWithdrawalRequest
+>
+export type ImportWithdrawalSuccessAction = ReturnType<
+  typeof importWithdrawalSuccess
+>
+export type ImportWithdrawalFailureAction = ReturnType<
+  typeof importWithdrawalFailure
+>
 
 // Finish Withdrawal
 export const FINISH_WITHDRAWAL_REQUEST = '[Request] Finish Withdrawal'
@@ -265,3 +289,7 @@ export const SET_PURCHASE = 'Set Purchase'
 export const setPurchase = (purchase: Purchase) =>
   action(SET_PURCHASE, { purchase })
 export type SetPurchaseAction = ReturnType<typeof setPurchase>
+
+export const CLEAR_MANA_ERROR = 'Clear Mana Error'
+export const clearManaError = () => action(CLEAR_MANA_ERROR)
+export type ClearManaErrorAction = ReturnType<typeof clearManaError>

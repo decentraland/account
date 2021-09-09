@@ -1,4 +1,4 @@
-import React, { ComponentProps, useState } from 'react'
+import React, { ComponentProps, useEffect, useState } from 'react'
 import { Close, Button, Field } from 'decentraland-ui'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
@@ -14,10 +14,18 @@ const ImportWithdrawalModal = ({
   address,
   name,
   isLoading,
+  error,
   onClose,
+  onImport,
 }: Props) => {
   const [tx, setTx] = useState('')
   const [txError, setTxError] = useState<string | undefined>()
+
+  useEffect(() => {
+    if (error) {
+      setTxError(error)
+    }
+  }, [error])
 
   // TODO: Create a util in decentraland-dapps that provides this
   const polygonscanHref = `${getTransactionOrigin(
@@ -26,11 +34,13 @@ const ImportWithdrawalModal = ({
 
   const handleTxChange: ComponentProps<typeof Field>['onChange'] = (e) => {
     const { value } = e.target
-    setTx(value)
+    setTx(value.trim())
   }
 
   const validate = () => {
-    if (!tx) {
+    if (!/^[0-9a-fA-Fx]{0,66}$/.test(tx)) {
+      return t('import_withdrawal_modal.errors.invalid_hash')
+    } else if (!tx) {
       return t('import_withdrawal_modal.errors.required_field')
     } else if (withdrawals.some((w) => w.initializeHash === tx)) {
       return t('import_withdrawal_modal.errors.duplicate')
@@ -39,7 +49,15 @@ const ImportWithdrawalModal = ({
     }
   }
 
-  const handleImport = () => {}
+  const handleImport = () => {
+    const error = validate()
+    if (error) {
+      setTxError(error)
+    } else {
+      setTxError(undefined)
+      onImport(tx)
+    }
+  }
 
   return (
     <Modal
@@ -75,15 +93,7 @@ const ImportWithdrawalModal = ({
         <Button
           className="button"
           primary
-          onClick={() => {
-            const error = validate()
-            if (error) {
-              setTxError(error)
-            } else {
-              setTxError(undefined)
-              handleImport()
-            }
-          }}
+          onClick={handleImport}
           loading={isLoading}
           disabled={isLoading}
         >

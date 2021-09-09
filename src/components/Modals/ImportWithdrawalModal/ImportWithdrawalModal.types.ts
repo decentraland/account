@@ -1,23 +1,26 @@
-// import { Dispatch } from 'redux'
+import { Dispatch } from 'redux'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
+import {
+  ClearManaErrorAction,
+  ImportWithdrawalRequestAction,
+} from '../../../modules/mana/actions'
 import { Withdrawal } from '../../../modules/mana/types'
-// import {
-//   ClearProfileErrorAction,
-//   SetProfileAvatarDescriptionRequestAction,
-// } from 'decentraland-dapps/dist/modules/profile/actions'
 
-export type Props = ModalProps & {
+export type Props = Omit<ModalProps, 'onClose'> & {
   address: string
   isLoading: boolean
   withdrawals: Withdrawal[]
-  onImport: () => void
+  error?: string
+  onClose: () => void
+  onClearError: () => void
+  onImport: (txHash: string) => void
 }
 
-// export type OwnProps = ModalProps
-export type MapState = Pick<Props, 'address' | 'withdrawals'>
-// export type MapDispatchProps = Pick<Props, 'onSubmit'> & {
-//   clearError: () => void
-// }
-// export type MapDispatch = Dispatch<
-//   SetProfileAvatarDescriptionRequestAction | ClearProfileErrorAction
-// >
+export type MapState = Pick<
+  Props,
+  'address' | 'withdrawals' | 'isLoading' | 'error'
+>
+export type MapDispatchProps = Pick<Props, 'onImport' | 'onClearError'>
+export type MapDispatch = Dispatch<
+  ImportWithdrawalRequestAction | ClearManaErrorAction
+>

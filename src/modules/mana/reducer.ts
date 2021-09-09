@@ -69,6 +69,14 @@ import {
   SetPurchaseAction,
   SET_PURCHASE,
   SET_WITHDRAWAL_FINALIZE_HASH,
+  ImportWithdrawalRequestAction,
+  ImportWithdrawalSuccessAction,
+  ImportWithdrawalFailureAction,
+  IMPORT_WITHDRAWAL_REQUEST,
+  IMPORT_WITHDRAWAL_FAILURE,
+  IMPORT_WITHDRAWAL_SUCCESS,
+  ClearManaErrorAction,
+  CLEAR_MANA_ERROR,
 } from './actions'
 import { Deposit, Withdrawal, WithdrawalStatus, Purchase } from './types'
 
@@ -96,7 +104,7 @@ const INITAL_STATE: ManaState = {
   error: null,
 }
 
-type ManaReducerAction =
+export type ManaReducerAction =
   | TransferManaRequestAction
   | TransferManaSuccessAction
   | TransferManaFailureAction
@@ -129,6 +137,10 @@ type ManaReducerAction =
   | FinishWithdrawalFailureAction
   | FetchTransactionSuccessAction
   | SetPurchaseAction
+  | ImportWithdrawalRequestAction
+  | ImportWithdrawalSuccessAction
+  | ImportWithdrawalFailureAction
+  | ClearManaErrorAction
 
 export function manaReducer(
   state = INITAL_STATE,
@@ -143,6 +155,7 @@ export function manaReducer(
     case INITIATE_WITHDRAWAL_REQUEST:
     case WATCH_DEPOSIT_STATUS_REQUEST:
     case WATCH_WITHDRAWAL_STATUS_REQUEST:
+    case IMPORT_WITHDRAWAL_REQUEST:
     case FINISH_WITHDRAWAL_REQUEST: {
       return {
         ...state,
@@ -328,6 +341,20 @@ export function manaReducer(
       }
     }
 
+    case IMPORT_WITHDRAWAL_SUCCESS: {
+      const { withdrawal } = action.payload
+      const { withdrawals } = state.data
+
+      return {
+        ...state,
+        loading: loadingReducer(state.loading, action),
+        data: {
+          ...state.data,
+          withdrawals: withdrawals.concat([withdrawal]),
+        },
+      }
+    }
+
     case FETCH_TRANSACTION_SUCCESS: {
       const { transaction } = action.payload
       switch (transaction.actionType) {
@@ -339,7 +366,8 @@ export function manaReducer(
               ...state.data,
               withdrawals: [
                 ...state.data.withdrawals.filter(
-                  (_withdraw) => _withdraw.initializeHash !== withdrawal.initializeHash
+                  (_withdraw) =>
+                    _withdraw.initializeHash !== withdrawal.initializeHash
                 ),
                 {
                   ...withdrawal,
@@ -362,6 +390,7 @@ export function manaReducer(
     case INITIATE_WITHDRAWAL_FAILURE:
     case WATCH_DEPOSIT_STATUS_FAILURE:
     case WATCH_WITHDRAWAL_STATUS_FAILURE:
+    case IMPORT_WITHDRAWAL_FAILURE:
     case FINISH_WITHDRAWAL_FAILURE: {
       const { error } = action.payload
       return {
@@ -370,6 +399,12 @@ export function manaReducer(
         error,
       }
     }
+
+    case CLEAR_MANA_ERROR:
+      return {
+        ...state,
+        error: null,
+      }
 
     default:
       return state
