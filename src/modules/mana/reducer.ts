@@ -156,14 +156,13 @@ export function manaReducer(
     case WATCH_DEPOSIT_STATUS_REQUEST:
     case WATCH_WITHDRAWAL_STATUS_REQUEST:
     case IMPORT_WITHDRAWAL_REQUEST:
-    case FINISH_WITHDRAWAL_REQUEST: {
-      return {
-        ...state,
-        loading: loadingReducer(state.loading, action),
-      }
-    }
-
-    case TRANSFER_MANA_SUCCESS: {
+    case FINISH_WITHDRAWAL_REQUEST:
+    case TRANSFER_MANA_SUCCESS:
+    case APPROVE_MANA_SUCCESS:
+    case DEPOSIT_MANA_SUCCESS:
+    case IMPORT_WITHDRAWAL_SUCCESS:
+    case INITIATE_WITHDRAWAL_SUCCESS:
+    case FINISH_WITHDRAWAL_SUCCESS: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
@@ -182,13 +181,6 @@ export function manaReducer(
       }
     }
 
-    case APPROVE_MANA_SUCCESS: {
-      return {
-        ...state,
-        loading: loadingReducer(state.loading, action),
-      }
-    }
-
     case GET_APPROVED_MANA_SUCCESS: {
       const { allowance } = action.payload
       return {
@@ -198,14 +190,6 @@ export function manaReducer(
           ...state.data,
           allowance,
         },
-      }
-    }
-
-    case DEPOSIT_MANA_SUCCESS:
-    case INITIATE_WITHDRAWAL_SUCCESS: {
-      return {
-        ...state,
-        loading: loadingReducer(state.loading, action),
       }
     }
 
@@ -330,27 +314,6 @@ export function manaReducer(
         data: {
           ...state.data,
           withdrawals: updatedWithdrawals,
-        },
-      }
-    }
-
-    case FINISH_WITHDRAWAL_SUCCESS: {
-      return {
-        ...state,
-        loading: loadingReducer(state.loading, action),
-      }
-    }
-
-    case IMPORT_WITHDRAWAL_SUCCESS: {
-      const { withdrawal } = action.payload
-      const { withdrawals } = state.data
-
-      return {
-        ...state,
-        loading: loadingReducer(state.loading, action),
-        data: {
-          ...state.data,
-          withdrawals: withdrawals.concat([withdrawal]),
         },
       }
     }

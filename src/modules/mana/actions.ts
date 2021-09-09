@@ -238,10 +238,10 @@ export const IMPORT_WITHDRAWAL_FAILURE = '[Failure] Import Withdrawal'
 
 export const importWithdrawalRequest = (txHash: string) =>
   action(IMPORT_WITHDRAWAL_REQUEST, { txHash })
-export const importWithdrawalSuccess = (withdrawal: Withdrawal) =>
-  action(IMPORT_WITHDRAWAL_SUCCESS, { withdrawal })
-export const importWithdrawalFailure = (txHash: string, error: string) =>
-  action(IMPORT_WITHDRAWAL_FAILURE, { txHash, error })
+export const importWithdrawalSuccess = () =>
+  action(IMPORT_WITHDRAWAL_SUCCESS)
+export const importWithdrawalFailure = (error: string) =>
+  action(IMPORT_WITHDRAWAL_FAILURE, { error })
 
 export type ImportWithdrawalRequestAction = ReturnType<
   typeof importWithdrawalRequest

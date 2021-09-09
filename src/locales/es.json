@@ -89,8 +89,11 @@
     "tx_label": "Hash de la Transacción",
     "import_withdrawal": "Importar",
     "errors":{
-      "required_field": "Campo requerido",
-      "duplicate": "Este retiro ya existe en su listado"
+      "invalid_hash": "Hash invalido",
+      "duplicate": "Este retiro ya existe en su listado",
+      "not_found": "No se encuentra",
+      "not_withdrawal": "No es un Retiro",
+      "already_processed": "Este retiro ya ha sido completado"
     }
   },
   "edit_profile_avatar_description_modal": {

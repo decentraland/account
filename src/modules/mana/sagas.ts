@@ -13,6 +13,7 @@ import {
 import { Provider } from 'decentraland-dapps/dist/modules/wallet/types'
 import { sendTransaction } from 'decentraland-dapps/dist/modules/wallet/utils'
 import {
+  fetchTransactionRequest,
   FetchTransactionSuccessAction,
   FETCH_TRANSACTION_SUCCESS,
 } from 'decentraland-dapps/dist/modules/transaction/actions'
@@ -55,7 +56,6 @@ import {
   InitiateWithdrawalRequestAction,
   initiateWithdrawalSuccess,
   INITIATE_WITHDRAWAL_REQUEST,
-  INITIATE_WITHDRAWAL_SUCCESS,
   setWithdrawalStatus,
   WATCH_WITHDRAWAL_STATUS_REQUEST,
   WatchWithdrawalStatusRequestAction,
@@ -85,8 +85,8 @@ import {
   setWithdrawalFinalizeHash,
   ImportWithdrawalRequestAction,
   IMPORT_WITHDRAWAL_REQUEST,
-  importWithdrawalSuccess,
   importWithdrawalFailure,
+  importWithdrawalSuccess,
 } from './actions'
 import { ERC20 } from '../../contracts/ERC20'
 import { RootChainManager } from '../../contracts/RootChainManager'
@@ -114,8 +114,6 @@ import {
 } from './selectors'
 import { closeModal, openModal } from '../modal/actions'
 import { store } from '../store'
-import { insertTransaction } from '../transaction/action'
-import { TransactionStatus } from 'decentraland-dapps/dist/modules/transaction/types'
 
 export function* manaSaga() {
   yield takeEvery(SET_DEPOSIT_STATUS, handleSetDepositStatus)
@@ -513,21 +511,17 @@ function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
     ])
 
     if (!transaction) {
-      yield put(
-        importWithdrawalFailure(txHash, importWithdrawalErrors.notFound)
-      )
+      yield put(importWithdrawalFailure(importWithdrawalErrors.notFound))
       return
     }
-    const { input, nonce } = transaction
+    const { input } = transaction
 
     // hex for the "withdraw" method found in transaction.input
     const method = '2e1a7d4d'
     const methodIndex = input.indexOf(method)
 
     if (methodIndex === -1) {
-      yield put(
-        importWithdrawalFailure(txHash, importWithdrawalErrors.notWithdrawal)
-      )
+      yield put(importWithdrawalFailure(importWithdrawalErrors.notWithdrawal))
       return
     }
 
@@ -543,7 +537,7 @@ function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
 
     if (isProcessed) {
       yield put(
-        importWithdrawalFailure(txHash, importWithdrawalErrors.alreadyProcessed)
+        importWithdrawalFailure(importWithdrawalErrors.alreadyProcessed)
       )
       return
     }
@@ -562,27 +556,23 @@ function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
       timestamp: Date.now(),
     }
 
-    yield put(importWithdrawalSuccess(withdrawal))
-    yield put(watchWithdrawalStatusSuccess(withdrawal))
+    yield put(importWithdrawalSuccess())
     yield put(
-      insertTransaction({
-        chainId: getChainIdByNetwork(Network.MATIC),
-        hash: txHash,
-        from: address!,
-        status: TransactionStatus.CONFIRMED,
-        timestamp: Date.now(),
-        replacedBy: null,
-        actionType: INITIATE_WITHDRAWAL_SUCCESS,
-        events: [],
-        nonce: parseInt(nonce, 10),
-      })
+      fetchTransactionRequest(
+        address!,
+        txHash,
+        initiateWithdrawalSuccess(
+          amountDec,
+          getChainIdByNetwork(Network.MATIC),
+          txHash
+        )
+      )
     )
+
+    yield put(watchWithdrawalStatusSuccess(withdrawal))
   } catch (error) {
     yield put(
-      importWithdrawalFailure(
-        txHash,
-        importWithdrawalErrors.other(error.message)
-      )
+      importWithdrawalFailure(importWithdrawalErrors.other(error.message))
     )
   }
 }

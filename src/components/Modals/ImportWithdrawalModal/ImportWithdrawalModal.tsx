@@ -17,7 +17,7 @@ const ImportWithdrawalModal = ({
   error,
   onClose,
   onImport,
-  onClearError
+  onClearError,
 }: Props) => {
   const [tx, setTx] = useState('')
   const [txError, setTxError] = useState<string | undefined>()
@@ -26,13 +26,6 @@ const ImportWithdrawalModal = ({
     onClearError()
   }, [onClearError])
 
-  useEffect(() => {
-    if (error) {
-      setTxError(error)
-    }
-  }, [error])
-
-  // TODO: Create a util in decentraland-dapps that provides this
   const polygonscanHref = `${getTransactionOrigin(
     getChainIdByNetwork(Network.MATIC)
   )}/address/${address}#tokentxns`
@@ -43,10 +36,8 @@ const ImportWithdrawalModal = ({
   }
 
   const validate = () => {
-    if (!/^[0-9a-fA-Fx]{0,66}$/.test(tx)) {
+    if (!/^[0-9a-fA-Fx]{66}$/.test(tx)) {
       return t('import_withdrawal_modal.errors.invalid_hash')
-    } else if (!tx) {
-      return t('import_withdrawal_modal.errors.required_field')
     } else if (withdrawals.some((w) => w.initializeHash === tx)) {
       return t('import_withdrawal_modal.errors.duplicate')
     } else {
@@ -55,13 +46,15 @@ const ImportWithdrawalModal = ({
   }
 
   const handleImport = () => {
-    const error = validate()
-    if (error) {
-      setTxError(error)
-    } else {
-      setTxError(undefined)
-      onImport(tx)
+    const validationError = validate()
+
+    if (validationError) {
+      setTxError(validationError)
+      return
     }
+
+    setTxError(undefined)
+    onImport(tx)
   }
 
   return (
@@ -92,8 +85,8 @@ const ImportWithdrawalModal = ({
           value={tx}
           onChange={handleTxChange}
           className="wallet"
-          message={txError}
-          error={!!txError}
+          message={!isLoading ? txError || error : undefined}
+          error={!isLoading && (!!txError || !!error)}
         />
         <Button
           className="button"

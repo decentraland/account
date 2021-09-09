@@ -87,11 +87,11 @@
     "tx_label": "Tx Hash",
     "import_withdrawal": "Import",
     "errors":{
-      "required_field": "Required field",
+      "invalid_hash": "Invalid Hash",
       "duplicate": "This Withdrawal already exists on your list",
       "not_found": "Not found",
       "not_withdrawal": "Not a Withdrawal",
-      "already_processed": "This Withdrawal has already been processed"
+      "already_processed": "This Withdrawal has already been completed"
     }
   },
   "edit_profile_avatar_description_modal": {

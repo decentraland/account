@@ -85,7 +85,7 @@
     "tx_label": "交易哈希",
     "import_withdrawal": "进口",
     "errors":{
-      "required_field": "必需字段",
+      "invalid_hash": "无效哈希",
       "duplicate": "此提款已存在于您的列表中",
       "not_found": "不存在",
       "not_withdrawal": "不是撤退",
