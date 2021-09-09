@@ -17,9 +17,14 @@ const ImportWithdrawalModal = ({
   error,
   onClose,
   onImport,
+  onClearError
 }: Props) => {
   const [tx, setTx] = useState('')
   const [txError, setTxError] = useState<string | undefined>()
+
+  useEffect(() => {
+    onClearError()
+  }, [])
 
   useEffect(() => {
     if (error) {
