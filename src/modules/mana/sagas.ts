@@ -500,6 +500,7 @@ function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
     }
     const { input, nonce } = transaction
 
+    // hex for the "withdraw" method found in transaction.input
     const method = '2e1a7d4d'
     const methodIndex = input.indexOf(method)
 
