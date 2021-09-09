@@ -79,6 +79,17 @@
       "invalid_address": "Billetera inválida"
     }
   },
+  "import_withdrawal_modal": {
+    "title":"Importar Retiro",
+    "description": "Los retiros son un proceso de 2 pasos. Inicializa un retiro con una transacción de Polygon que quema su Polygon MANA, y después de unos minutos puede desbloquear sus tokens MANA en Ethereum. Almacenamos la información de la primera transacción en su dispositivo, y es necesario para finalizar su retiro. Si por alguna razón esta información se pierde (es decir, borra el almacenamiento de su navegador) o si está terminando su retiro de un nuevo dispositivo, puede usar esta pantalla para recuperar su información de retiro ingresando el hash de la transacción de inicialización de retiro (en Polygon). Puedes ver todas tus últimas transacciones en {link}",
+    "polygonscan": "Polygonscan",
+    "tx_label": "Hash de la Transacción",
+    "import_withdrawal": "Importar",
+    "errors":{
+      "required_field": "Campo requerido",
+      "duplicate": "Este retiro ya existe en su listado"
+    }
+  },
   "edit_profile_avatar_description_modal": {
     "title": "Editar descripción del avatar del perfil",
     "subtitle": "Establecer una nueva descripción para el avatar de este perfil",
