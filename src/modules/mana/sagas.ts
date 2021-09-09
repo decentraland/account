@@ -499,14 +499,14 @@ function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
 
   const networks: ReturnType<typeof getNetworks> = yield select(getNetworks)
 
-  const childProvider: Provider = yield call(() =>
+  const provider: Provider = yield call(() =>
     getNetworkProvider(networks![Network.MATIC].chainId)
   )
 
   try {
     const transaction:
       | { input: string; nonce: string }
-      | undefined = yield call(childProvider.send, 'eth_getTransactionByHash', [
+      | undefined = yield call(provider.send, 'eth_getTransactionByHash', [
       txHash,
     ])
 
