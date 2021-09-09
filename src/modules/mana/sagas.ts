@@ -472,12 +472,31 @@ function* handleConnectWalletSuccess(_action: ConnectWalletSuccessAction) {
   }
 }
 
+function formatImportWithdrawalError(msg: string) {
+  return `${IMPORT_WITHDRAWAL_REQUEST} - ${msg}`
+}
+
+export enum ImportWithdrawalErrors {
+  NOT_FOUND = 'notFound',
+  NOT_WITHDRAWAL = 'notWithdrawal',
+  ALREADY_PROCESSED = 'alreadyProcessed',
+}
+
+export const importWithdrawalErrors = {
+  notFound: formatImportWithdrawalError(ImportWithdrawalErrors.NOT_FOUND),
+  notWithdrawal: formatImportWithdrawalError(
+    ImportWithdrawalErrors.NOT_WITHDRAWAL
+  ),
+  alreadyProcessed: formatImportWithdrawalError(
+    ImportWithdrawalErrors.ALREADY_PROCESSED
+  ),
+  other: (msg: string) => formatImportWithdrawalError(msg),
+}
+
 function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
   const {
     payload: { txHash },
   } = action
-
-  const formatError = (msg: string) => `${IMPORT_WITHDRAWAL_REQUEST} - ${msg}`
 
   const networks: ReturnType<typeof getNetworks> = yield select(getNetworks)
 
@@ -494,7 +513,7 @@ function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
 
     if (!transaction) {
       yield put(
-        importWithdrawalFailure(txHash, formatError('Transaction not found'))
+        importWithdrawalFailure(txHash, importWithdrawalErrors.notFound)
       )
       return
     }
@@ -505,7 +524,9 @@ function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
     const methodIndex = input.indexOf(method)
 
     if (methodIndex === -1) {
-      yield put(importWithdrawalFailure(txHash, formatError('Not a withdrawal')))
+      yield put(
+        importWithdrawalFailure(txHash, importWithdrawalErrors.notWithdrawal)
+      )
       return
     }
 
@@ -520,7 +541,9 @@ function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
     }
 
     if (isProcessed) {
-      yield put(importWithdrawalFailure(txHash, formatError('Already processed')))
+      yield put(
+        importWithdrawalFailure(txHash, importWithdrawalErrors.alreadyProcessed)
+      )
       return
     }
 
@@ -540,10 +563,21 @@ function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
 
     yield put(importWithdrawalSuccess(withdrawal))
     yield put(watchWithdrawalStatusSuccess(withdrawal))
-    yield put(insertTransaction(txHash, address!, parseInt(nonce), FINISH_WITHDRAWAL_SUCCESS))
+    yield put(
+      insertTransaction(
+        txHash,
+        address!,
+        parseInt(nonce),
+        FINISH_WITHDRAWAL_SUCCESS
+      )
+    )
   } catch (error) {
-    console.log(error)
-    yield put(importWithdrawalFailure(txHash, formatError(error.message)))
+    yield put(
+      importWithdrawalFailure(
+        txHash,
+        importWithdrawalErrors.other(error.message)
+      )
+    )
   }
 }
 

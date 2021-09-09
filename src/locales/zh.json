@@ -86,7 +86,10 @@
     "import_withdrawal": "进口",
     "errors":{
       "required_field": "必需字段",
-      "duplicate": "此提款已存在于您的列表中"
+      "duplicate": "此提款已存在于您的列表中",
+      "not_found": "不存在",
+      "not_withdrawal": "不是撤退",
+      "already_processed": "此务虚会已处理完毕"
     }
   },
   "edit_profile_avatar_description_modal": {

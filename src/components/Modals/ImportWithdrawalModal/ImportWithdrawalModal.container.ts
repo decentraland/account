@@ -1,4 +1,6 @@
 import { connect } from 'react-redux'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { RootState } from '../../../modules/reducer'
 import {
@@ -14,13 +16,32 @@ import {
   importWithdrawalRequest,
   IMPORT_WITHDRAWAL_REQUEST,
 } from '../../../modules/mana/actions'
-import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
+import { ImportWithdrawalErrors } from '../../../modules/mana/sagas'
 
 const mapState = (state: RootState): MapState => {
   const { error } = state.mana
-  const importError = error?.startsWith(IMPORT_WITHDRAWAL_REQUEST)
+
+  const unformatedImportError = error?.startsWith(IMPORT_WITHDRAWAL_REQUEST)
     ? error.split(' - ')[1]
     : undefined
+
+  let importError: string | undefined
+
+  if (unformatedImportError) {
+    switch (unformatedImportError) {
+      case ImportWithdrawalErrors.NOT_FOUND:
+        importError = t('import_withdrawal_modal.errors.not_found')
+        break
+      case ImportWithdrawalErrors.ALREADY_PROCESSED:
+        importError = t('import_withdrawal_modal.errors.already_processed')
+        break
+      case ImportWithdrawalErrors.NOT_WITHDRAWAL:
+        importError = t('import_withdrawal_modal.errors.not_withdrawal')
+        break
+      default:
+        importError = unformatedImportError
+    }
+  }
 
   return {
     address: getAddress(state)!,
