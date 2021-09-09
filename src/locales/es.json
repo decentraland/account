@@ -76,10 +76,7 @@
     "no_balance": "No tiene suficientes fondos",
     "errors": {
       "invalid_char": "Caracter invalido para una Billetera",
-      "invalid_address": "Billetera inválida",
-      "not_found": "No existe",
-      "not_withdrawal": "No es un Retiro",
-      "already_processed": "Este Retiro ya ha sido procesado"
+      "invalid_address": "Billetera inválida"
     }
   },
   "import_withdrawal_modal": {
