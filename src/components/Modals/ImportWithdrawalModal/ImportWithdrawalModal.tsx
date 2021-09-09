@@ -24,7 +24,7 @@ const ImportWithdrawalModal = ({
 
   useEffect(() => {
     onClearError()
-  }, [])
+  }, [onClearError])
 
   useEffect(() => {
     if (error) {
