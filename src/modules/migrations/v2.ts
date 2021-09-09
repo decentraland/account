@@ -29,7 +29,7 @@ const mapOldWithdrawal = (withdrawal: any): Withdrawal => ({
   status: withdrawal.status,
   timestamp: withdrawal.timestamp,
   finalizeHash: withdrawal.finalizeHash || null,
-  initializeHash: withdrawal.initializeHash || (withdrawal as any).hash,
+  initializeHash: withdrawal.initializeHash || withdrawal.hash,
 })
 
 const mapOldTransactions = (transaction: any) => ({
