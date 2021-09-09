@@ -9,6 +9,7 @@ import { createAnalyticsMiddleware } from 'decentraland-dapps/dist/modules/analy
 import { createRootReducer } from './reducer'
 import { rootSaga } from './sagas'
 import {
+  IMPORT_WITHDRAWAL_SUCCESS,
   SET_DEPOSIT_STATUS,
   SET_PURCHASE,
   SET_WITHDRAWAL_STATUS,
@@ -17,6 +18,7 @@ import {
 } from './mana/actions'
 import { isDevelopment } from '../lib/environment'
 import migrations from './migrations'
+import { INSERT_TRANSACTION } from './transaction/action'
 
 export const history = require('history').createBrowserHistory()
 const rootReducer = storageReducerWrapper(createRootReducer(history))
@@ -41,6 +43,8 @@ const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
     WATCH_DEPOSIT_STATUS_SUCCESS,
     WATCH_WITHDRAWAL_STATUS_SUCCESS,
     SET_PURCHASE,
+    IMPORT_WITHDRAWAL_SUCCESS,
+    INSERT_TRANSACTION
   ],
   migrations,
 })
