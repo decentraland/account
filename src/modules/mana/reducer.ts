@@ -104,7 +104,7 @@ const INITAL_STATE: ManaState = {
   error: null,
 }
 
-export type ManaReducerAction =
+type ManaReducerAction =
   | TransferManaRequestAction
   | TransferManaSuccessAction
   | TransferManaFailureAction
