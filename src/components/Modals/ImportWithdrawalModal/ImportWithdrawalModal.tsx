@@ -2,7 +2,7 @@ import React, { ComponentProps, useEffect, useState } from 'react'
 import { Close, Button, Field } from 'decentraland-ui'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { getTransactionOrigin } from 'decentraland-dapps/dist/modules/transaction/utils'
+import { getTransactionHref } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
 import { Network } from '@dcl/schemas'
 import { Props } from './ImportWithdrawalModal.types'
@@ -26,9 +26,10 @@ const ImportWithdrawalModal = ({
     onClearError()
   }, [onClearError])
 
-  const polygonscanHref = `${getTransactionOrigin(
+  const polygonscanHref = `${getTransactionHref(
+    { address },
     getChainIdByNetwork(Network.MATIC)
-  )}/address/${address}#tokentxns`
+  )}#tokentxns`
 
   const handleTxChange: ComponentProps<typeof Field>['onChange'] = (e) => {
     const { value } = e.target
