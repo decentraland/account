@@ -9,7 +9,6 @@ import { createAnalyticsMiddleware } from 'decentraland-dapps/dist/modules/analy
 import { createRootReducer } from './reducer'
 import { rootSaga } from './sagas'
 import {
-  IMPORT_WITHDRAWAL_SUCCESS,
   SET_DEPOSIT_STATUS,
   SET_PURCHASE,
   SET_WITHDRAWAL_STATUS,
