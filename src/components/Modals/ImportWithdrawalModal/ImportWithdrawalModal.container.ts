@@ -32,11 +32,14 @@ const mapState = (state: RootState): MapState => {
       case ImportWithdrawalErrors.NOT_FOUND:
         importError = t('import_withdrawal_modal.errors.not_found')
         break
-      case ImportWithdrawalErrors.ALREADY_PROCESSED:
-        importError = t('import_withdrawal_modal.errors.already_processed')
-        break
       case ImportWithdrawalErrors.NOT_WITHDRAWAL:
         importError = t('import_withdrawal_modal.errors.not_withdrawal')
+        break
+      case ImportWithdrawalErrors.NOT_OWN_TRANSACTION:
+        importError = t('import_withdrawal_modal.errors.not_own_tx')
+        break
+      case ImportWithdrawalErrors.ALREADY_PROCESSED:
+        importError = t('import_withdrawal_modal.errors.already_processed')
         break
       default:
         importError = unformatedImportError

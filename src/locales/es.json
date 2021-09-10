@@ -90,6 +90,7 @@
       "duplicate": "Este retiro ya existe en su listado",
       "not_found": "No se encuentra",
       "not_withdrawal": "No es un Retiro",
+      "not_own_tx": "Pertenece a otra billetera",
       "already_processed": "Este retiro ya ha sido completado"
     }
   },

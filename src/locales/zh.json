@@ -89,6 +89,7 @@
       "duplicate": "此提款已存在于您的列表中",
       "not_found": "不存在",
       "not_withdrawal": "不是撤退",
+      "not_own_tx": "属于另一个钱包",
       "already_processed": "此务虚会已处理完毕"
     }
   },

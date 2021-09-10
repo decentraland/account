@@ -91,6 +91,7 @@
       "duplicate": "This Withdrawal already exists on your list",
       "not_found": "Not found",
       "not_withdrawal": "Not a Withdrawal",
+      "not_own_tx": "Belongs to another wallet",
       "already_processed": "This Withdrawal has already been completed"
     }
   },

@@ -478,6 +478,7 @@ function formatImportWithdrawalError(msg: string) {
 export enum ImportWithdrawalErrors {
   NOT_FOUND = 'notFound',
   NOT_WITHDRAWAL = 'notWithdrawal',
+  NOT_OWN_TRANSACTION = 'notOwnTransaction',
   ALREADY_PROCESSED = 'alreadyProcessed',
 }
 
@@ -485,6 +486,9 @@ export const importWithdrawalErrors = {
   notFound: formatImportWithdrawalError(ImportWithdrawalErrors.NOT_FOUND),
   notWithdrawal: formatImportWithdrawalError(
     ImportWithdrawalErrors.NOT_WITHDRAWAL
+  ),
+  notOwnTransaction: formatImportWithdrawalError(
+    ImportWithdrawalErrors.NOT_OWN_TRANSACTION
   ),
   alreadyProcessed: formatImportWithdrawalError(
     ImportWithdrawalErrors.ALREADY_PROCESSED
@@ -497,15 +501,15 @@ function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
     payload: { txHash },
   } = action
 
-  const networks: ReturnType<typeof getNetworks> = yield select(getNetworks)
-
-  const provider: Provider = yield call(() =>
-    getNetworkProvider(networks![Network.MATIC].chainId)
-  )
-
   try {
+    const address: string | undefined = yield select(getAddress)
+    const networks: ReturnType<typeof getNetworks> = yield select(getNetworks)
+    const provider: Provider = yield call(() =>
+      getNetworkProvider(networks![Network.MATIC].chainId)
+    )
+
     const transaction:
-      | { input: string; nonce: string }
+      | { input: string; from: string }
       | undefined = yield call(provider.send, 'eth_getTransactionByHash', [
       txHash,
     ])
@@ -514,7 +518,7 @@ function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
       yield put(importWithdrawalFailure(importWithdrawalErrors.notFound))
       return
     }
-    const { input } = transaction
+    const { input, from } = transaction
 
     // hex for the "withdraw" method found in transaction.input
     const method = '2e1a7d4d'
@@ -522,6 +526,11 @@ function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
 
     if (methodIndex === -1) {
       yield put(importWithdrawalFailure(importWithdrawalErrors.notWithdrawal))
+      return
+    }
+
+    if (from !== address && !input.includes(address!.slice(2))) {
+      yield put(importWithdrawalFailure(importWithdrawalErrors.notOwnTransaction))
       return
     }
 
@@ -545,7 +554,6 @@ function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
     const methodEndIndex = methodIndex + method.length
     const amountHex = input.slice(methodEndIndex, methodEndIndex + 64)
     const amountDec = toBN(amountHex).div(toBN(1e18)).toNumber()
-    const address: string | undefined = yield select(getAddress)
 
     const withdrawal = {
       amount: amountDec,
