@@ -40,7 +40,7 @@ const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
     SET_WITHDRAWAL_STATUS,
     WATCH_DEPOSIT_STATUS_SUCCESS,
     WATCH_WITHDRAWAL_STATUS_SUCCESS,
-    SET_PURCHASE
+    SET_PURCHASE,
   ],
   migrations,
 })
