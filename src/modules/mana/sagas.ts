@@ -503,9 +503,8 @@ function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
 
   try {
     const address: string | undefined = yield select(getAddress)
-    const networks: ReturnType<typeof getNetworks> = yield select(getNetworks)
     const provider: Provider = yield call(() =>
-      getNetworkProvider(networks![Network.MATIC].chainId)
+      getNetworkProvider(getChainIdByNetwork(Network.MATIC))
     )
 
     const transaction:
