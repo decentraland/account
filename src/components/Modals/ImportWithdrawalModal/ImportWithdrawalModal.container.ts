@@ -11,8 +11,8 @@ import {
 import ImportWithdrawalModal from './ImportWithdrawalModal'
 import {
   getLoading,
+  getWalletWithdrawals,
   getWithdrawalImportError,
-  getWithdrawals,
 } from '../../../modules/mana/selectors'
 import {
   clearManaError,
@@ -23,7 +23,7 @@ import {
 const mapState = (state: RootState): MapState => {
   return {
     address: getAddress(state)!,
-    withdrawals: getWithdrawals(state),
+    withdrawals: getWalletWithdrawals(state),
     isLoading: isLoadingType(getLoading(state), IMPORT_WITHDRAWAL_REQUEST),
     error: getWithdrawalImportError(state) || undefined,
   }
