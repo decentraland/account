@@ -18,6 +18,7 @@ const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
   onConvert: (network) => dispatch(openModal('ConvertManaModal', { network })),
   onTransfer: (network) =>
     dispatch(openModal('TransferManaModal', { network })),
+  onImportWithdrawal: () => dispatch(openModal('ImportWithdrawalModal')),
   onReceive: (network, address) =>
     dispatch(openModal('ReceiveManaModal', { network, address })),
   onPurchase: (network) => dispatch(openTransak(network)),

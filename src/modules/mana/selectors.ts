@@ -1,15 +1,18 @@
-import { RootState } from '../reducer'
 import { Transaction } from 'decentraland-dapps/dist/modules/transaction/types'
-import {
-  APPROVE_MANA_SUCCESS,
-  TransferManaSuccessAction,
-  TRANSFER_MANA_SUCCESS,
-} from './actions'
 import { createSelector } from 'reselect'
-
 import { getData as getTransactionsData } from 'decentraland-dapps/dist/modules/transaction/selectors'
 import { isPending } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { Network } from '@dcl/schemas'
+import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { RootState } from '../reducer'
+import {
+  APPROVE_MANA_SUCCESS,
+  IMPORT_WITHDRAWAL_REQUEST,
+  TransferManaSuccessAction,
+  TRANSFER_MANA_SUCCESS,
+} from './actions'
 import {
   Transfer,
   Deposit,
@@ -22,9 +25,9 @@ import {
   PurchaseStatus,
   TransactionStatus,
 } from './types'
-import { Network } from '@dcl/schemas'
-import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
 import { mapStatus, mapStatusWithdrawal } from './utils'
+import { ImportWithdrawalErrors } from './sagas'
+
 
 export const getState = (state: RootState) => state.mana
 export const getData = (state: RootState) => getState(state).data
@@ -208,3 +211,42 @@ export const getTransactionByNetwork = createSelector<
     return result
   }
 )
+
+export const getWithdrawalImportError = createSelector<
+  RootState,
+  string | null,
+  string | null
+>(getError, (error) => {
+  if (!error) {
+    return null
+  }
+
+  const unformatedImportError = error.startsWith(IMPORT_WITHDRAWAL_REQUEST)
+    ? error.split(' - ')[1]
+    : null
+
+  if (!unformatedImportError) {
+    return null
+  }
+
+  let importError: string | null = null
+
+  switch (unformatedImportError) {
+    case ImportWithdrawalErrors.NOT_FOUND:
+      importError = t('import_withdrawal_modal.errors.not_found')
+      break
+    case ImportWithdrawalErrors.NOT_WITHDRAWAL:
+      importError = t('import_withdrawal_modal.errors.not_withdrawal')
+      break
+    case ImportWithdrawalErrors.NOT_OWN_TRANSACTION:
+      importError = t('import_withdrawal_modal.errors.not_own_tx')
+      break
+    case ImportWithdrawalErrors.ALREADY_PROCESSED:
+      importError = t('import_withdrawal_modal.errors.already_processed')
+      break
+    default:
+      importError = unformatedImportError
+  }
+
+  return importError
+})

@@ -21,7 +21,8 @@
     "receive": "Receive",
     "send": "Send",
     "tooltip_ethereum": "Your MANA balance on the main Ethereum blockchain. You can swap MANA from this balance to Polygon.",
-    "tooltip_matic": "Your MANA balance on Polygon's sidechain. You can use Polygon MANA for transactions in any scene currently supporting Polygon, with no transaction fees. You can withdraw MANA from Polygon's sidechain at any time."
+    "tooltip_matic": "Your MANA balance on Polygon's sidechain. You can use Polygon MANA for transactions in any scene currently supporting Polygon, with no transaction fees. You can withdraw MANA from Polygon's sidechain at any time.",
+    "import_withdrawal": "Import Withdrawal"
   },
   "account_card": {
     "tx_latests": "Latests Transactions",
@@ -77,6 +78,21 @@
     "errors": {
       "invalid_char": "Invalid character for an Address",
       "invalid_address": "Invalid Address"
+    }
+  },
+  "import_withdrawal_modal": {
+    "title":"Import Withdrawal",
+    "description": "Withdrawals are a 2-step process. You initialize a withdrawal with a Polygon transaction that burns your Polygon MANA, and after some minutes you are able to unlock your MANA tokens on Ethereum. We store the information from the first transaction on your device, and it's necessary to finish your withdrawal. If for some reason this information is lost (ie. you erase your browser's storage) or if you are finishing your withdrawal from a new device, you can use this screen to recover your withdrawal information by entering the hash of the withdrawal initialization transaction (in Polygon). You can see all your latest transaction on {link}",
+    "polygonscan": "Polygonscan",
+    "tx_label": "Tx Hash",
+    "import_withdrawal": "Import",
+    "errors":{
+      "invalid_hash": "Invalid Hash",
+      "duplicate": "This Withdrawal already exists on your list",
+      "not_found": "Not found",
+      "not_withdrawal": "Not a Withdrawal",
+      "not_own_tx": "Belongs to another wallet",
+      "already_processed": "This Withdrawal has already been completed"
     }
   },
   "edit_profile_avatar_description_modal": {

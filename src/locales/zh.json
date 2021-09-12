@@ -78,6 +78,21 @@
       "invalid_address": "无效地址"
     }
   },
+  "import_withdrawal_modal": {
+    "title":"进口提款",
+    "description": "取款是一个 2 步过程。您使用燃烧多边形 MANA 的多边形交易初始取款，几分钟后，您将能够在以太坊上解锁您的 MANA 令牌。我们将来自第一笔交易的信息存储在您的设备上，并且必须完成您的取款。如果由于某种原因丢失此信息（即您删除浏览器的存储），或者如果您正在完成从新设备的取款，您可以使用此屏幕输入取款初始化交易的哈希（Polygon）来恢复您的取款信息。您可以在 {link} 上查看您所有的最新交易",
+    "polygonscan": "Polygonscan",
+    "tx_label": "交易哈希",
+    "import_withdrawal": "进口",
+    "errors":{
+      "invalid_hash": "无效哈希",
+      "duplicate": "此提款已存在于您的列表中",
+      "not_found": "不存在",
+      "not_withdrawal": "不是撤退",
+      "not_own_tx": "属于另一个钱包",
+      "already_processed": "此务虚会已处理完毕"
+    }
+  },
   "edit_profile_avatar_description_modal": {
     "title": "编辑个人资料描述",
     "subtitle": "为这个配置文件设置一个新的描述",
