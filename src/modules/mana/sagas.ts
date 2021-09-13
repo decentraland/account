@@ -167,7 +167,7 @@ function* handleDepositManaRequest(action: DepositManaRequestAction) {
     yield put(depositManaSuccess(amount, chainId, txHash))
     yield put(watchDepositStatusRequest(amount, txHash))
     yield put(closeModal('ConvertManaModal'))
-  } catch (error) {
+  } catch (error: any) {
     yield put(depositManaFailure(amount, error.message))
   }
 }
@@ -233,7 +233,7 @@ function* handleGetApprovedManaRequest(_action: GetApprovedManaRequestAction) {
         .call()
     )
     yield put(getApprovedManaSuccess(allowance))
-  } catch (error) {
+  } catch (error: any) {
     yield put(getApprovedManaFailure(error.message))
   }
 }
@@ -264,7 +264,7 @@ function* handleApproveManaRequest(action: ApproveManaRequestAction) {
 
     const chainId: ChainId = yield select(getChainId)
     yield put(approveManaSuccess(allowance, from.toString(), chainId, txHash))
-  } catch (error) {
+  } catch (error: any) {
     yield put(closeModal('ConvertManaModal'))
     yield put(approveManaFailure(allowance, error))
   }
@@ -321,7 +321,7 @@ function* handleInitiateWithdrawalRequest(
     yield put(watchWithdrawalStatusRequest(amount, txHash))
     yield put(openModal('WithdrawalStatusModal', { txHash }))
     yield put(closeModal('ConvertManaModal'))
-  } catch (error) {
+  } catch (error: any) {
     yield put(initiateWithdrawalFailure(amount, error.message))
   }
 }
@@ -354,7 +354,7 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
     yield put(
       finishWithdrawalSuccess(storeWithdrawal!, chainId, tx.transactionHash)
     )
-  } catch (error) {
+  } catch (error: any) {
     const storeWithdrawal: Withdrawal = yield getStoreWithdrawalByHash(
       withdrawal.initializeHash
     )
@@ -431,7 +431,7 @@ function* handleSendManaRequest(action: TransferManaRequestAction) {
     }
 
     yield put(closeModal('TransferManaModal'))
-  } catch (error) {
+  } catch (error: any) {
     yield put(transferManaFailure(to, amount, network, error.message))
   }
 }
@@ -440,7 +440,7 @@ function* handleFetchManaPriceRequest(_action: FetchManaPriceRequestAction) {
   try {
     const price: number = yield call(() => coingecko.fetchManaPrice())
     yield put(fetchManaPriceSuccess(price))
-  } catch (error) {
+  } catch (error: any) {
     yield put(fetchManaPriceFailure(error))
   }
 }
@@ -578,7 +578,7 @@ export function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAc
     )
 
     yield put(watchWithdrawalStatusSuccess(withdrawal))
-  } catch (error) {
+  } catch (error: any) {
     yield put(
       importWithdrawalFailure(importWithdrawalErrors.other(error.message))
     )
