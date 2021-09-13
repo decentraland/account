@@ -16,5 +16,6 @@ jobs:
       - name: Build
         run: npm run build
       - name: Test
-        run: cp .ci/.env.dev .env
-        run: npm test
+        run: 
+          - cp .ci/.env.dev .env
+          - npm test
