@@ -16,5 +16,5 @@ jobs:
       - name: Build
         run: npm run build
       - name: Test
-        run: npm test -- --coverage
-        if: ${{ always() }}
+        run: cp .ci/.env.dev .env
+        run: npm test
