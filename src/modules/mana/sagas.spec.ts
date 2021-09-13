@@ -10,7 +10,7 @@ import {
 } from './actions'
 import { handleImportWithdrawalRequest, importWithdrawalErrors } from './sagas'
 import { getMaticPOSClient } from './utils'
-import mocks from './sagas.mocks.json'
+import data from './sagas.spec.data.json'
 
 jest.mock('decentraland-dapps/dist/lib/eth', () => ({
   //@ts-ignore
@@ -60,7 +60,7 @@ describe('manaSaga', () => {
         supplementaryAddress: from,
         txHash,
         metaWithdrawalInput: input,
-      } = mocks
+      } = data
 
       return handleImportWithdrawalRequestTest({
         address,
@@ -75,7 +75,7 @@ describe('manaSaga', () => {
         address: address,
         txHash,
         polygonWithdrawalInput: input,
-      } = mocks
+      } = data
 
       return handleImportWithdrawalRequestTest({
         address,
@@ -86,7 +86,7 @@ describe('manaSaga', () => {
     })
 
     it('should dispatch importWithdrawalFailure when tx is not found', () => {
-      const { address: address, txHash } = mocks
+      const { address: address, txHash } = data
 
       return handleImportWithdrawalRequestTest({
         address,
@@ -102,7 +102,7 @@ describe('manaSaga', () => {
         supplementaryAddress: from,
         txHash,
         metaWithdrawalInput: input,
-      } = mocks
+      } = data
 
       const address = 'Another Address'
 
@@ -121,7 +121,7 @@ describe('manaSaga', () => {
         supplementaryAddress: from,
         txHash,
         polygonWithdrawalInput: input,
-      } = mocks
+      } = data
 
       const address = 'Another Address'
 
@@ -141,7 +141,7 @@ describe('manaSaga', () => {
         supplementaryAddress: from,
         txHash,
         sendInput: input,
-      } = mocks
+      } = data
 
       return handleImportWithdrawalRequestTest({
         address,
@@ -163,7 +163,7 @@ describe('manaSaga', () => {
         supplementaryAddress: from,
         txHash,
         metaWithdrawalInput: input,
-      } = mocks
+      } = data
 
       return handleImportWithdrawalRequestTest({
         address,
