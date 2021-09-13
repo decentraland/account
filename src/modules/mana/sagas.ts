@@ -1,9 +1,9 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { MaticPOSClient } from '@maticnetwork/maticjs'
-import { Eth } from 'web3x-es/eth'
-import { abiCoder } from 'web3x-es/contract/abi-coder'
-import { Address } from 'web3x-es/address'
-import { toBN, toWei } from 'web3x-es/utils'
+import { Eth } from 'web3x/eth'
+import { abiCoder } from 'web3x/contract/abi-coder'
+import { Address } from 'web3x/address'
+import { toBN, toWei } from 'web3x/utils'
 import { ChainId, Network } from '@dcl/schemas'
 import {
   ConnectWalletSuccessAction,
