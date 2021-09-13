@@ -22,7 +22,6 @@ import {
   getConnectedProvider,
   getChainIdByNetwork,
 } from 'decentraland-dapps/dist/lib/eth'
-import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
 import {
   getAddress,
   getChainId,
@@ -97,7 +96,7 @@ import {
   waitForSync,
   isWithdrawalSynced,
   isDepositSynced,
-  MATIC_ENV,
+  getMaticPOSClient,
 } from './utils'
 import {
   WithdrawalStatus,
@@ -105,7 +104,6 @@ import {
   Deposit,
   DepositStatus,
   TransferStatus,
-  MaticEnv,
 } from './types'
 import {
   getWalletDeposits,
@@ -529,7 +527,9 @@ function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
     }
 
     if (from !== address && !input.includes(address!.slice(2))) {
-      yield put(importWithdrawalFailure(importWithdrawalErrors.notOwnTransaction))
+      yield put(
+        importWithdrawalFailure(importWithdrawalErrors.notOwnTransaction)
+      )
       return
     }
 
@@ -608,35 +608,4 @@ function* handleFetchTransactionSuccess(action: FetchTransactionSuccessAction) {
 function* getStoreWithdrawalByHash(hash: string) {
   const withdrawals: Withdrawal[] = yield select(getWithdrawals)
   return withdrawals.find((w) => w.initializeHash === hash)
-}
-
-function* getMaticPOSClient() {
-  const provider: Provider = yield call(getConnectedProvider)
-
-  if (!provider) {
-    throw new Error(`Could not connect to provider`)
-  }
-
-  const from: string | undefined = yield select(getAddress)
-
-  if (!from) {
-    throw new Error(`Could not get address`)
-  }
-
-  const chainId: ChainId = yield select(getChainId)
-  const parentConfig = getChainConfiguration(chainId)
-  const maticConfig = getChainConfiguration(
-    parentConfig.networkMapping[Network.MATIC]
-  )
-
-  const config = {
-    network: MATIC_ENV,
-    version: MATIC_ENV === MaticEnv.MAINNET ? 'v1' : 'mumbai',
-    parentProvider: provider,
-    maticProvider: maticConfig.rpcURL,
-    parentDefaultOptions: { from },
-    maticDefaultOptions: { from },
-  }
-
-  return new MaticPOSClient(config)
 }

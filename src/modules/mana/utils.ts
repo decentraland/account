@@ -8,6 +8,12 @@ import {
   isPending,
 } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { call, select } from '@redux-saga/core/effects'
+import { getConnectedProvider } from 'decentraland-dapps/dist/lib/eth'
+import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { ChainId, getChainId, Network } from '@dcl/schemas'
+import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
+import { MaticPOSClient } from '@maticnetwork/maticjs'
 import {
   DepositStatus,
   MaticEnv,
@@ -228,4 +234,35 @@ function getMaticEnv(env?: string) {
   } else {
     return MaticEnv.TESTNET
   }
+}
+
+export function* getMaticPOSClient() {
+  const provider: Provider = yield call(getConnectedProvider)
+
+  if (!provider) {
+    throw new Error(`Could not connect to provider`)
+  }
+
+  const from: string | undefined = yield select(getAddress)
+
+  if (!from) {
+    throw new Error(`Could not get address`)
+  }
+
+  const chainId: ChainId = yield select(getChainId)
+  const parentConfig = getChainConfiguration(chainId)
+  const maticConfig = getChainConfiguration(
+    parentConfig.networkMapping[Network.MATIC]
+  )
+
+  const config = {
+    network: MATIC_ENV,
+    version: MATIC_ENV === MaticEnv.MAINNET ? 'v1' : 'mumbai',
+    parentProvider: provider,
+    maticProvider: maticConfig.rpcURL,
+    parentDefaultOptions: { from },
+    maticDefaultOptions: { from },
+  }
+
+  return new MaticPOSClient(config)
 }
