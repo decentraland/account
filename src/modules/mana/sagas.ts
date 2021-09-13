@@ -494,15 +494,16 @@ export const importWithdrawalErrors = {
   other: (msg: string) => formatImportWithdrawalError(msg),
 }
 
-function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
+export function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
   const {
     payload: { txHash },
   } = action
 
   try {
     const address: string | undefined = yield select(getAddress)
-    const provider: Provider = yield call(() =>
-      getNetworkProvider(getChainIdByNetwork(Network.MATIC))
+    const provider: Provider = yield call(
+      getNetworkProvider,
+      getChainIdByNetwork(Network.MATIC)
     )
 
     const transaction:
