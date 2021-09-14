@@ -14,6 +14,7 @@ import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { ChainId, getChainId, Network } from '@dcl/schemas'
 import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
 import { MaticPOSClient } from '@maticnetwork/maticjs'
+import { getWithdrawals } from './selectors'
 import {
   DepositStatus,
   MaticEnv,
@@ -21,6 +22,7 @@ import {
   TransactionStatus,
   TransactionType,
   TransferStatus,
+  Withdrawal,
   WithdrawalStatus,
 } from './types'
 
@@ -265,4 +267,13 @@ export function* getMaticPOSClient() {
   }
 
   return new MaticPOSClient(config)
+}
+
+export function* getStoreWithdrawalByHash(hash: string) {
+  const withdrawals: Withdrawal[] = yield select(getWithdrawals)
+  return withdrawals.find((w) => w.initializeHash === hash)
+}
+
+export function getTimestamp() {
+  return Date.now()
 }

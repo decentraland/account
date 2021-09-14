@@ -1,17 +1,28 @@
-import { select } from '@redux-saga/core/effects'
-import { getNetworkProvider } from 'decentraland-dapps/dist/lib/eth'
+import { ChainId, Network } from '@dcl/schemas'
+import { call, select } from '@redux-saga/core/effects'
+import {
+  getChainIdByNetwork,
+  getNetworkProvider,
+} from 'decentraland-dapps/dist/lib/eth'
+import { fetchTransactionRequest } from 'decentraland-dapps/dist/modules/transaction/actions'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { expectSaga } from 'redux-saga-test-plan'
-import * as matchers from 'redux-saga-test-plan/matchers'
 import {
   importWithdrawalFailure,
   importWithdrawalRequest,
   importWithdrawalSuccess,
+  initiateWithdrawalSuccess,
+  watchWithdrawalStatusSuccess,
 } from './actions'
 import { handleImportWithdrawalRequest, importWithdrawalErrors } from './sagas'
-import { getMaticPOSClient } from './utils'
+import { WithdrawalStatus } from './types'
+import { getMaticPOSClient, getTimestamp } from './utils'
 
 const data = {
+  network: Network.MATIC,
+  chainId: ChainId.MATIC_MUMBAI,
+  timestamp: Date.now(),
+  amount: 1,
   address: '0x2f89ed84e0413960d9adf8d57dd56c2c2f5076cc',
   supplementaryAddress: '0x2f89ed84e0413960d9adf8d57dd56c2c2f5076cd',
   txHash: '0x9bfefc67ed1568a62082addea070e5812a199d5db593935c307697ed748515f8',
@@ -44,46 +55,45 @@ const data = {
     '0000000000000000000000000000',
 }
 
-jest.mock('decentraland-dapps/dist/lib/eth', () => ({
-  //@ts-ignore
-  ...jest.requireActual('decentraland-dapps/dist/lib/eth'),
-  getChainIdByNetwork: jest.fn().mockReturnValue(80001),
-}))
-
-jest.mock('./utils', () => ({
-  //@ts-ignore
-  ...jest.requireActual('./utils'),
-  getMaticPOSClient: jest.fn().mockResolvedValue({
-    isERC20ExitProcessed: jest.fn().mockResolvedValue(false),
-  }),
-}))
-
-const mockGetMaticPOSClient = getMaticPOSClient as jest.Mock
-
 describe('handleImportWithdrawalRequest', () => {
-  const handleImportWithdrawalRequestTest = ({
+  const handleTest = ({
     txHash,
     address,
-    expectedAction,
+    expectedActions,
     sendResponse,
+    isERC20ExitProcessed,
   }: {
     txHash: string
     address: string
-    expectedAction: any
+    expectedActions: any[]
     sendResponse?: { input: string; from: string }
-  }) =>
-    expectSaga(handleImportWithdrawalRequest, importWithdrawalRequest(txHash))
-      .provide([
-        [select(getAddress), address],
-        [
-          matchers.call.fn(getNetworkProvider),
-          Promise.resolve({
-            send: jest.fn().mockResolvedValue(sendResponse),
-          }),
-        ],
-      ])
-      .put(expectedAction)
-      .silentRun()
+    isERC20ExitProcessed?: boolean
+  }) => {
+    const { chainId, timestamp, network } = data
+
+    const maticPOSClient = {
+      isERC20ExitProcessed: jest.fn().mockResolvedValue(isERC20ExitProcessed),
+    }
+
+    const networkProvider = {
+      send: jest.fn().mockResolvedValue(sendResponse),
+    }
+
+    let test = expectSaga(
+      handleImportWithdrawalRequest,
+      importWithdrawalRequest(txHash)
+    ).provide([
+      [select(getAddress), address],
+      [call(getChainIdByNetwork, network), chainId],
+      [call(getTimestamp), timestamp],
+      [call(getMaticPOSClient), maticPOSClient],
+      [call(getNetworkProvider, chainId), networkProvider],
+    ])
+
+    expectedActions.forEach((ea) => (test = test.put(ea)))
+
+    return test.run()
+  }
 
   describe('given valid data', () => {
     describe('when data is for a meta transaction', () => {
@@ -93,26 +103,66 @@ describe('handleImportWithdrawalRequest', () => {
           supplementaryAddress: from,
           txHash,
           metaWithdrawalInput: input,
+          timestamp,
+          chainId,
+          amount,
         } = data
 
-        return handleImportWithdrawalRequestTest({
+        return handleTest({
           address,
           txHash,
           sendResponse: { input, from },
-          expectedAction: importWithdrawalSuccess(),
+          expectedActions: [
+            importWithdrawalSuccess(),
+            fetchTransactionRequest(
+              address,
+              txHash,
+              initiateWithdrawalSuccess(amount, chainId, txHash)
+            ),
+            watchWithdrawalStatusSuccess({
+              amount,
+              initializeHash: txHash,
+              status: WithdrawalStatus.PENDING,
+              finalizeHash: null,
+              from: address,
+              timestamp,
+            }),
+          ],
         })
       })
     })
 
     describe('when data is for a polygon transaction', () => {
       it('should dispatch desired actions', () => {
-        const { address: address, txHash, polygonWithdrawalInput: input } = data
+        const {
+          address: address,
+          txHash,
+          polygonWithdrawalInput: input,
+          chainId,
+          timestamp,
+          amount,
+        } = data
 
-        return handleImportWithdrawalRequestTest({
+        return handleTest({
           address,
           txHash,
           sendResponse: { input, from: address },
-          expectedAction: importWithdrawalSuccess(),
+          expectedActions: [
+            importWithdrawalSuccess(),
+            fetchTransactionRequest(
+              address,
+              txHash,
+              initiateWithdrawalSuccess(amount, chainId, txHash)
+            ),
+            watchWithdrawalStatusSuccess({
+              amount: amount,
+              initializeHash: txHash,
+              status: WithdrawalStatus.PENDING,
+              finalizeHash: null,
+              from: address,
+              timestamp,
+            }),
+          ],
         })
       })
     })
@@ -120,21 +170,21 @@ describe('handleImportWithdrawalRequest', () => {
 
   describe('given invalid data', () => {
     describe('when transaction is not found', () => {
-      it('should dispatch importWithdrawalFailure', () => {
+      it('should dispatch importWithdrawalFailure with not found message', () => {
         const { address: address, txHash } = data
 
-        return handleImportWithdrawalRequestTest({
+        return handleTest({
           address,
           txHash,
-          expectedAction: importWithdrawalFailure(
-            importWithdrawalErrors.notFound
-          ),
+          expectedActions: [
+            importWithdrawalFailure(importWithdrawalErrors.notFound),
+          ],
         })
       })
     })
 
     describe('when meta transaction belongs to another wallet', () => {
-      it('should dispatch importWithdrawalFailure', () => {
+      it('should dispatch importWithdrawalFailure with not own transaction message', () => {
         const {
           supplementaryAddress: from,
           txHash,
@@ -143,19 +193,19 @@ describe('handleImportWithdrawalRequest', () => {
 
         const address = 'Another Address'
 
-        return handleImportWithdrawalRequestTest({
+        return handleTest({
           address,
           txHash,
           sendResponse: { input, from },
-          expectedAction: importWithdrawalFailure(
-            importWithdrawalErrors.notOwnTransaction
-          ),
+          expectedActions: [
+            importWithdrawalFailure(importWithdrawalErrors.notOwnTransaction),
+          ],
         })
       })
     })
 
     describe('when polygon transaction belongs to another wallet', () => {
-      it('should dispatch importWithdrawalFailure', () => {
+      it('should dispatch importWithdrawalFailure with not own transaction message', () => {
         const {
           supplementaryAddress: from,
           txHash,
@@ -164,19 +214,19 @@ describe('handleImportWithdrawalRequest', () => {
 
         const address = 'Another Address'
 
-        return handleImportWithdrawalRequestTest({
+        return handleTest({
           address,
           txHash,
           sendResponse: { input, from },
-          expectedAction: importWithdrawalFailure(
-            importWithdrawalErrors.notOwnTransaction
-          ),
+          expectedActions: [
+            importWithdrawalFailure(importWithdrawalErrors.notOwnTransaction),
+          ],
         })
       })
     })
 
     describe('when transaction is not a withdrawal', () => {
-      it('should dispatch importWithdrawalFailure', () => {
+      it('should dispatch importWithdrawalFailure with not withdrawal message', () => {
         const {
           address: address,
           supplementaryAddress: from,
@@ -184,23 +234,19 @@ describe('handleImportWithdrawalRequest', () => {
           sendInput: input,
         } = data
 
-        return handleImportWithdrawalRequestTest({
+        return handleTest({
           address,
           txHash,
           sendResponse: { input, from },
-          expectedAction: importWithdrawalFailure(
-            importWithdrawalErrors.notWithdrawal
-          ),
+          expectedActions: [
+            importWithdrawalFailure(importWithdrawalErrors.notWithdrawal),
+          ],
         })
       })
     })
 
     describe('when transaction was already processed', () => {
-      it('should dispatch importWithdrawalFailure', () => {
-        mockGetMaticPOSClient.mockResolvedValue({
-          isERC20ExitProcessed: jest.fn().mockResolvedValue(true),
-        })
-
+      it('should dispatch importWithdrawalFailure with already processed message', () => {
         const {
           address: address,
           supplementaryAddress: from,
@@ -208,13 +254,14 @@ describe('handleImportWithdrawalRequest', () => {
           metaWithdrawalInput: input,
         } = data
 
-        return handleImportWithdrawalRequestTest({
+        return handleTest({
           address,
           txHash,
           sendResponse: { input, from },
-          expectedAction: importWithdrawalFailure(
-            importWithdrawalErrors.alreadyProcessed
-          ),
+          expectedActions: [
+            importWithdrawalFailure(importWithdrawalErrors.alreadyProcessed),
+          ],
+          isERC20ExitProcessed: true,
         })
       })
     })

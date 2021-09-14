@@ -97,6 +97,8 @@ import {
   isWithdrawalSynced,
   isDepositSynced,
   getMaticPOSClient,
+  getTimestamp,
+  getStoreWithdrawalByHash,
 } from './utils'
 import {
   WithdrawalStatus,
@@ -336,7 +338,7 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
     }
 
     const chainId: ChainId = yield select(getChainId)
-    const matic: MaticPOSClient = yield getMaticPOSClient()
+    const matic: MaticPOSClient = yield call(getMaticPOSClient)
 
     const tx: { transactionHash: string } = yield call(() =>
       matic.exitERC20(withdrawal.initializeHash, {
@@ -494,23 +496,23 @@ export const importWithdrawalErrors = {
   other: (msg: string) => formatImportWithdrawalError(msg),
 }
 
-export function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
+export function* handleImportWithdrawalRequest(
+  action: ImportWithdrawalRequestAction
+) {
   const {
     payload: { txHash },
   } = action
 
   try {
     const address: string | undefined = yield select(getAddress)
-    const provider: Provider = yield call(
-      getNetworkProvider,
-      getChainIdByNetwork(Network.MATIC)
-    )
+    const chainId: ChainId = yield call(getChainIdByNetwork, Network.MATIC)
+    const provider: Provider = yield call(getNetworkProvider, chainId)
 
-    const transaction:
-      | { input: string; from: string }
-      | undefined = yield call(provider.send, 'eth_getTransactionByHash', [
-      txHash,
-    ])
+    const transaction: { input: string; from: string } | undefined = yield call(
+      [provider, 'send'],
+      'eth_getTransactionByHash',
+      [txHash]
+    )
 
     if (!transaction) {
       yield put(importWithdrawalFailure(importWithdrawalErrors.notFound))
@@ -534,12 +536,12 @@ export function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAc
       return
     }
 
-    const matic: MaticPOSClient = yield getMaticPOSClient()
+    const matic: MaticPOSClient = yield call(getMaticPOSClient)
 
     let isProcessed: boolean
 
     try {
-      isProcessed = yield call(() => matic.isERC20ExitProcessed(txHash))
+      isProcessed = yield call([matic, 'isERC20ExitProcessed'], txHash)
     } catch (e) {
       isProcessed = false
     }
@@ -554,6 +556,7 @@ export function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAc
     const methodEndIndex = methodIndex + method.length
     const amountHex = input.slice(methodEndIndex, methodEndIndex + 64)
     const amountDec = toBN(amountHex).div(toBN(1e18)).toNumber()
+    const timestamp: number = yield call(getTimestamp)
 
     const withdrawal = {
       amount: amountDec,
@@ -561,7 +564,7 @@ export function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAc
       status: WithdrawalStatus.PENDING,
       finalizeHash: null,
       from: address!,
-      timestamp: Date.now(),
+      timestamp,
     }
 
     yield put(importWithdrawalSuccess())
@@ -569,11 +572,7 @@ export function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAc
       fetchTransactionRequest(
         address!,
         txHash,
-        initiateWithdrawalSuccess(
-          amountDec,
-          getChainIdByNetwork(Network.MATIC),
-          txHash
-        )
+        initiateWithdrawalSuccess(amountDec, chainId, txHash)
       )
     )
 
@@ -604,9 +603,4 @@ function* handleFetchTransactionSuccess(action: FetchTransactionSuccessAction) {
   if (transaction.actionType === TRANSFER_MANA_SUCCESS) {
     yield put(fetchWalletRequest())
   }
-}
-
-function* getStoreWithdrawalByHash(hash: string) {
-  const withdrawals: Withdrawal[] = yield select(getWithdrawals)
-  return withdrawals.find((w) => w.initializeHash === hash)
 }
