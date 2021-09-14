@@ -504,6 +504,12 @@ export function* handleImportWithdrawalRequest(
 
   try {
     const address: string | undefined = yield select(getAddress)
+
+    if (!address) {
+      yield put(importWithdrawalFailure(importWithdrawalErrors.other("Could not get the address")))
+      return 
+    }
+
     const chainId: ChainId = yield call(getChainIdByNetwork, Network.MATIC)
     const provider: Provider = yield call(getNetworkProvider, chainId)
 
@@ -528,7 +534,7 @@ export function* handleImportWithdrawalRequest(
       return
     }
 
-    if (from !== address && !input.includes(address!.slice(2))) {
+    if (from !== address && !input.includes(address.slice(2))) {
       yield put(
         importWithdrawalFailure(importWithdrawalErrors.notOwnTransaction)
       )
@@ -562,14 +568,14 @@ export function* handleImportWithdrawalRequest(
       initializeHash: txHash,
       status: WithdrawalStatus.PENDING,
       finalizeHash: null,
-      from: address!,
+      from: address,
       timestamp,
     }
 
     yield put(importWithdrawalSuccess())
     yield put(
       fetchTransactionRequest(
-        address!,
+        address,
         txHash,
         initiateWithdrawalSuccess(amountDec, chainId, txHash)
       )

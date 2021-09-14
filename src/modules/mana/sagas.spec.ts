@@ -58,14 +58,14 @@ const data = {
 describe('handleImportWithdrawalRequest', () => {
   const handleTest = ({
     txHash,
-    address,
     expectedActions,
+    address,
     sendResponse,
     isERC20ExitProcessed,
   }: {
     txHash: string
-    address: string
     expectedActions: any[]
+    address?: string
     sendResponse?: { input: string; from: string }
     isERC20ExitProcessed?: boolean
   }) => {
@@ -150,6 +150,19 @@ describe('handleImportWithdrawalRequest', () => {
   })
 
   describe('given invalid data', () => {
+    describe('when address is undefined', () => {
+      it('should dispatch importWithdrawalFailure with no address found message', () => {
+        const { txHash } = data
+
+        return handleTest({
+          txHash,
+          expectedActions: [
+            importWithdrawalFailure(importWithdrawalErrors.other("Could not get the address")),
+          ],
+        })
+      })
+    })
+
     describe('when transaction is not found', () => {
       it('should dispatch importWithdrawalFailure with not found message', () => {
         const { address, txHash } = data
