@@ -96,73 +96,53 @@ describe('handleImportWithdrawalRequest', () => {
   }
 
   describe('given valid data', () => {
+    const {
+      address,
+      txHash,
+      timestamp,
+      chainId,
+      amount,
+    } = data
+
+    const expectedActions = [
+      importWithdrawalSuccess(),
+      fetchTransactionRequest(
+        address,
+        txHash,
+        initiateWithdrawalSuccess(amount, chainId, txHash)
+      ),
+      watchWithdrawalStatusSuccess({
+        amount,
+        initializeHash: txHash,
+        status: WithdrawalStatus.PENDING,
+        finalizeHash: null,
+        from: address,
+        timestamp,
+      }),
+    ]
+
     describe('when data is for a meta transaction', () => {
       it('should dispatch desired actions', () => {
-        const {
-          address: address,
-          supplementaryAddress: from,
-          txHash,
-          metaWithdrawalInput: input,
-          timestamp,
-          chainId,
-          amount,
-        } = data
+        const { metaWithdrawalInput: input, supplementaryAddress: from } = data
 
         return handleTest({
           address,
           txHash,
           sendResponse: { input, from },
-          expectedActions: [
-            importWithdrawalSuccess(),
-            fetchTransactionRequest(
-              address,
-              txHash,
-              initiateWithdrawalSuccess(amount, chainId, txHash)
-            ),
-            watchWithdrawalStatusSuccess({
-              amount,
-              initializeHash: txHash,
-              status: WithdrawalStatus.PENDING,
-              finalizeHash: null,
-              from: address,
-              timestamp,
-            }),
-          ],
+          expectedActions,
         })
       })
     })
 
     describe('when data is for a polygon transaction', () => {
       it('should dispatch desired actions', () => {
-        const {
-          address: address,
-          txHash,
-          polygonWithdrawalInput: input,
-          chainId,
-          timestamp,
-          amount,
-        } = data
+        const { polygonWithdrawalInput: input } = data
 
         return handleTest({
           address,
           txHash,
           sendResponse: { input, from: address },
-          expectedActions: [
-            importWithdrawalSuccess(),
-            fetchTransactionRequest(
-              address,
-              txHash,
-              initiateWithdrawalSuccess(amount, chainId, txHash)
-            ),
-            watchWithdrawalStatusSuccess({
-              amount: amount,
-              initializeHash: txHash,
-              status: WithdrawalStatus.PENDING,
-              finalizeHash: null,
-              from: address,
-              timestamp,
-            }),
-          ],
+          expectedActions,
         })
       })
     })
