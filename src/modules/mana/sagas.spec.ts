@@ -96,53 +96,54 @@ describe('handleImportWithdrawalRequest', () => {
   }
 
   describe('given valid data', () => {
-    const {
-      address,
-      txHash,
-      timestamp,
-      chainId,
-      amount,
-    } = data
+    const getExpectedActions = () => {
+      const { address, txHash, timestamp, chainId, amount } = data
 
-    const expectedActions = [
-      importWithdrawalSuccess(),
-      fetchTransactionRequest(
-        address,
-        txHash,
-        initiateWithdrawalSuccess(amount, chainId, txHash)
-      ),
-      watchWithdrawalStatusSuccess({
-        amount,
-        initializeHash: txHash,
-        status: WithdrawalStatus.PENDING,
-        finalizeHash: null,
-        from: address,
-        timestamp,
-      }),
-    ]
+      return [
+        importWithdrawalSuccess(),
+        fetchTransactionRequest(
+          address,
+          txHash,
+          initiateWithdrawalSuccess(amount, chainId, txHash)
+        ),
+        watchWithdrawalStatusSuccess({
+          amount,
+          initializeHash: txHash,
+          status: WithdrawalStatus.PENDING,
+          finalizeHash: null,
+          from: address,
+          timestamp,
+        }),
+      ]
+    }
 
     describe('when data is for a meta transaction', () => {
       it('should dispatch desired actions', () => {
-        const { metaWithdrawalInput: input, supplementaryAddress: from } = data
+        const {
+          address,
+          txHash,
+          metaWithdrawalInput: input,
+          supplementaryAddress: from,
+        } = data
 
         return handleTest({
           address,
           txHash,
           sendResponse: { input, from },
-          expectedActions,
+          expectedActions: getExpectedActions(),
         })
       })
     })
 
     describe('when data is for a polygon transaction', () => {
       it('should dispatch desired actions', () => {
-        const { polygonWithdrawalInput: input } = data
+        const { address, txHash, polygonWithdrawalInput: input } = data
 
         return handleTest({
           address,
           txHash,
           sendResponse: { input, from: address },
-          expectedActions,
+          expectedActions: getExpectedActions(),
         })
       })
     })
@@ -151,7 +152,7 @@ describe('handleImportWithdrawalRequest', () => {
   describe('given invalid data', () => {
     describe('when transaction is not found', () => {
       it('should dispatch importWithdrawalFailure with not found message', () => {
-        const { address: address, txHash } = data
+        const { address, txHash } = data
 
         return handleTest({
           address,
@@ -208,7 +209,7 @@ describe('handleImportWithdrawalRequest', () => {
     describe('when transaction is not a withdrawal', () => {
       it('should dispatch importWithdrawalFailure with not withdrawal message', () => {
         const {
-          address: address,
+          address,
           supplementaryAddress: from,
           txHash,
           sendInput: input,
@@ -228,7 +229,7 @@ describe('handleImportWithdrawalRequest', () => {
     describe('when transaction was already processed', () => {
       it('should dispatch importWithdrawalFailure with already processed message', () => {
         const {
-          address: address,
+          address,
           supplementaryAddress: from,
           txHash,
           metaWithdrawalInput: input,
