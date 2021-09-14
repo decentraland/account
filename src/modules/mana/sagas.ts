@@ -110,7 +110,6 @@ import {
 import {
   getWalletDeposits,
   getWalletWithdrawals,
-  getWithdrawals,
 } from './selectors'
 import { closeModal, openModal } from '../modal/actions'
 import { store } from '../store'
