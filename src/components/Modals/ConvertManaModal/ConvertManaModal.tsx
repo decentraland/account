@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { fromWei } from 'web3x-es/utils'
+import { fromWei } from 'web3x/utils'
 import { Close, Field, Header, Radio, Section } from 'decentraland-ui'
 import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
 import { ChainButton } from 'decentraland-dapps/dist/containers'

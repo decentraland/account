@@ -15,7 +15,5 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
-      # Enable when a test is added
-      # - name: Test
-      #   run: npm test -- --coverage
-      #   if: ${{ always() }}
+      - name: Test
+        run: cp .ci/.env.dev .env & npm test

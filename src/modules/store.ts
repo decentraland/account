@@ -15,7 +15,7 @@ import {
   WATCH_DEPOSIT_STATUS_SUCCESS,
   WATCH_WITHDRAWAL_STATUS_SUCCESS,
 } from './mana/actions'
-import { isDevelopment } from '../lib/environment'
+import { isDevelopment, isTest } from '../lib/environment'
 import migrations from './migrations'
 
 export const history = require('history').createBrowserHistory()
@@ -24,7 +24,8 @@ const rootReducer = storageReducerWrapper(createRootReducer(history))
 const sagasMiddleware = createSagasMiddleware()
 const loggerMiddleware = createLogger({
   collapsed: () => true,
-  predicate: (_: any, action) => isDevelopment || action.type.includes('Failure'),
+  predicate: (_: any, action) =>
+    !isTest && (isDevelopment || action.type.includes('Failure')),
 })
 
 const transactionMiddleware = createTransactionMiddleware()

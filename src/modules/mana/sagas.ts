@@ -1,9 +1,9 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { MaticPOSClient } from '@maticnetwork/maticjs'
-import { Eth } from 'web3x-es/eth'
-import { abiCoder } from 'web3x-es/contract/abi-coder'
-import { Address } from 'web3x-es/address'
-import { toBN, toWei } from 'web3x-es/utils'
+import { Eth } from 'web3x/eth'
+import { abiCoder } from 'web3x/contract/abi-coder'
+import { Address } from 'web3x/address'
+import { toBN, toWei } from 'web3x/utils'
 import { ChainId, Network } from '@dcl/schemas'
 import {
   ConnectWalletSuccessAction,
@@ -22,7 +22,6 @@ import {
   getConnectedProvider,
   getChainIdByNetwork,
 } from 'decentraland-dapps/dist/lib/eth'
-import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
 import {
   getAddress,
   getChainId,
@@ -97,7 +96,8 @@ import {
   waitForSync,
   isWithdrawalSynced,
   isDepositSynced,
-  MATIC_ENV,
+  getMaticPOSClient,
+  getStoreWithdrawalByHash,
 } from './utils'
 import {
   WithdrawalStatus,
@@ -105,13 +105,8 @@ import {
   Deposit,
   DepositStatus,
   TransferStatus,
-  MaticEnv,
 } from './types'
-import {
-  getWalletDeposits,
-  getWalletWithdrawals,
-  getWithdrawals,
-} from './selectors'
+import { getWalletDeposits, getWalletWithdrawals } from './selectors'
 import { closeModal, openModal } from '../modal/actions'
 import { store } from '../store'
 
@@ -169,7 +164,7 @@ function* handleDepositManaRequest(action: DepositManaRequestAction) {
     yield put(depositManaSuccess(amount, chainId, txHash))
     yield put(watchDepositStatusRequest(amount, txHash))
     yield put(closeModal('ConvertManaModal'))
-  } catch (error) {
+  } catch (error: any) {
     yield put(depositManaFailure(amount, error.message))
   }
 }
@@ -235,7 +230,7 @@ function* handleGetApprovedManaRequest(_action: GetApprovedManaRequestAction) {
         .call()
     )
     yield put(getApprovedManaSuccess(allowance))
-  } catch (error) {
+  } catch (error: any) {
     yield put(getApprovedManaFailure(error.message))
   }
 }
@@ -266,7 +261,7 @@ function* handleApproveManaRequest(action: ApproveManaRequestAction) {
 
     const chainId: ChainId = yield select(getChainId)
     yield put(approveManaSuccess(allowance, from.toString(), chainId, txHash))
-  } catch (error) {
+  } catch (error: any) {
     yield put(closeModal('ConvertManaModal'))
     yield put(approveManaFailure(allowance, error))
   }
@@ -323,7 +318,7 @@ function* handleInitiateWithdrawalRequest(
     yield put(watchWithdrawalStatusRequest(amount, txHash))
     yield put(openModal('WithdrawalStatusModal', { txHash }))
     yield put(closeModal('ConvertManaModal'))
-  } catch (error) {
+  } catch (error: any) {
     yield put(initiateWithdrawalFailure(amount, error.message))
   }
 }
@@ -338,7 +333,7 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
     }
 
     const chainId: ChainId = yield select(getChainId)
-    const matic: MaticPOSClient = yield getMaticPOSClient()
+    const matic: MaticPOSClient = yield call(getMaticPOSClient)
 
     const tx: { transactionHash: string } = yield call(() =>
       matic.exitERC20(withdrawal.initializeHash, {
@@ -356,7 +351,7 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
     yield put(
       finishWithdrawalSuccess(storeWithdrawal!, chainId, tx.transactionHash)
     )
-  } catch (error) {
+  } catch (error: any) {
     const storeWithdrawal: Withdrawal = yield getStoreWithdrawalByHash(
       withdrawal.initializeHash
     )
@@ -433,7 +428,7 @@ function* handleSendManaRequest(action: TransferManaRequestAction) {
     }
 
     yield put(closeModal('TransferManaModal'))
-  } catch (error) {
+  } catch (error: any) {
     yield put(transferManaFailure(to, amount, network, error.message))
   }
 }
@@ -442,7 +437,7 @@ function* handleFetchManaPriceRequest(_action: FetchManaPriceRequestAction) {
   try {
     const price: number = yield call(() => coingecko.fetchManaPrice())
     yield put(fetchManaPriceSuccess(price))
-  } catch (error) {
+  } catch (error: any) {
     yield put(fetchManaPriceFailure(error))
   }
 }
@@ -496,27 +491,39 @@ export const importWithdrawalErrors = {
   other: (msg: string) => formatImportWithdrawalError(msg),
 }
 
-function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
+export function* handleImportWithdrawalRequest(
+  action: ImportWithdrawalRequestAction
+) {
   const {
     payload: { txHash },
   } = action
 
   try {
     const address: string | undefined = yield select(getAddress)
-    const provider: Provider = yield call(() =>
-      getNetworkProvider(getChainIdByNetwork(Network.MATIC))
-    )
 
-    const transaction:
-      | { input: string; from: string }
-      | undefined = yield call(provider.send, 'eth_getTransactionByHash', [
-      txHash,
-    ])
+    if (!address) {
+      yield put(
+        importWithdrawalFailure(
+          importWithdrawalErrors.other('Could not get the address')
+        )
+      )
+      return
+    }
+
+    const chainId: ChainId = yield call(getChainIdByNetwork, Network.MATIC)
+    const provider: Provider = yield call(getNetworkProvider, chainId)
+
+    const transaction: { input: string; from: string } | undefined = yield call(
+      [provider, 'send'],
+      'eth_getTransactionByHash',
+      [txHash]
+    )
 
     if (!transaction) {
       yield put(importWithdrawalFailure(importWithdrawalErrors.notFound))
       return
     }
+    
     const { input, from } = transaction
 
     // hex for the "withdraw" method found in transaction.input
@@ -528,17 +535,19 @@ function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
       return
     }
 
-    if (from !== address && !input.includes(address!.slice(2))) {
-      yield put(importWithdrawalFailure(importWithdrawalErrors.notOwnTransaction))
+    if (from !== address && !input.includes(address.slice(2))) {
+      yield put(
+        importWithdrawalFailure(importWithdrawalErrors.notOwnTransaction)
+      )
       return
     }
 
-    const matic: MaticPOSClient = yield getMaticPOSClient()
+    const matic: MaticPOSClient = yield call(getMaticPOSClient)
 
     let isProcessed: boolean
 
     try {
-      isProcessed = yield call(() => matic.isERC20ExitProcessed(txHash))
+      isProcessed = yield call([matic, 'isERC20ExitProcessed'], txHash)
     } catch (e) {
       isProcessed = false
     }
@@ -559,25 +568,21 @@ function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAction) {
       initializeHash: txHash,
       status: WithdrawalStatus.PENDING,
       finalizeHash: null,
-      from: address!,
+      from: address,
       timestamp: Date.now(),
     }
 
     yield put(importWithdrawalSuccess())
     yield put(
       fetchTransactionRequest(
-        address!,
+        address,
         txHash,
-        initiateWithdrawalSuccess(
-          amountDec,
-          getChainIdByNetwork(Network.MATIC),
-          txHash
-        )
+        initiateWithdrawalSuccess(amountDec, chainId, txHash)
       )
     )
 
     yield put(watchWithdrawalStatusSuccess(withdrawal))
-  } catch (error) {
+  } catch (error: any) {
     yield put(
       importWithdrawalFailure(importWithdrawalErrors.other(error.message))
     )
@@ -603,40 +608,4 @@ function* handleFetchTransactionSuccess(action: FetchTransactionSuccessAction) {
   if (transaction.actionType === TRANSFER_MANA_SUCCESS) {
     yield put(fetchWalletRequest())
   }
-}
-
-function* getStoreWithdrawalByHash(hash: string) {
-  const withdrawals: Withdrawal[] = yield select(getWithdrawals)
-  return withdrawals.find((w) => w.initializeHash === hash)
-}
-
-function* getMaticPOSClient() {
-  const provider: Provider = yield call(getConnectedProvider)
-
-  if (!provider) {
-    throw new Error(`Could not connect to provider`)
-  }
-
-  const from: string | undefined = yield select(getAddress)
-
-  if (!from) {
-    throw new Error(`Could not get address`)
-  }
-
-  const chainId: ChainId = yield select(getChainId)
-  const parentConfig = getChainConfiguration(chainId)
-  const maticConfig = getChainConfiguration(
-    parentConfig.networkMapping[Network.MATIC]
-  )
-
-  const config = {
-    network: MATIC_ENV,
-    version: MATIC_ENV === MaticEnv.MAINNET ? 'v1' : 'mumbai',
-    parentProvider: provider,
-    maticProvider: maticConfig.rpcURL,
-    parentDefaultOptions: { from },
-    maticDefaultOptions: { from },
-  }
-
-  return new MaticPOSClient(config)
 }
