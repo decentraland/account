@@ -73,12 +73,14 @@ describe('handleImportWithdrawalRequest', () => {
     address,
     sendResponse,
     isERC20ExitProcessed,
+    shouldRejectGetNetworkProvider,
   }: {
     txHash: string
     expectedActions: any[]
     address?: string
     sendResponse?: { input: string; from: string }
     isERC20ExitProcessed?: boolean
+    shouldRejectGetNetworkProvider?: boolean
   }) => {
     const { chainId, network } = data
 
@@ -86,9 +88,11 @@ describe('handleImportWithdrawalRequest', () => {
       isERC20ExitProcessed: jest.fn().mockResolvedValue(isERC20ExitProcessed),
     }
 
-    const networkProvider = {
-      send: jest.fn().mockResolvedValue(sendResponse),
-    }
+    const networkProvider = shouldRejectGetNetworkProvider
+      ? Promise.reject(new Error('Some Error'))
+      : Promise.resolve({
+          send: jest.fn().mockResolvedValue(sendResponse),
+        })
 
     let test = expectSaga(
       handleImportWithdrawalRequest,
@@ -160,21 +164,6 @@ describe('handleImportWithdrawalRequest', () => {
   })
 
   describe('given invalid data', () => {
-    describe('when address is undefined', () => {
-      it('should dispatch the import withdrawal failure action with no address found message', () => {
-        const { txHash } = data
-
-        return handleTest({
-          txHash,
-          expectedActions: [
-            importWithdrawalFailure(
-              importWithdrawalErrors.other('Could not get the address')
-            ),
-          ],
-        })
-      })
-    })
-
     describe('when transaction is not found', () => {
       it('should dispatch the import withdrawal failure action with not found message', () => {
         const { address, txHash } = data
@@ -269,6 +258,38 @@ describe('handleImportWithdrawalRequest', () => {
           ],
           isERC20ExitProcessed: true,
         })
+      })
+    })
+  })
+
+  describe('when address is undefined', () => {
+    it('should dispatch the import withdrawal failure action with no address found message', () => {
+      const { txHash } = data
+
+      return handleTest({
+        txHash,
+        expectedActions: [
+          importWithdrawalFailure(
+            importWithdrawalErrors.other('Could not get the address')
+          ),
+        ],
+      })
+    })
+  })
+
+  describe('when provider cannot be obtained', () => {
+    it('should dispatch the import withdrawal failure action with no provider obtained message', () => {
+      const { address, txHash } = data
+
+      return handleTest({
+        address,
+        txHash,
+        shouldRejectGetNetworkProvider: true,
+        expectedActions: [
+          importWithdrawalFailure(
+            importWithdrawalErrors.other('Could not get provider')
+          ),
+        ],
       })
     })
   })

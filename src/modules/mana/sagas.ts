@@ -106,10 +106,7 @@ import {
   DepositStatus,
   TransferStatus,
 } from './types'
-import {
-  getWalletDeposits,
-  getWalletWithdrawals,
-} from './selectors'
+import { getWalletDeposits, getWalletWithdrawals } from './selectors'
 import { closeModal, openModal } from '../modal/actions'
 import { store } from '../store'
 
@@ -505,12 +502,28 @@ export function* handleImportWithdrawalRequest(
     const address: string | undefined = yield select(getAddress)
 
     if (!address) {
-      yield put(importWithdrawalFailure(importWithdrawalErrors.other("Could not get the address")))
-      return 
+      yield put(
+        importWithdrawalFailure(
+          importWithdrawalErrors.other('Could not get the address')
+        )
+      )
+      return
     }
 
     const chainId: ChainId = yield call(getChainIdByNetwork, Network.MATIC)
-    const provider: Provider = yield call(getNetworkProvider, chainId)
+
+    let provider: Provider
+
+    try {
+      provider = yield call(getNetworkProvider, chainId)
+    } catch (error) {
+      yield put(
+        importWithdrawalFailure(
+          importWithdrawalErrors.other('Could not get provider')
+        )
+      )
+      return
+    }
 
     const transaction: { input: string; from: string } | undefined = yield call(
       [provider, 'send'],
