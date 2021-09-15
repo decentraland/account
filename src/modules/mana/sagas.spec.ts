@@ -128,7 +128,7 @@ describe('handleImportWithdrawalRequest', () => {
     }
 
     describe('when data is for a meta transaction', () => {
-      it('should dispatch desired actions', () => {
+      it('should dispatch the actions to signal the withdrawal success, to fetch the transaction and to watch for the transaction status', () => {
         const {
           address,
           txHash,
@@ -146,7 +146,7 @@ describe('handleImportWithdrawalRequest', () => {
     })
 
     describe('when data is for a polygon transaction', () => {
-      it('should dispatch desired actions', () => {
+      it('should dispatch the actions to signal the withdrawal success, to fetch the transaction and to watch for the transaction status', () => {
         const { address, txHash, polygonWithdrawalInput: input } = data
 
         return handleTest({
@@ -161,7 +161,7 @@ describe('handleImportWithdrawalRequest', () => {
 
   describe('given invalid data', () => {
     describe('when address is undefined', () => {
-      it('should dispatch importWithdrawalFailure with no address found message', () => {
+      it('should dispatch the import withdrawal failure action with no address found message', () => {
         const { txHash } = data
 
         return handleTest({
@@ -176,7 +176,7 @@ describe('handleImportWithdrawalRequest', () => {
     })
 
     describe('when transaction is not found', () => {
-      it('should dispatch importWithdrawalFailure with not found message', () => {
+      it('should dispatch the import withdrawal failure action with not found message', () => {
         const { address, txHash } = data
 
         return handleTest({
@@ -190,7 +190,7 @@ describe('handleImportWithdrawalRequest', () => {
     })
 
     describe('when meta transaction belongs to another wallet', () => {
-      it('should dispatch importWithdrawalFailure with not own transaction message', () => {
+      it('should dispatch the import withdrawal failure action with not own transaction message', () => {
         const {
           supplementaryAddress: from,
           txHash,
@@ -211,7 +211,7 @@ describe('handleImportWithdrawalRequest', () => {
     })
 
     describe('when polygon transaction belongs to another wallet', () => {
-      it('should dispatch importWithdrawalFailure with not own transaction message', () => {
+      it('should dispatch the import withdrawal failure action with not own transaction message', () => {
         const {
           supplementaryAddress: from,
           txHash,
@@ -232,7 +232,7 @@ describe('handleImportWithdrawalRequest', () => {
     })
 
     describe('when transaction is not a withdrawal', () => {
-      it('should dispatch importWithdrawalFailure with not withdrawal message', () => {
+      it('should dispatch the import withdrawal failure action with not withdrawal message', () => {
         const {
           address,
           supplementaryAddress: from,
@@ -252,7 +252,7 @@ describe('handleImportWithdrawalRequest', () => {
     })
 
     describe('when transaction was already processed', () => {
-      it('should dispatch importWithdrawalFailure with already processed message', () => {
+      it('should dispatch the import withdrawal failure action with already processed message', () => {
         const {
           address,
           supplementaryAddress: from,
