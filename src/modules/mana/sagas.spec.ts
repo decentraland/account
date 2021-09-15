@@ -74,6 +74,7 @@ describe('handleImportWithdrawalRequest', () => {
     sendResponse,
     isERC20ExitProcessed,
     shouldRejectGetNetworkProvider,
+    shouldRejectProviderSend,
   }: {
     txHash: string
     expectedActions: any[]
@@ -81,6 +82,7 @@ describe('handleImportWithdrawalRequest', () => {
     sendResponse?: { input: string; from: string }
     isERC20ExitProcessed?: boolean
     shouldRejectGetNetworkProvider?: boolean
+    shouldRejectProviderSend?: boolean
   }) => {
     const { chainId, network } = data
 
@@ -89,9 +91,11 @@ describe('handleImportWithdrawalRequest', () => {
     }
 
     const networkProvider = shouldRejectGetNetworkProvider
-      ? Promise.reject(new Error('Some Error'))
+      ? Promise.reject(new Error('getNetworkProvider rejected'))
       : Promise.resolve({
-          send: jest.fn().mockResolvedValue(sendResponse),
+          send: shouldRejectProviderSend
+            ? jest.fn().mockRejectedValue(new Error('provider.send rejected'))
+            : jest.fn().mockResolvedValue(sendResponse),
         })
 
     let test = expectSaga(
@@ -287,7 +291,24 @@ describe('handleImportWithdrawalRequest', () => {
         shouldRejectGetNetworkProvider: true,
         expectedActions: [
           importWithdrawalFailure(
-            importWithdrawalErrors.other('Could not get provider')
+            importWithdrawalErrors.other('getNetworkProvider rejected')
+          ),
+        ],
+      })
+    })
+  })
+
+  describe('when provider.send is rejected', () => {
+    it('should dispatch the import withdrawal failure action with send failed message', () => {
+      const { address, txHash } = data
+
+      return handleTest({
+        address,
+        txHash,
+        shouldRejectProviderSend: true,
+        expectedActions: [
+          importWithdrawalFailure(
+            importWithdrawalErrors.other('provider.send rejected')
           ),
         ],
       })

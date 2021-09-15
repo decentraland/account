@@ -511,19 +511,7 @@ export function* handleImportWithdrawalRequest(
     }
 
     const chainId: ChainId = yield call(getChainIdByNetwork, Network.MATIC)
-
-    let provider: Provider
-
-    try {
-      provider = yield call(getNetworkProvider, chainId)
-    } catch (error) {
-      yield put(
-        importWithdrawalFailure(
-          importWithdrawalErrors.other('Could not get provider')
-        )
-      )
-      return
-    }
+    const provider: Provider = yield call(getNetworkProvider, chainId)
 
     const transaction: { input: string; from: string } | undefined = yield call(
       [provider, 'send'],
@@ -535,6 +523,7 @@ export function* handleImportWithdrawalRequest(
       yield put(importWithdrawalFailure(importWithdrawalErrors.notFound))
       return
     }
+    
     const { input, from } = transaction
 
     // hex for the "withdraw" method found in transaction.input
