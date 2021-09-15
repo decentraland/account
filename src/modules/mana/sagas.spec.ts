@@ -16,7 +16,7 @@ import {
 } from './actions'
 import { handleImportWithdrawalRequest, importWithdrawalErrors } from './sagas'
 import { WithdrawalStatus } from './types'
-import { getMaticPOSClient, getTimestamp } from './utils'
+import { getMaticPOSClient } from './utils'
 
 const data = {
   network: Network.MATIC,
@@ -56,6 +56,17 @@ const data = {
 }
 
 describe('handleImportWithdrawalRequest', () => {
+  let dateSpy: jest.SpyInstance<number, []>
+
+  beforeEach(() => {
+    dateSpy = jest.spyOn(Date, 'now')
+    dateSpy.mockImplementation(() => data.timestamp)
+  })
+
+  afterEach(() => {
+    dateSpy.mockRestore()
+  })
+
   const handleTest = ({
     txHash,
     expectedActions,
@@ -69,7 +80,7 @@ describe('handleImportWithdrawalRequest', () => {
     sendResponse?: { input: string; from: string }
     isERC20ExitProcessed?: boolean
   }) => {
-    const { chainId, timestamp, network } = data
+    const { chainId, network } = data
 
     const maticPOSClient = {
       isERC20ExitProcessed: jest.fn().mockResolvedValue(isERC20ExitProcessed),
@@ -85,7 +96,6 @@ describe('handleImportWithdrawalRequest', () => {
     ).provide([
       [select(getAddress), address],
       [call(getChainIdByNetwork, network), chainId],
-      [call(getTimestamp), timestamp],
       [call(getMaticPOSClient), maticPOSClient],
       [call(getNetworkProvider, chainId), networkProvider],
     ])
@@ -157,7 +167,9 @@ describe('handleImportWithdrawalRequest', () => {
         return handleTest({
           txHash,
           expectedActions: [
-            importWithdrawalFailure(importWithdrawalErrors.other("Could not get the address")),
+            importWithdrawalFailure(
+              importWithdrawalErrors.other('Could not get the address')
+            ),
           ],
         })
       })

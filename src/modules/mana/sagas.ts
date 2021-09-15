@@ -97,7 +97,6 @@ import {
   isWithdrawalSynced,
   isDepositSynced,
   getMaticPOSClient,
-  getTimestamp,
   getStoreWithdrawalByHash,
 } from './utils'
 import {
@@ -561,7 +560,6 @@ export function* handleImportWithdrawalRequest(
     const methodEndIndex = methodIndex + method.length
     const amountHex = input.slice(methodEndIndex, methodEndIndex + 64)
     const amountDec = toBN(amountHex).div(toBN(1e18)).toNumber()
-    const timestamp: number = yield call(getTimestamp)
 
     const withdrawal = {
       amount: amountDec,
@@ -569,7 +567,7 @@ export function* handleImportWithdrawalRequest(
       status: WithdrawalStatus.PENDING,
       finalizeHash: null,
       from: address,
-      timestamp,
+      timestamp: Date.now(),
     }
 
     yield put(importWithdrawalSuccess())

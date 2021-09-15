@@ -273,7 +273,3 @@ export function* getStoreWithdrawalByHash(hash: string) {
   const withdrawals: Withdrawal[] = yield select(getWithdrawals)
   return withdrawals.find((w) => w.initializeHash === hash)
 }
-
-export function getTimestamp() {
-  return Date.now()
-}
