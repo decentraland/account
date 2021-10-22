@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { fromWei } from 'web3x/utils'
 import { Close, Field, Header, Radio, Section } from 'decentraland-ui'
-import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
-import { ChainButton } from 'decentraland-dapps/dist/containers'
-import ChainCheck from 'decentraland-dapps/dist/containers/ChainCheck'
+import { NetworkButton, NetworkCheck } from 'decentraland-dapps/dist/containers'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { Network } from '@dcl/schemas'
@@ -74,8 +72,6 @@ const ConvertManaModal: React.FC<Props> = ({
     }
   }, [allowance, onManaPrice])
 
-  const chainId = getChainIdByNetwork(network)
-
   const isButtonLoading = isLoading || isWaitingForApproval
   const isDisabledByAmount =
     network === Network.MATIC ? manaMatic < amount : manaEth < amount
@@ -131,8 +127,8 @@ const ConvertManaModal: React.FC<Props> = ({
             <Header sub={true}>
               {t('convert_mana_modal.label_approvement')}
             </Header>
-            <ChainCheck chainId={chainId}>
-              {isEnabled => (
+            <NetworkCheck network={network}>
+              {(isEnabled) => (
                 <Radio
                   toggle
                   checked={isApproved}
@@ -140,23 +136,23 @@ const ConvertManaModal: React.FC<Props> = ({
                   disabled={isApproved || !isEnabled}
                 />
               )}
-            </ChainCheck>
+            </NetworkCheck>
           </Section>
         ) : null}
         <div className="fees-warning">{t('global.fees_warning')}</div>
-        <ChainButton
+        <NetworkButton
           primary
           onClick={handleConvert}
           loading={isButtonLoading}
           disabled={isButtonDisabled}
-          chainId={chainId}
+          network={network}
         >
           {t(
             network === Network.ETHEREUM
               ? 'convert_mana_modal.label_button_ethereum'
               : 'convert_mana_modal.label_button_matic'
           )}
-        </ChainButton>
+        </NetworkButton>
       </Modal.Content>
     </Modal>
   )
