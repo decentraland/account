@@ -10,7 +10,10 @@ import {
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { call, select } from '@redux-saga/core/effects'
 import { getConnectedProvider } from 'decentraland-dapps/dist/lib/eth'
-import { getAddress, getChainId } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import {
+  getAddress,
+  getChainId,
+} from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { ChainId, Network } from '@dcl/schemas'
 import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
 import { MaticPOSClient } from '@maticnetwork/maticjs'
@@ -25,15 +28,17 @@ import {
   Withdrawal,
   WithdrawalStatus,
 } from './types'
+import { gasPriceAPI } from '../../lib/api/gasPrice'
+import { utils } from 'ethers'
 
-export const MANA_CONTRACT_ADDRESS = process.env
-  .REACT_APP_MANA_CONTRACT_ADDRESS!
-export const ERC20_PREDICATE_CONTRACT_ADDRESS = process.env
-  .REACT_APP_ERC20_PREDICATE_CONTRACT_ADDRESS!
-export const ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS = process.env
-  .REACT_APP_ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS!
-export const MATIC_ROOT_CHAIN_SUBGRAPH = process.env
-  .REACT_APP_MATIC_ROOT_CHAIN_SUBGRAPH!
+export const MANA_CONTRACT_ADDRESS =
+  process.env.REACT_APP_MANA_CONTRACT_ADDRESS!
+export const ERC20_PREDICATE_CONTRACT_ADDRESS =
+  process.env.REACT_APP_ERC20_PREDICATE_CONTRACT_ADDRESS!
+export const ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS =
+  process.env.REACT_APP_ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS!
+export const MATIC_ROOT_CHAIN_SUBGRAPH =
+  process.env.REACT_APP_MATIC_ROOT_CHAIN_SUBGRAPH!
 export const MATIC_ENV: MaticEnv = getMaticEnv(process.env.REACT_APP_MATIC_ENV)
 export const TRANSACTIONS_API_URL = process.env.REACT_APP_TRANSACTIONS_API_URL!
 
@@ -272,4 +277,18 @@ export function* getMaticPOSClient() {
 export function* getStoreWithdrawalByHash(hash: string) {
   const withdrawals: Withdrawal[] = yield select(getWithdrawals)
   return withdrawals.find((w) => w.initializeHash === hash)
+}
+
+const EXIT_CONTRACT_GAS_CONSUMPTION = 238325 // gas in wei
+
+export async function getEstimatedExitTransactionCost() {
+  const {
+    result: { fast, ethPrice },
+  } = await gasPriceAPI.fetchGasPrice()
+
+  const gasPriceWei = utils.parseUnits(String(fast.feeCap.toFixed(3)), 'gwei')
+  const estimatedTxGasWei = gasPriceWei.mul(EXIT_CONTRACT_GAS_CONSUMPTION)
+  const estimatedTxGasEther = utils.formatEther(estimatedTxGasWei)
+
+  return +estimatedTxGasEther * ethPrice
 }

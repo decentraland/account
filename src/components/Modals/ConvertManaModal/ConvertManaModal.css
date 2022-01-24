@@ -95,7 +95,7 @@
   line-height: 26px;
 }
 
-.ConvertManaModal button.ui.primary {
+.ConvertManaModal button.ui.primary.start-transaction-button {
   margin-top: 20px;
   width: 100%;
 }

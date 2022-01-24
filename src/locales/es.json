@@ -80,12 +80,12 @@
     }
   },
   "import_withdrawal_modal": {
-    "title":"Importar Retiro",
+    "title": "Importar Retiro",
     "description": "Los retiros son un proceso de 2 pasos. Inicializa un retiro con una transacción de Polygon que quema su Polygon MANA, y después de unos minutos puede desbloquear sus tokens MANA en Ethereum. Almacenamos la información de la primera transacción en su dispositivo, y es necesario para finalizar su retiro. Si por alguna razón esta información se pierde (es decir, borra el almacenamiento de su navegador) o si está terminando su retiro de un nuevo dispositivo, puede usar esta pantalla para recuperar su información de retiro ingresando el hash de la transacción de inicialización de retiro (en Polygon). Puedes ver todas tus últimas transacciones en {link}",
     "polygonscan": "Polygonscan",
     "tx_label": "Hash de la Transacción",
     "import_withdrawal": "Importar",
-    "errors":{
+    "errors": {
       "invalid_hash": "Hash invalido",
       "duplicate": "Este retiro ya existe en su listado",
       "not_found": "No se encuentra",
@@ -112,7 +112,11 @@
     "title_matic": "Convertir a MANA en Ethereum",
     "subtitle_matic": "Retira MANA de Polygon a Ethereum",
     "label_approvement": "MANA Aprobado",
-    "no_balance": "No tiene suficientes fondos"
+    "no_balance": "No tiene suficientes fondos",
+    "withdrawal_cost": "Esta operación consta de dos pasos. El primer paso no tendrá ningún costo. El segundo costará aproximadamente ${cost} de gas en Ethereum",
+    "withdrawal_cost_error": "Hubo un error al intentar calcular el costo de la transacción",
+    "withdrawal_cost_accept": "Continuar",
+    "withdrawal_cost_cancel": "Cancelar"
   },
   "withdrawal_status_modal": {
     "title": "Convertir a Mana",

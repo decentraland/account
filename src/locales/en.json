@@ -81,12 +81,12 @@
     }
   },
   "import_withdrawal_modal": {
-    "title":"Import Withdrawal",
+    "title": "Import Withdrawal",
     "description": "Withdrawals are a 2-step process. You initialize a withdrawal with a Polygon transaction that burns your Polygon MANA, and after some minutes you are able to unlock your MANA tokens on Ethereum. We store the information from the first transaction on your device, and it's necessary to finish your withdrawal. If for some reason this information is lost (ie. you erase your browser's storage) or if you are finishing your withdrawal from a new device, you can use this screen to recover your withdrawal information by entering the hash of the withdrawal initialization transaction (in Polygon). You can see all your latest transaction on {link}",
     "polygonscan": "Polygonscan",
     "tx_label": "Tx Hash",
     "import_withdrawal": "Import",
-    "errors":{
+    "errors": {
       "invalid_hash": "Invalid Hash",
       "duplicate": "This Withdrawal already exists on your list",
       "not_found": "Not found",
@@ -113,7 +113,11 @@
     "title_matic": "Convert to Ethereum MANA",
     "subtitle_matic": "Withdraw MANA from Polygon into Ethereum",
     "label_approvement": "MANA Approved",
-    "no_balance": "You don't have enough balance"
+    "no_balance": "You don't have enough balance",
+    "withdrawal_cost": "This operation consists of two steps. The first step won't have any cost. The second one will cost a approximately ${cost} of gas fees on Ethereum",
+    "withdrawal_cost_error": "There was an error trying to calculate the transaction cost",
+    "withdrawal_cost_accept": "Proceed",
+    "withdrawal_cost_cancel": "Cancel"
   },
   "withdrawal_status_modal": {
     "title": "Convert to Mana",

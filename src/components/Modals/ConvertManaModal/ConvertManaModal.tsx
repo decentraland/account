@@ -1,11 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { fromWei } from 'web3x/utils'
-import { Close, Field, Header, Radio, Section } from 'decentraland-ui'
+import {
+  Button,
+  Close,
+  Field,
+  Header,
+  Loader,
+  Radio,
+  Section,
+} from 'decentraland-ui'
 import { NetworkButton, NetworkCheck } from 'decentraland-dapps/dist/containers'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { Network } from '@dcl/schemas'
 import { Props } from './ConvertManaModal.types'
+import { getEstimatedExitTransactionCost } from '../../../modules/mana/utils'
 import './ConvertManaModal.css'
 
 const MAX_APPROVAL =
@@ -38,12 +47,12 @@ const ConvertManaModal: React.FC<Props> = ({
     }
   }
 
-  const handleApprove = () => {
+  const handleApprove = useCallback(() => {
     onApproveMana(MAX_APPROVAL)
     setIsApproved(!isApproved)
-  }
+  }, [isApproved, onApproveMana])
 
-  const handleConvert = () => {
+  const handleConvert = useCallback(() => {
     switch (network) {
       case Network.ETHEREUM: {
         onDepositMana(amount)
@@ -54,15 +63,15 @@ const ConvertManaModal: React.FC<Props> = ({
         break
       }
     }
-  }
+  }, [amount, network, onDepositMana, onWithdrawMana])
 
-  const handleMax = () => {
+  const handleMax = useCallback(() => {
     if (network === Network.MATIC) {
       setAmount(manaMatic)
     } else {
       setAmount(manaEth)
     }
-  }
+  }, [manaEth, manaMatic, network])
 
   useEffect(() => {
     onManaPrice()
@@ -71,6 +80,26 @@ const ConvertManaModal: React.FC<Props> = ({
       setIsApproved(true)
     }
   }, [allowance, onManaPrice])
+
+  const [hasAcceptedWithdrawalCost, setHasAcceptedWithdrawalCost] =
+    useState(false)
+  const [txEstimatedCost, setTxEstimatedCost] = useState<number | null>()
+
+  useEffect(() => {
+    let cancel = false
+    const calculateExitCost = async () => {
+      try {
+        const cost = await getEstimatedExitTransactionCost()
+        if (!cancel) setTxEstimatedCost(cost)
+      } catch (error) {
+        setTxEstimatedCost(null)
+      }
+    }
+    calculateExitCost()
+    return () => {
+      cancel = true
+    }
+  }, [])
 
   const isButtonLoading = isLoading || isWaitingForApproval
   const isDisabledByAmount =
@@ -81,29 +110,27 @@ const ConvertManaModal: React.FC<Props> = ({
     isDisabledByAmount ||
     amount <= 0
 
-  return (
-    <Modal
-      name={name}
-      className="ConvertManaModal"
-      closeIcon={<Close onClick={onClose} />}
-    >
-      <Modal.Header>
-        <div className="title">
-          {t(
-            network === Network.ETHEREUM
-              ? 'convert_mana_modal.title_ethereum'
-              : 'convert_mana_modal.title_matic'
+  const content = useMemo(() => {
+    if (!hasAcceptedWithdrawalCost) {
+      return (
+        <div className="fees-warning">
+          {txEstimatedCost ? (
+            <T
+              id="convert_mana_modal.withdrawal_cost"
+              values={{
+                cost: <b>{txEstimatedCost.toFixed(2)}</b>,
+              }}
+            />
+          ) : txEstimatedCost === null ? (
+            t('convert_mana_modal.withdrawal_cost_error')
+          ) : (
+            <Loader size="tiny" />
           )}
         </div>
-        <div className="subtitle">
-          {t(
-            network === Network.ETHEREUM
-              ? 'convert_mana_modal.subtitle_ethereum'
-              : 'convert_mana_modal.subtitle_matic'
-          )}
-        </div>
-      </Modal.Header>
-      <Modal.Content>
+      )
+    }
+    return (
+      <>
         <Field
           label={t('convert_mana_modal.amount_label')}
           placeholder="0"
@@ -141,6 +168,7 @@ const ConvertManaModal: React.FC<Props> = ({
         ) : null}
         <div className="fees-warning">{t('global.fees_warning')}</div>
         <NetworkButton
+          className="start-transaction-button"
           primary
           onClick={handleConvert}
           loading={isButtonLoading}
@@ -153,7 +181,56 @@ const ConvertManaModal: React.FC<Props> = ({
               : 'convert_mana_modal.label_button_matic'
           )}
         </NetworkButton>
-      </Modal.Content>
+      </>
+    )
+  }, [
+    amount,
+    handleApprove,
+    handleConvert,
+    handleMax,
+    hasAcceptedWithdrawalCost,
+    isApproved,
+    isButtonDisabled,
+    isButtonLoading,
+    isDisabledByAmount,
+    manaPrice,
+    network,
+    txEstimatedCost,
+  ])
+
+  return (
+    <Modal
+      name={name}
+      className="ConvertManaModal"
+      closeIcon={<Close onClick={onClose} />}
+    >
+      <Modal.Header>
+        <div className="title">
+          {t(
+            network === Network.ETHEREUM
+              ? 'convert_mana_modal.title_ethereum'
+              : 'convert_mana_modal.title_matic'
+          )}
+        </div>
+        <div className="subtitle">
+          {t(
+            network === Network.ETHEREUM
+              ? 'convert_mana_modal.subtitle_ethereum'
+              : 'convert_mana_modal.subtitle_matic'
+          )}
+        </div>
+      </Modal.Header>
+      <Modal.Content>{content}</Modal.Content>
+      {!hasAcceptedWithdrawalCost ? (
+        <Modal.Actions>
+          <Button onClick={onClose}>
+            {t('convert_mana_modal.withdrawal_cost_cancel')}
+          </Button>
+          <Button primary onClick={() => setHasAcceptedWithdrawalCost(true)}>
+            {t('convert_mana_modal.withdrawal_cost_accept')}
+          </Button>
+        </Modal.Actions>
+      ) : null}
     </Modal>
   )
 }
