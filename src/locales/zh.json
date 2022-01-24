@@ -11,6 +11,7 @@
   "account_header": {
     "actions": {
       "change_alias": "更改别名",
+      "get_a_name": "取个名字",
       "edit_avatar": "编辑头像",
       "set_description": "单击此处设置说明..."
     }

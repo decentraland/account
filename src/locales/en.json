@@ -11,6 +11,7 @@
   "account_header": {
     "actions": {
       "change_alias": "Change Alias",
+      "get_a_name": "Get a name",
       "edit_avatar": "Edit Avatar",
       "set_description": "Click here to set a description..."
     }
