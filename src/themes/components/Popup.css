@@ -1,5 +1,5 @@
 .ui.popup,
 .ui.inverted.popup {
-  height: auto;
+  height: auto !important;
   z-index: 3001; /* to be higher than modals/dimmers */
 }

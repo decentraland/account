@@ -20,8 +20,8 @@
     "convert": "Cambiar",
     "receive": "Recibir",
     "send": "Enviar",
-    "tooltip_ethereum": "Este es tu balance de MANA en Ethereum",
-    "tooltip_matic": "Este es tu balance de MANA en Polygon (antes llamado Matic)"
+    "tooltip_ethereum": "Este es tu balance de MANA en Ethereum. Puedes cambiarlo por MANA en Polygon.",
+    "tooltip_matic": "Este es tu balance de MANA en Polygon. Puedes usar el MANA en Polygon sin pagar tarifa de gas. Puedes volver tu MANA de Polygon a Ethereum en cualquier momento."
   },
   "account_card": {
     "tx_latests": "Ultimas Transacciones",
@@ -80,12 +80,12 @@
     }
   },
   "import_withdrawal_modal": {
-    "title":"Importar Retiro",
+    "title": "Importar Retiro",
     "description": "Los retiros son un proceso de 2 pasos. Inicializa un retiro con una transacción de Polygon que quema su Polygon MANA, y después de unos minutos puede desbloquear sus tokens MANA en Ethereum. Almacenamos la información de la primera transacción en su dispositivo, y es necesario para finalizar su retiro. Si por alguna razón esta información se pierde (es decir, borra el almacenamiento de su navegador) o si está terminando su retiro de un nuevo dispositivo, puede usar esta pantalla para recuperar su información de retiro ingresando el hash de la transacción de inicialización de retiro (en Polygon). Puedes ver todas tus últimas transacciones en {link}",
     "polygonscan": "Polygonscan",
     "tx_label": "Hash de la Transacción",
     "import_withdrawal": "Importar",
-    "errors":{
+    "errors": {
       "invalid_hash": "Hash invalido",
       "duplicate": "Este retiro ya existe en su listado",
       "not_found": "No se encuentra",
