@@ -9,6 +9,7 @@ const EXPLORER_URL = process.env.REACT_APP_EXPLORER_URL!
 
 const AccountHeader = (props: Props) => {
   const { avatar, onOpenEditProfileAvatarModal } = props
+  const hasName = !!avatar?.name
 
   return (
     <Header size="large" className="AccountHeader">
@@ -34,8 +35,15 @@ const AccountHeader = (props: Props) => {
         )}
       </div>
       <div className="actions">
-        <Button primary inverted href={`${BUILDER_URL}/names`} target="_blank">
-          {t('account_header.actions.change_alias')}
+        <Button
+          primary
+          inverted
+          href={`${BUILDER_URL}/${hasName ? 'names' : 'claim-name'}`}
+          target="_blank"
+        >
+          {hasName
+            ? t('account_header.actions.change_alias')
+            : t('account_header.actions.get_a_name')}
         </Button>
         <Button
           primary
