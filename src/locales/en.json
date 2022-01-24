@@ -114,7 +114,7 @@
     "subtitle_matic": "Withdraw MANA from Polygon into Ethereum",
     "label_approvement": "MANA Approved",
     "no_balance": "You don't have enough balance",
-    "withdrawal_cost": "This operation consists of two steps. The first step won't have any cost. The second one will cost a approximately ${cost} of gas fees on Ethereum",
+    "withdrawal_cost": "This operation consists of two steps. The first step won't have any cost. The second one will cost approximately {cost} of gas fees on Ethereum.",
     "withdrawal_cost_error": "There was an error trying to calculate the transaction cost",
     "withdrawal_cost_accept": "Proceed",
     "withdrawal_cost_cancel": "Cancel"
