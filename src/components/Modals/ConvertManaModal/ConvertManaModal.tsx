@@ -119,7 +119,7 @@ const ConvertManaModal: React.FC<Props> = ({
             <T
               id="convert_mana_modal.withdrawal_cost"
               values={{
-                cost: <b>{txEstimatedCost.toFixed(2)}</b>,
+                cost: <b>${txEstimatedCost.toFixed(2)}</b>,
               }}
             />
           ) : (
