@@ -114,7 +114,10 @@
     "title_matic": "Convert to Ethereum MANA",
     "subtitle_matic": "Withdraw MANA from Polygon into Ethereum",
     "label_approvement": "MANA Approved",
-    "no_balance": "You don't have enough balance"
+    "no_balance": "You don't have enough balance",
+    "withdrawal_cost": "This operation consists of two steps. The first step won't have any cost. The second one will cost approximately {cost} of gas fees on Ethereum.",
+    "withdrawal_cost_accept": "Proceed",
+    "withdrawal_cost_cancel": "Cancel"
   },
   "withdrawal_status_modal": {
     "title": "Convert to Mana",

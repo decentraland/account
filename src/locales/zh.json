@@ -112,7 +112,10 @@
     "title_matic": "转换为MANA",
     "subtitle_matic": "将MANA从Polygon撤至Ethereum",
     "label_approvement": "获MANA批准",
-    "no_balance": "您的余额不足"
+    "no_balance": "您的余额不足",
+    "withdrawal_cost": "该操作包括两个步骤。第一步不会有任何费用。第二个将在以太坊上花费大约 ${cost} 的汽油费",
+    "withdrawal_cost_accept": "继续",
+    "withdrawal_cost_cancel": "取消"
   },
   "withdrawal_status_modal": {
     "title": "转化为法力",
