@@ -92,6 +92,7 @@ const ConvertManaModal: React.FC<Props> = ({
         const cost = await getEstimatedExitTransactionCost()
         if (!cancel) setTxEstimatedCost(cost)
       } catch (error) {
+        setHasAcceptedWithdrawalCost(true)
         setTxEstimatedCost(null)
       }
     }
@@ -121,8 +122,6 @@ const ConvertManaModal: React.FC<Props> = ({
                 cost: <b>{txEstimatedCost.toFixed(2)}</b>,
               }}
             />
-          ) : txEstimatedCost === null ? (
-            t('convert_mana_modal.withdrawal_cost_error')
           ) : (
             <Loader size="tiny" />
           )}

@@ -114,7 +114,6 @@
     "label_approvement": "MANA Aprobado",
     "no_balance": "No tiene suficientes fondos",
     "withdrawal_cost": "Esta operación consta de dos pasos. El primer paso no tendrá ningún costo. El segundo costará aproximadamente ${cost} de gas en Ethereum",
-    "withdrawal_cost_error": "Hubo un error al intentar calcular el costo de la transacción",
     "withdrawal_cost_accept": "Continuar",
     "withdrawal_cost_cancel": "Cancelar"
   },
