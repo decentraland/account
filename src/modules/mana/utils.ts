@@ -279,7 +279,7 @@ export function* getStoreWithdrawalByHash(hash: string) {
   return withdrawals.find((w) => w.initializeHash === hash)
 }
 
-const EXIT_CONTRACT_GAS_CONSUMPTION = 238325 // gas in wei
+const EXIT_CONTRACT_GAS_CONSUMPTION = 260670 // gas in wei
 
 export async function getEstimatedExitTransactionCost() {
   const {
