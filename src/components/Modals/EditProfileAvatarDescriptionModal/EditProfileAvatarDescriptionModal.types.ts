@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { Avatar } from 'decentraland-ui'
+import { Avatar } from '@dcl/schemas'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import {
   ClearProfileErrorAction,
