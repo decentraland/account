@@ -1,4 +1,4 @@
-import { Avatar } from 'decentraland-ui'
+import { Avatar } from '@dcl/schemas'
 import { Dispatch, AnyAction } from 'redux'
 
 export type Props = {
