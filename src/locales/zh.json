@@ -11,6 +11,7 @@
   "account_header": {
     "actions": {
       "change_alias": "更改别名",
+      "get_a_name": "取个名字",
       "edit_avatar": "编辑头像",
       "set_description": "单击此处设置说明..."
     }
@@ -20,8 +21,8 @@
     "convert": "改造",
     "receive": "接收",
     "send": "发送",
-    "tooltip_ethereum": "这是Ethereum Mana",
-    "tooltip_matic": "这是Polygon Mana"
+    "tooltip_ethereum": "你在以太坊主区块链上的 MANA 余额。你可以将 MANA 从这个余额换成 Polygon。",
+    "tooltip_matic": "您在 Polygon 侧链上的 MANA 余额。您可以使用 Polygon MANA 而无需支付 gas 费用。您可以随时从 Polygon 的侧链中提取 MANA。"
   },
   "account_card": {
     "tx_latests": "最新交易",
@@ -79,12 +80,12 @@
     }
   },
   "import_withdrawal_modal": {
-    "title":"进口提款",
+    "title": "进口提款",
     "description": "取款是一个 2 步过程。您使用燃烧多边形 MANA 的多边形交易初始取款，几分钟后，您将能够在以太坊上解锁您的 MANA 令牌。我们将来自第一笔交易的信息存储在您的设备上，并且必须完成您的取款。如果由于某种原因丢失此信息（即您删除浏览器的存储），或者如果您正在完成从新设备的取款，您可以使用此屏幕输入取款初始化交易的哈希（Polygon）来恢复您的取款信息。您可以在 {link} 上查看您所有的最新交易",
     "polygonscan": "Polygonscan",
     "tx_label": "交易哈希",
     "import_withdrawal": "进口",
-    "errors":{
+    "errors": {
       "invalid_hash": "无效哈希",
       "duplicate": "此提款已存在于您的列表中",
       "not_found": "不存在",
@@ -111,7 +112,10 @@
     "title_matic": "转换为MANA",
     "subtitle_matic": "将MANA从Polygon撤至Ethereum",
     "label_approvement": "获MANA批准",
-    "no_balance": "您的余额不足"
+    "no_balance": "您的余额不足",
+    "withdrawal_cost": "该操作包括两个步骤。第一步不会有任何费用。第二个将在以太坊上花费大约 ${cost} 的汽油费",
+    "withdrawal_cost_accept": "继续",
+    "withdrawal_cost_cancel": "取消"
   },
   "withdrawal_status_modal": {
     "title": "转化为法力",

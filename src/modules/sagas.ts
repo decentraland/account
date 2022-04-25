@@ -4,12 +4,12 @@ import { createProfileSaga } from 'decentraland-dapps/dist/modules/profile/sagas
 import { createTranslationSaga } from 'decentraland-dapps/dist/modules/translation/sagas'
 import { transactionSaga } from 'decentraland-dapps/dist/modules/transaction/sagas'
 import { createWalletSaga } from 'decentraland-dapps/dist/modules/wallet/sagas'
+import { toastSaga } from 'decentraland-dapps/dist/modules/toast/sagas'
 import { TRANSACTIONS_API_URL } from './mana/utils'
 import { modalSaga } from './modal/sagas'
 import { locationSaga } from './location/sagas'
 import { manaSaga } from './mana/sagas'
 import { transakSaga } from './transak/sagas'
-import { toastSaga } from './toast/sagas'
 import { profileSaga as localProfileSaga } from './profile/sagas'
 import * as translations from '../locales'
 
