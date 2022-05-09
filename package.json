@@ -34,7 +34,6 @@
     "start": "react-scripts start",
     "build": "CI=false react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "build:contracts": "npx web3x-codegen"
   },
   "prettier": {
@@ -68,6 +67,7 @@
     "@types/redux-logger": "^3.0.8",
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
+    "customize-cra": "^1.0.0",
     "dcl-tslint-config-standard": "^2.0.0",
     "prettier": "^2.2.1",
     "react-app-rewired": "^2.2.1",
