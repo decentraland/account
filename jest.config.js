@@ -8,8 +8,7 @@ const config = {
     '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}',
   ],
   testEnvironment: 'jsdom',
-  testRunner:
-    '/Users/lpetaccio/repositories/account/node_modules/jest-circus/runner.js',
+  testRunner: '<rootDir>/node_modules/jest-circus/runner.js',
   transform: {
     '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': '<rootDir>/config/jest/babelTransform.js',
     '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',
