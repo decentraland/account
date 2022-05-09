@@ -48,7 +48,6 @@
     "html-webpack-plugin": "4.5.0",
     "identity-obj-proxy": "3.0.0",
     "jest": "26.6.0",
-    "jest-circus": "26.6.0",
     "jest-resolve": "26.6.0",
     "jest-watch-typeahead": "0.6.1",
     "mini-css-extract-plugin": "0.11.3",
@@ -91,7 +90,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "CI=false node scripts/build.js",
-    "test": "node scripts/test.js",
+    "test": "node scripts/test.js --config jest.config.js",
     "build:contracts": "npx web3x-codegen"
   },
   "prettier": {
@@ -127,6 +126,7 @@
     "@typescript-eslint/parser": "^4.13.0",
     "customize-cra": "^1.0.0",
     "dcl-tslint-config-standard": "^2.0.0",
+    "jest-circus": "^26.6.0",
     "prettier": "^2.2.1",
     "react-app-rewired": "^2.2.1",
     "redux-saga-test-plan": "^4.0.3",
