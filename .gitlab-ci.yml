@@ -1,6 +1,8 @@
 image: decentraland/ci-node:latest
 
 build:
+  variables:
+    NODE_OPTIONS: --max-old-space-size=8192
   only:
     - master
     - staging
