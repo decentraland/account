@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { fromWei } from 'web3x/utils'
+import { ethers } from 'ethers'
 import {
   Button,
   Close,
@@ -75,7 +75,7 @@ const ConvertManaModal: React.FC<Props> = ({
 
   useEffect(() => {
     onManaPrice()
-    const amountAllowed = parseInt(fromWei(allowance, 'ether'), 10)
+    const amountAllowed = parseInt(ethers.utils.formatEther(allowance), 10)
     if (!isNaN(amountAllowed) && amountAllowed > 100) {
       setIsApproved(true)
     }
