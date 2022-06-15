@@ -5,9 +5,11 @@ import { locations } from '../../modules/locations'
 import { HomePage } from '../HomePage'
 import { SignInPage } from '../SignInPage'
 import { Props } from './Routes.types'
+import { config } from '../../config'
 
 const Routes = ({ isConnected }: Props) => {
-  const APP_ID = process.env.REACT_APP_INTERCOM_APP_ID
+  const APP_ID = config.get('INTERCOM_APP_ID')
+
   if (!isConnected) {
     return (
       <>

@@ -3,9 +3,10 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { AvatarFace, Button, Header, Icon } from 'decentraland-ui'
 import { Props } from './AccountHeader.types'
 import './AccountHeader.css'
+import { config } from '../../../config'
 
-const BUILDER_URL = process.env.REACT_APP_BUILDER_URL!
-const EXPLORER_URL = process.env.REACT_APP_EXPLORER_URL!
+const BUILDER_URL = config.get('BUILDER_URL')!
+const EXPLORER_URL = config.get('EXPLORER_URL')!
 
 const AccountHeader = (props: Props) => {
   const { avatar, onOpenEditProfileAvatarModal } = props

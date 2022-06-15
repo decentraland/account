@@ -1,12 +1,13 @@
 import { EventEmitter } from 'ws'
 import transakSDK from '@transak/transak-sdk'
 import { Store } from 'redux'
+import { Network } from '@dcl/schemas'
 import { Purchase, PurchaseStatus } from '../mana/types'
 import { setPurchase } from '../mana/actions'
-import { Network } from '@dcl/schemas'
+import { config } from '../../config'
 
-export const TRANSAK_KEY = process.env.REACT_APP_TRANSAK_KEY!
-export const TRANSAK_ENV = process.env.REACT_APP_TRANSAK_ENV!
+export const TRANSAK_KEY = config.get('TRANSAK_KEY')!
+export const TRANSAK_ENV = config.get('TRANSAK_ENV')!
 
 type OrderData = {
   eventName: string
