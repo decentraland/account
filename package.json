@@ -1,6 +1,6 @@
 {
-  "name": "account",
-  "version": "1.1.0",
+  "name": "@dcl/account-site",
+  "version": "0.0.0-developmen",
   "private": true,
   "dependencies": {
     "@babel/core": "^7.17.10",
