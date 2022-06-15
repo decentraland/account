@@ -26,6 +26,8 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+        env:
+          NODE_OPTIONS: '--max-old-space-size=8192'
       - name: Publish
         uses: menduz/oddish-action@master
         with:
