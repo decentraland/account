@@ -11,18 +11,19 @@ import { locationSaga } from './location/sagas'
 import { manaSaga } from './mana/sagas'
 import { transakSaga } from './transak/sagas'
 import { profileSaga as localProfileSaga } from './profile/sagas'
+import { config } from '../config'
 import * as translations from '../locales'
 
 const analyticsSaga = createAnalyticsSaga()
 
 const profileSaga = createProfileSaga({
-  peerUrl: process.env.REACT_APP_PEER_URL!,
+  peerUrl: config.get('PEER_URL')!,
 })
 
 const translationSaga = createTranslationSaga({ translations })
 
 const walletSaga = createWalletSaga({
-  CHAIN_ID: +(process.env.REACT_APP_CHAIN_ID || 1),
+  CHAIN_ID: +(config.get('CHAIN_ID') || 1),
   POLL_INTERVAL: 0,
   TRANSACTIONS_API_URL,
 })

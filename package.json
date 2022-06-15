@@ -1,10 +1,11 @@
 {
-  "name": "account",
-  "version": "1.1.0",
+  "name": "@dcl/account-site",
+  "version": "0.0.0-developmen",
   "private": true,
   "dependencies": {
     "@babel/core": "^7.17.10",
     "@dcl/schemas": "^4.4.0",
+    "@dcl/ui-env": "^1.2.0",
     "@maticnetwork/maticjs": "^2.0.51",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
     "@svgr/webpack": "5.5.0",
@@ -89,6 +90,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
+    "prebuild": "node scripts/prebuild.js",
     "build": "CI=false node scripts/build.js",
     "test": "node scripts/test.js --config jest.config.js",
     "build:contracts": "npx web3x-codegen"

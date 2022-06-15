@@ -1,0 +1,18 @@
+{
+  "CHAIN_ID": "1",
+  "PEER_URL": "https://peer-lb.decentraland.org",
+  "BUILDER_URL": "https://builder.decentraland.org",
+  "EXPLORER_URL": "https://play.decentraland.org",
+  "TRANSACTIONS_API_URL": "https://transactions-api.decentraland.net/v1",
+  "TRANSAK_KEY": "cb87de5f-add2-48a1-bab4-6a9409b811b1",
+  "TRANSAK_ENV": "PRODUCTION",
+  "MATIC_ENV": "mainnet",
+  "MATIC_ROOT_CHAIN_SUBGRAPH": "https://api.thegraph.com/subgraphs/name/maticnetwork/mainnet-root-subgraphs",
+  "MANA_CONTRACT_ADDRESS": "0x0f5d2fb29fb7d3cfee444a200298f468908cc942",
+  "ERC20_PREDICATE_CONTRACT_ADDRESS": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+  "ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
+  "SEGMENT_API_KEY": "I2fojSHbvc856pZqoLYXZrfwxsKJ24WG",
+  "INTERCOM_APP_ID": "z0h94kay",
+  "DISCORD_URL": "https://dcl.gg/discord",
+  "ROLLBAR_ACCESS_TOKEN": "a12a0a402dda4bc588d4893db656ef6b"
+}

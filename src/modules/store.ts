@@ -15,8 +15,10 @@ import {
   WATCH_DEPOSIT_STATUS_SUCCESS,
   WATCH_WITHDRAWAL_STATUS_SUCCESS,
 } from './mana/actions'
-import { isDevelopment, isTest } from '../lib/environment'
+import { isTest } from '../lib/environment'
+import { config } from '../config'
 import migrations from './migrations'
+import { Env } from '@dcl/ui-env'
 
 export const history = require('history').createBrowserHistory()
 const rootReducer = storageReducerWrapper(createRootReducer(history))
@@ -25,7 +27,7 @@ const sagasMiddleware = createSagasMiddleware()
 const loggerMiddleware = createLogger({
   collapsed: () => true,
   predicate: (_: any, action) =>
-    !isTest && (isDevelopment || action.type.includes('Failure')),
+    !isTest && (config.is(Env.DEVELOPMENT) || action.type.includes('Failure')),
 })
 
 const transactionMiddleware = createTransactionMiddleware()
@@ -46,7 +48,7 @@ const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
   migrations,
 })
 const analyticsMiddleware = createAnalyticsMiddleware(
-  process.env.REACT_APP_SEGMENT_API_KEY || ''
+  config.get('SEGMENT_API_KEY')
 )
 
 const middleware = applyMiddleware(
@@ -63,7 +65,7 @@ const store = createStore(rootReducer, enhancer)
 sagasMiddleware.run(rootSaga)
 loadStorageMiddleware(store)
 
-if (isDevelopment) {
+if (config.is(Env.DEVELOPMENT)) {
   const _window = window as any
   _window.store = store
 }

@@ -30,17 +30,20 @@ import {
 } from './types'
 import { gasPriceAPI } from '../../lib/api/gasPrice'
 import { utils } from 'ethers'
+import { config } from '../../config'
 
-export const MANA_CONTRACT_ADDRESS =
-  process.env.REACT_APP_MANA_CONTRACT_ADDRESS!
-export const ERC20_PREDICATE_CONTRACT_ADDRESS =
-  process.env.REACT_APP_ERC20_PREDICATE_CONTRACT_ADDRESS!
-export const ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS =
-  process.env.REACT_APP_ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS!
-export const MATIC_ROOT_CHAIN_SUBGRAPH =
-  process.env.REACT_APP_MATIC_ROOT_CHAIN_SUBGRAPH!
-export const MATIC_ENV: MaticEnv = getMaticEnv(process.env.REACT_APP_MATIC_ENV)
-export const TRANSACTIONS_API_URL = process.env.REACT_APP_TRANSACTIONS_API_URL!
+export const MANA_CONTRACT_ADDRESS = config.get('MANA_CONTRACT_ADDRESS')!
+export const ERC20_PREDICATE_CONTRACT_ADDRESS = config.get(
+  'ERC20_PREDICATE_CONTRACT_ADDRESS'
+)!
+export const ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS = config.get(
+  'ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS'
+)!
+export const MATIC_ROOT_CHAIN_SUBGRAPH = config.get(
+  'MATIC_ROOT_CHAIN_SUBGRAPH'
+)!
+export const MATIC_ENV: MaticEnv = getMaticEnv(config.get('MATIC_ENV'))
+export const TRANSACTIONS_API_URL = config.get('TRANSACTIONS_API_URL')!
 
 const POLL_INTERVAL = 30 * 1000 // 30 seconds
 
