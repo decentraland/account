@@ -40,6 +40,6 @@ jobs:
           packageVersion: ${{ github.event.inputs.packageVersion }}
 
           # Rollout information
-          deploymentDomain: builder.decentraland${{ github.event.inputs.deploymentDomain }}
+          deploymentDomain: account.decentraland${{ github.event.inputs.deploymentDomain }}
           deploymentName: '_site'
           percentage: ${{ github.event.inputs.rolloutPercentage }}

@@ -24,7 +24,7 @@ jobs:
           packageVersion: ${{ github.event.deployment.payload.packageVersion }}
 
           # Rollout information
-          deploymentDomain: 'builder.decentraland.zone'
+          deploymentDomain: 'account.decentraland.zone'
           deploymentName: '_site'
           percentage: 100
 
@@ -43,6 +43,6 @@ jobs:
           packageVersion: ${{ github.event.deployment.payload.packageVersion }}
 
           # Rollout information
-          deploymentDomain: 'builder.decentraland.today'
+          deploymentDomain: 'account.decentraland.today'
           deploymentName: '_site'
           percentage: 100
