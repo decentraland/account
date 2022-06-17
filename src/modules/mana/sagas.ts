@@ -152,7 +152,7 @@ function* handleDepositManaRequest(action: DepositManaRequestAction) {
         MANA_CONTRACT_ADDRESS,
         ethers.utils.defaultAbiCoder.encode(
           ['uint256'],
-          [ethers.utils.formatEther(amount.toString())]
+          [ethers.utils.parseEther(amount.toString())]
         )
       )
     )
@@ -295,7 +295,7 @@ function* handleInitiateWithdrawalRequest(
     const chainId = getChainIdByNetwork(Network.MATIC)
     const contract = getContract(ContractName.MANAToken, chainId)
     const txHash: string = yield call(sendTransaction, contract, (mana) =>
-      mana.withdraw(ethers.utils.formatEther(amount.toString()))
+      mana.withdraw(ethers.utils.parseEther(amount.toString()))
     )
     yield put(initiateWithdrawalSuccess(amount, chainId, txHash))
     yield put(watchWithdrawalStatusRequest(amount, txHash))
@@ -356,7 +356,7 @@ function* handleSendManaRequest(action: TransferManaRequestAction) {
     switch (network) {
       case Network.ETHEREUM: {
         const { hash }: ethers.ContractTransaction = yield call(() =>
-          mana.transfer(to, ethers.utils.formatEther(amount.toString()))
+          mana.transfer(to, ethers.utils.parseEther(amount.toString()))
         )
         const chainId: ChainId = yield select(getChainId)
 
@@ -381,7 +381,7 @@ function* handleSendManaRequest(action: TransferManaRequestAction) {
         const chainId = getChainIdByNetwork(network)
         const contract = getContract(ContractName.MANAToken, chainId)
         const txHash: string = yield call(sendTransaction, contract, (mana) =>
-          mana.transfer(to, ethers.utils.formatEther(amount.toString()))
+          mana.transfer(to, ethers.utils.parseEther(amount.toString()))
         )
 
         yield put(
