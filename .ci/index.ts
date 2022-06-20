@@ -5,6 +5,8 @@ async function main() {
   const account = buildStatic({
     domain: `account.decentraland.${env === 'prd' ? 'org' : envTLD}`,
     defaultPath: 'index.html',
+    unprotect: true,
+    destroy: true,
   })
 
   return {
