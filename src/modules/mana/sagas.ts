@@ -15,6 +15,7 @@ import {
   FETCH_TRANSACTION_SUCCESS,
 } from 'decentraland-dapps/dist/modules/transaction/actions'
 import {
+  getSigner,
   getNetworkProvider,
   getConnectedProvider,
   getChainIdByNetwork,
@@ -105,7 +106,6 @@ import {
 import { getWalletDeposits, getWalletWithdrawals } from './selectors'
 import { closeModal, openModal } from '../modal/actions'
 import { store } from '../store'
-import { getSigner } from '../wallet/utils'
 
 export function* manaSaga() {
   yield takeEvery(SET_DEPOSIT_STATUS, handleSetDepositStatus)
