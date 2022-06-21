@@ -10,6 +10,7 @@
   },
   "build": {
     "env": {
+      "GEN_STATIC_LOCAL": "true",
       "REACT_APP_DCL_DEFAULT_ENV": "dev"
     }
   }
