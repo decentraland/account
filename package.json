@@ -89,36 +89,6 @@
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "5.1.4"
   },
-  "scripts": {
-    "start": "node scripts/start.js",
-    "prebuild": "node scripts/prebuild.js",
-    "build": "CI=false node scripts/build.js",
-    "test": "node scripts/test.js --config jest.config.js",
-    "build:contracts": "typechain --target ethers-v5 --out-dir src/contracts src/contracts/*.json"
-  },
-  "prettier": {
-    "printWidth": 80,
-    "singleQuote": true,
-    "semi": false
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
     "@types/history": "^4.7.3",
     "@types/react": "^17.0.18",
@@ -139,6 +109,39 @@
     "tslint-plugin-prettier": "^2.3.0",
     "tslint-react": "^5.0.0",
     "typescript": "^4.6.3"
+  },
+  "scripts": {
+    "start": "node scripts/start.js",
+    "prebuild": "node scripts/prebuild.js",
+    "build": "CI=false node scripts/build.js",
+    "test": "node scripts/test.js --config jest.config.js",
+    "build:contracts": "typechain --target ethers-v5 --out-dir src/contracts src/contracts/*.json"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "singleQuote": true,
+    "semi": false
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "engines": {
+    "node": ">= 16.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "babel": {
     "presets": [
