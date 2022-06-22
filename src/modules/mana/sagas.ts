@@ -1,9 +1,6 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { MaticPOSClient } from '@maticnetwork/maticjs'
-import { Eth } from 'web3x/eth'
-import { abiCoder } from 'web3x/contract/abi-coder'
-import { Address } from 'web3x/address'
-import { toBN, toWei } from 'web3x/utils'
+import { ethers, Signer } from 'ethers'
 import { ChainId, Network } from '@dcl/schemas'
 import {
   ConnectWalletSuccessAction,
@@ -18,6 +15,7 @@ import {
   FETCH_TRANSACTION_SUCCESS,
 } from 'decentraland-dapps/dist/modules/transaction/actions'
 import {
+  getSigner,
   getNetworkProvider,
   getConnectedProvider,
   getChainIdByNetwork,
@@ -87,8 +85,7 @@ import {
   importWithdrawalFailure,
   importWithdrawalSuccess,
 } from './actions'
-import { ERC20 } from '../../contracts/ERC20'
-import { RootChainManager } from '../../contracts/RootChainManager'
+import { ERC20__factory, RootChainManager__factory } from '../../contracts'
 import {
   MANA_CONTRACT_ADDRESS,
   ERC20_PREDICATE_CONTRACT_ADDRESS,
@@ -143,23 +140,24 @@ function* handleDepositManaRequest(action: DepositManaRequestAction) {
     if (!provider) {
       throw new Error(`Could not get connected provider`)
     }
-    const eth = new Eth(provider)
+    const signer: Signer = yield getSigner()
     const from: string = yield select(getAddress)
-    const rootChainContract = new RootChainManager(
-      eth,
-      Address.fromString(ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS)
+    const rootChainContract = RootChainManager__factory.connect(
+      ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS,
+      signer
     )
-    const txHash: string = yield call(() =>
-      rootChainContract.methods
-        .depositFor(
-          Address.fromString(from),
-          Address.fromString(MANA_CONTRACT_ADDRESS),
-          abiCoder.encodeParameter('uint256', toWei(amount.toString(), 'ether'))
+    const transaction: ethers.ContractTransaction = yield call(() =>
+      rootChainContract.depositFor(
+        from,
+        MANA_CONTRACT_ADDRESS,
+        ethers.utils.defaultAbiCoder.encode(
+          ['uint256'],
+          [ethers.utils.parseEther(amount.toString())]
         )
-        .send({ from: Address.fromString(from) })
-        .getTxHash()
+      )
     )
 
+    const txHash = transaction.hash
     const chainId: ChainId = yield select(getChainId)
     yield put(depositManaSuccess(amount, chainId, txHash))
     yield put(watchDepositStatusRequest(amount, txHash))
@@ -214,22 +212,14 @@ function* handleGetApprovedManaRequest(_action: GetApprovedManaRequestAction) {
     if (!provider) {
       throw new Error(`Could not connect to provider`)
     }
-    const eth = new Eth(provider)
+    const signer: Signer = yield getSigner()
     const from: string = yield select(getAddress)
-    const manaContract = new ERC20(
-      eth,
-      Address.fromString(MANA_CONTRACT_ADDRESS)
-    )
+    const manaContract = ERC20__factory.connect(MANA_CONTRACT_ADDRESS, signer)
 
-    const allowance: string = yield call(() =>
-      manaContract.methods
-        .allowance(
-          Address.fromString(from),
-          Address.fromString(ERC20_PREDICATE_CONTRACT_ADDRESS)
-        )
-        .call()
+    const allowance: ethers.BigNumber = yield call(() =>
+      manaContract.allowance(from, ERC20_PREDICATE_CONTRACT_ADDRESS)
     )
-    yield put(getApprovedManaSuccess(allowance))
+    yield put(getApprovedManaSuccess(allowance.toString()))
   } catch (error: any) {
     yield put(getApprovedManaFailure(error.message))
   }
@@ -242,25 +232,18 @@ function* handleApproveManaRequest(action: ApproveManaRequestAction) {
     if (!provider) {
       throw new Error(`Could not connect to provider`)
     }
-    const eth = new Eth(provider)
+    const signer: Signer = yield getSigner()
     const from: string = yield select(getAddress)
-    const manaContract = new ERC20(
-      eth,
-      Address.fromString(MANA_CONTRACT_ADDRESS)
-    )
+    const manaContract = ERC20__factory.connect(MANA_CONTRACT_ADDRESS, signer)
 
-    const txHash: string = yield call(() =>
-      manaContract.methods
-        .approve(
-          Address.fromString(ERC20_PREDICATE_CONTRACT_ADDRESS),
-          allowance
-        )
-        .send({ from: Address.fromString(from) })
-        .getTxHash()
+    const transaction: ethers.ContractTransaction = yield call(() =>
+      manaContract.approve(ERC20_PREDICATE_CONTRACT_ADDRESS, allowance)
     )
 
     const chainId: ChainId = yield select(getChainId)
-    yield put(approveManaSuccess(allowance, from.toString(), chainId, txHash))
+    yield put(
+      approveManaSuccess(allowance, from.toString(), chainId, transaction.hash)
+    )
   } catch (error: any) {
     yield put(closeModal('ConvertManaModal'))
     yield put(approveManaFailure(allowance, error))
@@ -312,7 +295,7 @@ function* handleInitiateWithdrawalRequest(
     const chainId = getChainIdByNetwork(Network.MATIC)
     const contract = getContract(ContractName.MANAToken, chainId)
     const txHash: string = yield call(sendTransaction, contract, (mana) =>
-      mana.withdraw(toWei(amount.toString(), 'ether'))
+      mana.withdraw(ethers.utils.parseEther(amount.toString()))
     )
     yield put(initiateWithdrawalSuccess(amount, chainId, txHash))
     yield put(watchWithdrawalStatusRequest(amount, txHash))
@@ -367,24 +350,20 @@ function* handleSendManaRequest(action: TransferManaRequestAction) {
     if (!provider) {
       throw new Error(`Could not get connected provider`)
     }
-    const eth = new Eth(provider)
-    const address: string = yield select(getAddress)
-    const mana = new ERC20(eth, Address.fromString(MANA_CONTRACT_ADDRESS))
+    const signer: Signer = yield getSigner()
+    const mana = ERC20__factory.connect(MANA_CONTRACT_ADDRESS, signer)
 
     switch (network) {
       case Network.ETHEREUM: {
-        const txHash: string = yield call(() =>
-          mana.methods
-            .transfer(Address.fromString(to), toWei(amount.toString(), 'ether'))
-            .send({ from: Address.fromString(address) })
-            .getTxHash()
+        const { hash }: ethers.ContractTransaction = yield call(() =>
+          mana.transfer(to, ethers.utils.parseEther(amount.toString()))
         )
         const chainId: ChainId = yield select(getChainId)
 
         yield put(
           transferManaSuccess(
             {
-              hash: txHash,
+              hash,
               network,
               chainId,
               amount,
@@ -393,7 +372,7 @@ function* handleSendManaRequest(action: TransferManaRequestAction) {
               timestamp: Date.now(),
             },
             chainId,
-            txHash
+            hash
           )
         )
         break
@@ -402,7 +381,7 @@ function* handleSendManaRequest(action: TransferManaRequestAction) {
         const chainId = getChainIdByNetwork(network)
         const contract = getContract(ContractName.MANAToken, chainId)
         const txHash: string = yield call(sendTransaction, contract, (mana) =>
-          mana.transfer(to, toWei(amount.toString(), 'ether'))
+          mana.transfer(to, ethers.utils.parseEther(amount.toString()))
         )
 
         yield put(
@@ -523,7 +502,7 @@ export function* handleImportWithdrawalRequest(
       yield put(importWithdrawalFailure(importWithdrawalErrors.notFound))
       return
     }
-    
+
     const { input, from } = transaction
 
     // hex for the "withdraw" method found in transaction.input
@@ -560,8 +539,10 @@ export function* handleImportWithdrawalRequest(
     }
 
     const methodEndIndex = methodIndex + method.length
-    const amountHex = input.slice(methodEndIndex, methodEndIndex + 64)
-    const amountDec = toBN(amountHex).div(toBN(1e18)).toNumber()
+    const amountHex = '0x' + input.slice(methodEndIndex, methodEndIndex + 64)
+    const amountDec = ethers.BigNumber.from(amountHex)
+      .div('1000000000000000000')
+      .toNumber()
 
     const withdrawal = {
       amount: amountDec,
