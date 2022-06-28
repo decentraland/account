@@ -79,7 +79,7 @@ const AccountCardHeader = ({
             <div
               className={network === Network.MATIC ? 'matic-logo' : 'mana-logo'}
             />
-            {(amount | 0).toLocaleString()}
+            {(amount ? Number(amount.toFixed(2)) : 0).toLocaleString()}
           </div>
         </div>
         <div className="actions">
