@@ -125,9 +125,10 @@ export function initializeTransak(store: Store, address: string) {
 }
 
 export function openTransakWidget(address: string, network: Network) {
+  const transakNetwork = network === Network.MATIC ? 'polygon' : 'ethereum'
   const transak = getTransak(address)
   transak.partnerData.walletAddress = address
-  transak.partnerData.defaultNetwork = network.toLowerCase()
-  transak.partnerData.networks = network.toLowerCase()
+  transak.partnerData.defaultNetwork = transakNetwork
+  transak.partnerData.networks = transakNetwork
   transak.init()
 }
