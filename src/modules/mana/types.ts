@@ -74,19 +74,3 @@ export type Withdrawal = {
   amount: number
   timestamp: number
 }
-
-export enum PurchaseStatus {
-  PENDING = 'pending',
-  FAILED = 'failed',
-  CANCELLED = 'cancelled',
-  COMPLETE = 'complete',
-}
-
-export type Purchase = {
-  id: string
-  amount: number
-  network: Network
-  timestamp: number
-  status: PurchaseStatus
-  address: string
-}

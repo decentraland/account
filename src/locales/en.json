@@ -56,7 +56,7 @@
   "transaction_description": {
     "deposit": "Deposit to Polygon MANA",
     "withdrawal": "Withdrawal to Ethereum MANA",
-    "buy": "Add tokens via Transak",
+    "buy": "Add tokens via {gateway}",
     "send": "Send tokens to"
   },
   "transaction_type": {

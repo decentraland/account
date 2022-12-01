@@ -1,7 +1,7 @@
 import { Network } from '@dcl/schemas'
 import { Dispatch } from 'redux'
 import { OpenModalAction } from '../../../../modules/modal/actions'
-import { OpenTransakAction } from '../../../../modules/transak/actions'
+import { OpenManaFiatGatewayAction } from 'decentraland-dapps/dist/modules/manaFiatGateway/actions'
 
 export type Props = {
   address?: string
@@ -20,4 +20,4 @@ export type MapDispatchProps = Pick<
   Props,
   'onTransfer' | 'onReceive' | 'onConvert' | 'onPurchase' | 'onImportWithdrawal'
 >
-export type MapDispatch = Dispatch<OpenModalAction | OpenTransakAction>
+export type MapDispatch = Dispatch<OpenModalAction | OpenManaFiatGatewayAction>

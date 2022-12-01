@@ -6,6 +6,7 @@ import {
   FETCH_TRANSACTION_SUCCESS,
   FetchTransactionSuccessAction,
 } from 'decentraland-dapps/dist/modules/transaction/actions'
+import { Purchase } from 'decentraland-dapps/dist/modules/mana/types'
 import {
   ApproveManaFailureAction,
   ApproveManaRequestAction,
@@ -78,7 +79,7 @@ import {
   ClearManaErrorAction,
   CLEAR_MANA_ERROR,
 } from './actions'
-import { Deposit, Withdrawal, WithdrawalStatus, Purchase } from './types'
+import { Deposit, Withdrawal, WithdrawalStatus } from './types'
 
 export type ManaState = {
   data: {

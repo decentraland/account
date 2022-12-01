@@ -3,10 +3,10 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Close } from 'decentraland-ui'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
+import { Purchase } from 'decentraland-dapps/dist/modules/mana/types'
 import { Network } from '@dcl/schemas'
 import {
   Deposit,
-  Purchase,
   Transaction,
   TransactionType,
   Transfer,

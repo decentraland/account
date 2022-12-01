@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
+import { openManaFiatGateway } from 'decentraland-dapps/dist/modules/manaFiatGateway/actions'
 import { openModal } from '../../../../../modules/modal/actions'
 import { RootState } from '../../../../../modules/reducer'
-import { openTransak } from '../../../../../modules/transak/actions'
 import AccountTransaction from './AccountTransaction'
 import {
   MapDispatch,
@@ -21,7 +21,8 @@ const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
         transaction,
       })
     ),
-  onPendingPurchase: (network) => dispatch(openTransak(network)),
+  onPendingPurchase: (network, gateway) =>
+    dispatch(openManaFiatGateway(network, gateway)),
 })
 
 export default connect(mapState, mapDispatch)(AccountTransaction)

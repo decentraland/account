@@ -1,13 +1,13 @@
 import { action } from 'typesafe-actions'
 import { ChainId, Network } from '@dcl/schemas'
 import { buildTransactionPayload } from 'decentraland-dapps/dist/modules/transaction/utils'
+import { Purchase } from 'decentraland-dapps/dist/modules/mana/types'
 import {
   WithdrawalStatus,
   Withdrawal,
   Deposit,
   DepositStatus,
   Transfer,
-  Purchase,
 } from './types'
 
 // Get MANA Approved
@@ -238,8 +238,7 @@ export const IMPORT_WITHDRAWAL_FAILURE = '[Failure] Import Withdrawal'
 
 export const importWithdrawalRequest = (txHash: string) =>
   action(IMPORT_WITHDRAWAL_REQUEST, { txHash })
-export const importWithdrawalSuccess = () =>
-  action(IMPORT_WITHDRAWAL_SUCCESS)
+export const importWithdrawalSuccess = () => action(IMPORT_WITHDRAWAL_SUCCESS)
 export const importWithdrawalFailure = (error: string) =>
   action(IMPORT_WITHDRAWAL_FAILURE, { error })
 

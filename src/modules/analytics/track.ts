@@ -13,6 +13,7 @@ import {
 import { add } from 'decentraland-dapps/dist/modules/analytics/utils'
 import { PayloadAction } from 'typesafe-actions'
 import { TransactionStatus } from 'decentraland-dapps/dist/modules/transaction/types'
+import { PurchaseStatus } from 'decentraland-dapps/dist/modules/mana/types'
 import {
   DepositManaFailureAction,
   DepositManaSuccessAction,
@@ -37,7 +38,6 @@ import {
   ApproveManaSuccessAction,
   ApproveManaFailureAction,
 } from '../mana/actions'
-import { PurchaseStatus } from '../mana/types'
 
 function track<T extends PayloadAction<string, any>>(
   actionType: string,
