@@ -5,10 +5,11 @@ import { createTranslationSaga } from 'decentraland-dapps/dist/modules/translati
 import { transactionSaga } from 'decentraland-dapps/dist/modules/transaction/sagas'
 import { createWalletSaga } from 'decentraland-dapps/dist/modules/wallet/sagas'
 import { toastSaga } from 'decentraland-dapps/dist/modules/toast/sagas'
+import { locationSaga } from 'decentraland-dapps/dist/modules/location/sagas'
 import { createManaFiatGatewaysSaga } from 'decentraland-dapps/dist/modules/manaFiatGateway/sagas'
 import { TRANSACTIONS_API_URL } from './mana/utils'
 import { modalSaga } from './modal/sagas'
-import { locationSaga } from './location/sagas'
+import { locationSaga as localLocationSaga } from './location/sagas'
 import { manaSaga } from './mana/sagas'
 import { profileSaga as localProfileSaga } from './profile/sagas'
 import { config } from '../config'
@@ -51,6 +52,7 @@ export function* rootSaga() {
     translationSaga(),
     modalSaga(),
     locationSaga(),
+    localLocationSaga(),
     manaSaga(),
     toastSaga(),
     manaFiatGatewaysSaga(),
