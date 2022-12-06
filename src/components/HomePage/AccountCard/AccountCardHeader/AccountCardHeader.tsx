@@ -33,7 +33,6 @@ const AccountCardHeader = ({
 
   const handleAddTokens = () => {
     setIsOpenBuyManaWithFiatModal(true)
-    // onPurchase(network)
   }
 
   const handleCloseBuyManaWithFiatModal = () => {
