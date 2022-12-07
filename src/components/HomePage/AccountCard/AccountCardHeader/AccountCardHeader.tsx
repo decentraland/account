@@ -49,11 +49,13 @@ const AccountCardHeader = ({
 
   return (
     <>
-      <BuyManaWithFiatModal
-        open={isOpenBuyManaWithFiatModal}
-        selectedNetwork={network}
-        onClose={handleCloseBuyManaWithFiatModal}
-      />
+      {isOpenBuyManaWithFiatModal && (
+        <BuyManaWithFiatModal
+          open={isOpenBuyManaWithFiatModal}
+          selectedNetwork={network}
+          onClose={handleCloseBuyManaWithFiatModal}
+        />
+      )}
       <div className="AccountCardHeader">
         <div className="title">
           <div className="title-text-container">
