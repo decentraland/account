@@ -2,8 +2,8 @@ import { Dispatch } from 'redux'
 import { Network } from '@dcl/schemas'
 import { NetworkGatewayType } from 'decentraland-ui'
 import {
-  openManaFiatGateway,
-  OpenManaFiatGatewayAction,
+  openManaFiatGatewayRequest,
+  OpenManaFiatGatewayRequestAction,
 } from 'decentraland-dapps/dist/modules/manaFiatGateway/actions'
 import { Transaction } from '../../../../../modules/mana/types'
 import { OpenModalAction } from '../../../../../modules/modal/actions'
@@ -14,7 +14,7 @@ export type Props = {
   onPendingPurchase: (
     network: Network,
     gateway: NetworkGatewayType
-  ) => ReturnType<typeof openManaFiatGateway>
+  ) => ReturnType<typeof openManaFiatGatewayRequest>
   onTransactionDetail: (description: string, transaction: Transaction) => void
 }
 
@@ -24,4 +24,6 @@ export type MapDispatchProps = Pick<
   Props,
   'onTransactionDetail' | 'onPendingWithdrawal' | 'onPendingPurchase'
 >
-export type MapDispatch = Dispatch<OpenModalAction | OpenManaFiatGatewayAction>
+export type MapDispatch = Dispatch<
+  OpenModalAction | OpenManaFiatGatewayRequestAction
+>

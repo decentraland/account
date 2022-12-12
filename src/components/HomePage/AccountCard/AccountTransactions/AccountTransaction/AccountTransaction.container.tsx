@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { openManaFiatGateway } from 'decentraland-dapps/dist/modules/manaFiatGateway/actions'
+import { openManaFiatGatewayRequest } from 'decentraland-dapps/dist/modules/manaFiatGateway/actions'
 import { openModal } from '../../../../../modules/modal/actions'
 import { RootState } from '../../../../../modules/reducer'
 import AccountTransaction from './AccountTransaction'
@@ -22,7 +22,7 @@ const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
       })
     ),
   onPendingPurchase: (network, gateway) =>
-    dispatch(openManaFiatGateway(network, gateway)),
+    dispatch(openManaFiatGatewayRequest(network, gateway)),
 })
 
 export default connect(mapState, mapDispatch)(AccountTransaction)
