@@ -2,15 +2,16 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import createSagasMiddleware from 'redux-saga'
 import { routerMiddleware } from 'connected-react-router'
 import { createLogger } from 'redux-logger'
+import { Env } from '@dcl/ui-env'
 import { createStorageMiddleware } from 'decentraland-dapps/dist/modules/storage/middleware'
 import { storageReducerWrapper } from 'decentraland-dapps/dist/modules/storage/reducer'
 import { createTransactionMiddleware } from 'decentraland-dapps/dist/modules/transaction/middleware'
 import { createAnalyticsMiddleware } from 'decentraland-dapps/dist/modules/analytics/middleware'
+import { SET_PURCHASE } from 'decentraland-dapps/dist/modules/mana/actions'
 import { createRootReducer } from './reducer'
 import { rootSaga } from './sagas'
 import {
   SET_DEPOSIT_STATUS,
-  SET_PURCHASE,
   SET_WITHDRAWAL_STATUS,
   WATCH_DEPOSIT_STATUS_SUCCESS,
   WATCH_WITHDRAWAL_STATUS_SUCCESS,
@@ -18,7 +19,6 @@ import {
 import { isTest } from '../lib/environment'
 import { config } from '../config'
 import migrations from './migrations'
-import { Env } from '@dcl/ui-env'
 
 export const history = require('history').createBrowserHistory()
 const rootReducer = storageReducerWrapper(createRootReducer(history))

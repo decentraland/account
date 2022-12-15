@@ -283,12 +283,6 @@ export type FinishWithdrawalFailureAction = ReturnType<
   typeof finishWithdrawalFailure
 >
 
-// Set Purchase
-export const SET_PURCHASE = 'Set Purchase'
-export const setPurchase = (purchase: Purchase) =>
-  action(SET_PURCHASE, { purchase })
-export type SetPurchaseAction = ReturnType<typeof setPurchase>
-
 export const CLEAR_MANA_ERROR = 'Clear Mana Error'
 export const clearManaError = () => action(CLEAR_MANA_ERROR)
 export type ClearManaErrorAction = ReturnType<typeof clearManaError>
