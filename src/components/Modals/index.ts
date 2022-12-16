@@ -1,4 +1,4 @@
-export { FeedbackModal } from 'decentraland-dapps/dist/containers/BuyManaWithFiatModal/FeedbackModal'
+export { BuyManaWithFiatFeedbackModal } from 'decentraland-dapps/dist/containers/BuyManaWithFiatModal/BuyManaWithFiatFeedbackModal'
 export { default as TestModal } from './TestModal'
 export { default as TransactionDetailModal } from './TransactionDetailModal'
 export { default as SeeAllTransactionModal } from './SeeAllTransactionModal'
