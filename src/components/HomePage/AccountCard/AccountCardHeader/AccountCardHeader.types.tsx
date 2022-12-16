@@ -11,14 +11,13 @@ export type Props = {
   onTransfer: (network: Network) => void
   onReceive: (network: Network, address: string) => void
   onConvert: (network: Network) => void
-  onPurchase: (network: Network) => void
   onImportWithdrawal: () => void
 }
 
 export type MapStateProps = Pick<Props, 'address'>
 export type MapDispatchProps = Pick<
   Props,
-  'onTransfer' | 'onReceive' | 'onConvert' | 'onPurchase' | 'onImportWithdrawal'
+  'onTransfer' | 'onReceive' | 'onConvert' | 'onImportWithdrawal'
 >
 export type MapDispatch = Dispatch<
   OpenModalAction | OpenManaFiatGatewayRequestAction

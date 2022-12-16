@@ -1,6 +1,4 @@
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
-import { openManaFiatGatewayRequest } from 'decentraland-dapps/dist/modules/manaFiatGateway/actions'
-import { NetworkGatewayType } from 'decentraland-ui'
 import { connect } from 'react-redux'
 import { openModal } from '../../../../modules/modal/actions'
 import { RootState } from '../../../../modules/reducer'
@@ -22,8 +20,6 @@ const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
   onImportWithdrawal: () => dispatch(openModal('ImportWithdrawalModal')),
   onReceive: (network, address) =>
     dispatch(openModal('ReceiveManaModal', { network, address })),
-  onPurchase: (network) =>
-    dispatch(openManaFiatGatewayRequest(network, NetworkGatewayType.TRANSAK)),
 })
 
 export default connect(mapState, mapDispatch)(AccountCardHeader)
