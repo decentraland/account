@@ -1,4 +1,5 @@
 import { all } from 'redux-saga/effects'
+import { NetworkGatewayType } from 'decentraland-ui'
 import { createAnalyticsSaga } from 'decentraland-dapps/dist/modules/analytics/sagas'
 import { createProfileSaga } from 'decentraland-dapps/dist/modules/profile/sagas'
 import { createTranslationSaga } from 'decentraland-dapps/dist/modules/translation/sagas'
@@ -14,7 +15,6 @@ import { manaSaga } from './mana/sagas'
 import { profileSaga as localProfileSaga } from './profile/sagas'
 import { config } from '../config'
 import * as translations from '../locales'
-import { NetworkGatewayType } from 'decentraland-ui'
 
 const analyticsSaga = createAnalyticsSaga()
 
