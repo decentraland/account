@@ -2,7 +2,6 @@ import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { connect } from 'react-redux'
 import { openModal } from '../../../../modules/modal/actions'
 import { RootState } from '../../../../modules/reducer'
-import { openTransak } from '../../../../modules/transak/actions'
 import AccountCardHeader from './AccountCardHeader'
 import {
   MapDispatch,
@@ -21,7 +20,6 @@ const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
   onImportWithdrawal: () => dispatch(openModal('ImportWithdrawalModal')),
   onReceive: (network, address) =>
     dispatch(openModal('ReceiveManaModal', { network, address })),
-  onPurchase: (network) => dispatch(openTransak(network)),
 })
 
 export default connect(mapState, mapDispatch)(AccountCardHeader)

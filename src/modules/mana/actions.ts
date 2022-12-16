@@ -7,7 +7,6 @@ import {
   Deposit,
   DepositStatus,
   Transfer,
-  Purchase,
 } from './types'
 
 // Get MANA Approved
@@ -238,8 +237,7 @@ export const IMPORT_WITHDRAWAL_FAILURE = '[Failure] Import Withdrawal'
 
 export const importWithdrawalRequest = (txHash: string) =>
   action(IMPORT_WITHDRAWAL_REQUEST, { txHash })
-export const importWithdrawalSuccess = () =>
-  action(IMPORT_WITHDRAWAL_SUCCESS)
+export const importWithdrawalSuccess = () => action(IMPORT_WITHDRAWAL_SUCCESS)
 export const importWithdrawalFailure = (error: string) =>
   action(IMPORT_WITHDRAWAL_FAILURE, { error })
 
@@ -283,12 +281,6 @@ export type FinishWithdrawalSuccessAction = ReturnType<
 export type FinishWithdrawalFailureAction = ReturnType<
   typeof finishWithdrawalFailure
 >
-
-// Set Purchase
-export const SET_PURCHASE = 'Set Purchase'
-export const setPurchase = (purchase: Purchase) =>
-  action(SET_PURCHASE, { purchase })
-export type SetPurchaseAction = ReturnType<typeof setPurchase>
 
 export const CLEAR_MANA_ERROR = 'Clear Mana Error'
 export const clearManaError = () => action(CLEAR_MANA_ERROR)

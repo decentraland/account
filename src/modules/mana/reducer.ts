@@ -7,6 +7,11 @@ import {
   FetchTransactionSuccessAction,
 } from 'decentraland-dapps/dist/modules/transaction/actions'
 import {
+  SET_PURCHASE,
+  SetPurchaseAction,
+} from 'decentraland-dapps/dist/modules/mana/actions'
+import { Purchase } from 'decentraland-dapps/dist/modules/mana/types'
+import {
   ApproveManaFailureAction,
   ApproveManaRequestAction,
   ApproveManaSuccessAction,
@@ -66,8 +71,6 @@ import {
   FinishWithdrawalFailureAction,
   FinishWithdrawalRequestAction,
   FinishWithdrawalSuccessAction,
-  SetPurchaseAction,
-  SET_PURCHASE,
   SET_WITHDRAWAL_FINALIZE_HASH,
   ImportWithdrawalRequestAction,
   ImportWithdrawalSuccessAction,
@@ -78,7 +81,7 @@ import {
   ClearManaErrorAction,
   CLEAR_MANA_ERROR,
 } from './actions'
-import { Deposit, Withdrawal, WithdrawalStatus, Purchase } from './types'
+import { Deposit, Withdrawal, WithdrawalStatus } from './types'
 
 export type ManaState = {
   data: {

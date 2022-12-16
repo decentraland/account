@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { distanceInWordsToNow } from 'decentraland-dapps/dist/lib/utils'
+import { Purchase } from 'decentraland-dapps/dist/modules/mana/types'
+import { gatewaysNames, NetworkGatewayType } from 'decentraland-ui'
 import {
   Deposit,
   Transfer,
@@ -8,7 +10,6 @@ import {
   TransactionType,
   Withdrawal,
   WithdrawalStatus,
-  Purchase,
 } from '../../../../../modules/mana/types'
 import {
   getStatusMessage,
@@ -28,7 +29,10 @@ const AccountTransaction = ({
   // This forces a re-render every minute, to keep the "time ago" of the detail updated
   const [now, setNow] = useState(Date.now())
   useEffect(() => {
-    setTimeout(() => setNow(Date.now()), 60000)
+    const timer = setTimeout(() => setNow(Date.now()), 60000)
+    return () => {
+      clearTimeout(timer)
+    }
   }, [now])
 
   const shortening = (address: string): string =>
@@ -44,7 +48,10 @@ const AccountTransaction = ({
     data = transaction.data as Withdrawal
   } else if (type === TransactionType.PURCHASE) {
     data = transaction.data as Purchase
-    description = t('transaction_description.buy')
+    const { gateway } = data as Purchase
+    description = t('transaction_description.buy', {
+      gateway: gatewaysNames[gateway || NetworkGatewayType.TRANSAK],
+    })
   } else if (type === TransactionType.TRANSFER) {
     data = transaction.data as Transfer
     description = `${t('transaction_description.send')} ${shortening(data.to)}`
@@ -82,8 +89,15 @@ const AccountTransaction = ({
       type === TransactionType.PURCHASE &&
       status === TransactionStatus.PENDING
     ) {
-      const { network } = data as Purchase
-      onPendingPurchase(network)
+      const { network, gateway } = data as Purchase
+      switch (gateway) {
+        case NetworkGatewayType.MOON_PAY:
+          onTransactionDetail(description, transaction)
+          break
+        case NetworkGatewayType.TRANSAK:
+          onPendingPurchase(network, gateway)
+          break
+      }
     } else {
       onTransactionDetail(description, transaction)
     }

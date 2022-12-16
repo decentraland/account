@@ -55,7 +55,7 @@
   "transaction_description": {
     "deposit": "Depósito de MANA en Polygon",
     "withdrawal": "Extracción de MANA a Ethereum",
-    "buy": "Compra de Tokens via Transak",
+    "buy": "Compra de Tokens via {gateway}",
     "send": "Envio de tokens a"
   },
   "transaction_type": {

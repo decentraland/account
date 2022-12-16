@@ -54,7 +54,7 @@
   "transaction_description": {
     "deposit": "存入Polygon MANA",
     "withdrawal": "提款至Ethereum MANA",
-    "buy": "通过Transak添加令牌",
+    "buy": "通过{gateway}添加令牌",
     "send": "将令牌发送到"
   },
   "transaction_type": {

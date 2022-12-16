@@ -1,6 +1,6 @@
 {
   "name": "@dcl/account-site",
-  "version": "0.0.0-developmen",
+  "version": "0.0.0-development",
   "private": true,
   "dependencies": {
     "@babel/core": "^7.17.10",
@@ -12,7 +12,6 @@
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
-    "@transak/transak-sdk": "^1.0.31",
     "@typechain/ethers-v5": "^10.0.0",
     "@types/jest": "^26.0.19",
     "@types/node": "^12.19.11",
@@ -28,9 +27,9 @@
     "case-sensitive-paths-webpack-plugin": "2.3.0",
     "connected-react-router": "^6.9.1",
     "css-loader": "4.3.0",
-    "decentraland-dapps": "^13.7.1",
+    "decentraland-dapps": "^13.16.0",
     "decentraland-transactions": "^1.22.2",
-    "decentraland-ui": "^3.56.0",
+    "decentraland-ui": "^3.64.1",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
     "eslint": "^7.11.0",
@@ -96,7 +95,6 @@
     "@types/react-redux": "^7.1.18",
     "@types/react-router-dom": "^5.1.7",
     "@types/redux-logger": "^3.0.8",
-    "@types/ws": "^8.5.3",
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
     "customize-cra": "^1.0.0",
@@ -129,7 +127,7 @@
     ]
   },
   "engines": {
-    "node": ">= 16.0.0"
+    "node": "^16"
   },
   "browserslist": {
     "production": [

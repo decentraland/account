@@ -8,6 +8,7 @@ import {
   isPending,
 } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { PurchaseStatus } from 'decentraland-dapps/dist/modules/mana/types'
 import { call, select } from '@redux-saga/core/effects'
 import { getConnectedProvider } from 'decentraland-dapps/dist/lib/eth'
 import {
@@ -21,7 +22,6 @@ import { getWithdrawals } from './selectors'
 import {
   DepositStatus,
   MaticEnv,
-  PurchaseStatus,
   TransactionStatus,
   TransactionType,
   TransferStatus,
