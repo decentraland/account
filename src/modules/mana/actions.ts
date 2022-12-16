@@ -1,7 +1,6 @@
 import { action } from 'typesafe-actions'
 import { ChainId, Network } from '@dcl/schemas'
 import { buildTransactionPayload } from 'decentraland-dapps/dist/modules/transaction/utils'
-import { Purchase } from 'decentraland-dapps/dist/modules/mana/types'
 import {
   WithdrawalStatus,
   Withdrawal,
