@@ -35,7 +35,7 @@ const AccountCardHeader = ({
   }
 
   const handleAddTokens = () => {
-    analytics.track('[Account] Buy MANA with FIAT - Open Modal')
+    analytics.track('Open BUY MANA modal')
     setIsOpenBuyManaWithFiatModal(true)
   }
 
