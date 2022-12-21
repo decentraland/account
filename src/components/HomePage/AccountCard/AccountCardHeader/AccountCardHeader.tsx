@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Network } from '@dcl/schemas'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button, Dropdown, Popup } from 'decentraland-ui'
+import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import BuyManaWithFiatModal from 'decentraland-dapps/dist/containers/BuyManaWithFiatModal'
 import { Props } from './AccountCardHeader.types'
 import './AccountCardHeader.css'
@@ -16,6 +17,8 @@ const AccountCardHeader = ({
   onConvert,
   onImportWithdrawal,
 }: Props) => {
+  const analytics = getAnalytics()
+
   const [isOpenBuyManaWithFiatModal, setIsOpenBuyManaWithFiatModal] =
     useState(false)
 
@@ -32,6 +35,7 @@ const AccountCardHeader = ({
   }
 
   const handleAddTokens = () => {
+    analytics.track('Open BUY MANA modal')
     setIsOpenBuyManaWithFiatModal(true)
   }
 
