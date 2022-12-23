@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Network } from '@dcl/schemas'
 import { Button, Dropdown, Popup } from 'decentraland-ui'
 import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import BuyManaWithFiatModal from 'decentraland-dapps/dist/containers/BuyManaWithFiatModal'
 import { Props } from './AccountCardHeader.types'
 import './AccountCardHeader.css'
 
@@ -16,11 +15,9 @@ const AccountCardHeader = ({
   onReceive,
   onConvert,
   onImportWithdrawal,
+  onAddTokens,
 }: Props) => {
   const analytics = getAnalytics()
-
-  const [isOpenBuyManaWithFiatModal, setIsOpenBuyManaWithFiatModal] =
-    useState(false)
 
   const handleTransferMana = () => onTransfer(network)
 
@@ -36,11 +33,7 @@ const AccountCardHeader = ({
 
   const handleAddTokens = () => {
     analytics.track('Open BUY MANA modal')
-    setIsOpenBuyManaWithFiatModal(true)
-  }
-
-  const handleCloseBuyManaWithFiatModal = () => {
-    setIsOpenBuyManaWithFiatModal(!isOpenBuyManaWithFiatModal)
+    onAddTokens(network)
   }
 
   const handleConvert = () => onConvert(network)
@@ -53,11 +46,6 @@ const AccountCardHeader = ({
 
   return (
     <>
-      <BuyManaWithFiatModal
-        open={isOpenBuyManaWithFiatModal}
-        selectedNetwork={network}
-        onClose={handleCloseBuyManaWithFiatModal}
-      />
       <div className="AccountCardHeader">
         <div className="title">
           <div className="title-text-container">
