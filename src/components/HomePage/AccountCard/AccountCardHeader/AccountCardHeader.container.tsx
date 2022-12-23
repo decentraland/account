@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import { Network } from '@dcl/schemas'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
-import { openModal } from '../../../../modules/modal/actions'
 import { openBuyManaWithFiatModalRequest } from 'decentraland-dapps/dist/modules/manaFiatGateway/actions'
+import { openModal } from '../../../../modules/modal/actions'
 import { RootState } from '../../../../modules/reducer'
 import {
   MapDispatch,
