@@ -3,6 +3,7 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Close } from 'decentraland-ui'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
+import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
 import { Purchase } from 'decentraland-dapps/dist/modules/mana/types'
 import { Network } from '@dcl/schemas'
 import {
@@ -46,6 +47,14 @@ const TransactionDetailModal: React.FC<ModalProps> = ({
       break
     case TransactionType.PURCHASE:
       data = transaction.data as Purchase
+      dataComponent = data.txHash ? (
+        <Data label={'tx'}>
+          <ExplorerLink
+            chainId={getChainIdByNetwork(data.network)}
+            txHash={data.txHash}
+          />
+        </Data>
+      ) : null
       break
     case TransactionType.TRANSFER:
       data = transaction.data as Transfer
