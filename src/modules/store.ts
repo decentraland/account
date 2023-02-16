@@ -7,7 +7,7 @@ import { createStorageMiddleware } from 'decentraland-dapps/dist/modules/storage
 import { storageReducerWrapper } from 'decentraland-dapps/dist/modules/storage/reducer'
 import { createTransactionMiddleware } from 'decentraland-dapps/dist/modules/transaction/middleware'
 import { createAnalyticsMiddleware } from 'decentraland-dapps/dist/modules/analytics/middleware'
-import { SET_PURCHASE } from 'decentraland-dapps/dist/modules/mana/actions'
+import { SET_PURCHASE } from 'decentraland-dapps/dist/modules/gateway/actions'
 import { createRootReducer } from './reducer'
 import { rootSaga } from './sagas'
 import {

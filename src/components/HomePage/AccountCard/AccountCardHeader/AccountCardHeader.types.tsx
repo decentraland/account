@@ -4,7 +4,7 @@ import {
   openBuyManaWithFiatModalRequest,
   OpenBuyManaWithFiatModalRequestAction,
   OpenManaFiatGatewayRequestAction,
-} from 'decentraland-dapps/dist/modules/manaFiatGateway/actions'
+} from 'decentraland-dapps/dist/modules/gateway/actions'
 import { OpenModalAction } from '../../../../modules/modal/actions'
 
 export type Props = {
