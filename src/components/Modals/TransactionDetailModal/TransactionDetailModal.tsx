@@ -4,7 +4,7 @@ import { Close } from 'decentraland-ui'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
-import { Purchase } from 'decentraland-dapps/dist/modules/mana/types'
+import { Purchase } from 'decentraland-dapps/dist/modules/gateway/types'
 import { Network } from '@dcl/schemas'
 import {
   Deposit,

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { openManaFiatGatewayRequest } from 'decentraland-dapps/dist/modules/manaFiatGateway/actions'
+import { openManaFiatGatewayRequest } from 'decentraland-dapps/dist/modules/gateway/actions'
 import { openModal } from '../../../../../modules/modal/actions'
 import { RootState } from '../../../../../modules/reducer'
 import AccountTransaction from './AccountTransaction'

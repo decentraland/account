@@ -8,7 +8,7 @@ import { transactionReducer as transaction } from 'decentraland-dapps/dist/modul
 import { profileReducer as profile } from 'decentraland-dapps/dist/modules/profile/reducer'
 import { modalReducer as modal } from 'decentraland-dapps/dist/modules/modal/reducer'
 import { toastReducer as toast } from 'decentraland-dapps/dist/modules/toast/reducer'
-import { manaFiatGatewayReducer as manaFiatGateway } from 'decentraland-dapps/dist/modules/manaFiatGateway/reducer'
+import { gatewayReducer as gateway } from 'decentraland-dapps/dist/modules/gateway/reducer'
 import { manaReducer as mana } from './mana/reducer'
 
 export const createRootReducer = (history: History) =>
@@ -21,7 +21,7 @@ export const createRootReducer = (history: History) =>
     modal,
     mana,
     toast,
-    manaFiatGateway,
+    gateway,
     router: connectRouter(history),
   })
 

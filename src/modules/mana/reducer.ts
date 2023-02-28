@@ -9,8 +9,8 @@ import {
 import {
   SET_PURCHASE,
   SetPurchaseAction,
-} from 'decentraland-dapps/dist/modules/mana/actions'
-import { Purchase } from 'decentraland-dapps/dist/modules/mana/types'
+} from 'decentraland-dapps/dist/modules/gateway/actions'
+import { Purchase } from 'decentraland-dapps/dist/modules/gateway/types'
 import {
   ApproveManaFailureAction,
   ApproveManaRequestAction,

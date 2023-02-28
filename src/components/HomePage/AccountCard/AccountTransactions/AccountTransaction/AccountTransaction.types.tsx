@@ -4,7 +4,7 @@ import { NetworkGatewayType } from 'decentraland-ui'
 import {
   openManaFiatGatewayRequest,
   OpenManaFiatGatewayRequestAction,
-} from 'decentraland-dapps/dist/modules/manaFiatGateway/actions'
+} from 'decentraland-dapps/dist/modules/gateway/actions'
 import { Transaction } from '../../../../../modules/mana/types'
 import { OpenModalAction } from '../../../../../modules/modal/actions'
 

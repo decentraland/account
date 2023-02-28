@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { distanceInWordsToNow } from 'decentraland-dapps/dist/lib/utils'
-import { Purchase } from 'decentraland-dapps/dist/modules/mana/types'
+import { Purchase } from 'decentraland-dapps/dist/modules/gateway/types'
 import { gatewaysNames, NetworkGatewayType } from 'decentraland-ui'
 import {
   Deposit,

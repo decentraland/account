@@ -7,7 +7,7 @@ import { transactionSaga } from 'decentraland-dapps/dist/modules/transaction/sag
 import { createWalletSaga } from 'decentraland-dapps/dist/modules/wallet/sagas'
 import { toastSaga } from 'decentraland-dapps/dist/modules/toast/sagas'
 import { locationSaga } from 'decentraland-dapps/dist/modules/location/sagas'
-import { createManaFiatGatewaysSaga } from 'decentraland-dapps/dist/modules/manaFiatGateway/sagas'
+import { createGatewaySaga } from 'decentraland-dapps/dist/modules/gateway/sagas'
 import { TRANSACTIONS_API_URL } from './mana/utils'
 import { modalSaga } from './modal/sagas'
 import { locationSaga as localLocationSaga } from './location/sagas'
@@ -30,7 +30,7 @@ const walletSaga = createWalletSaga({
   TRANSACTIONS_API_URL,
 })
 
-const manaFiatGatewaysSaga = createManaFiatGatewaysSaga({
+const gatewaySaga = createGatewaySaga({
   [NetworkGatewayType.MOON_PAY]: {
     apiBaseUrl: config.get('MOON_PAY_API_URL'),
     apiKey: config.get('MOON_PAY_API_KEY'),
@@ -38,8 +38,14 @@ const manaFiatGatewaysSaga = createManaFiatGatewaysSaga({
     widgetBaseUrl: config.get('MOON_PAY_WIDGET_URL'),
   },
   [NetworkGatewayType.TRANSAK]: {
+    apiBaseUrl: config.get('TRANSAK_API_URL'),
     key: config.get('TRANSAK_KEY'),
     env: config.get('TRANSAK_ENV'),
+    pollingDelay: +config.get('TRANSAK_POLLING_DELAY'),
+    pusher: {
+      appKey: config.get('TRANSAK_PUSHER_APP_KEY'),
+      appCluster: config.get('TRANSAK_PUSHER_APP_CLUSTER'),
+    },
   },
 })
 
@@ -55,7 +61,7 @@ export function* rootSaga() {
     localLocationSaga(),
     manaSaga(),
     toastSaga(),
-    manaFiatGatewaysSaga(),
+    gatewaySaga(),
     localProfileSaga(),
   ])
 }

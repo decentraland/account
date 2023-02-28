@@ -6,9 +6,11 @@ import { isPending } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import {
+  ManaPurchase,
   Purchase,
   PurchaseStatus,
-} from 'decentraland-dapps/dist/modules/mana/types'
+} from 'decentraland-dapps/dist/modules/gateway/types'
+import { isManaPurchase } from 'decentraland-dapps/dist/modules/gateway/utils'
 import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
 import { RootState } from '../reducer'
 import {
@@ -80,7 +82,8 @@ export const isWaitingForApproval = createSelector<
 
 export const getDeposits = (state: RootState) => getData(state).deposits
 export const getWithdrawals = (state: RootState) => getData(state).withdrawals
-export const getPurchases = (state: RootState) => getData(state).purchases
+export const getPurchases = (state: RootState) =>
+  getData(state).purchases.filter(isManaPurchase)
 
 export const getWalletDeposits = createSelector<
   RootState,
@@ -113,7 +116,7 @@ export const getTransactionByNetwork = createSelector<
   Transaction[],
   Deposit[],
   Withdrawal[],
-  Purchase[],
+  ManaPurchase[],
   string | undefined,
   Record<Network, AccountTransaction[]>
 >(
