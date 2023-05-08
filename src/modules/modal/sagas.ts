@@ -1,22 +1,20 @@
-import { put, takeEvery } from '@redux-saga/core/effects'
+import { takeEvery, put, select, delay } from 'redux-saga/effects'
+import { LOCATION_CHANGE } from 'connected-react-router'
 import { getOpenModals } from 'decentraland-dapps/dist/modules/modal/selectors'
+import { ModalState } from 'decentraland-dapps/dist/modules/modal/reducer'
 import { IMPORT_WITHDRAWAL_SUCCESS } from '../mana/actions'
-
-import { history, store } from '../store'
 import { closeAllModals, closeModal } from './actions'
 
 export function* modalSaga() {
-  // Can't use generators inside the history listen callback
-  history.listen(() => handleURLChange())
+  yield takeEvery(LOCATION_CHANGE, handleLocationChange)
   yield takeEvery(IMPORT_WITHDRAWAL_SUCCESS, handleImportWithdrawalSuccess)
 }
 
-function handleURLChange() {
-  const openModals = getOpenModals(store.getState())
-
-  if (Object.keys(openModals).length > 1) {
-    // Move the dispatch to the end of the queue to avoid conflicting with other running sagas
-    setTimeout(() => store.dispatch(closeAllModals()))
+function* handleLocationChange() {
+  const openModals: ModalState = yield select(getOpenModals)
+  if (Object.keys(openModals).length > 0) {
+    yield delay(100)
+    yield put(closeAllModals())
   }
 }
 
