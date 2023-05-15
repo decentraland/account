@@ -146,6 +146,7 @@
     "failed": "Fallido",
     "cancelled": "Cancelado",
     "complete": "Completado",
+    "refunded": "Reintegrada",
     "pending": "Pendiente",
     "expired": "Expirada"
   },
