@@ -1,20 +1,21 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { ethers } from 'ethers'
 import { Button, Close, Field, Loader } from 'decentraland-ui'
+import { ContractName } from 'decentraland-transactions'
 import { withAuthorizedAction } from 'decentraland-dapps/dist/containers'
 import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { Contract, Network } from '@dcl/schemas'
-import { Props } from './ConvertManaModal.types'
+import { AuthorizedAction } from 'decentraland-dapps/dist/containers/withAuthorizedAction/AuthorizationModal'
+import { AuthorizationType } from 'decentraland-dapps/dist/modules/authorization/types'
+import { ERC20_PREDICATE_CONTRACT_ADDRESS } from '../../../modules/mana/utils'
 import {
   MANA_CONTRACT_ADDRESS,
   getEstimatedExitTransactionCost,
 } from '../../../modules/mana/utils'
+import { getDepositManaStatus, getError } from '../../../modules/mana/selectors'
+import { Props } from './ConvertManaModal.types'
 import './ConvertManaModal.css'
-import { AuthorizedAction } from 'decentraland-dapps/dist/containers/withAuthorizedAction/AuthorizationModal'
-import { AuthorizationType } from 'decentraland-dapps/dist/modules/authorization/types'
-import { ERC20_PREDICATE_CONTRACT_ADDRESS } from '../../../modules/mana/utils'
-import { ContractName } from 'decentraland-transactions'
 
 const ConvertManaModal: React.FC<Props> = ({
   name,
@@ -224,5 +225,5 @@ const ConvertManaModal: React.FC<Props> = ({
 }
 
 export default React.memo(
-  withAuthorizedAction(ConvertManaModal, AuthorizedAction.SWAP_MANA)
+  withAuthorizedAction(ConvertManaModal, AuthorizedAction.SWAP_MANA, getDepositManaStatus, getError)
 )
