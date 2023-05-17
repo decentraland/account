@@ -1,0 +1,7 @@
+.authorization-modal .ui.basic.button.close-button {
+  box-shadow: unset;
+}
+
+.authorization-modal .ui.button.close-button::before {
+  filter: brightness(0.5);
+}

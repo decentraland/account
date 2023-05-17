@@ -1,9 +1,8 @@
 import { connect } from 'react-redux'
-import { getNetworks } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { getNetworks, getData as getWallet } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { Network } from '@dcl/schemas'
 import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
 import {
-  approveManaRequest,
   APPROVE_MANA_REQUEST,
   depositManaRequest,
   DEPOSIT_MANA_REQUEST,
@@ -17,13 +16,11 @@ import { RootState } from '../../../modules/reducer'
 import {
   getManaPrice,
   getLoading,
-  getAllowance,
-  isWaitingForApproval,
 } from '../../../modules/mana/selectors'
-import { MapDispatch, MapDispatchProps } from './ConvertManaModal.types'
+import { MapDispatch, MapDispatchProps, MapState } from './ConvertManaModal.types'
 import ConvertManaModal from './ConvertManaModal'
 
-const mapState = (state: RootState) => {
+const mapState = (state: RootState): MapState => {
   const networks = getNetworks(state)
   let manaEth = 0
   let manaMatic = 0
@@ -35,9 +32,8 @@ const mapState = (state: RootState) => {
   return {
     manaEth,
     manaMatic,
-    allowance: getAllowance(state),
     manaPrice: getManaPrice(state),
-    isWaitingForApproval: isWaitingForApproval(state),
+    wallet: getWallet(state),
     isLoading:
       isLoadingType(getLoading(state), DEPOSIT_MANA_REQUEST) ||
       isLoadingType(getLoading(state), TRANSFER_MANA_REQUEST) ||
@@ -49,7 +45,6 @@ const mapState = (state: RootState) => {
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
   onDepositMana: (amount) => dispatch(depositManaRequest(amount)),
-  onApproveMana: (allowance) => dispatch(approveManaRequest(allowance)),
   onManaPrice: () => dispatch(fetchManaPriceRequest()),
   onWithdrawMana: (amount) => dispatch(initiateWithdrawalRequest(amount)),
 })

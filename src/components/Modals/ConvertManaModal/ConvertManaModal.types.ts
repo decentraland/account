@@ -1,7 +1,8 @@
 import { Dispatch } from 'redux'
+import { Wallet } from 'decentraland-dapps/dist/modules/wallet/types'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
+import { WithAuthorizedActionProps } from 'decentraland-dapps/dist/containers/withAuthorizedAction'
 import {
-  approveManaRequest,
   depositManaRequest,
   fetchManaPriceRequest,
   initiateWithdrawalRequest,
@@ -10,21 +11,20 @@ import {
 export type Props = ModalProps & {
   isLoading: boolean
   isWaitingForApproval: boolean
-  allowance: string
   manaEth: number
   manaMatic: number
   manaPrice: number
-  onApproveMana: typeof approveManaRequest
+  wallet: Wallet | null
   onManaPrice: typeof fetchManaPriceRequest
   onDepositMana: typeof depositManaRequest
   onWithdrawMana: typeof initiateWithdrawalRequest
-}
+} & WithAuthorizedActionProps
 
 export type State = {}
 
-export type MapState = Props
+export type MapState = Pick<Props, 'wallet' | 'isLoading' | 'manaEth' | 'manaMatic' | 'manaPrice'>
 export type MapDispatch = Dispatch
 export type MapDispatchProps = Pick<
   Props,
-  'onApproveMana' | 'onManaPrice' | 'onDepositMana' | 'onWithdrawMana'
+  'onManaPrice' | 'onDepositMana' | 'onWithdrawMana'
 >
