@@ -117,7 +117,14 @@
     "no_balance": "You don't have enough balance",
     "withdrawal_cost": "This operation consists of two steps. The first step won't have any cost. The second one will cost approximately {cost} of gas fees on Ethereum.",
     "withdrawal_cost_accept": "Proceed",
-    "withdrawal_cost_cancel": "Cancel"
+    "withdrawal_cost_cancel": "Cancel",
+    "authorization": {
+      "title_action": "deposit",
+      "action": "swap",
+      "confirm_transaction_title": "Complete transaction to deposit the MANA",
+      "authorize_mana_description": "Keep in mind that some wallets require setting a custom MANA spending limit. Enter what you want to deposit {price} MANA or a higher amount you're comfortable with. You can change the limit at any time.",
+      "set_cap_description": "Enter what you want to deposit {price} MANA or a higher amount you're comfortable with. You can change the limit at any time."
+    }
   },
   "withdrawal_status_modal": {
     "title": "Convert to Mana",

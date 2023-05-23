@@ -115,7 +115,14 @@
     "no_balance": "您的余额不足",
     "withdrawal_cost": "该操作包括两个步骤。第一步不会有任何费用。第二个将在以太坊上花费大约 ${cost} 的汽油费",
     "withdrawal_cost_accept": "继续",
-    "withdrawal_cost_cancel": "取消"
+    "withdrawal_cost_cancel": "取消",
+    "authorization": {
+      "title_action": "订金",
+      "action": "交换",
+      "confirm_transaction_title": "完整的交易以存放法力",
+      "authorize_mana_description": "请记住，某些钱包需要设置自定义的法力支出限制。输入要存入{price}的法力值或更高舒适的内容。您可以随时更改限制。",
+      "set_cap_description": "输入要存入{price}法力或更高量的范围的内容。您可以随时更改限制."
+    }
   },
   "withdrawal_status_modal": {
     "title": "转化为法力",

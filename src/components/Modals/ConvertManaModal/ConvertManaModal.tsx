@@ -225,5 +225,23 @@ const ConvertManaModal: React.FC<Props> = ({
 }
 
 export default React.memo(
-  withAuthorizedAction(ConvertManaModal, AuthorizedAction.SWAP_MANA, getDepositManaStatus, getError)
+  withAuthorizedAction(
+    ConvertManaModal,
+    AuthorizedAction.SWAP_MANA,
+    {
+      title_action: 'convert_mana_modal.authorization.title_action',
+      action: 'convert_mana_modal.authorization.action',
+      confirm_transaction: {
+        title: 'convert_mana_modal.authorization.confirm_transaction_title',
+      },
+      set_cap: {
+        description: 'convert_mana_modal.authorization.set_cap_description'
+      },
+      authorize_mana: {
+        description: 'convert_mana_modal.authorization.authorize_mana_description'
+      }
+    },
+    getDepositManaStatus,
+    getError
+  )
 )
