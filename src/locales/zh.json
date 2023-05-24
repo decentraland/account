@@ -145,6 +145,7 @@
     "failed": "失败的",
     "cancelled": "取消",
     "complete": "完全的",
+    "refunded": "已退款",
     "pending": "待办的",
     "expired": "已到期"
   },
