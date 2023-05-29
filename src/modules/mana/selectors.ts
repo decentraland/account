@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect'
+import { AuthorizationStepStatus } from 'decentraland-ui'
 import { Network } from '@dcl/schemas'
 import { Transaction } from 'decentraland-dapps/dist/modules/transaction/types'
 import { getData as getTransactionsData } from 'decentraland-dapps/dist/modules/transaction/selectors'
@@ -12,12 +13,14 @@ import {
 } from 'decentraland-dapps/dist/modules/gateway/types'
 import { isManaPurchase } from 'decentraland-dapps/dist/modules/gateway/utils'
 import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
+import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
 import { RootState } from '../reducer'
 import {
   APPROVE_MANA_SUCCESS,
   IMPORT_WITHDRAWAL_REQUEST,
   TransferManaSuccessAction,
   TRANSFER_MANA_SUCCESS,
+  DEPOSIT_MANA_REQUEST,
 } from './actions'
 import {
   Transfer,
@@ -255,3 +258,15 @@ export const getWithdrawalImportError = createSelector<
 
   return importError
 })
+
+export const getDepositManaStatus = (state: RootState) => {
+  if (isLoadingType(getLoading(state), DEPOSIT_MANA_REQUEST)) {
+    return AuthorizationStepStatus.WAITING
+  }
+
+  if (getError(state)) {
+    return AuthorizationStepStatus.ERROR
+  }
+
+  return AuthorizationStepStatus.PENDING
+}

@@ -1,41 +1,37 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { ethers } from 'ethers'
-import {
-  Button,
-  Close,
-  Field,
-  Header,
-  Loader,
-  Radio,
-  Section,
-} from 'decentraland-ui'
-import { NetworkButton, NetworkCheck } from 'decentraland-dapps/dist/containers'
+import { Button, Close, Field, Loader } from 'decentraland-ui'
+import { ContractName } from 'decentraland-transactions'
+import { NetworkButton, withAuthorizedAction } from 'decentraland-dapps/dist/containers'
 import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
-import { Network } from '@dcl/schemas'
+import { Contract, Network } from '@dcl/schemas'
+import { AuthorizedAction } from 'decentraland-dapps/dist/containers/withAuthorizedAction/AuthorizationModal'
+import { AuthorizationType } from 'decentraland-dapps/dist/modules/authorization/types'
+import { ERC20_PREDICATE_CONTRACT_ADDRESS } from '../../../modules/mana/utils'
+import {
+  MANA_CONTRACT_ADDRESS,
+  getEstimatedExitTransactionCost,
+} from '../../../modules/mana/utils'
+import { getDepositManaStatus, getError } from '../../../modules/mana/selectors'
 import { Props } from './ConvertManaModal.types'
-import { getEstimatedExitTransactionCost } from '../../../modules/mana/utils'
 import './ConvertManaModal.css'
-
-const MAX_APPROVAL =
-  '57896044618658097711785492504343953926634992332820282019728792003956564819968'
 
 const ConvertManaModal: React.FC<Props> = ({
   name,
   manaEth,
   manaMatic,
+  wallet,
   onClose,
   isLoading,
-  allowance,
   manaPrice,
   onManaPrice,
-  onApproveMana,
   onDepositMana,
   onWithdrawMana,
-  isWaitingForApproval,
+  onAuthorizedAction,
+  onClearManaError,
   metadata: { network },
 }) => {
-  const [isApproved, setIsApproved] = useState(false)
   const [amount, setAmount] = useState(0)
 
   const handleSetAmount = (e: React.FormEvent<HTMLInputElement>) => {
@@ -47,15 +43,29 @@ const ConvertManaModal: React.FC<Props> = ({
     }
   }
 
-  const handleApprove = useCallback(() => {
-    onApproveMana(MAX_APPROVAL)
-    setIsApproved(!isApproved)
-  }, [isApproved, onApproveMana])
-
   const handleConvert = useCallback(() => {
     switch (network) {
       case Network.ETHEREUM: {
-        onDepositMana(amount)
+        const manaContract = {
+          name: ContractName.MANAToken,
+          address: MANA_CONTRACT_ADDRESS,
+          network,
+          chainId: wallet?.chainId,
+        } as Contract
+
+        onClearManaError()
+
+        onAuthorizedAction({
+          authorizationType: AuthorizationType.ALLOWANCE,
+          authorizedAddress: ERC20_PREDICATE_CONTRACT_ADDRESS,
+          authorizedContractLabel: 'ERC20 Predicate',
+          targetContract: manaContract,
+          targetContractName: ContractName.MANAToken,
+          requiredAllowanceInWei: ethers.utils
+            .parseEther(amount.toString())
+            .toString(),
+          onAuthorized: () => onDepositMana(amount),
+        })
         break
       }
       case Network.MATIC: {
@@ -63,7 +73,15 @@ const ConvertManaModal: React.FC<Props> = ({
         break
       }
     }
-  }, [amount, network, onDepositMana, onWithdrawMana])
+  }, [
+    amount,
+    network,
+    wallet?.chainId,
+    onDepositMana,
+    onWithdrawMana,
+    onAuthorizedAction,
+    onClearManaError
+  ])
 
   const handleMax = useCallback(() => {
     if (network === Network.MATIC) {
@@ -75,11 +93,7 @@ const ConvertManaModal: React.FC<Props> = ({
 
   useEffect(() => {
     onManaPrice()
-    const amountAllowed = parseInt(ethers.utils.formatEther(allowance), 10)
-    if (!isNaN(amountAllowed) && amountAllowed > 100) {
-      setIsApproved(true)
-    }
-  }, [allowance, onManaPrice])
+  }, [onManaPrice])
 
   const [hasAcceptedWithdrawalCost, setHasAcceptedWithdrawalCost] =
     useState(false)
@@ -102,12 +116,11 @@ const ConvertManaModal: React.FC<Props> = ({
     }
   }, [])
 
-  const isButtonLoading = isLoading || isWaitingForApproval
+  const isButtonLoading = isLoading
   const isDisabledByAmount =
     network === Network.MATIC ? manaMatic < amount : manaEth < amount
   const isButtonDisabled =
     isButtonLoading ||
-    (network === Network.ETHEREUM && !isApproved) ||
     isDisabledByAmount ||
     amount <= 0
 
@@ -148,23 +161,6 @@ const ConvertManaModal: React.FC<Props> = ({
             {(amount * manaPrice).toFixed(2)} {t('global.usd_symbol')}
           </div>
         )}
-        {network === Network.ETHEREUM ? (
-          <Section className="field">
-            <Header sub={true}>
-              {t('convert_mana_modal.label_approvement')}
-            </Header>
-            <NetworkCheck network={network}>
-              {(isEnabled) => (
-                <Radio
-                  toggle
-                  checked={isApproved}
-                  onChange={handleApprove}
-                  disabled={isApproved || !isEnabled}
-                />
-              )}
-            </NetworkCheck>
-          </Section>
-        ) : null}
         <div className="fees-warning">{t('global.fees_warning')}</div>
         <NetworkButton
           className="start-transaction-button"
@@ -184,11 +180,9 @@ const ConvertManaModal: React.FC<Props> = ({
     )
   }, [
     amount,
-    handleApprove,
     handleConvert,
     handleMax,
     hasAcceptedWithdrawalCost,
-    isApproved,
     isButtonDisabled,
     isButtonLoading,
     isDisabledByAmount,
@@ -234,4 +228,24 @@ const ConvertManaModal: React.FC<Props> = ({
   )
 }
 
-export default React.memo(ConvertManaModal)
+export default React.memo(
+  withAuthorizedAction(
+    ConvertManaModal,
+    AuthorizedAction.SWAP_MANA,
+    {
+      title_action: 'convert_mana_modal.authorization.title_action',
+      action: 'convert_mana_modal.authorization.action',
+      confirm_transaction: {
+        title: 'convert_mana_modal.authorization.confirm_transaction_title',
+      },
+      set_cap: {
+        description: 'convert_mana_modal.authorization.set_cap_description'
+      },
+      authorize_mana: {
+        description: 'convert_mana_modal.authorization.authorize_mana_description'
+      }
+    },
+    getDepositManaStatus,
+    getError
+  )
+)

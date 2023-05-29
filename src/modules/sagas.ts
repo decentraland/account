@@ -8,6 +8,7 @@ import { createWalletSaga } from 'decentraland-dapps/dist/modules/wallet/sagas'
 import { toastSaga } from 'decentraland-dapps/dist/modules/toast/sagas'
 import { locationSaga } from 'decentraland-dapps/dist/modules/location/sagas'
 import { createGatewaySaga } from 'decentraland-dapps/dist/modules/gateway/sagas'
+import { authorizationSaga } from 'decentraland-dapps/dist/modules/authorization/sagas'
 import { TRANSACTIONS_API_URL } from './mana/utils'
 import { modalSaga } from './modal/sagas'
 import { locationSaga as localLocationSaga } from './location/sagas'
@@ -52,6 +53,7 @@ const gatewaySaga = createGatewaySaga({
 export function* rootSaga() {
   yield all([
     analyticsSaga(),
+    authorizationSaga(),
     transactionSaga(),
     profileSaga(),
     walletSaga(),

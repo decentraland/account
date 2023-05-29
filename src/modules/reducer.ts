@@ -9,10 +9,12 @@ import { profileReducer as profile } from 'decentraland-dapps/dist/modules/profi
 import { modalReducer as modal } from 'decentraland-dapps/dist/modules/modal/reducer'
 import { toastReducer as toast } from 'decentraland-dapps/dist/modules/toast/reducer'
 import { gatewayReducer as gateway } from 'decentraland-dapps/dist/modules/gateway/reducer'
+import { authorizationReducer as authorization } from 'decentraland-dapps/dist/modules/authorization/reducer'
 import { manaReducer as mana } from './mana/reducer'
 
 export const createRootReducer = (history: History) =>
   combineReducers({
+    authorization,
     profile,
     storage,
     transaction,
