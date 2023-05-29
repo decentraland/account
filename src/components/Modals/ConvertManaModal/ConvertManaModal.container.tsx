@@ -11,6 +11,7 @@ import {
   initiateWithdrawalRequest,
   INITIATE_WITHDRAWAL_REQUEST,
   TRANSFER_MANA_REQUEST,
+  clearManaError,
 } from '../../../modules/mana/actions'
 import { RootState } from '../../../modules/reducer'
 import {
@@ -47,6 +48,7 @@ const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
   onDepositMana: (amount) => dispatch(depositManaRequest(amount)),
   onManaPrice: () => dispatch(fetchManaPriceRequest()),
   onWithdrawMana: (amount) => dispatch(initiateWithdrawalRequest(amount)),
+  onClearManaError: () => dispatch(clearManaError())
 })
 
 export default connect(mapState, mapDispatch)(ConvertManaModal)

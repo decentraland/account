@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { ethers } from 'ethers'
 import { Button, Close, Field, Loader } from 'decentraland-ui'
 import { ContractName } from 'decentraland-transactions'
-import { withAuthorizedAction } from 'decentraland-dapps/dist/containers'
+import { NetworkButton, withAuthorizedAction } from 'decentraland-dapps/dist/containers'
 import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { Contract, Network } from '@dcl/schemas'
@@ -29,6 +29,7 @@ const ConvertManaModal: React.FC<Props> = ({
   onDepositMana,
   onWithdrawMana,
   onAuthorizedAction,
+  onClearManaError,
   metadata: { network },
 }) => {
   const [amount, setAmount] = useState(0)
@@ -51,6 +52,8 @@ const ConvertManaModal: React.FC<Props> = ({
           network,
           chainId: wallet?.chainId,
         } as Contract
+
+        onClearManaError()
 
         onAuthorizedAction({
           authorizationType: AuthorizationType.ALLOWANCE,
@@ -77,6 +80,7 @@ const ConvertManaModal: React.FC<Props> = ({
     onDepositMana,
     onWithdrawMana,
     onAuthorizedAction,
+    onClearManaError
   ])
 
   const handleMax = useCallback(() => {
@@ -118,8 +122,7 @@ const ConvertManaModal: React.FC<Props> = ({
   const isButtonDisabled =
     isButtonLoading ||
     isDisabledByAmount ||
-    amount <= 0 ||
-    wallet?.network !== network
+    amount <= 0
 
   const content = useMemo(() => {
     if (!hasAcceptedWithdrawalCost) {
@@ -159,19 +162,20 @@ const ConvertManaModal: React.FC<Props> = ({
           </div>
         )}
         <div className="fees-warning">{t('global.fees_warning')}</div>
-        <Button
+        <NetworkButton
           className="start-transaction-button"
           primary
           onClick={handleConvert}
           loading={isButtonLoading}
           disabled={isButtonDisabled}
+          network={network}
         >
           {t(
             network === Network.ETHEREUM
               ? 'convert_mana_modal.label_button_ethereum'
               : 'convert_mana_modal.label_button_matic'
           )}
-        </Button>
+        </NetworkButton>
       </>
     )
   }, [

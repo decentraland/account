@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect'
+import { AuthorizationStepStatus } from 'decentraland-ui'
 import { Network } from '@dcl/schemas'
 import { Transaction } from 'decentraland-dapps/dist/modules/transaction/types'
 import { getData as getTransactionsData } from 'decentraland-dapps/dist/modules/transaction/selectors'
@@ -13,7 +14,6 @@ import {
 import { isManaPurchase } from 'decentraland-dapps/dist/modules/gateway/utils'
 import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
 import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
-import { AuthorizationStepStatus } from 'decentraland-ui'
 import { RootState } from '../reducer'
 import {
   APPROVE_MANA_SUCCESS,

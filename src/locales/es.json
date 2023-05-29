@@ -120,7 +120,7 @@
     "authorization": {
       "title_action": "depósito",
       "action": "intercambio",
-      "confirm_transaction_title": "Transacción completa para depositar el MANA",
+      "confirm_transaction_title": "Completar transacción para depositar el MANA",
       "authorize_mana_description": "Tenga en cuenta que algunas billeteras requieren establecer un límite de gasto de MANA personalizado. Ingrese lo que desea depositar {price} Mana o una cantidad más alta con la que se sienta cómodo. Puede cambiar el límite en cualquier momento.",
       "set_cap_description": "Ingrese lo que desea depositar {price} MANA o una cantidad más alta con la que se sienta cómodo. Puede cambiar el límite en cualquier momento."
     }
