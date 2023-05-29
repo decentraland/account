@@ -122,6 +122,8 @@ track<SetPurchaseAction>(
       ? 'Purchase Complete'
       : action.payload.purchase.status === PurchaseStatus.FAILED
       ? 'Purchase Failed'
+      : action.payload.purchase.status === PurchaseStatus.REFUNDED
+      ? 'Purchase Refunded'
       : 'Purchase Started',
   (action) => action.payload.purchase
 )

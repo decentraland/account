@@ -195,6 +195,7 @@ export const getTransactionByNetwork = createSelector<
         status:
           purchase.status === PurchaseStatus.FAILED ||
           purchase.status === PurchaseStatus.CANCELLED ||
+          purchase.status === PurchaseStatus.REFUNDED ||
           (purchase.status === PurchaseStatus.PENDING &&
             purchase.timestamp + ONE_HOUR < Date.now())
             ? TransactionStatus.REJECTED

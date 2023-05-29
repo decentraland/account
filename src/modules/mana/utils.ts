@@ -192,6 +192,9 @@ export const getStatusMessage = (
     if (childStatus === PurchaseStatus.COMPLETE) {
       return t('purchase_status.complete')
     }
+    if (childStatus === PurchaseStatus.REFUNDED) {
+      return t('purchase_status.refunded')
+    }
     if (childStatus === PurchaseStatus.FAILED) {
       return t('purchase_status.failed')
     }
