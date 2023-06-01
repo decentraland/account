@@ -394,7 +394,14 @@ module.exports = function (webpackEnv) {
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
-              include: paths.appSrc,
+              include: [
+                paths.appSrc,
+                path.resolve('node_modules/@walletconnect'),
+                path.resolve('node_modules/@web3modal'),
+                path.resolve(
+                  'node_modules/@metamask/utils/node_modules/superstruct'
+                ),
+              ],
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
@@ -460,29 +467,6 @@ module.exports = function (webpackEnv) {
                 sourceMaps: shouldUseSourceMap,
                 inputSourceMap: shouldUseSourceMap,
               },
-            },
-            {
-              // transpile superstruct dependency as it is using nullish coalescing
-              // operator that is included in ecma 11 and babel-preset-react-app/dependencies
-              // is not enough to transpile it correctly. TODO: check if there is a
-              // better approach
-              test: /\/superstruct\/.*\.mjs$/,
-              loader: require.resolve('babel-loader'),
-              options: {
-                babelrc: false,
-                configFile: false,
-                compact: false,
-                presets: [
-                  [
-                    require.resolve('babel-preset-react-app'),
-                    { helpers: true },
-                  ],
-                ],
-                cacheDirectory: true,
-                cacheCompression: false,
-                sourceMaps: shouldUseSourceMap,
-                inputSourceMap: shouldUseSourceMap,
-              }
             },
             // "postcss" loader applies autoprefixer to our CSS.
             // "css" loader resolves paths in CSS and adds assets as dependencies.
