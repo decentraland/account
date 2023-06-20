@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import Tooltip from '../Tooltip'
-import './WithdrawalTooltip.css'
 
 export default class WithdrawalTooltip extends React.PureComponent {
   render() {
