@@ -44,15 +44,13 @@
   cursor: default;
 }
 
-.ui.checkbox input.hidden + label, 
-.ui.checkbox input.hidden:focus + label, 
-.ui.checkbox input.hidden:active + label {
+.WithdrawalStatusModal .ui.checkbox input.hidden + label, 
+.WithdrawalStatusModal .ui.checkbox input.hidden:focus + label, 
+.WithdrawalStatusModal .ui.checkbox input.hidden:active + label {
   font-size: 17px;
-  line-height: 26px;
-  letter-spacing: -0.2px;
   color: #16141A;
   margin: 8px 0px;
-  padding: 0px 0px 0px 34px
+  padding: 0px 0px 0px 28px
 }
 
 .WithdrawalStatusModal .ui.button.primary {
