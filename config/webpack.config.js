@@ -397,7 +397,6 @@ module.exports = function (webpackEnv) {
               include: [
                 paths.appSrc,
                 path.resolve('node_modules/@walletconnect'),
-                path.resolve('node_modules/@web3modal'),
                 path.resolve(
                   'node_modules/@metamask/utils/node_modules/superstruct'
                 ),
