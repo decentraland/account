@@ -10,14 +10,11 @@ import './modules/analytics/track'
 import './modules/analytics/rollbar'
 
 import './setup'
-import './themes'
 
 import { store, history } from './modules/store'
 import { Routes } from './components/Routes'
 import * as locales from './locales'
 import * as modals from './components/Modals'
-
-import './index.css'
 
 import reportWebVitals from './reportWebVitals'
 
@@ -43,3 +40,8 @@ ReactDOM.render(component, document.getElementById('root'))
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals()
+
+// eslint-disable-next-line import/first
+import './index.css'
+// eslint-disable-next-line import/first
+import './themes'

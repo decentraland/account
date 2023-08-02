@@ -2,9 +2,11 @@ import { all } from 'redux-saga/effects'
 import { NetworkGatewayType } from 'decentraland-ui'
 import { createAnalyticsSaga } from 'decentraland-dapps/dist/modules/analytics/sagas'
 import { createProfileSaga } from 'decentraland-dapps/dist/modules/profile/sagas'
+import { ApplicationName } from 'decentraland-dapps/dist/modules/features/types'
 import { createTranslationSaga } from 'decentraland-dapps/dist/modules/translation/sagas'
 import { transactionSaga } from 'decentraland-dapps/dist/modules/transaction/sagas'
 import { createWalletSaga } from 'decentraland-dapps/dist/modules/wallet/sagas'
+import { featuresSaga } from 'decentraland-dapps/dist/modules/features/sagas'
 import { toastSaga } from 'decentraland-dapps/dist/modules/toast/sagas'
 import { locationSaga } from 'decentraland-dapps/dist/modules/location/sagas'
 import { createGatewaySaga } from 'decentraland-dapps/dist/modules/gateway/sagas'
@@ -61,6 +63,12 @@ export function* rootSaga() {
     modalSaga(),
     locationSaga(),
     localLocationSaga(),
+    featuresSaga({
+      polling: {
+        apps: [ApplicationName.DAPPS],
+        delay: 60000 /** 60 seconds */,
+      },
+    }),
     manaSaga(),
     toastSaga(),
     gatewaySaga(),
