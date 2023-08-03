@@ -12,8 +12,12 @@ import { AccountCardContainer } from './AccountCardContainer'
 import { Props } from './HomePage.types'
 import './HomePage.css'
 
-const HomePage: React.FC<Props> = ({ withdrawals, deposits, transactionsByNetwork }) => {
-
+const HomePage: React.FC<Props> = ({
+  withdrawals,
+  deposits,
+  transactionsByNetwork,
+  isProfileSiteEnabled,
+}) => {
   const ethereumTransactions = transactionsByNetwork[Network.ETHEREUM]
   const maticTransactions = transactionsByNetwork[Network.MATIC]
 
@@ -27,7 +31,7 @@ const HomePage: React.FC<Props> = ({ withdrawals, deposits, transactionsByNetwor
     <>
       <Navbar />
       <Page className="HomePage">
-        <AccountHeader />
+        {!isProfileSiteEnabled ? <AccountHeader /> : null}
         <AccountCardContainer>
           <AccountCard
             network={Network.ETHEREUM}
