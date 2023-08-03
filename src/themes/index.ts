@@ -1,6 +1,8 @@
-import 'semantic-ui-css/semantic.min.css'
-import 'decentraland-ui/dist/themes/base-theme.css'
-import 'decentraland-ui/dist/themes/alternative/light-theme.css'
+// Base
+import 'decentraland-ui/lib/styles.css'
+
+// Theme
+import 'decentraland-ui/lib/light-theme.css'
 
 // Overrides
 import './components/Button.css'

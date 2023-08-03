@@ -43,7 +43,6 @@ export default class WithdrawalStatusModal extends React.PureComponent<Props> {
     const { status, amount } = withdrawal
 
     const handleFinishWithdrawal = () => onFinishWithdrawal(withdrawal)
-    console.log({ status, isLoading, isTxPending })
 
     return (
       <Modal
