@@ -3,13 +3,11 @@ import { push, getLocation } from 'connected-react-router'
 import { isConnected } from 'decentraland-dapps/dist/modules/wallet/selectors'
 
 import { RootState } from '../../modules/reducer'
-import { getIsProfileSiteEnabled } from '../../modules/features/selectors'
 import { MapStateProps, MapDispatch, MapDispatchProps } from './Navbar.types'
 import Navbar from './Navbar'
 
 const mapState = (state: RootState): MapStateProps => ({
   isConnected: isConnected(state),
-  isProfileSiteEnabled: getIsProfileSiteEnabled(state),
   pathname: getLocation(state).pathname,
 })
 

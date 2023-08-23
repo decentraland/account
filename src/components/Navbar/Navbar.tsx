@@ -9,12 +9,12 @@ import { Props } from './Navbar.types'
 import './Navbar.css'
 
 const Navbar = (props: Props) => {
-  const { pathname, onNavigate, isConnected, isProfileSiteEnabled } = props
+  const { pathname, onNavigate, isConnected } = props
 
   if (isConnected) {
     props = {
       ...props,
-      rightMenu: <UserMenu newMenu={isProfileSiteEnabled} />,
+      rightMenu: <UserMenu />,
     }
   }
 
