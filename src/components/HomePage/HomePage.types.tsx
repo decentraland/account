@@ -10,7 +10,7 @@ export type Props = {
 }
 export type MapStateProps = Pick<
   Props,
-  'transactionsByNetwork' | 'withdrawals' | 'deposits' | 'isProfileSiteEnabled'
+  'transactionsByNetwork' | 'withdrawals' | 'deposits'
 >
 export type MapDispatchProps = {}
 export type MapDispatch = Dispatch
