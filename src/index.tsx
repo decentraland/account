@@ -7,7 +7,7 @@ import ToastProvider from 'decentraland-dapps/dist/providers/ToastProvider'
 import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
 
 import './modules/analytics/track'
-import './modules/analytics/rollbar'
+import './modules/analytics/sentry'
 
 import './setup'
 import './themes'

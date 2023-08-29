@@ -8,6 +8,7 @@
     "@dcl/ui-env": "^1.2.0",
     "@maticnetwork/maticjs": "^2.0.51",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
+    "@sentry/react": "^7.64.0",
     "@svgr/webpack": "5.5.0",
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.2",
