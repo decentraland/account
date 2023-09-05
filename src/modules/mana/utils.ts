@@ -11,13 +11,8 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { PurchaseStatus } from 'decentraland-dapps/dist/modules/gateway/types'
 import { call, select } from '@redux-saga/core/effects'
 import { getConnectedProvider } from 'decentraland-dapps/dist/lib/eth'
-import {
-  getAddress,
-  getChainId,
-} from 'decentraland-dapps/dist/modules/wallet/selectors'
-import { ChainId, Network } from '@dcl/schemas'
-import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
-import { MaticPOSClient } from '@maticnetwork/maticjs'
+import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { IPOSClientConfig, POSClient } from '@maticnetwork/maticjs'
 import { getWithdrawals } from './selectors'
 import {
   DepositStatus,
@@ -250,11 +245,15 @@ function getMaticEnv(env?: string) {
 }
 
 export function* getMaticPOSClient() {
-  const provider: Provider = yield call(getConnectedProvider)
+  const connectedProvider: Provider = yield call(getConnectedProvider)
 
-  if (!provider) {
+  if (!connectedProvider) {
     throw new Error(`Could not connect to provider`)
   }
+
+  const web3Provider = new ethers.providers.Web3Provider(
+    connectedProvider as any
+  )
 
   const from: string | undefined = yield select(getAddress)
 
@@ -262,22 +261,29 @@ export function* getMaticPOSClient() {
     throw new Error(`Could not get address`)
   }
 
-  const chainId: ChainId = yield select(getChainId)
-  const parentConfig = getChainConfiguration(chainId)
-  const maticConfig = getChainConfiguration(
-    parentConfig.networkMapping[Network.MATIC]
-  )
-
-  const config = {
+  const config: IPOSClientConfig = {
+    log: true,
     network: MATIC_ENV,
     version: MATIC_ENV === MaticEnv.MAINNET ? 'v1' : 'mumbai',
-    parentProvider: provider,
-    maticProvider: maticConfig.rpcURL,
-    parentDefaultOptions: { from },
-    maticDefaultOptions: { from },
+    parent: {
+      provider: web3Provider,
+      defaultConfig: {
+        from,
+      },
+    },
+    child: {
+      provider: web3Provider,
+      defaultConfig: {
+        from,
+      },
+    },
   }
 
-  return new MaticPOSClient(config)
+  const client = new POSClient()
+
+  yield call([client, client.init], config)
+
+  return client
 }
 
 export function* getStoreWithdrawalByHash(hash: string) {
