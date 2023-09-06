@@ -1,5 +1,7 @@
-import { BigNumber, ethers } from 'ethers'
+import { BigNumber, ethers, utils } from 'ethers'
+import { ChainId, Network } from '@dcl/schemas'
 import { TransactionStatus as TxStatus } from 'decentraland-dapps/dist/modules/transaction/types'
+import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
 import { graphql } from 'decentraland-dapps/dist/lib/graph'
 import { Provider } from 'decentraland-transactions'
 import {
@@ -11,7 +13,10 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { PurchaseStatus } from 'decentraland-dapps/dist/modules/gateway/types'
 import { call, select } from '@redux-saga/core/effects'
 import { getConnectedProvider } from 'decentraland-dapps/dist/lib/eth'
-import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import {
+  getAddress,
+  getChainId,
+} from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { IPOSClientConfig, POSClient } from '@maticnetwork/maticjs'
 import { getWithdrawals } from './selectors'
 import {
@@ -24,7 +29,6 @@ import {
   WithdrawalStatus,
 } from './types'
 import { gasPriceAPI } from '../../lib/api/gasPrice'
-import { utils } from 'ethers'
 import { config } from '../../config'
 
 export const MANA_CONTRACT_ADDRESS = config.get('MANA_CONTRACT_ADDRESS')!
@@ -261,6 +265,12 @@ export function* getMaticPOSClient() {
     throw new Error(`Could not get address`)
   }
 
+  const chainId: ChainId = yield select(getChainId)
+  const parentConfig = getChainConfiguration(chainId)
+  const maticConfig = getChainConfiguration(
+    parentConfig.networkMapping[Network.MATIC]
+  )
+
   const config: IPOSClientConfig = {
     log: true,
     network: MATIC_ENV,
@@ -272,7 +282,7 @@ export function* getMaticPOSClient() {
       },
     },
     child: {
-      provider: web3Provider,
+      provider: new ethers.providers.JsonRpcProvider(maticConfig.rpcURL),
       defaultConfig: {
         from,
       },
