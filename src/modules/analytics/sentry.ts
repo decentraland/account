@@ -1,4 +1,5 @@
 import { init, BrowserTracing, Replay } from '@sentry/react'
+import { Env } from '@dcl/ui-env/dist/env'
 import { config } from '../../config'
 
 init({
@@ -13,4 +14,5 @@ init({
   // Session Replay
   replaysSessionSampleRate: 0.01,
   replaysOnErrorSampleRate: 0.01,
+  enabled: !config.is(Env.DEVELOPMENT),
 })
