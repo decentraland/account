@@ -272,7 +272,6 @@ export function* getMaticPOSClient() {
   )
 
   const config: IPOSClientConfig = {
-    log: true,
     network: MATIC_ENV,
     version: MATIC_ENV === MaticEnv.MAINNET ? 'v1' : 'mumbai',
     parent: {
