@@ -1,5 +1,7 @@
-import { BigNumber, ethers } from 'ethers'
+import { BigNumber, ethers, utils } from 'ethers'
+import { ChainId, Network } from '@dcl/schemas'
 import { TransactionStatus as TxStatus } from 'decentraland-dapps/dist/modules/transaction/types'
+import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
 import { graphql } from 'decentraland-dapps/dist/lib/graph'
 import { Provider } from 'decentraland-transactions'
 import {
@@ -15,9 +17,7 @@ import {
   getAddress,
   getChainId,
 } from 'decentraland-dapps/dist/modules/wallet/selectors'
-import { ChainId, Network } from '@dcl/schemas'
-import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
-import { MaticPOSClient } from '@maticnetwork/maticjs'
+import { IPOSClientConfig, POSClient } from '@maticnetwork/maticjs'
 import { getWithdrawals } from './selectors'
 import {
   DepositStatus,
@@ -29,7 +29,6 @@ import {
   WithdrawalStatus,
 } from './types'
 import { gasPriceAPI } from '../../lib/api/gasPrice'
-import { utils } from 'ethers'
 import { config } from '../../config'
 
 export const MANA_CONTRACT_ADDRESS = config.get('MANA_CONTRACT_ADDRESS')!
@@ -250,11 +249,15 @@ function getMaticEnv(env?: string) {
 }
 
 export function* getMaticPOSClient() {
-  const provider: Provider = yield call(getConnectedProvider)
+  const connectedProvider: Provider = yield call(getConnectedProvider)
 
-  if (!provider) {
+  if (!connectedProvider) {
     throw new Error(`Could not connect to provider`)
   }
+
+  const web3Provider = new ethers.providers.Web3Provider(
+    connectedProvider as any
+  )
 
   const from: string | undefined = yield select(getAddress)
 
@@ -268,16 +271,28 @@ export function* getMaticPOSClient() {
     parentConfig.networkMapping[Network.MATIC]
   )
 
-  const config = {
+  const config: IPOSClientConfig = {
     network: MATIC_ENV,
     version: MATIC_ENV === MaticEnv.MAINNET ? 'v1' : 'mumbai',
-    parentProvider: provider,
-    maticProvider: maticConfig.rpcURL,
-    parentDefaultOptions: { from },
-    maticDefaultOptions: { from },
+    parent: {
+      provider: web3Provider,
+      defaultConfig: {
+        from,
+      },
+    },
+    child: {
+      provider: new ethers.providers.JsonRpcProvider(maticConfig.rpcURL),
+      defaultConfig: {
+        from,
+      },
+    },
   }
 
-  return new MaticPOSClient(config)
+  const client = new POSClient()
+
+  yield call([client, client.init], config)
+
+  return client
 }
 
 export function* getStoreWithdrawalByHash(hash: string) {

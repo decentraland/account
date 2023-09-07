@@ -1,5 +1,11 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects'
-import { MaticPOSClient } from '@maticnetwork/maticjs'
+import {
+  ITransactionWriteResult,
+  POSClient,
+  setProofApi,
+  use,
+} from '@maticnetwork/maticjs'
+import { Web3ClientPlugin } from '@maticnetwork/maticjs-ethers'
 import { ethers, Signer } from 'ethers'
 import { ChainId, Network } from '@dcl/schemas'
 import {
@@ -105,7 +111,12 @@ import {
 } from './types'
 import { getWalletDeposits, getWalletWithdrawals } from './selectors'
 import { closeModal, openModal } from '../modal/actions'
-import { store } from '../store'
+
+// Makes the maticjs client use the ethers library.
+use(Web3ClientPlugin)
+
+// Required for doing withdrawExitFaster calls with the maticjs client.
+setProofApi('https://proof-generator.polygon.technology/')
 
 export function* manaSaga() {
   yield takeEvery(SET_DEPOSIT_STATUS, handleSetDepositStatus)
@@ -316,23 +327,28 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
     }
 
     const chainId: ChainId = yield select(getChainId)
-    const matic: MaticPOSClient = yield call(getMaticPOSClient)
+    const matic: POSClient = yield call(getMaticPOSClient)
+    const erc20RootToken = matic.erc20(MANA_CONTRACT_ADDRESS, true)
 
-    const tx: { transactionHash: string } = yield call(() =>
-      matic.exitERC20(withdrawal.initializeHash, {
-        from,
-        onTransactionHash: (hash: string) => {
-          store.dispatch(setWithdrawalFinalizeHash(withdrawal, hash))
-        },
-      })
+    const withdrawExitResult: ITransactionWriteResult = yield call(
+      [erc20RootToken, erc20RootToken.withdrawExitFaster],
+      withdrawal.initializeHash,
+      { from }
     )
+
+    const transactionHash: string = yield call([
+      withdrawExitResult,
+      withdrawExitResult.getTransactionHash,
+    ])
+
+    yield put(setWithdrawalFinalizeHash(withdrawal, transactionHash))
 
     const storeWithdrawal: Withdrawal = yield getStoreWithdrawalByHash(
       withdrawal.initializeHash
     )
 
     yield put(
-      finishWithdrawalSuccess(storeWithdrawal!, chainId, tx.transactionHash)
+      finishWithdrawalSuccess(storeWithdrawal!, chainId, transactionHash)
     )
   } catch (error: any) {
     const storeWithdrawal: Withdrawal = yield getStoreWithdrawalByHash(
@@ -521,12 +537,16 @@ export function* handleImportWithdrawalRequest(
       return
     }
 
-    const matic: MaticPOSClient = yield call(getMaticPOSClient)
+    const matic: POSClient = yield call(getMaticPOSClient)
+    const erc20RootToken = matic.erc20(MANA_CONTRACT_ADDRESS, true)
 
     let isProcessed: boolean
 
     try {
-      isProcessed = yield call([matic, 'isERC20ExitProcessed'], txHash)
+      isProcessed = yield call(
+        [erc20RootToken, erc20RootToken.isWithdrawExited],
+        txHash
+      )
     } catch (e) {
       isProcessed = false
     }

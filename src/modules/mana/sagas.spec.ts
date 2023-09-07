@@ -87,7 +87,9 @@ describe('handleImportWithdrawalRequest', () => {
     const { chainId, network } = data
 
     const maticPOSClient = {
-      isERC20ExitProcessed: jest.fn().mockResolvedValue(isERC20ExitProcessed),
+      erc20: () => ({
+        isWithdrawExited: () => Promise.resolve(isERC20ExitProcessed),
+      }),
     }
 
     const networkProvider = shouldRejectGetNetworkProvider
