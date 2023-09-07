@@ -8,7 +8,7 @@
     "@dcl/ui-env": "^1.2.0",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
-    "@maticnetwork/maticjs": "file:packages/maticnetwork-maticjs-3.6.2.tgz",
+    "@maticnetwork/maticjs": "^3.6.4",
     "@maticnetwork/maticjs-ethers": "^1.0.3",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
     "@sentry/react": "^7.64.0",
