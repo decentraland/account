@@ -112,8 +112,10 @@ import {
 import { getWalletDeposits, getWalletWithdrawals } from './selectors'
 import { closeModal, openModal } from '../modal/actions'
 
+// Makes the maticjs client use the ethers library.
 use(Web3ClientPlugin)
 
+// Required for doing withdrawExitFaster calls with the maticjs client.
 setProofApi('https://proof-generator.polygon.technology/')
 
 export function* manaSaga() {
