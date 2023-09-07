@@ -1,5 +1,10 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects'
-import { ITransactionWriteResult, POSClient, use } from '@maticnetwork/maticjs'
+import {
+  ITransactionWriteResult,
+  POSClient,
+  setProofApi,
+  use,
+} from '@maticnetwork/maticjs'
 import { Web3ClientPlugin } from '@maticnetwork/maticjs-ethers'
 import { ethers, Signer } from 'ethers'
 import { ChainId, Network } from '@dcl/schemas'
@@ -108,6 +113,8 @@ import { getWalletDeposits, getWalletWithdrawals } from './selectors'
 import { closeModal, openModal } from '../modal/actions'
 
 use(Web3ClientPlugin)
+
+setProofApi('https://proof-generator.polygon.technology/')
 
 export function* manaSaga() {
   yield takeEvery(SET_DEPOSIT_STATUS, handleSetDepositStatus)
@@ -322,7 +329,7 @@ function* handleFinishWithdrawalRequest(action: FinishWithdrawalRequestAction) {
     const erc20RootToken = matic.erc20(MANA_CONTRACT_ADDRESS, true)
 
     const withdrawExitResult: ITransactionWriteResult = yield call(
-      [erc20RootToken, erc20RootToken.withdrawExit],
+      [erc20RootToken, erc20RootToken.withdrawExitFaster],
       withdrawal.initializeHash,
       { from }
     )
