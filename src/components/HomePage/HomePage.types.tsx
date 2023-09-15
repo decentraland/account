@@ -6,7 +6,6 @@ export type Props = {
   transactionsByNetwork: Record<Network, Transaction[]>
   withdrawals: Withdrawal[]
   deposits: Deposit[]
-  isProfileSiteEnabled: boolean
 }
 export type MapStateProps = Pick<
   Props,

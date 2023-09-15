@@ -15,7 +15,6 @@ import { TRANSACTIONS_API_URL } from './mana/utils'
 import { modalSaga } from './modal/sagas'
 import { locationSaga as localLocationSaga } from './location/sagas'
 import { manaSaga } from './mana/sagas'
-import { profileSaga as localProfileSaga } from './profile/sagas'
 import { config } from '../config'
 import * as translations from '../locales'
 
@@ -72,6 +71,5 @@ export function* rootSaga() {
     manaSaga(),
     toastSaga(),
     gatewaySaga(),
-    localProfileSaga(),
   ])
 }
