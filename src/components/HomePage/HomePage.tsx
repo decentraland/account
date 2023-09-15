@@ -6,7 +6,6 @@ import DepositTooltip from '../Tooltips/DepositTooltip'
 import WithdrawalTooltip from '../Tooltips/WithdrawalTooltip'
 import { Navbar } from '../Navbar'
 import { Footer } from '../Footer'
-import { AccountHeader } from './AccountHeader'
 import { AccountCard } from './AccountCard'
 import { AccountCardContainer } from './AccountCardContainer'
 import { Props } from './HomePage.types'
@@ -16,7 +15,6 @@ const HomePage: React.FC<Props> = ({
   withdrawals,
   deposits,
   transactionsByNetwork,
-  isProfileSiteEnabled,
 }) => {
   const ethereumTransactions = transactionsByNetwork[Network.ETHEREUM]
   const maticTransactions = transactionsByNetwork[Network.MATIC]
@@ -31,7 +29,6 @@ const HomePage: React.FC<Props> = ({
     <>
       <Navbar />
       <Page className="HomePage">
-        {!isProfileSiteEnabled ? <AccountHeader /> : null}
         <AccountCardContainer>
           <AccountCard
             network={Network.ETHEREUM}
