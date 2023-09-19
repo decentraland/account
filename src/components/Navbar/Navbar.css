@@ -20,3 +20,8 @@
 .dcl.account-wrapper .dcl.mana {
   flex: none;
 }
+
+.dcl.new-user-menu .ui.button {
+  color: black;
+  text-transform: uppercase;
+}
