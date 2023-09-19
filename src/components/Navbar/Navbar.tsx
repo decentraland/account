@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import {
   Navbar as BaseNavbar,
-  UserMenu,
+  UserInformation,
 } from 'decentraland-dapps/dist/containers'
 
 import { locations } from '../../modules/locations'
@@ -14,7 +14,7 @@ const Navbar = (props: Props) => {
   if (isConnected) {
     props = {
       ...props,
-      rightMenu: <UserMenu />,
+      rightMenu: <UserInformation />,
     }
   }
 
