@@ -20,9 +20,11 @@ import { isTest } from '../lib/environment'
 import { config } from '../config'
 import migrations from './migrations'
 
-export const history = require('history').createBrowserHistory({
-  basename: config.get('BASE_NAME'),
-})
+const basename = /^decentraland.(zone|org|today)$/.test(window.location.host)
+  ? '/account'
+  : undefined
+
+export const history = require('history').createBrowserHistory({ basename })
 const rootReducer = storageReducerWrapper(createRootReducer(history))
 
 const sagasMiddleware = createSagasMiddleware()
