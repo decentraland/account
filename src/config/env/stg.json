@@ -1,6 +1,5 @@
 {
   "CHAIN_ID": "1",
-  "BASE_NAME": "/account",
   "PEER_URL": "https://peer.decentraland.org",
   "BUILDER_URL": "https://builder.decentraland.today",
   "EXPLORER_URL": "https://play.decentraland.org",
