@@ -1,7 +1,7 @@
 {
   "CHAIN_ID": "1",
   "PEER_URL": "https://peer.decentraland.org",
-  "BUILDER_URL": "https://builder.decentraland.today",
+  "BUILDER_URL": "https://decentraland.today/builder",
   "EXPLORER_URL": "https://play.decentraland.org",
   "TRANSACTIONS_API_URL": "https://transactions-api.decentraland.today/v1",
   "TRANSAK_API_URL": "https://api.transak.com/partners/api",

@@ -33,7 +33,7 @@
     "css-loader": "4.3.0",
     "decentraland-dapps": "^16.16.4",
     "decentraland-transactions": "^1.46.0",
-    "decentraland-ui": "^4.27.5",
+    "decentraland-ui": "^4.29.0",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
     "eslint": "^7.11.0",
