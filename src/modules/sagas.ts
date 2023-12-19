@@ -22,6 +22,7 @@ const analyticsSaga = createAnalyticsSaga()
 
 const profileSaga = createProfileSaga({
   peerUrl: config.get('PEER_URL')!,
+  getIdentity: () => undefined,
 })
 
 const translationSaga = createTranslationSaga({ translations })
