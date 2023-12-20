@@ -397,6 +397,7 @@ module.exports = function (webpackEnv) {
               include: [
                 paths.appSrc,
                 path.resolve('node_modules/@walletconnect'),
+                path.resolve('node_modules/unstorage'),
                 path.resolve(
                   'node_modules/@metamask/utils/node_modules/superstruct'
                 ),
@@ -414,7 +415,6 @@ module.exports = function (webpackEnv) {
                     },
                   ],
                 ],
-
                 plugins: [
                   [
                     require.resolve('babel-plugin-named-asset-import'),
@@ -443,7 +443,7 @@ module.exports = function (webpackEnv) {
             // Process any JS outside of the app with Babel.
             // Unlike the application JS, we only compile the standard ES features.
             {
-              test: /\.(js)$/,
+              test: /\.(js|mjs)$/,
               exclude: /@babel(?:\/|\\{1,2})runtime/,
               loader: require.resolve('babel-loader'),
               options: {
