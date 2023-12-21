@@ -1,7 +1,6 @@
 {
   "name": "@dcl/account-site",
   "version": "0.0.0-development",
-  "private": true,
   "dependencies": {
     "@babel/core": "^7.23.6",
     "@dcl/schemas": "^8.1.0",
@@ -149,6 +148,10 @@
     "presets": [
       "react-app"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/decentraland/account.git"
   },
   "homepage": ""
 }
