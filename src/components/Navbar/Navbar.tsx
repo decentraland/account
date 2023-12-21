@@ -5,11 +5,12 @@ import {
 } from 'decentraland-dapps/dist/containers'
 
 import { locations } from '../../modules/locations'
+import { config } from '../../config'
 import { Props } from './Navbar.types'
 import './Navbar.css'
 
 const Navbar = (props: Props) => {
-  const { pathname, onNavigate, isConnected } = props
+  const { pathname, onNavigate, isConnected, isAuthDappEnabled } = props
 
   if (isConnected) {
     props = {
@@ -19,8 +20,16 @@ const Navbar = (props: Props) => {
   }
 
   const handleOnSignIn = useCallback(() => {
+    if (isAuthDappEnabled) {
+      window.location.replace(
+        `${config.get('AUTH_URL')}/login?redirectTo=${
+          window.location.href
+        }`
+      )
+      return
+    }
     onNavigate(locations.signIn())
-  }, [onNavigate])
+  }, [isAuthDappEnabled, onNavigate])
 
   const handleOnClickAccount = useCallback(() => {
     onNavigate(locations.settings())
