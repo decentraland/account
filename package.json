@@ -30,7 +30,7 @@
     "case-sensitive-paths-webpack-plugin": "2.3.0",
     "connected-react-router": "^6.9.1",
     "css-loader": "4.3.0",
-    "decentraland-dapps": "^16.21.4",
+    "decentraland-dapps": "^16.27.0",
     "decentraland-transactions": "^1.46.0",
     "decentraland-ui": "^4.31.0",
     "dotenv": "8.2.0",

@@ -401,6 +401,8 @@ module.exports = function (webpackEnv) {
                 path.resolve(
                   'node_modules/@metamask/utils/node_modules/superstruct'
                 ),
+                path.resolve('node_modules/decentraland-connect'),
+                path.resolve('node_modules/@dcl/single-sign-on-client')
               ],
               loader: require.resolve('babel-loader'),
               options: {
