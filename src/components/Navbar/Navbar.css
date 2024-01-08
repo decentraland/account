@@ -25,3 +25,8 @@
   color: black;
   text-transform: uppercase;
 }
+
+.dui-user-menu-signed-in .ui.basic.button,
+.dui-user-menu-signed-in .ui.basic.buttons .button {
+  box-shadow: unset;
+}
