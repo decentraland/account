@@ -17,6 +17,19 @@ export default defineConfig(({ command, mode }) => {
         VITE_REACT_APP_DCL_DEFAULT_ENV: envVariables.VITE_REACT_APP_DCL_DEFAULT_ENV
       }
     },
+    server: {
+      https: true,
+      proxy: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        '/auth': {
+          target: 'https://decentraland.zone',
+          followRedirects: true,
+          changeOrigin: true,
+          secure: false,
+          ws: true
+        }
+      }
+    },
     ...(command === 'build'
       ? {
           base: envVariables.VITE_BASE_URL,
