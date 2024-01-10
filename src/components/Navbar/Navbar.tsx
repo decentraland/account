@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import {
   Navbar as BaseNavbar,
+  Navbar2 as BaseNavbar2,
   UserInformation,
 } from 'decentraland-dapps/dist/containers'
 
@@ -10,7 +11,13 @@ import { Props } from './Navbar.types'
 import './Navbar.css'
 
 const Navbar = (props: Props) => {
-  const { pathname, onNavigate, isConnected, isAuthDappEnabled } = props
+  const {
+    pathname,
+    onNavigate,
+    isConnected,
+    isAuthDappEnabled,
+    isNavbarV2Enabled,
+  } = props
 
   if (isConnected) {
     props = {
@@ -22,9 +29,7 @@ const Navbar = (props: Props) => {
   const handleOnSignIn = useCallback(() => {
     if (isAuthDappEnabled) {
       window.location.replace(
-        `${config.get('AUTH_URL')}/login?redirectTo=${
-          window.location.href
-        }`
+        `${config.get('AUTH_URL')}/login?redirectTo=${window.location.href}`
       )
       return
     }
@@ -35,7 +40,13 @@ const Navbar = (props: Props) => {
     onNavigate(locations.settings())
   }, [onNavigate])
 
-  return (
+  return isNavbarV2Enabled ? (
+    <BaseNavbar2
+      {...props}
+      isSignIn={pathname === locations.signIn()}
+      onSignIn={handleOnSignIn}
+    />
+  ) : (
     <BaseNavbar
       {...props}
       isFullscreen={props.isFullscreen}
