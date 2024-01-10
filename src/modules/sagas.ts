@@ -25,7 +25,9 @@ const profileSaga = createProfileSaga({
   getIdentity: () => undefined,
 })
 
-const translationSaga = createTranslationSaga({ translations })
+const translationSaga = createTranslationSaga({
+  translations: translations as any,
+})
 
 const walletSaga = createWalletSaga({
   CHAIN_ID: +(config.get('CHAIN_ID') || 1),

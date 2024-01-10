@@ -5,7 +5,7 @@ import {
   OpenBuyManaWithFiatModalRequestAction,
   OpenManaFiatGatewayRequestAction,
 } from 'decentraland-dapps/dist/modules/gateway/actions'
-import { OpenModalAction } from '../../../../modules/modal/actions'
+import { OpenModalAction } from 'decentraland-dapps/dist/modules/modal/actions'
 
 export type Props = {
   address?: string

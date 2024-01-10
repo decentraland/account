@@ -1,3 +1,4 @@
+import 'semantic-ui-css/semantic.min.css'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
@@ -9,17 +10,14 @@ import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationPr
 import './modules/analytics/track'
 import './modules/analytics/sentry'
 
-import './setup'
-import './themes'
-
 import { store, history } from './modules/store'
 import { Routes } from './components/Routes'
 import * as locales from './locales'
 import * as modals from './components/Modals'
 
+import 'decentraland-ui/dist/themes/alternative/light-theme.css'
+import './themes'
 import './index.css'
-
-import reportWebVitals from './reportWebVitals'
 
 const component = (
   <Provider store={store}>
@@ -38,8 +36,3 @@ const component = (
 )
 
 ReactDOM.render(component, document.getElementById('root'))
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals()

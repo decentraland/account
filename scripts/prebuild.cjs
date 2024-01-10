@@ -20,7 +20,7 @@ publicPackageJson.version = packageJson.version
 
 // set public url
 Object.assign(ENV_CONTENT, getPublicUrls())
-packageJson.homepage = ENV_CONTENT['PUBLIC_URL']
+packageJson.homepage = ENV_CONTENT['VITE_BASE_URL']
 publicPackageJson.homepage = packageJson.homepage
 if (packageJson.homepage) {
   // github action outputs. Do not touch.
@@ -40,10 +40,10 @@ fs.writeFileSync(
     .map((e) => e[0] + '=' + JSON.stringify(e[1]))
     .join('\n') + '\n'
 )
-fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2))
+fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2) + '\n')
 fs.writeFileSync(
   './public/package.json',
-  JSON.stringify(publicPackageJson, null, 2)
+  JSON.stringify(publicPackageJson, null, 2) + '\n'
 )
 
 // public url logic
@@ -61,12 +61,12 @@ function getPublicUrls() {
     const cdnUrl = `https://cdn.decentraland.org/${publicPackageJson.name}/${publicPackageJson.version}`
     console.log(`Using CDN as public url: "${cdnUrl}"`)
     return {
-      PUBLIC_URL: cdnUrl,
+      VITE_BASE_URL: cdnUrl,
     }
   }
   // localhost
-  console.log(`Using empty pubic url`)
+  console.log('Using empty pubic url')
   return {
-    PUBLIC_URL: ``,
+    VITE_BASE_URL: '',
   }
 }

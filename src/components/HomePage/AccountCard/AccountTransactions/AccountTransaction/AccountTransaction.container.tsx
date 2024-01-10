@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { openManaFiatGatewayRequest } from 'decentraland-dapps/dist/modules/gateway/actions'
-import { openModal } from '../../../../../modules/modal/actions'
 import { RootState } from '../../../../../modules/reducer'
 import AccountTransaction from './AccountTransaction'
 import {
@@ -8,6 +7,7 @@ import {
   MapDispatchProps,
   MapStateProps,
 } from './AccountTransaction.types'
+import { openModal } from 'decentraland-dapps/dist/modules/modal/actions'
 
 const mapState = (_state: RootState): MapStateProps => ({})
 

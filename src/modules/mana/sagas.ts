@@ -110,7 +110,10 @@ import {
   TransferStatus,
 } from './types'
 import { getWalletDeposits, getWalletWithdrawals } from './selectors'
-import { closeModal, openModal } from '../modal/actions'
+import {
+  closeModal,
+  openModal,
+} from 'decentraland-dapps/dist/modules/modal/actions'
 
 // Makes the maticjs client use the ethers library.
 use(Web3ClientPlugin)
