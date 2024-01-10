@@ -50,6 +50,7 @@
     "@types/react-redux": "^7.1.18",
     "@types/react-router-dom": "^5.1.7",
     "@types/redux-logger": "^3.0.8",
+    "@vitejs/plugin-basic-ssl": "^1.0.2",
     "@vitejs/plugin-react": "^4.2.1",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "identity-obj-proxy": "^3.0.0",
@@ -70,33 +71,8 @@
     "build": "tsc && vite build",
     "build:contracts": "typechain --target ethers-v5 --out-dir src/contracts src/contracts/*.json"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "engines": {
     "node": "^18"
-  },
-  "browserslist": {
-    "production": [
-      "chrome >= 67",
-      "edge >= 79",
-      "firefox >= 68",
-      "opera >= 54",
-      "safari >= 14"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
   },
   "repository": {
     "type": "git",

@@ -10,14 +10,13 @@ import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationPr
 import './modules/analytics/track'
 import './modules/analytics/sentry'
 
-// import './themes'
-
 import { store, history } from './modules/store'
 import { Routes } from './components/Routes'
 import * as locales from './locales'
 import * as modals from './components/Modals'
 
 import 'decentraland-ui/dist/themes/alternative/light-theme.css'
+import './themes'
 import './index.css'
 
 const component = (

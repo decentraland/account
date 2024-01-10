@@ -1,9 +1,3 @@
-// Base
-import 'decentraland-ui/lib/styles.css'
-
-// Theme
-import 'decentraland-ui/lib/light-theme.css'
-
 // Overrides
 import './components/Button.css'
 import './components/Card.css'
