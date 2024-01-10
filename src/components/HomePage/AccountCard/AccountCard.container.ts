@@ -1,6 +1,5 @@
 import { getNetworks } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { connect } from 'react-redux'
-import { openModal } from '../../../modules/modal/actions'
 import { RootState } from '../../../modules/reducer'
 import AccountCard from './AccountCard'
 import {
@@ -9,6 +8,7 @@ import {
   MapStateProps,
   OwnProps,
 } from './AccountCard.types'
+import { openModal } from 'decentraland-dapps/dist/modules/modal/actions'
 
 const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
   const networks = getNetworks(state)

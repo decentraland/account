@@ -6,7 +6,7 @@ import {
   OpenManaFiatGatewayRequestAction,
 } from 'decentraland-dapps/dist/modules/gateway/actions'
 import { Transaction } from '../../../../../modules/mana/types'
-import { OpenModalAction } from '../../../../../modules/modal/actions'
+import { OpenModalAction } from 'decentraland-dapps/dist/modules/modal/actions'
 
 export type Props = {
   transaction: Transaction

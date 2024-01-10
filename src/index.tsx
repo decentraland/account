@@ -1,3 +1,4 @@
+import 'semantic-ui-css/semantic.min.css'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
@@ -9,14 +10,14 @@ import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationPr
 import './modules/analytics/track'
 import './modules/analytics/sentry'
 
-import './setup'
-import './themes'
+// import './themes'
 
 import { store, history } from './modules/store'
 import { Routes } from './components/Routes'
 import * as locales from './locales'
 import * as modals from './components/Modals'
 
+import 'decentraland-ui/dist/themes/alternative/light-theme.css'
 import './index.css'
 
 import reportWebVitals from './reportWebVitals'
