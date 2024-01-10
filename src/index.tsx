@@ -20,8 +20,6 @@ import * as modals from './components/Modals'
 import 'decentraland-ui/dist/themes/alternative/light-theme.css'
 import './index.css'
 
-import reportWebVitals from './reportWebVitals'
-
 const component = (
   <Provider store={store}>
     <TranslationProvider locales={Object.keys(locales)}>
@@ -39,8 +37,3 @@ const component = (
 )
 
 ReactDOM.render(component, document.getElementById('root'))
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals()

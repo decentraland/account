@@ -1,17 +1,14 @@
 {
   "version": 2,
   "name": "account",
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/index.html" }
-  ],
+  "routes": [{ "handle": "filesystem" }, { "src": "/.*", "dest": "/index.html" }],
   "github": {
     "silent": true
   },
   "build": {
     "env": {
       "GEN_STATIC_LOCAL": "true",
-      "REACT_APP_DCL_DEFAULT_ENV": "dev"
+      "VITE_REACT_APP_DCL_DEFAULT_ENV": "dev"
     }
   }
 }

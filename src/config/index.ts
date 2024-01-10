@@ -7,13 +7,11 @@ export const config = createConfig(
   {
     [Env.DEVELOPMENT]: dev,
     [Env.STAGING]: stg,
-    [Env.PRODUCTION]: prod,
+    [Env.PRODUCTION]: prod
   },
   {
     systemEnvVariables: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      REACT_APP_DCL_DEFAULT_ENV:
-        (import.meta as any).env.VITE_REACT_APP_DCL_DEFAULT_ENV ?? 'dev',
-    },
+      REACT_APP_DCL_DEFAULT_ENV: process.env.VITE_REACT_APP_DCL_DEFAULT_ENV
+    }
   }
 )
