@@ -7,7 +7,6 @@ import {
 } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import {
   getIsAuthDappEnabled,
-  getIsNavbarV2Enabled,
 } from '../../modules/features/selectors'
 import { RootState } from '../../modules/reducer'
 import { MapStateProps, MapDispatch, MapDispatchProps } from './Navbar.types'
@@ -23,7 +22,6 @@ const mapState = (state: RootState): MapStateProps => {
     isConnected: isConnected(state),
     pathname: getLocation(state).pathname,
     isAuthDappEnabled: !!getIsAuthDappEnabled(state),
-    isNavbarV2Enabled: getIsNavbarV2Enabled(state),
   }
 }
 
