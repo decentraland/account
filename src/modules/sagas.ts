@@ -17,22 +17,23 @@ import { locationSaga as localLocationSaga } from './location/sagas'
 import { manaSaga } from './mana/sagas'
 import { config } from '../config'
 import * as translations from '../locales'
+import { FiatGateway } from 'decentraland-dapps/dist/modules/gateway/types'
 
 const analyticsSaga = createAnalyticsSaga()
 
 const profileSaga = createProfileSaga({
   peerUrl: config.get('PEER_URL')!,
-  getIdentity: () => undefined,
+  getIdentity: () => undefined
 })
 
 const translationSaga = createTranslationSaga({
-  translations: translations as any,
+  translations: translations as any
 })
 
 const walletSaga = createWalletSaga({
   CHAIN_ID: +(config.get('CHAIN_ID') || 1),
   POLL_INTERVAL: 0,
-  TRANSACTIONS_API_URL,
+  TRANSACTIONS_API_URL
 })
 
 const gatewaySaga = createGatewaySaga({
@@ -40,7 +41,7 @@ const gatewaySaga = createGatewaySaga({
     apiBaseUrl: config.get('MOON_PAY_API_URL'),
     apiKey: config.get('MOON_PAY_API_KEY'),
     pollingDelay: +config.get('MOON_PAY_POLLING_DELAY'),
-    widgetBaseUrl: config.get('MOON_PAY_WIDGET_URL'),
+    widgetBaseUrl: config.get('MOON_PAY_WIDGET_URL')
   },
   [NetworkGatewayType.TRANSAK]: {
     apiBaseUrl: config.get('TRANSAK_API_URL'),
@@ -49,9 +50,14 @@ const gatewaySaga = createGatewaySaga({
     pollingDelay: +config.get('TRANSAK_POLLING_DELAY'),
     pusher: {
       appKey: config.get('TRANSAK_PUSHER_APP_KEY'),
-      appCluster: config.get('TRANSAK_PUSHER_APP_CLUSTER'),
-    },
+      appCluster: config.get('TRANSAK_PUSHER_APP_CLUSTER')
+    }
   },
+  // Wert is not being used in account dapp
+  [FiatGateway.WERT]: {
+    marketplaceServerURL: '',
+    url: ''
+  }
 })
 
 export function* rootSaga() {
@@ -68,11 +74,11 @@ export function* rootSaga() {
     featuresSaga({
       polling: {
         apps: [ApplicationName.DAPPS],
-        delay: 60000 /** 60 seconds */,
-      },
+        delay: 60000 /** 60 seconds */
+      }
     }),
     manaSaga(),
     toastSaga(),
-    gatewaySaga(),
+    gatewaySaga()
   ])
 }
