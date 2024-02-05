@@ -12,7 +12,7 @@
     "@sentry/react": "^7.64.0",
     "@typechain/ethers-v5": "^10.0.0",
     "connected-react-router": "^6.9.1",
-    "decentraland-dapps": "^18.1.0",
+    "decentraland-dapps": "^17.6.0",
     "decentraland-transactions": "^1.46.0",
     "decentraland-ui": "^4.35.7",
     "dotenv": "8.2.0",
