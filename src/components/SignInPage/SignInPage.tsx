@@ -19,7 +19,7 @@ const SignInPage = ({ isAuthDappEnabled, isConnecting }: Props) => {
   }, [isAuthDappEnabled, isConnecting])
   return (
     <>
-      <Navbar isFullscreen />
+      <Navbar />
       <Page className="SignInPage" isFullscreen>
         <SignIn />
       </Page>
