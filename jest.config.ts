@@ -26,6 +26,6 @@ export default async (): Promise<Config> => {
     moduleNameMapper: {
       '\\.(css|less)$': 'identity-obj-proxy'
     },
-    transformIgnorePatterns: ['node_modules/(?!(multiformats|uint8arrays|@dcl/single-sign-on-client|decentraland-connect|uuid)/)']
+    transformIgnorePatterns: ['node_modules/(?!(multiformats|uint8arrays|@dcl/single-sign-on-client|decentraland-connect|uuid|decentraland-dapps)/)']
   }
 }
