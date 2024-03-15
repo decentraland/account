@@ -22,12 +22,14 @@
     "receive": "接收",
     "send": "发送",
     "tooltip_ethereum": "你在以太坊主区块链上的 MANA 余额。你可以将 MANA 从这个余额换成 Polygon。",
-    "tooltip_matic": "您在 Polygon 侧链上的 MANA 余额。您可以使用 Polygon MANA 而无需支付 gas 费用。您可以随时从 Polygon 的侧链中提取 MANA。"
+    "tooltip_matic": "您在 Polygon 侧链上的 MANA 余额。您可以使用 Polygon MANA 而无需支付 gas 费用。您可以随时从 Polygon 的侧链中提取 MANA。",
+    "import_withdrawal": "出口退运"
   },
   "account_card": {
     "tx_latests": "最新交易",
     "tx_pending": "待交易",
-    "see_all": "看到所有"
+    "see_all": "看到所有",
+    "empty": "您还没有任何交易。"
   },
   "transaction_detail_modal": {
     "title": "交易明细",
