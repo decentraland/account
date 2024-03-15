@@ -22,13 +22,14 @@
     "receive": "Recibir",
     "send": "Enviar",
     "tooltip_ethereum": "Este es tu balance de MANA en Ethereum. Puedes cambiarlo por MANA en Polygon.",
-    "tooltip_matic": "Este es tu balance de MANA en Polygon. Puedes usar el MANA en Polygon sin pagar tarifa de gas. Puedes volver tu MANA de Polygon a Ethereum en cualquier momento."
+    "tooltip_matic": "Este es tu balance de MANA en Polygon. Puedes usar el MANA en Polygon sin pagar tarifa de gas. Puedes volver tu MANA de Polygon a Ethereum en cualquier momento.",
+    "import_withdrawal": "Importar retiro"
   },
   "account_card": {
     "tx_latests": "Ultimas Transacciones",
     "tx_pending": "Transacciones Pendientes",
     "see_all": "Ver Todas",
-    "empty": "No haz realizado transacciones."
+    "empty": "No has realizado ninguna transacción todavía."
   },
   "transaction_detail_modal": {
     "title": "Detalle de Transaction",
@@ -54,13 +55,13 @@
   },
   "transaction_description": {
     "deposit": "Depósito de MANA en Polygon",
-    "withdrawal": "Extracción de MANA a Ethereum",
+    "withdrawal": "Retiro de MANA a Ethereum",
     "buy": "Compra de Tokens via {gateway}",
     "send": "Envio de tokens a"
   },
   "transaction_type": {
     "deposit": "Deposito",
-    "withdrawal": "Extracción"
+    "withdrawal": "Retiro"
   },
   "transaction_status": {
     "pending": "Pendiente",
@@ -81,7 +82,7 @@
     }
   },
   "import_withdrawal_modal": {
-    "title": "Importar Retiro",
+    "title": "Importar retiro",
     "description": "Los retiros son un proceso de 2 pasos. Inicializa un retiro con una transacción de Polygon que quema su Polygon MANA, y después de unos minutos puede desbloquear sus tokens MANA en Ethereum. Almacenamos la información de la primera transacción en su dispositivo, y es necesario para finalizar su retiro. Si por alguna razón esta información se pierde (es decir, borra el almacenamiento de su navegador) o si está terminando su retiro de un nuevo dispositivo, puede usar esta pantalla para recuperar su información de retiro ingresando el hash de la transacción de inicialización de retiro (en Polygon). Puedes ver todas tus últimas transacciones en {link}",
     "polygonscan": "Polygonscan",
     "tx_label": "Hash de la Transacción",
