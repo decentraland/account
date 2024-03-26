@@ -7,6 +7,7 @@ export type Props = Partial<NavbarProps> & {
   pathname: string
   isConnected: boolean
   isAuthDappEnabled: boolean
+  address?: string
   onNavigate: (path: string) => void
 }
 
@@ -16,6 +17,7 @@ export type MapStateProps = Pick<
   | 'hasActivity'
   | 'isConnected'
   | 'isAuthDappEnabled'
+  | 'address'
 >
 export type MapDispatchProps = Pick<Props, 'onNavigate'>
 export type MapDispatch = Dispatch<CallHistoryMethodAction>
