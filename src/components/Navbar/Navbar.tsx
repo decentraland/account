@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
 import { Navbar as BaseNavbar } from 'decentraland-dapps/dist/containers'
-import { NavbarPages } from 'decentraland-ui/dist/components/Navbar/Navbar.types'
 import { localStorageGetIdentity } from '@dcl/single-sign-on-client'
 
 import { locations } from '../../modules/locations'

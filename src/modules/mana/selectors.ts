@@ -132,6 +132,11 @@ export const getTransactionByNetwork = createSelector<
     const result: Record<Network, AccountTransaction[]> = {
       ETHEREUM: [],
       MATIC: [],
+      "BINANCE SMART CHAIN": [],
+      ARBITRUM: [],
+      AVALANCHE: [],
+      FANTOM: [],
+      OPTIMISM: []
     }
     for (const tx of transactions.filter(
       (tx) => tx.from.toLowerCase() === walletAddress?.toLowerCase()

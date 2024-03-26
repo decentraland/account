@@ -75,6 +75,9 @@
   "engines": {
     "node": "^18"
   },
+  "overrides": {
+    "@dcl/schemas": "^11.2.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/decentraland/account.git"
