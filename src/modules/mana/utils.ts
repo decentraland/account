@@ -273,7 +273,7 @@ export function* getMaticPOSClient() {
 
   const config: IPOSClientConfig = {
     network: MATIC_ENV,
-    version: MATIC_ENV === MaticEnv.MAINNET ? 'v1' : 'mumbai',
+    version: MATIC_ENV === MaticEnv.MAINNET ? 'v1' : 'amoy',
     parent: {
       provider: web3Provider,
       defaultConfig: {
