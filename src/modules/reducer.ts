@@ -11,7 +11,6 @@ import { translationReducer as translation } from 'decentraland-dapps/dist/modul
 import { walletReducer as wallet } from 'decentraland-dapps/dist/modules/wallet/reducer'
 import { History } from 'history'
 import { combineReducers } from 'redux'
-
 import { manaReducer as mana } from './mana/reducer'
 
 export const createRootReducer = (history: History) =>

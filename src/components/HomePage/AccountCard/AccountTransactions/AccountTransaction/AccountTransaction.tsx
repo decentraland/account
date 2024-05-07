@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react'
-
 import { distanceInWordsToNow } from 'decentraland-dapps/dist/lib/utils'
 import { Purchase } from 'decentraland-dapps/dist/modules/gateway/types'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-
 import { NetworkGatewayType, gatewaysNames } from 'decentraland-ui'
-
-import { Props } from './AccountTransaction.types'
 import { Deposit, TransactionStatus, TransactionType, Transfer, Withdrawal, WithdrawalStatus } from '../../../../../modules/mana/types'
 import { getStatusMessage, isPendingAccountTransaction } from '../../../../../modules/mana/utils'
+import { Props } from './AccountTransaction.types'
 
 import './AccountTransaction.css'
 

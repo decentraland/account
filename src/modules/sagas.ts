@@ -11,15 +11,13 @@ import { transactionSaga } from 'decentraland-dapps/dist/modules/transaction/sag
 import { createTranslationSaga } from 'decentraland-dapps/dist/modules/translation/sagas'
 import { createWalletSaga } from 'decentraland-dapps/dist/modules/wallet/sagas'
 import { all } from 'redux-saga/effects'
-
 import { NetworkGatewayType } from 'decentraland-ui'
-
+import { config } from '../config'
+import * as translations from '../locales'
 import { locationSaga as localLocationSaga } from './location/sagas'
 import { manaSaga } from './mana/sagas'
 import { TRANSACTIONS_API_URL } from './mana/utils'
 import { modalSaga } from './modal/sagas'
-import { config } from '../config'
-import * as translations from '../locales'
 
 const analyticsSaga = createAnalyticsSaga()
 

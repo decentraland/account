@@ -1,12 +1,10 @@
 import { Redirect, Route, Switch } from 'react-router-dom'
-
 import Intercom from 'decentraland-dapps/dist/components/Intercom'
-
-import { Props } from './Routes.types'
 import { config } from '../../config'
 import { locations } from '../../modules/locations'
 import { HomePage } from '../HomePage'
 import { SignInPage } from '../SignInPage'
+import { Props } from './Routes.types'
 
 const Routes = ({ isConnected }: Props) => {
   const APP_ID = config.get('INTERCOM_APP_ID')

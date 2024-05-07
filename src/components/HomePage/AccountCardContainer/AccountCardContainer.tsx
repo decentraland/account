@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { Props } from './AccountCardContainer.types'
 
 import './AccountCardContainer.css'

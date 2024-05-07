@@ -4,7 +4,6 @@ import { getChainIdByNetwork, getNetworkProvider } from 'decentraland-dapps/dist
 import { fetchTransactionRequest } from 'decentraland-dapps/dist/modules/transaction/actions'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { expectSaga } from 'redux-saga-test-plan'
-
 import {
   importWithdrawalFailure,
   importWithdrawalRequest,

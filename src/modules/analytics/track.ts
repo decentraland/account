@@ -12,7 +12,6 @@ import {
 } from 'decentraland-dapps/dist/modules/transaction/actions'
 import { TransactionStatus } from 'decentraland-dapps/dist/modules/transaction/types'
 import { PayloadAction } from 'typesafe-actions'
-
 import {
   APPROVE_MANA_FAILURE,
   APPROVE_MANA_SUCCESS,

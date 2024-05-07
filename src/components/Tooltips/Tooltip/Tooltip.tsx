@@ -1,7 +1,5 @@
 import * as React from 'react'
-
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-
 import { Button } from 'decentraland-ui'
 
 import './Tooltip.css'

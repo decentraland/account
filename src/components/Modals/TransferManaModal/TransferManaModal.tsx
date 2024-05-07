@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react'
-
 import { Network } from '@dcl/schemas'
 import { NetworkButton } from 'decentraland-dapps/dist/containers'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-
 import { Close, Field } from 'decentraland-ui'
-
 import { Props } from './TransferManaModal.types'
 
 import './TransferManaModal.css'

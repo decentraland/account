@@ -1,19 +1,16 @@
 import * as React from 'react'
-
 import { Network } from '@dcl/schemas'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
 import { Purchase } from 'decentraland-dapps/dist/modules/gateway/types'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
-
 import { Close } from 'decentraland-ui'
-
+import { Deposit, Transaction, TransactionType, Transfer, Withdrawal } from '../../../modules/mana/types'
+import { getStatusMessage } from '../../../modules/mana/utils'
 import Data from './Data'
 import ExplorerLink from './ExplorerLink'
 import WithdrawalDataComponent from './WithdrawalDataComponent'
-import { Deposit, Transaction, TransactionType, Transfer, Withdrawal } from '../../../modules/mana/types'
-import { getStatusMessage } from '../../../modules/mana/utils'
 
 import './TransactionDetailModal.css'
 

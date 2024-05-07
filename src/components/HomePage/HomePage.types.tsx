@@ -1,6 +1,5 @@
 import { Network } from '@dcl/schemas'
 import { Dispatch } from 'redux'
-
 import { Deposit, Transaction, Withdrawal } from '../../modules/mana/types'
 
 export type Props = {

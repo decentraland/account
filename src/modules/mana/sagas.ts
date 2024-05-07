@@ -14,9 +14,9 @@ import { Provider } from 'decentraland-dapps/dist/modules/wallet/types'
 import { sendTransaction } from 'decentraland-dapps/dist/modules/wallet/utils'
 import { Signer, ethers } from 'ethers'
 import { call, put, select, takeEvery } from 'redux-saga/effects'
-
 import { ContractName, getContract } from 'decentraland-transactions'
-
+import { ERC20__factory, RootChainManager__factory } from '../../contracts'
+import { coingecko } from '../../lib/api/coingecko'
 import {
   APPROVE_MANA_REQUEST,
   ApproveManaRequestAction,
@@ -87,8 +87,6 @@ import {
   isWithdrawalSynced,
   waitForSync
 } from './utils'
-import { ERC20__factory, RootChainManager__factory } from '../../contracts'
-import { coingecko } from '../../lib/api/coingecko'
 
 // Makes the maticjs client use the ethers library.
 use(Web3ClientPlugin)

@@ -1,7 +1,6 @@
 import { Transaction } from 'decentraland-dapps/dist/modules/transaction/types'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import { Dispatch } from 'redux'
-
 import { finishWithdrawalRequest } from '../../../modules/mana/actions'
 import { Withdrawal } from '../../../modules/mana/types'
 

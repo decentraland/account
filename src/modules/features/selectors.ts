@@ -1,8 +1,7 @@
 import { getIsFeatureEnabled, hasLoadedInitialFlags } from 'decentraland-dapps/dist/modules/features/selectors'
 import { ApplicationName } from 'decentraland-dapps/dist/modules/features/types'
-
-import { FeatureName } from './types'
 import { RootState } from '../reducer'
+import { FeatureName } from './types'
 
 export const getIsAuthDappEnabled = (state: RootState) => {
   if (hasLoadedInitialFlags(state)) {

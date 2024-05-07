@@ -1,14 +1,11 @@
 import React from 'react'
-
 import { Network } from '@dcl/schemas'
 import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
 import { getTransactionHref } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-
 import { Radio } from 'decentraland-ui'
-
-import { Props } from './WithdrawInitialized.types'
 import LinkWrapper from '../LinkWrapper'
+import { Props } from './WithdrawInitialized.types'
 
 const WithdrawInitialized = ({ withdrawal }: Props) => {
   const { initializeHash } = withdrawal

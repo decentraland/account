@@ -6,9 +6,8 @@ import { getLocation, push } from 'connected-react-router'
 import { connectWalletSuccess } from 'decentraland-dapps/dist/modules/wallet/actions'
 import { Wallet } from 'decentraland-dapps/dist/modules/wallet/types'
 import { expectSaga } from 'redux-saga-test-plan'
-
-import { locationSaga } from './sagas'
 import { locations } from '../locations'
+import { locationSaga } from './sagas'
 
 describe('when handling connect wallet success', () => {
   const mockWallet: Wallet = {

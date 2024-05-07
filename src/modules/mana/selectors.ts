@@ -9,9 +9,8 @@ import { isPending } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { createSelector } from 'reselect'
-
 import { AuthorizationStepStatus } from 'decentraland-ui'
-
+import { RootState } from '../reducer'
 import {
   APPROVE_MANA_SUCCESS,
   DEPOSIT_MANA_REQUEST,
@@ -31,7 +30,6 @@ import {
   Withdrawal
 } from './types'
 import { mapStatus, mapStatusWithdrawal } from './utils'
-import { RootState } from '../reducer'
 
 export const getState = (state: RootState) => state.mana
 export const getData = (state: RootState) => getState(state).data

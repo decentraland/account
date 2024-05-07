@@ -1,9 +1,8 @@
 import { connect } from 'react-redux'
-
-import WithdrawalDataComponent from './WithdrawalDataComponent'
-import { MapStateProps } from './WithdrawalDataComponent.types'
 import { getWithdrawals } from '../../../../modules/mana/selectors'
 import { RootState } from '../../../../modules/reducer'
+import WithdrawalDataComponent from './WithdrawalDataComponent'
+import { MapStateProps } from './WithdrawalDataComponent.types'
 
 const mapState = (state: RootState): MapStateProps => ({
   withdrawals: getWithdrawals(state)

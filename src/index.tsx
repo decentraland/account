@@ -1,15 +1,12 @@
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-
 import { ConnectedRouter } from 'connected-react-router'
 import ModalProvider from 'decentraland-dapps/dist/providers/ModalProvider'
 import ToastProvider from 'decentraland-dapps/dist/providers/ToastProvider'
 import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
 import WalletProvider from 'decentraland-dapps/dist/providers/WalletProvider'
-
 import './modules/analytics/track'
 import './modules/analytics/sentry'
-
 import * as modals from './components/Modals'
 import { Routes } from './components/Routes'
 import * as locales from './locales'

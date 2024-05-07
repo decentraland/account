@@ -1,5 +1,5 @@
-import v2 from './v2'
 import { WithdrawalStatus } from '../mana/types'
+import v2 from './v2'
 
 describe('migrations - v2', () => {
   it('should migrate from previous version', () => {

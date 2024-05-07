@@ -1,13 +1,11 @@
 import { connect } from 'react-redux'
-
 import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
-
-import ImportWithdrawalModal from './ImportWithdrawalModal'
-import { MapDispatch, MapDispatchProps, MapState, Props } from './ImportWithdrawalModal.types'
 import { IMPORT_WITHDRAWAL_REQUEST, clearManaError, importWithdrawalRequest } from '../../../modules/mana/actions'
 import { getLoading, getWalletWithdrawals, getWithdrawalImportError } from '../../../modules/mana/selectors'
 import { RootState } from '../../../modules/reducer'
+import ImportWithdrawalModal from './ImportWithdrawalModal'
+import { MapDispatch, MapDispatchProps, MapState, Props } from './ImportWithdrawalModal.types'
 
 const mapState = (state: RootState): MapState => {
   return {

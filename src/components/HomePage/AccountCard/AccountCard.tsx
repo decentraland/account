@@ -1,13 +1,10 @@
 import React from 'react'
-
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-
 import { Card } from 'decentraland-ui'
-
+import { isPendingAccountTransaction } from '../../../modules/mana/utils'
 import { Props } from './AccountCard.types'
 import { AccountCardHeader } from './AccountCardHeader'
 import { AccountTransactions } from './AccountTransactions'
-import { isPendingAccountTransaction } from '../../../modules/mana/utils'
 
 import './AccountCard.css'
 

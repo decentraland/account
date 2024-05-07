@@ -1,13 +1,10 @@
 import React, { ComponentProps, useEffect, useState } from 'react'
-
 import { Network } from '@dcl/schemas'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
 import { getTransactionHref } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
-
 import { Button, Close, Field } from 'decentraland-ui'
-
 import { Props } from './ImportWithdrawalModal.types'
 
 import './ImportWithdrawalModal.css'

@@ -1,13 +1,11 @@
 import { connect } from 'react-redux'
-
 import { Network } from '@dcl/schemas'
 import { openBuyManaWithFiatModalRequest } from 'decentraland-dapps/dist/modules/gateway/actions'
 import { openModal } from 'decentraland-dapps/dist/modules/modal/actions'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
-
+import { RootState } from '../../../../modules/reducer'
 import AccountCardHeader from './AccountCardHeader'
 import { MapDispatch, MapDispatchProps, MapStateProps } from './AccountCardHeader.types'
-import { RootState } from '../../../../modules/reducer'
 
 const mapState = (state: RootState): MapStateProps => ({
   address: getAddress(state)

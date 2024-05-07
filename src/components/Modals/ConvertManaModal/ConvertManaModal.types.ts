@@ -2,7 +2,6 @@ import { WithAuthorizedActionProps } from 'decentraland-dapps/dist/containers/wi
 import { Wallet } from 'decentraland-dapps/dist/modules/wallet/types'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import { Dispatch } from 'redux'
-
 import { clearManaError, depositManaRequest, fetchManaPriceRequest, initiateWithdrawalRequest } from '../../../modules/mana/actions'
 
 export type Props = ModalProps & {

@@ -4,7 +4,6 @@
 // learn more: https://github.com/testing-library/jest-dom
 import path from 'path'
 import { TextDecoder, TextEncoder } from 'util'
-
 import { config } from 'dotenv'
 
 config({ path: path.resolve(process.cwd(), '.env.example') })

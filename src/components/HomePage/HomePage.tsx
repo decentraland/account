@@ -1,17 +1,14 @@
 import React from 'react'
-
 import { Network } from '@dcl/schemas'
-
 import { Page } from 'decentraland-ui'
-
-import { AccountCard } from './AccountCard'
-import { AccountCardContainer } from './AccountCardContainer'
-import { Props } from './HomePage.types'
 import { DepositStatus, WithdrawalStatus } from '../../modules/mana/types'
 import { Footer } from '../Footer'
 import { Navbar } from '../Navbar'
 import DepositTooltip from '../Tooltips/DepositTooltip'
 import WithdrawalTooltip from '../Tooltips/WithdrawalTooltip'
+import { AccountCard } from './AccountCard'
+import { AccountCardContainer } from './AccountCardContainer'
+import { Props } from './HomePage.types'
 
 import './HomePage.css'
 

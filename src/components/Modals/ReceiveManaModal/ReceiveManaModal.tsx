@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
-
 import { Close, Field } from 'decentraland-ui'
 
 import './ReceiveManaModal.css'

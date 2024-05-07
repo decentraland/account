@@ -1,19 +1,16 @@
 import * as React from 'react'
-
 import { Network } from '@dcl/schemas'
 import { NetworkButton } from 'decentraland-dapps/dist/containers'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { isPending } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-
 import { Button, Close } from 'decentraland-ui'
-
+import { FINISH_WITHDRAWAL_SUCCESS } from '../../../modules/mana/actions'
+import { WithdrawalStatus } from '../../../modules/mana/types'
 import CompleteWithdrawal from './CompleteWithdrawal'
 import ReadyToWithdraw from './ReadyToWithdraw'
 import { Props } from './WithdrawalStatusModal.types'
 import WithdrawInitialized from './WithdrawInitialized'
-import { FINISH_WITHDRAWAL_SUCCESS } from '../../../modules/mana/actions'
-import { WithdrawalStatus } from '../../../modules/mana/types'
 
 import './WithdrawalStatusModal.css'
 

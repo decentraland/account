@@ -1,15 +1,12 @@
 import React from 'react'
-
 import { Network } from '@dcl/schemas'
 import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
 import { getTransactionHref } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-
 import { Radio } from 'decentraland-ui'
-
-import { Props } from './CompleteWithdrawal.types'
 import { WithdrawalStatus } from '../../../../modules/mana/types'
 import LinkWrapper from '../LinkWrapper'
+import { Props } from './CompleteWithdrawal.types'
 
 const CompleteWithdrawal = ({ withdrawal }: Props) => {
   const { status, finalizeHash } = withdrawal

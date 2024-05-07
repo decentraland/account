@@ -1,11 +1,8 @@
 import React from 'react'
-
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-
 import { Radio } from 'decentraland-ui'
-
-import { Props } from './ReadyToWithdraw.types'
 import { WithdrawalStatus } from '../../../../modules/mana/types'
+import { Props } from './ReadyToWithdraw.types'
 
 import './ReadyToWithdraw.css'
 

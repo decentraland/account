@@ -3,7 +3,6 @@ import { closeAllModals, closeModal } from 'decentraland-dapps/dist/modules/moda
 import { ModalState } from 'decentraland-dapps/dist/modules/modal/reducer'
 import { getOpenModals } from 'decentraland-dapps/dist/modules/modal/selectors'
 import { delay, put, select, takeEvery } from 'redux-saga/effects'
-
 import { IMPORT_WITHDRAWAL_SUCCESS } from '../mana/actions'
 
 export function* modalSaga() {

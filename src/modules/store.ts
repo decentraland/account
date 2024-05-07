@@ -9,13 +9,12 @@ import { createBrowserHistory } from 'history'
 import { applyMiddleware, compose, createStore } from 'redux'
 import { createLogger } from 'redux-logger'
 import createSagasMiddleware from 'redux-saga'
-
+import { config } from '../config'
+import { isTest } from '../lib/environment'
 import { SET_DEPOSIT_STATUS, SET_WITHDRAWAL_STATUS, WATCH_DEPOSIT_STATUS_SUCCESS, WATCH_WITHDRAWAL_STATUS_SUCCESS } from './mana/actions'
 import migrations from './migrations'
 import { createRootReducer } from './reducer'
 import { rootSaga } from './sagas'
-import { config } from '../config'
-import { isTest } from '../lib/environment'
 
 const basename = /^decentraland.(zone|org|today)$/.test(window.location.host) ? '/account' : undefined
 

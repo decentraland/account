@@ -1,6 +1,5 @@
 import { Env } from '@dcl/ui-env/dist/env'
 import { BrowserTracing, Replay, init } from '@sentry/react'
-
 import { config } from '../../config'
 
 init({

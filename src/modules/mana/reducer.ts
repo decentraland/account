@@ -2,7 +2,6 @@ import { SET_PURCHASE, SetPurchaseAction } from 'decentraland-dapps/dist/modules
 import { Purchase } from 'decentraland-dapps/dist/modules/gateway/types'
 import { LoadingState, loadingReducer } from 'decentraland-dapps/dist/modules/loading/reducer'
 import { FETCH_TRANSACTION_SUCCESS, FetchTransactionSuccessAction } from 'decentraland-dapps/dist/modules/transaction/actions'
-
 import {
   APPROVE_MANA_FAILURE,
   APPROVE_MANA_REQUEST,

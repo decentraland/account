@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { AccountTransaction } from './AccountTransaction'
 import { Props } from './AccountTransactions.types'
 

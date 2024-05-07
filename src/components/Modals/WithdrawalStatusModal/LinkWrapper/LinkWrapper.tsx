@@ -1,7 +1,5 @@
 import React from 'react'
-
 import { Icon } from 'decentraland-ui'
-
 import { Props } from './LinkWrapper.types'
 
 import './LinkWrapper.css'

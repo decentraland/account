@@ -1,12 +1,9 @@
 import * as React from 'react'
-
 import { Network } from '@dcl/schemas'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
-
 import { Close } from 'decentraland-ui'
-
 import { Transaction } from '../../../modules/mana/types'
 import { AccountTransaction } from '../../HomePage/AccountCard/AccountTransactions/AccountTransaction'
 

@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-
 import { Contract, Network } from '@dcl/schemas'
 import { NetworkButton, withAuthorizedAction } from 'decentraland-dapps/dist/containers'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
@@ -7,13 +6,11 @@ import { AuthorizedAction } from 'decentraland-dapps/dist/containers/withAuthori
 import { AuthorizationType } from 'decentraland-dapps/dist/modules/authorization/types'
 import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { ethers } from 'ethers'
-
 import { ContractName } from 'decentraland-transactions'
 import { Button, Close, Field, Loader } from 'decentraland-ui'
-
-import { Props } from './ConvertManaModal.types'
 import { getDepositManaStatus, getError } from '../../../modules/mana/selectors'
 import { ERC20_PREDICATE_CONTRACT_ADDRESS, MANA_CONTRACT_ADDRESS, getEstimatedExitTransactionCost } from '../../../modules/mana/utils'
+import { Props } from './ConvertManaModal.types'
 
 import './ConvertManaModal.css'
 

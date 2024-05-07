@@ -10,13 +10,11 @@ import { hasFailed, hasSucceeded, isPending } from 'decentraland-dapps/dist/modu
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { getAddress, getChainId } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { BigNumber, ethers, utils } from 'ethers'
-
 import { Provider } from 'decentraland-transactions'
-
-import { getWithdrawals } from './selectors'
-import { DepositStatus, MaticEnv, TransactionStatus, TransactionType, TransferStatus, Withdrawal, WithdrawalStatus } from './types'
 import { config } from '../../config'
 import { gasPriceAPI } from '../../lib/api/gasPrice'
+import { getWithdrawals } from './selectors'
+import { DepositStatus, MaticEnv, TransactionStatus, TransactionType, TransferStatus, Withdrawal, WithdrawalStatus } from './types'
 
 export const MANA_CONTRACT_ADDRESS = config.get('MANA_CONTRACT_ADDRESS')
 export const ERC20_PREDICATE_CONTRACT_ADDRESS = config.get('ERC20_PREDICATE_CONTRACT_ADDRESS')

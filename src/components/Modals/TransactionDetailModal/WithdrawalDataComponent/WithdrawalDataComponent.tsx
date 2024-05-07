@@ -1,10 +1,8 @@
 import React from 'react'
-
 import { Network } from '@dcl/schemas'
-
-import { Props } from './WithdrawalDataComponent.types'
 import Data from '../Data'
 import ExplorerLink from '../ExplorerLink'
+import { Props } from './WithdrawalDataComponent.types'
 
 const WithdrawalDataComponent = ({ withdrawals, data }: Props) => {
   const withdrawal = withdrawals.find(w => w.initializeHash === data.initializeHash)

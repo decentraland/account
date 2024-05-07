@@ -14,6 +14,7 @@ module.exports = {
     '@typescript-eslint/triple-slash-reference': 'off',
     // TODO: Remove this rule and fix all the ban types issues
     '@typescript-eslint/ban-types': 'off',
+    'import/default': 'off',
     'autofix/no-debugger': 'error',
     'sort-imports': [
       'error',
@@ -30,7 +31,8 @@ module.exports = {
           'builtin',
           'external',
           'internal',
-          ['sibling', 'parent'], // <- Relative imports, the sibling and parent types they can be mingled together
+          'parent',
+          'sibling', // <- Relative imports, the sibling and parent types they can be mingled together
           'index',
           'object',
           'type',
@@ -52,7 +54,7 @@ module.exports = {
             group: 'internal'
           }
         ],
-        'newlines-between': 'always',
+        'newlines-between': 'never',
         alphabetize: {
           order: 'asc',
           caseInsensitive: true
@@ -62,9 +64,15 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
+      typescript: {
+        alwaysTryTypes: true
+      },
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx']
       }
+    },
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.js', '.jsx', '.ts', '.tsx']
     }
   }
 }
