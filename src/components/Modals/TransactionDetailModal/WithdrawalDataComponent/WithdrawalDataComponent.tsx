@@ -1,13 +1,13 @@
 import React from 'react'
+
 import { Network } from '@dcl/schemas'
-import Data from '../Data'
+
 import { Props } from './WithdrawalDataComponent.types'
+import Data from '../Data'
 import ExplorerLink from '../ExplorerLink'
 
 const WithdrawalDataComponent = ({ withdrawals, data }: Props) => {
-  const withdrawal = withdrawals.find(
-    (w) => w.initializeHash === data.initializeHash
-  )
+  const withdrawal = withdrawals.find(w => w.initializeHash === data.initializeHash)
 
   if (!withdrawal) {
     return null

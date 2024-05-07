@@ -1,19 +1,15 @@
 import { connect } from 'react-redux'
-import {
-  getWalletWithdrawals,
-  getWalletDeposits,
-  getTransactionByNetwork,
-} from '../../modules/mana/selectors'
-import { RootState } from '../../modules/reducer'
 
 import HomePage from './HomePage'
-import { MapStateProps, MapDispatchProps, MapDispatch } from './HomePage.types'
+import { MapDispatch, MapDispatchProps, MapStateProps } from './HomePage.types'
+import { getTransactionByNetwork, getWalletDeposits, getWalletWithdrawals } from '../../modules/mana/selectors'
+import { RootState } from '../../modules/reducer'
 
 const mapState = (state: RootState): MapStateProps => {
   return {
     transactionsByNetwork: getTransactionByNetwork(state),
     withdrawals: getWalletWithdrawals(state),
-    deposits: getWalletDeposits(state),
+    deposits: getWalletDeposits(state)
   }
 }
 

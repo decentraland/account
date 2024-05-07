@@ -5,9 +5,15 @@ module.exports = {
   extends: ['@dcl/eslint-config/dapps', 'plugin:css-import-order/recommended'],
   rules: {
     // TODO: Remove this rule and fix all the naming conventions issues
-    '@typescript-eslint/naming-convention': 'warn',
+    '@typescript-eslint/naming-convention': 'off',
     // TODO: Remove this rule and fix all the explicit any issues
     '@typescript-eslint/no-explicit-any': 'off',
+    // TODO: Remove this rule and fix all the unbound method issues
+    '@typescript-eslint/unbound-method': 'off',
+    // TODO: Remove this rule and fix all the triple slash reference issues
+    '@typescript-eslint/triple-slash-reference': 'off',
+    // TODO: Remove this rule and fix all the ban types issues
+    '@typescript-eslint/ban-types': 'off',
     'autofix/no-debugger': 'error',
     'sort-imports': [
       'error',

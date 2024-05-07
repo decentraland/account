@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Close, Field } from 'decentraland-ui'
-import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
+
 import Modal from 'decentraland-dapps/dist/containers/Modal'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
+
+import { Close, Field } from 'decentraland-ui'
+
 import './ReceiveManaModal.css'
 
 const ReceiveManaModal = ({ name, onClose, metadata }: ModalProps) => {
@@ -17,11 +20,7 @@ const ReceiveManaModal = ({ name, onClose, metadata }: ModalProps) => {
   }
 
   return (
-    <Modal
-      name={name}
-      className="ReceiveManaModal"
-      closeIcon={<Close onClick={onClose} />}
-    >
+    <Modal name={name} className="ReceiveManaModal" closeIcon={<Close onClick={onClose} />}>
       <Modal.Header>
         <div className="title"> {t('receive_mana_modal.title')}</div>
       </Modal.Header>

@@ -1,10 +1,12 @@
 import React, { useCallback, useMemo } from 'react'
-import { Navbar as BaseNavbar } from 'decentraland-dapps/dist/containers'
-import { localStorageGetIdentity } from '@dcl/single-sign-on-client'
 
-import { locations } from '../../modules/locations'
-import { config } from '../../config'
+import { localStorageGetIdentity } from '@dcl/single-sign-on-client'
+import { Navbar as BaseNavbar } from 'decentraland-dapps/dist/containers'
+
 import { Props } from './Navbar.types'
+import { config } from '../../config'
+import { locations } from '../../modules/locations'
+
 import './Navbar.css'
 
 const Navbar = (props: Props) => {
@@ -27,13 +29,7 @@ const Navbar = (props: Props) => {
   }, [address])
 
   return (
-    <BaseNavbar
-      {...props}
-      isSignIn={pathname === locations.signIn()}
-      onSignIn={handleOnSignIn}
-      withNotifications
-      identity={identity}
-    />
+    <BaseNavbar {...props} isSignIn={pathname === locations.signIn()} onSignIn={handleOnSignIn} withNotifications identity={identity} />
   )
 }
 

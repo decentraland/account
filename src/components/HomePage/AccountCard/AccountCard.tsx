@@ -1,31 +1,25 @@
 import React from 'react'
+
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+
 import { Card } from 'decentraland-ui'
-import { isPendingAccountTransaction } from '../../../modules/mana/utils'
-import { AccountCardHeader } from './AccountCardHeader'
+
 import { Props } from './AccountCard.types'
+import { AccountCardHeader } from './AccountCardHeader'
 import { AccountTransactions } from './AccountTransactions'
+import { isPendingAccountTransaction } from '../../../modules/mana/utils'
+
 import './AccountCard.css'
 
 const MAX_TXS_TO_SHOW_PER_STATUS = 4
 
-const AccountCard = ({
-  network,
-  title,
-  amount,
-  transactions,
-  onSeeAll,
-}: Props) => {
+const AccountCard = ({ network, title, amount, transactions, onSeeAll }: Props) => {
   const pending = transactions
-    .filter((tx) =>
-      isPendingAccountTransaction(tx.type, tx.status, tx.data.status)
-    )
+    .filter(tx => isPendingAccountTransaction(tx.type, tx.status, tx.data.status))
     .slice(0, MAX_TXS_TO_SHOW_PER_STATUS)
 
   const latest = transactions
-    .filter(
-      (tx) => !isPendingAccountTransaction(tx.type, tx.status, tx.data.status)
-    )
+    .filter(tx => !isPendingAccountTransaction(tx.type, tx.status, tx.data.status))
     .slice(0, MAX_TXS_TO_SHOW_PER_STATUS)
 
   const handleOnSeeAll = () => onSeeAll(transactions, network)

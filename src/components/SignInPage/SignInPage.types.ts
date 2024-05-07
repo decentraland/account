@@ -1,5 +1,5 @@
 export type Props = {
-  isAuthDappEnabled: boolean,
+  isAuthDappEnabled: boolean
   isConnecting: boolean
 }
 

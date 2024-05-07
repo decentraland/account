@@ -1,23 +1,24 @@
-import 'semantic-ui-css/semantic.min.css'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+
 import { ConnectedRouter } from 'connected-react-router'
 import ModalProvider from 'decentraland-dapps/dist/providers/ModalProvider'
-import WalletProvider from 'decentraland-dapps/dist/providers/WalletProvider'
 import ToastProvider from 'decentraland-dapps/dist/providers/ToastProvider'
 import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
+import WalletProvider from 'decentraland-dapps/dist/providers/WalletProvider'
 
 import './modules/analytics/track'
 import './modules/analytics/sentry'
 
-import { store, history } from './modules/store'
+import * as modals from './components/Modals'
 import { Routes } from './components/Routes'
 import * as locales from './locales'
-import * as modals from './components/Modals'
-
-import 'decentraland-ui/dist/themes/alternative/light-theme.css'
+import { history, store } from './modules/store'
 import './themes'
+
 import './index.css'
+import 'semantic-ui-css/semantic.min.css'
+import 'decentraland-ui/dist/themes/alternative/light-theme.css'
 
 const component = (
   <Provider store={store}>
