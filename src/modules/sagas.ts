@@ -5,6 +5,7 @@ import { ApplicationName } from 'decentraland-dapps/dist/modules/features/types'
 import { createGatewaySaga } from 'decentraland-dapps/dist/modules/gateway/sagas'
 import { FiatGateway } from 'decentraland-dapps/dist/modules/gateway/types'
 import { locationSaga } from 'decentraland-dapps/dist/modules/location/sagas'
+import { NotificationsAPI } from 'decentraland-dapps/dist/modules/notifications'
 import { createProfileSaga } from 'decentraland-dapps/dist/modules/profile/sagas'
 import { toastSaga } from 'decentraland-dapps/dist/modules/toast/sagas'
 import { transactionSaga } from 'decentraland-dapps/dist/modules/transaction/sagas'
@@ -18,6 +19,7 @@ import { locationSaga as localLocationSaga } from './location/sagas'
 import { manaSaga } from './mana/sagas'
 import { TRANSACTIONS_API_URL } from './mana/utils'
 import { modalSaga } from './modal/sagas'
+import { subscriptionSagas } from './subscription/sagas'
 
 const analyticsSaga = createAnalyticsSaga()
 
@@ -60,7 +62,7 @@ const gatewaySaga = createGatewaySaga({
   }
 })
 
-export function* rootSaga() {
+export function* rootSaga(notificationsAPI: NotificationsAPI) {
   yield all([
     analyticsSaga(),
     authorizationSaga(),
@@ -79,6 +81,7 @@ export function* rootSaga() {
     }),
     manaSaga(),
     toastSaga(),
+    subscriptionSagas(notificationsAPI),
     gatewaySaga()
   ])
 }

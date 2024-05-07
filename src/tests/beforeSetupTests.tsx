@@ -5,9 +5,16 @@
 import path from 'path'
 import { TextDecoder, TextEncoder } from 'util'
 import { config } from 'dotenv'
+import fetch, { Request, Response } from 'node-fetch'
 
 config({ path: path.resolve(process.cwd(), '.env.example') })
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
+if (!globalThis.fetch) {
+  globalThis.fetch = fetch as any
+  globalThis.Request = Request as any
+  globalThis.Response = Response as any
+}
+
 Object.assign(globalThis, { TextDecoder, TextEncoder })
 Object.assign(globalThis, {
   setImmediate: global.setImmediate || ((fn: (...args: any[]) => void, ...args: any) => global.setTimeout(fn, 0, ...args))
