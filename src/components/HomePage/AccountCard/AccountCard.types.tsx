@@ -1,7 +1,8 @@
 import { Network } from '@dcl/schemas'
-import { Dispatch } from 'redux'
-import { Transaction } from '../../../modules/mana/types'
 import { OpenModalAction } from 'decentraland-dapps/dist/modules/modal/actions'
+import { Dispatch } from 'redux'
+
+import { Transaction } from '../../../modules/mana/types'
 
 export type Props = {
   network: Network

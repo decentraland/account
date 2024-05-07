@@ -2,20 +2,20 @@ import { ChainId, Network } from '@dcl/schemas'
 
 export enum MaticEnv {
   MAINNET = 'mainnet',
-  TESTNET = 'testnet',
+  TESTNET = 'testnet'
 }
 
 export enum TransactionType {
   DEPOSIT = 'deposit',
   WITHDRAWAL = 'withdrawal',
   TRANSFER = 'transfer',
-  PURCHASE = 'purchase',
+  PURCHASE = 'purchase'
 }
 
 export enum TransactionStatus {
   CONFIRMED = 'confirmed',
   PENDING = 'pending',
-  REJECTED = 'rejected',
+  REJECTED = 'rejected'
 }
 
 export type Transaction<T = any> = {
@@ -34,7 +34,7 @@ export type Buy = {
 export enum TransferStatus {
   CONFIRMED = 'confirmed',
   PENDING = 'pending',
-  REJECTED = 'rejected',
+  REJECTED = 'rejected'
 }
 
 export type Transfer = {
@@ -49,7 +49,7 @@ export type Transfer = {
 
 export enum DepositStatus {
   PENDING = 'pending',
-  COMPLETE = 'complete',
+  COMPLETE = 'complete'
 }
 
 export type Deposit = {
@@ -63,7 +63,7 @@ export type Deposit = {
 export enum WithdrawalStatus {
   PENDING = 'pending',
   CHECKPOINT = 'checkpoint',
-  COMPLETE = 'complete',
+  COMPLETE = 'complete'
 }
 
 export type Withdrawal = {

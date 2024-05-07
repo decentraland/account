@@ -58,6 +58,9 @@
     "@vitejs/plugin-react": "^4.2.1",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "eslint": "^8.57.0",
+    "eslint-plugin-autofix": "^2.0.0",
+    "eslint-plugin-css-import-order": "^1.1.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.6",
@@ -79,11 +82,10 @@
     "test:coverage": "npm run test -- --coverage",
     "build": "tsc && vite build",
     "build:contracts": "typechain --target ethers-v5 --out-dir src/contracts src/contracts/*.json",
-    "lint": "eslint -c .eslintrc.cjs --ext .ts,.tsx,.js,.jsx ./src",
-    "check:code": "eslint -c .eslintrc.cjs src",
-    "fix:code": "npm run lint -- --fix",
-    "prepare": "husky",
-    "fix:prettier": "prettier --write '**/*.{ts,tsx,js,jsx,json,md,mdx,css}'"
+    "check:code": "eslint ./src --ext .ts,.tsx,.js,.jsx",
+    "fix:code": "npm run check:code -- --fix",
+    "fix:prettier": "prettier --write '**/*.{ts,tsx,js,jsx,json,md,mdx,css}'",
+    "prepare": "husky"
   },
   "engines": {
     "node": "^20"

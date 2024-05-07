@@ -1,22 +1,20 @@
-import React from 'react'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import * as React from 'react'
+
+import { Network } from '@dcl/schemas'
 import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
 import { getTransactionHref } from 'decentraland-dapps/dist/modules/transaction/utils'
-import { Network } from '@dcl/schemas'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+
 import { Radio } from 'decentraland-ui'
-import LinkWrapper from '../LinkWrapper'
-import { WithdrawalStatus } from '../../../../modules/mana/types'
+
 import { Props } from './CompleteWithdrawal.types'
+import { WithdrawalStatus } from '../../../../modules/mana/types'
+import LinkWrapper from '../LinkWrapper'
 
 const CompleteWithdrawal = ({ withdrawal }: Props) => {
   const { status, finalizeHash } = withdrawal
 
-  const href =
-    finalizeHash &&
-    getTransactionHref(
-      { txHash: finalizeHash },
-      getChainIdByNetwork(Network.ETHEREUM)
-    )
+  const href = finalizeHash && getTransactionHref({ txHash: finalizeHash }, getChainIdByNetwork(Network.ETHEREUM))
 
   const radio = (
     <Radio

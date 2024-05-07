@@ -1,48 +1,29 @@
-import { BigNumber, ethers, utils } from 'ethers'
 import { ChainId, Network } from '@dcl/schemas'
-import { TransactionStatus as TxStatus } from 'decentraland-dapps/dist/modules/transaction/types'
-import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
-import { graphql } from 'decentraland-dapps/dist/lib/graph'
-import { Provider } from 'decentraland-transactions'
-import {
-  hasFailed,
-  hasSucceeded,
-  isPending,
-} from 'decentraland-dapps/dist/modules/transaction/utils'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { PurchaseStatus } from 'decentraland-dapps/dist/modules/gateway/types'
-import { call, select } from '@redux-saga/core/effects'
-import { getConnectedProvider } from 'decentraland-dapps/dist/lib/eth'
-import {
-  getAddress,
-  getChainId,
-} from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { IPOSClientConfig, POSClient } from '@maticnetwork/maticjs'
-import { getWithdrawals } from './selectors'
-import {
-  DepositStatus,
-  MaticEnv,
-  TransactionStatus,
-  TransactionType,
-  TransferStatus,
-  Withdrawal,
-  WithdrawalStatus,
-} from './types'
-import { gasPriceAPI } from '../../lib/api/gasPrice'
-import { config } from '../../config'
+import { call, select } from '@redux-saga/core/effects'
+import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
+import { getConnectedProvider } from 'decentraland-dapps/dist/lib/eth'
+import { graphql } from 'decentraland-dapps/dist/lib/graph'
+import { PurchaseStatus } from 'decentraland-dapps/dist/modules/gateway/types'
+import { TransactionStatus as TxStatus } from 'decentraland-dapps/dist/modules/transaction/types'
+import { hasFailed, hasSucceeded, isPending } from 'decentraland-dapps/dist/modules/transaction/utils'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { getAddress, getChainId } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { BigNumber, ethers, utils } from 'ethers'
 
-export const MANA_CONTRACT_ADDRESS = config.get('MANA_CONTRACT_ADDRESS')!
-export const ERC20_PREDICATE_CONTRACT_ADDRESS = config.get(
-  'ERC20_PREDICATE_CONTRACT_ADDRESS'
-)!
-export const ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS = config.get(
-  'ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS'
-)!
-export const MATIC_ROOT_CHAIN_SUBGRAPH = config.get(
-  'MATIC_ROOT_CHAIN_SUBGRAPH'
-)!
+import { Provider } from 'decentraland-transactions'
+
+import { getWithdrawals } from './selectors'
+import { DepositStatus, MaticEnv, TransactionStatus, TransactionType, TransferStatus, Withdrawal, WithdrawalStatus } from './types'
+import { config } from '../../config'
+import { gasPriceAPI } from '../../lib/api/gasPrice'
+
+export const MANA_CONTRACT_ADDRESS = config.get('MANA_CONTRACT_ADDRESS')
+export const ERC20_PREDICATE_CONTRACT_ADDRESS = config.get('ERC20_PREDICATE_CONTRACT_ADDRESS')
+export const ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS = config.get('ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS')
+export const MATIC_ROOT_CHAIN_SUBGRAPH = config.get('MATIC_ROOT_CHAIN_SUBGRAPH')
 export const MATIC_ENV: MaticEnv = getMaticEnv(config.get('MATIC_ENV'))
-export const TRANSACTIONS_API_URL = config.get('TRANSACTIONS_API_URL')!
+export const TRANSACTIONS_API_URL = config.get('TRANSACTIONS_API_URL')
 
 const POLL_INTERVAL = 30 * 1000 // 30 seconds
 
@@ -58,22 +39,19 @@ function instantiateStateReceiver(provider: Provider) {
           {
             internalType: 'uint256',
             name: '',
-            type: 'uint256',
-          },
+            type: 'uint256'
+          }
         ],
         payable: false,
         stateMutability: 'view',
-        type: 'function',
-      },
+        type: 'function'
+      }
     ] as any,
     new ethers.providers.Web3Provider(provider as any)
   )
 }
 
-export async function isWithdrawalSynced(
-  txHash: string,
-  maticProvider: Provider
-) {
+export async function isWithdrawalSynced(txHash: string, maticProvider: Provider) {
   const tx = await maticProvider.send!('eth_getTransactionReceipt', [txHash])
   if (!tx || !tx.blockNumber) return false
 
@@ -87,11 +65,7 @@ export async function isWithdrawalSynced(
   return isSynced
 }
 
-export async function isDepositSynced(
-  txHash: string,
-  ethereumProvider: Provider,
-  maticProvider: Provider
-) {
+export async function isDepositSynced(txHash: string, ethereumProvider: Provider, maticProvider: Provider) {
   // get root counter
   const tx = await ethereumProvider.send!('eth_getTransactionReceipt', [txHash])
   if (!tx) return false
@@ -109,19 +83,14 @@ export async function isDepositSynced(
   return isSynced
 }
 
-export async function waitForSync(
-  txHash: string,
-  isSynced: (txHash: string) => Promise<boolean>
-): Promise<void> {
+export async function waitForSync(txHash: string, isSynced: (txHash: string) => Promise<boolean>): Promise<void> {
   try {
     const isConfirmed = await isSynced(txHash)
     if (!isConfirmed) {
       throw new Error('Not confirmed')
     }
   } catch (error) {
-    await new Promise((resolve) =>
-      setTimeout(() => resolve(void 0), POLL_INTERVAL)
-    )
+    await new Promise(resolve => setTimeout(() => resolve(void 0), POLL_INTERVAL))
     return waitForSync(txHash, isSynced)
   }
 }
@@ -138,9 +107,7 @@ export const mapStatus = (txStatus: TxStatus | null) => {
   }
 }
 
-export const mapStatusWithdrawal = (
-  status: WithdrawalStatus
-): TransactionStatus => {
+export const mapStatusWithdrawal = (status: WithdrawalStatus): TransactionStatus => {
   switch (status) {
     case WithdrawalStatus.COMPLETE:
       return TransactionStatus.CONFIRMED
@@ -152,11 +119,7 @@ export const mapStatusWithdrawal = (
   }
 }
 
-export const getStatusMessage = (
-  type: TransactionType,
-  parentStatus: TransactionStatus,
-  childStatus: any
-) => {
+export const getStatusMessage = (type: TransactionType, parentStatus: TransactionStatus, childStatus: any) => {
   if (type === TransactionType.WITHDRAWAL) {
     if (childStatus === WithdrawalStatus.COMPLETE) {
       return t('withdrawal_status.complete')
@@ -200,10 +163,7 @@ export const getStatusMessage = (
     if (childStatus === PurchaseStatus.CANCELLED) {
       return t('purchase_status.cancelled')
     }
-    if (
-      parentStatus === TransactionStatus.REJECTED &&
-      childStatus === PurchaseStatus.PENDING
-    ) {
+    if (parentStatus === TransactionStatus.REJECTED && childStatus === PurchaseStatus.PENDING) {
       return t('purchase_status.expired')
     }
 
@@ -213,19 +173,12 @@ export const getStatusMessage = (
   return t('transaction_status.pending')
 }
 
-export const isPendingAccountTransaction = (
-  type: TransactionType,
-  parentStatus: TransactionStatus,
-  childStatus: any
-) => {
+export const isPendingAccountTransaction = (type: TransactionType, parentStatus: TransactionStatus, childStatus: any) => {
   if (parentStatus === TransactionStatus.PENDING) {
     return true
   }
   if (type === TransactionType.WITHDRAWAL) {
-    if (
-      childStatus === WithdrawalStatus.CHECKPOINT ||
-      childStatus === WithdrawalStatus.PENDING
-    ) {
+    if (childStatus === WithdrawalStatus.CHECKPOINT || childStatus === WithdrawalStatus.PENDING) {
       return true
     }
   } else if (type === TransactionType.DEPOSIT) {
@@ -252,24 +205,20 @@ export function* getMaticPOSClient() {
   const connectedProvider: Provider = yield call(getConnectedProvider)
 
   if (!connectedProvider) {
-    throw new Error(`Could not connect to provider`)
+    throw new Error('Could not connect to provider')
   }
 
-  const web3Provider = new ethers.providers.Web3Provider(
-    connectedProvider as any
-  )
+  const web3Provider = new ethers.providers.Web3Provider(connectedProvider as any)
 
   const from: string | undefined = yield select(getAddress)
 
   if (!from) {
-    throw new Error(`Could not get address`)
+    throw new Error('Could not get address')
   }
 
   const chainId: ChainId = yield select(getChainId)
   const parentConfig = getChainConfiguration(chainId)
-  const maticConfig = getChainConfiguration(
-    parentConfig.networkMapping[Network.MATIC]
-  )
+  const maticConfig = getChainConfiguration(parentConfig.networkMapping[Network.MATIC])
 
   const config: IPOSClientConfig = {
     network: MATIC_ENV,
@@ -277,15 +226,15 @@ export function* getMaticPOSClient() {
     parent: {
       provider: web3Provider,
       defaultConfig: {
-        from,
-      },
+        from
+      }
     },
     child: {
       provider: new ethers.providers.JsonRpcProvider(maticConfig.rpcURL),
       defaultConfig: {
-        from,
-      },
-    },
+        from
+      }
+    }
   }
 
   const client = new POSClient()
@@ -297,14 +246,14 @@ export function* getMaticPOSClient() {
 
 export function* getStoreWithdrawalByHash(hash: string) {
   const withdrawals: Withdrawal[] = yield select(getWithdrawals)
-  return withdrawals.find((w) => w.initializeHash === hash)
+  return withdrawals.find(w => w.initializeHash === hash)
 }
 
 const EXIT_CONTRACT_GAS_CONSUMPTION = 260670 // gas in wei
 
 export async function getEstimatedExitTransactionCost() {
   const {
-    result: { fast, ethPrice },
+    result: { fast, ethPrice }
   } = await gasPriceAPI.fetchGasPrice()
 
   const gasPriceWei = utils.parseUnits(String(fast.feeCap.toFixed(3)), 'gwei')

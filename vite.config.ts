@@ -31,33 +31,33 @@ export default defineConfig(({ command, mode }) => {
     },
     ...(command === 'build'
       ? {
-        base: envVariables.VITE_BASE_URL,
-        optimizeDeps: {
-          esbuildOptions: {
-            // Node.js global to browser globalThis
-            define: {
-              global: 'globalThis'
+          base: envVariables.VITE_BASE_URL,
+          optimizeDeps: {
+            esbuildOptions: {
+              // Node.js global to browser globalThis
+              define: {
+                global: 'globalThis'
+              },
+              // Enable esbuild polyfill plugins
+              plugins: [
+                NodeGlobalsPolyfillPlugin({
+                  buffer: true,
+                  process: true
+                }),
+                NodeModulesPolyfillPlugin()
+              ]
+            }
+          },
+          build: {
+            commonjsOptions: {
+              transformMixedEsModules: true
             },
-            // Enable esbuild polyfill plugins
-            plugins: [
-              NodeGlobalsPolyfillPlugin({
-                buffer: true,
-                process: true
-              }),
-              NodeModulesPolyfillPlugin()
-            ]
+            rollupOptions: {
+              plugins: [rollupNodePolyFill()]
+            },
+            sourcemap: true
           }
-        },
-        build: {
-          commonjsOptions: {
-            transformMixedEsModules: true
-          },
-          rollupOptions: {
-            plugins: [rollupNodePolyFill()]
-          },
-          sourcemap: true
         }
-      }
       : undefined)
   } as any
 })

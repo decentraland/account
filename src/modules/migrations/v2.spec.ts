@@ -1,5 +1,5 @@
-import { WithdrawalStatus } from '../mana/types'
 import v2 from './v2'
+import { WithdrawalStatus } from '../mana/types'
 
 describe('migrations - v2', () => {
   it('should migrate from previous version', () => {
@@ -8,22 +8,18 @@ describe('migrations - v2', () => {
       hash: 'hash',
       from: 'from',
       status: WithdrawalStatus.PENDING,
-      timestamp: 1,
+      timestamp: 1
     })
 
     const oldState: any = {
       mana: {
         data: {
-          withdrawals: [makeOldWithdrawal()],
-        },
+          withdrawals: [makeOldWithdrawal()]
+        }
       },
       transaction: {
-        data: [
-          { payload: undefined },
-          { payload: { foo: 'bar' } },
-          { payload: { withdrawal: makeOldWithdrawal() } },
-        ],
-      },
+        data: [{ payload: undefined }, { payload: { foo: 'bar' } }, { payload: { withdrawal: makeOldWithdrawal() } }]
+      }
     }
 
     const state = v2(oldState)

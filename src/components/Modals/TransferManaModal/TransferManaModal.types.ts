@@ -1,9 +1,7 @@
-import { Dispatch } from 'redux'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
-import {
-  fetchManaPriceRequest,
-  transferManaRequest,
-} from '../../../modules/mana/actions'
+import { Dispatch } from 'redux'
+
+import { fetchManaPriceRequest, transferManaRequest } from '../../../modules/mana/actions'
 
 export type Props = ModalProps & {
   isLoading: boolean

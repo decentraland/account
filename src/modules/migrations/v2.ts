@@ -13,13 +13,13 @@ const v2 = (state: RootState) => {
       ...state.mana,
       data: {
         ...state.mana.data,
-        withdrawals: updatedWithdrawals,
-      },
+        withdrawals: updatedWithdrawals
+      }
     },
     transaction: {
       ...state.transaction,
-      data: updatedTransactions,
-    },
+      data: updatedTransactions
+    }
   }
 }
 
@@ -29,7 +29,7 @@ const mapOldWithdrawal = (withdrawal: any): Withdrawal => ({
   status: withdrawal.status,
   timestamp: withdrawal.timestamp,
   finalizeHash: withdrawal.finalizeHash || null,
-  initializeHash: withdrawal.initializeHash || withdrawal.hash,
+  initializeHash: withdrawal.initializeHash || withdrawal.hash
 })
 
 const mapOldTransactions = (transaction: any) => ({
@@ -37,9 +37,9 @@ const mapOldTransactions = (transaction: any) => ({
   payload: transaction.payload?.withdrawal
     ? {
         ...transaction.payload,
-        withdrawal: mapOldWithdrawal(transaction.payload.withdrawal),
+        withdrawal: mapOldWithdrawal(transaction.payload.withdrawal)
       }
-    : transaction.payload,
+    : transaction.payload
 })
 
 export default v2
