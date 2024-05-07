@@ -1,9 +1,9 @@
-name: Test
+name: Lint
 
 on: [push, pull_request]
 
 jobs:
-  test:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -13,5 +13,5 @@ jobs:
           node-version: 20.x
       - name: Install
         run: npm ci
-      - name: Test
-        run: npm run test
+      - name: Lint
+        run: npm run check:code

@@ -5,7 +5,7 @@ import WithdrawalDataComponent from './WithdrawalDataComponent'
 import { MapStateProps } from './WithdrawalDataComponent.types'
 
 const mapState = (state: RootState): MapStateProps => ({
-  withdrawals: getWithdrawals(state),
+  withdrawals: getWithdrawals(state)
 })
 
 export default connect(mapState)(WithdrawalDataComponent)

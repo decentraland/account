@@ -1,6 +1,7 @@
 import React from 'react'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Props } from './Data.types'
+
 import './Data.css'
 
 const Data = ({ label, children }: Props) => {
@@ -12,4 +13,4 @@ const Data = ({ label, children }: Props) => {
   )
 }
 
-export default React.memo( Data)
+export default React.memo(Data)

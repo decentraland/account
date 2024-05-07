@@ -1,20 +1,17 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { ethers } from 'ethers'
-import { Button, Close, Field, Loader } from 'decentraland-ui'
-import { ContractName } from 'decentraland-transactions'
-import { NetworkButton, withAuthorizedAction } from 'decentraland-dapps/dist/containers'
-import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
-import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { Contract, Network } from '@dcl/schemas'
+import { NetworkButton, withAuthorizedAction } from 'decentraland-dapps/dist/containers'
+import Modal from 'decentraland-dapps/dist/containers/Modal'
 import { AuthorizedAction } from 'decentraland-dapps/dist/containers/withAuthorizedAction/AuthorizationModal'
 import { AuthorizationType } from 'decentraland-dapps/dist/modules/authorization/types'
-import { ERC20_PREDICATE_CONTRACT_ADDRESS } from '../../../modules/mana/utils'
-import {
-  MANA_CONTRACT_ADDRESS,
-  getEstimatedExitTransactionCost,
-} from '../../../modules/mana/utils'
+import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { ethers } from 'ethers'
+import { ContractName } from 'decentraland-transactions'
+import { Button, Close, Field, Loader } from 'decentraland-ui'
 import { getDepositManaStatus, getError } from '../../../modules/mana/selectors'
+import { ERC20_PREDICATE_CONTRACT_ADDRESS, MANA_CONTRACT_ADDRESS, getEstimatedExitTransactionCost } from '../../../modules/mana/utils'
 import { Props } from './ConvertManaModal.types'
+
 import './ConvertManaModal.css'
 
 const ConvertManaModal: React.FC<Props> = ({
@@ -30,7 +27,7 @@ const ConvertManaModal: React.FC<Props> = ({
   onWithdrawMana,
   onAuthorizedAction,
   onClearManaError,
-  metadata: { network },
+  metadata: { network }
 }) => {
   const [amount, setAmount] = useState(0)
 
@@ -50,7 +47,7 @@ const ConvertManaModal: React.FC<Props> = ({
           name: ContractName.MANAToken,
           address: MANA_CONTRACT_ADDRESS,
           network,
-          chainId: wallet?.chainId,
+          chainId: wallet?.chainId
         } as Contract
 
         onClearManaError()
@@ -61,10 +58,8 @@ const ConvertManaModal: React.FC<Props> = ({
           authorizedContractLabel: 'ERC20 Predicate',
           targetContract: manaContract,
           targetContractName: ContractName.MANAToken,
-          requiredAllowanceInWei: ethers.utils
-            .parseEther(amount.toString())
-            .toString(),
-          onAuthorized: () => onDepositMana(amount),
+          requiredAllowanceInWei: ethers.utils.parseEther(amount.toString()).toString(),
+          onAuthorized: () => onDepositMana(amount)
         })
         break
       }
@@ -73,15 +68,7 @@ const ConvertManaModal: React.FC<Props> = ({
         break
       }
     }
-  }, [
-    amount,
-    network,
-    wallet?.chainId,
-    onDepositMana,
-    onWithdrawMana,
-    onAuthorizedAction,
-    onClearManaError
-  ])
+  }, [amount, network, wallet?.chainId, onDepositMana, onWithdrawMana, onAuthorizedAction, onClearManaError])
 
   const handleMax = useCallback(() => {
     if (network === Network.MATIC) {
@@ -95,8 +82,7 @@ const ConvertManaModal: React.FC<Props> = ({
     onManaPrice()
   }, [onManaPrice])
 
-  const [hasAcceptedWithdrawalCost, setHasAcceptedWithdrawalCost] =
-    useState(false)
+  const [hasAcceptedWithdrawalCost, setHasAcceptedWithdrawalCost] = useState(false)
   const [txEstimatedCost, setTxEstimatedCost] = useState<number | null>()
 
   useEffect(() => {
@@ -117,12 +103,8 @@ const ConvertManaModal: React.FC<Props> = ({
   }, [])
 
   const isButtonLoading = isLoading
-  const isDisabledByAmount =
-    network === Network.MATIC ? manaMatic < amount : manaEth < amount
-  const isButtonDisabled =
-    isButtonLoading ||
-    isDisabledByAmount ||
-    amount <= 0
+  const isDisabledByAmount = network === Network.MATIC ? manaMatic < amount : manaEth < amount
+  const isButtonDisabled = isButtonLoading || isDisabledByAmount || amount <= 0
 
   const content = useMemo(() => {
     if (!hasAcceptedWithdrawalCost) {
@@ -132,7 +114,7 @@ const ConvertManaModal: React.FC<Props> = ({
             <T
               id="convert_mana_modal.withdrawal_cost"
               values={{
-                cost: <b>${txEstimatedCost.toFixed(2)}</b>,
+                cost: <b>${txEstimatedCost.toFixed(2)}</b>
               }}
             />
           ) : (
@@ -153,9 +135,7 @@ const ConvertManaModal: React.FC<Props> = ({
           onAction={handleMax}
         />
         {isDisabledByAmount ? (
-          <div className="amount-error">
-            {t('convert_mana_modal.no_balance')}
-          </div>
+          <div className="amount-error">{t('convert_mana_modal.no_balance')}</div>
         ) : (
           <div className="usd-amount">
             {(amount * manaPrice).toFixed(2)} {t('global.usd_symbol')}
@@ -170,11 +150,7 @@ const ConvertManaModal: React.FC<Props> = ({
           disabled={isButtonDisabled}
           network={network}
         >
-          {t(
-            network === Network.ETHEREUM
-              ? 'convert_mana_modal.label_button_ethereum'
-              : 'convert_mana_modal.label_button_matic'
-          )}
+          {t(network === Network.ETHEREUM ? 'convert_mana_modal.label_button_ethereum' : 'convert_mana_modal.label_button_matic')}
         </NetworkButton>
       </>
     )
@@ -188,37 +164,23 @@ const ConvertManaModal: React.FC<Props> = ({
     isDisabledByAmount,
     manaPrice,
     network,
-    txEstimatedCost,
+    txEstimatedCost
   ])
 
   return (
-    <Modal
-      name={name}
-      className="ConvertManaModal"
-      closeIcon={<Close onClick={onClose} />}
-    >
+    <Modal name={name} className="ConvertManaModal" closeIcon={<Close onClick={onClose} />}>
       <Modal.Header>
         <div className="title">
-          {t(
-            network === Network.ETHEREUM
-              ? 'convert_mana_modal.title_ethereum'
-              : 'convert_mana_modal.title_matic'
-          )}
+          {t(network === Network.ETHEREUM ? 'convert_mana_modal.title_ethereum' : 'convert_mana_modal.title_matic')}
         </div>
         <div className="subtitle">
-          {t(
-            network === Network.ETHEREUM
-              ? 'convert_mana_modal.subtitle_ethereum'
-              : 'convert_mana_modal.subtitle_matic'
-          )}
+          {t(network === Network.ETHEREUM ? 'convert_mana_modal.subtitle_ethereum' : 'convert_mana_modal.subtitle_matic')}
         </div>
       </Modal.Header>
       <Modal.Content>{content}</Modal.Content>
       {!hasAcceptedWithdrawalCost ? (
         <Modal.Actions>
-          <Button onClick={onClose}>
-            {t('convert_mana_modal.withdrawal_cost_cancel')}
-          </Button>
+          <Button onClick={onClose}>{t('convert_mana_modal.withdrawal_cost_cancel')}</Button>
           <Button primary onClick={() => setHasAcceptedWithdrawalCost(true)}>
             {t('convert_mana_modal.withdrawal_cost_accept')}
           </Button>
@@ -236,7 +198,7 @@ export default React.memo(
       title_action: 'convert_mana_modal.authorization.title_action',
       action: 'convert_mana_modal.authorization.action',
       confirm_transaction: {
-        title: 'convert_mana_modal.authorization.confirm_transaction_title',
+        title: 'convert_mana_modal.authorization.confirm_transaction_title'
       },
       set_cap: {
         description: 'convert_mana_modal.authorization.set_cap_description'

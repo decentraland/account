@@ -7,7 +7,7 @@
   font-weight: 600;
   font-size: 21px;
   line-height: 30px;
-letter-spacing: 0.3px;
+  letter-spacing: 0.3px;
 }
 
 .TransferManaModal .subtitle {
@@ -42,11 +42,12 @@ letter-spacing: 0.3px;
 
   /* identical to box height, or 160% */
   text-align: center;
-  color: #736E7D;
+  color: #736e7d;
 }
 
-.TransferManaModal .dcl.close, .ui.modal > .dcl.close {
-  margin:10px;
+.TransferManaModal .dcl.close,
+.ui.modal > .dcl.close {
+  margin: 10px;
   padding: 10px;
   background-color: white;
 }
@@ -72,23 +73,23 @@ letter-spacing: 0.3px;
   width: 100%;
   min-width: 100%;
   margin-top: 30px;
-  text-align:center;
+  text-align: center;
   font-size: 20px;
   line-height: 20px;
   letter-spacing: 0.4px;
 }
 
-.TransferManaModal .dcl.field .ui.input.amount input, .TransferManaModal .ui.form .dcl.field .ui.input.amount input
-{
-  text-align:center;
+.TransferManaModal .dcl.field .ui.input.amount input,
+.TransferManaModal .ui.form .dcl.field .ui.input.amount input {
+  text-align: center;
   font-weight: 600;
   font-size: 40px;
   line-height: 48px;
 }
 
-.TransferManaModal .dcl.field .ui.input.wallet input, .TransferManaModal .ui.form .dcl.field .ui.input.wallet input
-{
-  text-align:center;
+.TransferManaModal .dcl.field .ui.input.wallet input,
+.TransferManaModal .ui.form .dcl.field .ui.input.wallet input {
+  text-align: center;
   font-weight: 600;
   font-size: 17px;
   line-height: 26px;
@@ -111,5 +112,5 @@ letter-spacing: 0.3px;
   line-height: 18px;
   margin-bottom: 10px;
   text-align: center;
-  color: #736E7D;
+  color: #736e7d;
 }

@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
-import { push, getLocation } from 'connected-react-router'
+import { getLocation, push } from 'connected-react-router'
 import { getPendingTransactions } from 'decentraland-dapps/dist/modules/transaction/selectors'
 import { getAddress, isConnected } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { getIsAuthDappEnabled } from '../../modules/features/selectors'
 import { RootState } from '../../modules/reducer'
-import { MapStateProps, MapDispatch, MapDispatchProps } from './Navbar.types'
 import Navbar from './Navbar'
+import { MapDispatch, MapDispatchProps, MapStateProps } from './Navbar.types'
 
 const mapState = (state: RootState): MapStateProps => {
   const address = getAddress(state)

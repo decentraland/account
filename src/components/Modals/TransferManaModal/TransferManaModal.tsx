@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Close, Field } from 'decentraland-ui'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { Network } from '@dcl/schemas'
 import { NetworkButton } from 'decentraland-dapps/dist/containers'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
-import { Network } from '@dcl/schemas'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { Close, Field } from 'decentraland-ui'
 import { Props } from './TransferManaModal.types'
+
 import './TransferManaModal.css'
 
 const TransferManaModal: React.FC<Props> = ({
@@ -16,13 +17,13 @@ const TransferManaModal: React.FC<Props> = ({
   manaPrice,
   onManaPrice,
   onTransferMana,
-  metadata: { network },
+  metadata: { network }
 }) => {
   const [amount, setAmount] = useState(0)
   const [to, setTo] = useState('')
   const [errors, setErrors] = useState({
     amount: { hasError: false, message: '' },
-    to: { hasError: false, message: '' },
+    to: { hasError: false, message: '' }
   })
 
   const handleSetAmount = (e: React.FormEvent<HTMLInputElement>) => {
@@ -40,7 +41,7 @@ const TransferManaModal: React.FC<Props> = ({
     if (isValid) {
       setErrors({
         ...errors,
-        to: { hasError: false, message: '' },
+        to: { hasError: false, message: '' }
       })
       setTo(value)
     } else {
@@ -48,8 +49,8 @@ const TransferManaModal: React.FC<Props> = ({
         ...errors,
         to: {
           hasError: true,
-          message: t('transfer_mana_modal.errors.invalid_char'),
-        },
+          message: t('transfer_mana_modal.errors.invalid_char')
+        }
       })
     }
   }
@@ -63,8 +64,8 @@ const TransferManaModal: React.FC<Props> = ({
         ...errors,
         to: {
           hasError: true,
-          message: t('transfer_mana_modal.errors.invalid_address'),
-        },
+          message: t('transfer_mana_modal.errors.invalid_address')
+        }
       })
     }
   }
@@ -81,15 +82,10 @@ const TransferManaModal: React.FC<Props> = ({
     onManaPrice()
   }, [onManaPrice])
 
-  const isDisabledByAmount =
-    network === Network.MATIC ? manaMatic < amount : manaEth < amount
+  const isDisabledByAmount = network === Network.MATIC ? manaMatic < amount : manaEth < amount
 
   return (
-    <Modal
-      name={name}
-      className="TransferManaModal"
-      closeIcon={<Close onClick={onClose} />}
-    >
+    <Modal name={name} className="TransferManaModal" closeIcon={<Close onClick={onClose} />}>
       <Modal.Header>
         <div className="title"> {t('transfer_mana_modal.send_tokens')} </div>
         <div className="subtitle"> {t('transfer_mana_modal.subtitle')} </div>
@@ -107,9 +103,7 @@ const TransferManaModal: React.FC<Props> = ({
           onAction={handleMax}
         />
         {isDisabledByAmount ? (
-          <div className="amount-error">
-            {t('transfer_mana_modal.no_balance')}
-          </div>
+          <div className="amount-error">{t('transfer_mana_modal.no_balance')}</div>
         ) : (
           <div className="usd-amount">
             {(amount * manaPrice).toFixed(2)} {t('global.usd_symbol')}
@@ -124,9 +118,7 @@ const TransferManaModal: React.FC<Props> = ({
           message={errors.to.message}
           error={errors.to.hasError}
         />
-        <div className="fees-warning">
-          {network === Network.ETHEREUM ? t('global.fees_warning') : null}
-        </div>
+        <div className="fees-warning">{network === Network.ETHEREUM ? t('global.fees_warning') : null}</div>
         <NetworkButton
           primary
           onClick={handleTransferMana}

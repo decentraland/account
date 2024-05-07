@@ -7,9 +7,7 @@ const ExplorerLink = ({ network, chainId, txHash }: Props) => {
   const resolvedChainId = chainId || (network && getChainIdByNetwork(network))
 
   if (!resolvedChainId) {
-    throw new Error(
-      'At least one of network or chainId must be provided as props'
-    )
+    throw new Error('At least one of network or chainId must be provided as props')
   }
 
   const href = getTransactionHref({ txHash }, resolvedChainId)

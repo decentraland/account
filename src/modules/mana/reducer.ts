@@ -1,85 +1,76 @@
-import {
-  loadingReducer,
-  LoadingState,
-} from 'decentraland-dapps/dist/modules/loading/reducer'
-import {
-  FETCH_TRANSACTION_SUCCESS,
-  FetchTransactionSuccessAction,
-} from 'decentraland-dapps/dist/modules/transaction/actions'
-import {
-  SET_PURCHASE,
-  SetPurchaseAction,
-} from 'decentraland-dapps/dist/modules/gateway/actions'
+import { SET_PURCHASE, SetPurchaseAction } from 'decentraland-dapps/dist/modules/gateway/actions'
 import { Purchase } from 'decentraland-dapps/dist/modules/gateway/types'
+import { LoadingState, loadingReducer } from 'decentraland-dapps/dist/modules/loading/reducer'
+import { FETCH_TRANSACTION_SUCCESS, FetchTransactionSuccessAction } from 'decentraland-dapps/dist/modules/transaction/actions'
 import {
-  ApproveManaFailureAction,
-  ApproveManaRequestAction,
-  ApproveManaSuccessAction,
-  GetApprovedManaFailureAction,
-  GetApprovedManaRequestAction,
-  GetApprovedManaSuccessAction,
   APPROVE_MANA_FAILURE,
   APPROVE_MANA_REQUEST,
   APPROVE_MANA_SUCCESS,
-  FetchManaPriceFailureAction,
-  FetchManaPriceRequestAction,
-  FetchManaPriceSuccessAction,
+  ApproveManaFailureAction,
+  ApproveManaRequestAction,
+  ApproveManaSuccessAction,
+  CLEAR_MANA_ERROR,
+  ClearManaErrorAction,
+  DEPOSIT_MANA_FAILURE,
+  DEPOSIT_MANA_REQUEST,
+  DEPOSIT_MANA_SUCCESS,
+  DepositManaFailureAction,
+  DepositManaRequestAction,
+  DepositManaSuccessAction,
   FETCH_MANA_PRICE_FAILURE,
   FETCH_MANA_PRICE_REQUEST,
   FETCH_MANA_PRICE_SUCCESS,
-  TransferManaFailureAction,
-  TransferManaRequestAction,
-  TransferManaSuccessAction,
-  TRANSFER_MANA_FAILURE,
-  TRANSFER_MANA_REQUEST,
-  TRANSFER_MANA_SUCCESS,
-  GET_APPROVED_MANA_REQUEST,
-  GET_APPROVED_MANA_SUCCESS,
-  GET_APPROVED_MANA_FAILURE,
-  DepositManaRequestAction,
-  DepositManaSuccessAction,
-  DepositManaFailureAction,
-  DEPOSIT_MANA_REQUEST,
-  DEPOSIT_MANA_SUCCESS,
-  DEPOSIT_MANA_FAILURE,
-  InitiateWithdrawalFailureAction,
-  InitiateWithdrawalRequestAction,
-  InitiateWithdrawalSuccessAction,
-  INITIATE_WITHDRAWAL_FAILURE,
-  INITIATE_WITHDRAWAL_REQUEST,
-  INITIATE_WITHDRAWAL_SUCCESS,
-  SetWithdrawalStatusAction,
-  SetWithdrawalFinalizeHashAction,
-  SET_WITHDRAWAL_STATUS,
-  WatchWithdrawalStatusRequestAction,
-  WatchWithdrawalStatusFailureAction,
-  WatchWithdrawalStatusSuccessAction,
-  WATCH_WITHDRAWAL_STATUS_SUCCESS,
-  WATCH_WITHDRAWAL_STATUS_REQUEST,
-  WATCH_WITHDRAWAL_STATUS_FAILURE,
-  WatchDepositStatusRequestAction,
-  WatchDepositStatusSuccessAction,
-  WatchDepositStatusFailureAction,
-  SetDepositStatusAction,
-  WATCH_DEPOSIT_STATUS_REQUEST,
-  WATCH_DEPOSIT_STATUS_SUCCESS,
-  SET_DEPOSIT_STATUS,
-  WATCH_DEPOSIT_STATUS_FAILURE,
-  FINISH_WITHDRAWAL_REQUEST,
   FINISH_WITHDRAWAL_FAILURE,
+  FINISH_WITHDRAWAL_REQUEST,
   FINISH_WITHDRAWAL_SUCCESS,
+  FetchManaPriceFailureAction,
+  FetchManaPriceRequestAction,
+  FetchManaPriceSuccessAction,
   FinishWithdrawalFailureAction,
   FinishWithdrawalRequestAction,
   FinishWithdrawalSuccessAction,
-  SET_WITHDRAWAL_FINALIZE_HASH,
+  GET_APPROVED_MANA_FAILURE,
+  GET_APPROVED_MANA_REQUEST,
+  GET_APPROVED_MANA_SUCCESS,
+  GetApprovedManaFailureAction,
+  GetApprovedManaRequestAction,
+  GetApprovedManaSuccessAction,
+  IMPORT_WITHDRAWAL_FAILURE,
+  IMPORT_WITHDRAWAL_REQUEST,
+  IMPORT_WITHDRAWAL_SUCCESS,
+  INITIATE_WITHDRAWAL_FAILURE,
+  INITIATE_WITHDRAWAL_REQUEST,
+  INITIATE_WITHDRAWAL_SUCCESS,
+  ImportWithdrawalFailureAction,
   ImportWithdrawalRequestAction,
   ImportWithdrawalSuccessAction,
-  ImportWithdrawalFailureAction,
-  IMPORT_WITHDRAWAL_REQUEST,
-  IMPORT_WITHDRAWAL_FAILURE,
-  IMPORT_WITHDRAWAL_SUCCESS,
-  ClearManaErrorAction,
-  CLEAR_MANA_ERROR,
+  InitiateWithdrawalFailureAction,
+  InitiateWithdrawalRequestAction,
+  InitiateWithdrawalSuccessAction,
+  SET_DEPOSIT_STATUS,
+  SET_WITHDRAWAL_FINALIZE_HASH,
+  SET_WITHDRAWAL_STATUS,
+  SetDepositStatusAction,
+  SetWithdrawalFinalizeHashAction,
+  SetWithdrawalStatusAction,
+  TRANSFER_MANA_FAILURE,
+  TRANSFER_MANA_REQUEST,
+  TRANSFER_MANA_SUCCESS,
+  TransferManaFailureAction,
+  TransferManaRequestAction,
+  TransferManaSuccessAction,
+  WATCH_DEPOSIT_STATUS_FAILURE,
+  WATCH_DEPOSIT_STATUS_REQUEST,
+  WATCH_DEPOSIT_STATUS_SUCCESS,
+  WATCH_WITHDRAWAL_STATUS_FAILURE,
+  WATCH_WITHDRAWAL_STATUS_REQUEST,
+  WATCH_WITHDRAWAL_STATUS_SUCCESS,
+  WatchDepositStatusFailureAction,
+  WatchDepositStatusRequestAction,
+  WatchDepositStatusSuccessAction,
+  WatchWithdrawalStatusFailureAction,
+  WatchWithdrawalStatusRequestAction,
+  WatchWithdrawalStatusSuccessAction
 } from './actions'
 import { Deposit, Withdrawal, WithdrawalStatus } from './types'
 
@@ -101,10 +92,10 @@ const INITAL_STATE: ManaState = {
     price: 0,
     withdrawals: [],
     deposits: [],
-    purchases: [],
+    purchases: []
   },
   loading: [],
-  error: null,
+  error: null
 }
 
 type ManaReducerAction =
@@ -145,10 +136,7 @@ type ManaReducerAction =
   | ImportWithdrawalFailureAction
   | ClearManaErrorAction
 
-export function manaReducer(
-  state = INITAL_STATE,
-  action: ManaReducerAction
-): ManaState {
+export function manaReducer(state = INITAL_STATE, action: ManaReducerAction): ManaState {
   switch (action.type) {
     case TRANSFER_MANA_REQUEST:
     case FETCH_MANA_PRICE_REQUEST:
@@ -168,7 +156,7 @@ export function manaReducer(
     case FINISH_WITHDRAWAL_SUCCESS: {
       return {
         ...state,
-        loading: loadingReducer(state.loading, action),
+        loading: loadingReducer(state.loading, action)
       }
     }
 
@@ -179,8 +167,8 @@ export function manaReducer(
         loading: loadingReducer(state.loading, action),
         data: {
           ...state.data,
-          price,
-        },
+          price
+        }
       }
     }
 
@@ -191,8 +179,8 @@ export function manaReducer(
         loading: loadingReducer(state.loading, action),
         data: {
           ...state.data,
-          allowance,
-        },
+          allowance
+        }
       }
     }
 
@@ -204,12 +192,10 @@ export function manaReducer(
         data: {
           ...state.data,
           deposits: [
-            ...state.data.deposits.filter(
-              (_deposit) => _deposit.hash !== deposit.hash
-            ), // remove it if it was already added
-            deposit,
-          ],
-        },
+            ...state.data.deposits.filter(_deposit => _deposit.hash !== deposit.hash), // remove it if it was already added
+            deposit
+          ]
+        }
       }
     }
 
@@ -219,13 +205,8 @@ export function manaReducer(
         ...state,
         data: {
           ...state.data,
-          purchases: [
-            ...state.data.purchases.filter(
-              (_purchase) => _purchase.id !== purchase.id
-            ),
-            purchase,
-          ],
-        },
+          purchases: [...state.data.purchases.filter(_purchase => _purchase.id !== purchase.id), purchase]
+        }
       }
     }
 
@@ -237,21 +218,16 @@ export function manaReducer(
         data: {
           ...state.data,
           withdrawals: [
-            ...state.data.withdrawals.filter(
-              (_withdraw) =>
-                _withdraw.initializeHash !== withdrawal.initializeHash
-            ), // remove it if it was already added
-            withdrawal,
-          ],
-        },
+            ...state.data.withdrawals.filter(_withdraw => _withdraw.initializeHash !== withdrawal.initializeHash), // remove it if it was already added
+            withdrawal
+          ]
+        }
       }
     }
 
     case SET_DEPOSIT_STATUS: {
       const { txHash, status } = action.payload
-      const deposit = state.data.deposits.find(
-        (deposit) => deposit.hash === txHash
-      )
+      const deposit = state.data.deposits.find(deposit => deposit.hash === txHash)
       return deposit
         ? {
             ...state,
@@ -260,24 +236,20 @@ export function manaReducer(
 
               deposits: [
                 // replace old tx with new one
-                ...state.data.deposits.filter(
-                  (_deposit) => deposit.hash !== _deposit.hash
-                ),
+                ...state.data.deposits.filter(_deposit => deposit.hash !== _deposit.hash),
                 {
                   ...deposit,
-                  status,
-                },
-              ],
-            },
+                  status
+                }
+              ]
+            }
           }
         : state
     }
 
     case SET_WITHDRAWAL_STATUS: {
       const { txHash, status } = action.payload
-      const withdrawal = state.data.withdrawals.find(
-        (withdrawal) => withdrawal.initializeHash === txHash
-      )
+      const withdrawal = state.data.withdrawals.find(withdrawal => withdrawal.initializeHash === txHash)
       return withdrawal
         ? {
             ...state,
@@ -286,16 +258,13 @@ export function manaReducer(
 
               withdrawals: [
                 // replace old tx with new one
-                ...state.data.withdrawals.filter(
-                  (_withdrawal) =>
-                    withdrawal.initializeHash !== _withdrawal.initializeHash
-                ),
+                ...state.data.withdrawals.filter(_withdrawal => withdrawal.initializeHash !== _withdrawal.initializeHash),
                 {
                   ...withdrawal,
-                  status,
-                },
-              ],
-            },
+                  status
+                }
+              ]
+            }
           }
         : state
     }
@@ -304,7 +273,7 @@ export function manaReducer(
       const { withdrawal: providedWithdrawal, finalizeHash } = action.payload
       const { withdrawals } = state.data
 
-      const updatedWithdrawals = withdrawals.map((withdrawal) => {
+      const updatedWithdrawals = withdrawals.map(withdrawal => {
         if (withdrawal.initializeHash === providedWithdrawal.initializeHash) {
           return { ...withdrawal, finalizeHash: finalizeHash }
         }
@@ -316,8 +285,8 @@ export function manaReducer(
         ...state,
         data: {
           ...state.data,
-          withdrawals: updatedWithdrawals,
-        },
+          withdrawals: updatedWithdrawals
+        }
       }
     }
 
@@ -331,16 +300,13 @@ export function manaReducer(
             data: {
               ...state.data,
               withdrawals: [
-                ...state.data.withdrawals.filter(
-                  (_withdraw) =>
-                    _withdraw.initializeHash !== withdrawal.initializeHash
-                ),
+                ...state.data.withdrawals.filter(_withdraw => _withdraw.initializeHash !== withdrawal.initializeHash),
                 {
                   ...withdrawal,
-                  status: WithdrawalStatus.COMPLETE,
-                },
-              ],
-            },
+                  status: WithdrawalStatus.COMPLETE
+                }
+              ]
+            }
           }
         }
         default:
@@ -362,14 +328,14 @@ export function manaReducer(
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
-        error,
+        error
       }
     }
 
     case CLEAR_MANA_ERROR:
       return {
         ...state,
-        error: null,
+        error: null
       }
 
     default:

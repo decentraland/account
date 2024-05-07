@@ -1,24 +1,15 @@
 import React, { ComponentProps, useEffect, useState } from 'react'
-import { Close, Button, Field } from 'decentraland-ui'
-import Modal from 'decentraland-dapps/dist/containers/Modal'
-import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { getTransactionHref } from 'decentraland-dapps/dist/modules/transaction/utils'
-import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
 import { Network } from '@dcl/schemas'
+import Modal from 'decentraland-dapps/dist/containers/Modal'
+import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
+import { getTransactionHref } from 'decentraland-dapps/dist/modules/transaction/utils'
+import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { Button, Close, Field } from 'decentraland-ui'
 import { Props } from './ImportWithdrawalModal.types'
 
 import './ImportWithdrawalModal.css'
 
-const ImportWithdrawalModal = ({
-  withdrawals,
-  address,
-  name,
-  isLoading,
-  error,
-  onClose,
-  onImport,
-  onClearError,
-}: Props) => {
+const ImportWithdrawalModal = ({ withdrawals, address, name, isLoading, error, onClose, onImport, onClearError }: Props) => {
   const [tx, setTx] = useState('')
   const [txError, setTxError] = useState<string | undefined>()
 
@@ -26,12 +17,9 @@ const ImportWithdrawalModal = ({
     onClearError()
   }, [onClearError])
 
-  const polygonscanHref = `${getTransactionHref(
-    { address },
-    getChainIdByNetwork(Network.MATIC)
-  )}#tokentxns`
+  const polygonscanHref = `${getTransactionHref({ address }, getChainIdByNetwork(Network.MATIC))}#tokentxns`
 
-  const handleTxChange: ComponentProps<typeof Field>['onChange'] = (e) => {
+  const handleTxChange: ComponentProps<typeof Field>['onChange'] = e => {
     const { value } = e.target
     setTx(value.trim())
   }
@@ -39,7 +27,7 @@ const ImportWithdrawalModal = ({
   const validate = () => {
     if (!/^[0-9a-fA-Fx]{66}$/.test(tx)) {
       return t('import_withdrawal_modal.errors.invalid_hash')
-    } else if (withdrawals.some((w) => w.initializeHash === tx)) {
+    } else if (withdrawals.some(w => w.initializeHash === tx)) {
       return t('import_withdrawal_modal.errors.duplicate')
     } else {
       return undefined
@@ -59,11 +47,7 @@ const ImportWithdrawalModal = ({
   }
 
   return (
-    <Modal
-      name={name}
-      className="ImportWithdrawalModal"
-      closeIcon={<Close onClick={onClose} />}
-    >
+    <Modal name={name} className="ImportWithdrawalModal" closeIcon={<Close onClick={onClose} />}>
       <Modal.Header>
         <div className="title">{t('import_withdrawal_modal.title')} </div>
       </Modal.Header>
@@ -76,7 +60,7 @@ const ImportWithdrawalModal = ({
                 <a href={polygonscanHref} target="_blank" rel="noreferrer">
                   {t('import_withdrawal_modal.polygonscan')}
                 </a>
-              ),
+              )
             }}
           />
         </p>
@@ -89,13 +73,7 @@ const ImportWithdrawalModal = ({
           message={!isLoading ? txError || error : undefined}
           error={!isLoading && (!!txError || !!error)}
         />
-        <Button
-          className="button"
-          primary
-          onClick={handleImport}
-          loading={isLoading}
-          disabled={isLoading}
-        >
+        <Button className="button" primary onClick={handleImport} loading={isLoading} disabled={isLoading}>
           {t('import_withdrawal_modal.import_withdrawal')}
         </Button>
       </Modal.Content>

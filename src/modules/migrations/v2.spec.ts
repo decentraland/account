@@ -8,22 +8,18 @@ describe('migrations - v2', () => {
       hash: 'hash',
       from: 'from',
       status: WithdrawalStatus.PENDING,
-      timestamp: 1,
+      timestamp: 1
     })
 
     const oldState: any = {
       mana: {
         data: {
-          withdrawals: [makeOldWithdrawal()],
-        },
+          withdrawals: [makeOldWithdrawal()]
+        }
       },
       transaction: {
-        data: [
-          { payload: undefined },
-          { payload: { foo: 'bar' } },
-          { payload: { withdrawal: makeOldWithdrawal() } },
-        ],
-      },
+        data: [{ payload: undefined }, { payload: { foo: 'bar' } }, { payload: { withdrawal: makeOldWithdrawal() } }]
+      }
     }
 
     const state = v2(oldState)

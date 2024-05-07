@@ -1,6 +1,7 @@
 import React from 'react'
-import { Props } from './AccountTransactions.types'
 import { AccountTransaction } from './AccountTransaction'
+import { Props } from './AccountTransactions.types'
+
 import './AccountTransactions.css'
 
 const AccountTransactions = ({ transactions }: Props) => (

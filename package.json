@@ -58,6 +58,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "eslint": "^8.57.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-autofix": "^2.0.0",
     "eslint-plugin-css-import-order": "^1.1.0",
     "eslint-plugin-import": "^2.29.1",
@@ -84,7 +85,7 @@
     "build:contracts": "typechain --target ethers-v5 --out-dir src/contracts src/contracts/*.json",
     "check:code": "eslint ./src --ext .ts,.tsx,.js,.jsx",
     "fix:code": "npm run check:code -- --fix",
-    "fix:prettier": "prettier --write '**/*.{ts,tsx,js,jsx,json,md,mdx,css}'",
+    "fix:prettier": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,md,mdx,css}'",
     "pre-commit:fix:code": "eslint --fix",
     "prepare": "husky"
   },
