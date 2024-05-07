@@ -13,14 +13,15 @@
   line-height: 30px;
   text-align: center;
   letter-spacing: 0.3px;
-  color: #16141A;
+  color: #16141a;
 }
 
-.WithdrawalStatusModal .amount_placeholder, .WithdrawalStatusModal .status_placeholder {
+.WithdrawalStatusModal .amount_placeholder,
+.WithdrawalStatusModal .status_placeholder {
   font-size: 13px;
   line-height: 18px;
   text-transform: uppercase;
-  color: #736E7D;
+  color: #736e7d;
 }
 
 .WithdrawalStatusModal .amount {
@@ -28,7 +29,7 @@
   font-size: 21px;
   line-height: 30px;
   letter-spacing: 0.315px;
-  color: #16141A;
+  color: #16141a;
   padding-bottom: 40px;
 }
 
@@ -38,19 +39,19 @@
 }
 
 .WithdrawalStatusModal .default_cursor.ui.checkbox,
-.WithdrawalStatusModal .default_cursor.ui.checkbox input.hidden + label, 
-.WithdrawalStatusModal .default_cursor.ui.checkbox input.hidden:focus + label, 
+.WithdrawalStatusModal .default_cursor.ui.checkbox input.hidden + label,
+.WithdrawalStatusModal .default_cursor.ui.checkbox input.hidden:focus + label,
 .WithdrawalStatusModal .default_cursor.ui.checkbox input.hidden:active + label {
   cursor: default;
 }
 
-.WithdrawalStatusModal .ui.checkbox input.hidden + label, 
-.WithdrawalStatusModal .ui.checkbox input.hidden:focus + label, 
+.WithdrawalStatusModal .ui.checkbox input.hidden + label,
+.WithdrawalStatusModal .ui.checkbox input.hidden:focus + label,
 .WithdrawalStatusModal .ui.checkbox input.hidden:active + label {
   font-size: 17px;
-  color: #16141A;
+  color: #16141a;
   margin: 8px 0px;
-  padding: 0px 0px 0px 28px
+  padding: 0px 0px 0px 28px;
 }
 
 .WithdrawalStatusModal .ui.button.primary {
