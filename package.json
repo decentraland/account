@@ -85,6 +85,7 @@
     "check:code": "eslint ./src --ext .ts,.tsx,.js,.jsx",
     "fix:code": "npm run check:code -- --fix",
     "fix:prettier": "prettier --write '**/*.{ts,tsx,js,jsx,json,md,mdx,css}'",
+    "pre-commit:fix:code": "eslint --fix",
     "prepare": "husky"
   },
   "engines": {

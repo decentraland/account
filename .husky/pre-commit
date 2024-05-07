@@ -1,3 +1,16 @@
-npm run fix:code
-npm run fix:prettier
-npm run test
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+FILES=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g' | { grep -E '(js|ts|tsx|json|yml|md|html|css)$' || true; })
+
+if [ -z "$FILES" ]; then
+exit 0
+fi
+
+TS_FILES=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g' | { grep -E '(js|ts|tsx)$' || true; })
+
+if [[ ! -z "$TS_FILES" ]];then
+echo "Running lints"
+npm run pre-commit:fix:code -- $TS_FILES
+git add $TS_FILES
+fi
