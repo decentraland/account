@@ -1,5 +1,3 @@
-const { plugins } = require('@swc/core')
-
 /* eslint-env node */
 module.exports = {
   parserOptions: { project: ['./tsconfig.json'] },
