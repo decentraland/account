@@ -86,5 +86,8 @@ export function subscriptionReducer(state = buildInitialState(), action: Subscri
         error
       }
     }
+    default: {
+      return state
+    }
   }
 }
