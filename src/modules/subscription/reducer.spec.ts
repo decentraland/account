@@ -98,7 +98,7 @@ describe('when reducing the update of the subscription success action', () => {
     }
   })
 
-  it('should return a state with the details of subscription set, email set and the loading state cleared', () => {
+  it('should return a state with the details of subscription set and the loading state cleared', () => {
     expect(subscriptionReducer(initialState, saveSubscriptionsSuccess(subscription.details))).toEqual({
       ...state,
       subscriptionDetails: objectToCamel(subscription.details),

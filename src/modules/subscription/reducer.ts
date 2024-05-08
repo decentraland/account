@@ -55,14 +55,15 @@ export function subscriptionReducer(state = buildInitialState(), action: Subscri
 
     case GET_SUBSCRIPTIONS_SUCCESS: {
       const { details, email } = action.payload
-      const newSubscriptionState = { subscriptionDetails: state.subscriptionDetails, email: state.email }
+      const newSubscriptionState = { ...state }
       newSubscriptionState.subscriptionDetails = objectToCamel(details)
-      email && (newSubscriptionState.email = email)
+      if (email) {
+        newSubscriptionState.email = email
+      }
 
       return {
-        ...state,
-        loading: loadingReducer(state.loading, action),
-        ...newSubscriptionState
+        ...newSubscriptionState,
+        loading: loadingReducer(state.loading, action)
       }
     }
 

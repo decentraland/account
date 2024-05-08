@@ -6,6 +6,7 @@ import { getSubscriptionsRequest } from './actions'
 import { buildInitialState } from './reducer'
 import {
   getEmail,
+  getError,
   getSubscriptionByNotificationType,
   getSubscriptionDetails,
   hasEmail,
@@ -32,7 +33,7 @@ describe('when selecting the email', () => {
   })
 })
 
-describe('when asking whether the state has email', () => {
+describe('when asking whether the state has an email', () => {
   describe('and the state doesn`t have an email', () => {
     it('should return false', () => {
       expect(hasEmail(state)).toBe(false)
@@ -95,9 +96,9 @@ describe('when asking whether the state is ignoring all in-app notifications', (
 
 describe('when selecting the subscription setting by notification type', () => {
   it('should return the setting for the given notification type', () => {
-    const getSetting = getSubscriptionByNotificationType(state)
     const notificationType = toCamel(NotificationType.BID_ACCEPTED) as ToCamel<NotificationType>
-    expect(getSetting(notificationType)).toBe(subscription.subscriptionDetails.messageType[notificationType])
+    const setting = getSubscriptionByNotificationType(state, notificationType)
+    expect(setting).toBe(subscription.subscriptionDetails.messageType[notificationType])
   })
 })
 
@@ -114,5 +115,14 @@ describe('when asking whether the state is loading subscriptions', () => {
     it('should return false', () => {
       expect(isLoadingSubscriptions(state)).toBe(false)
     })
+  })
+})
+
+describe('when selecting the subscription has failed', () => {
+  beforeEach(() => {
+    state.subscription.error = 'some error'
+  })
+  it('should return the error', () => {
+    expect(getError(state)).toBe(state.subscription.error)
   })
 })
