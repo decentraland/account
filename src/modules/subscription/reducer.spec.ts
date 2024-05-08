@@ -1,4 +1,5 @@
 import { Subscription } from '@dcl/schemas'
+import { objectToCamel, objectToSnake } from 'ts-case-convert'
 import {
   getSubscriptionsFailure,
   getSubscriptionsRequest,
@@ -9,7 +10,6 @@ import {
 } from './actions'
 import { buildInitialState, subscriptionReducer } from './reducer'
 import { SubscriptionState } from './types'
-import { transformSubscriptionDetailsToCamelCase, transformSubscriptionDetailsToSnakeCase } from './utils'
 
 let state: SubscriptionState
 let initialState: SubscriptionState
@@ -20,7 +20,7 @@ beforeEach(() => {
   subscription = {
     address: '0x13a088C9ae5028C55F8E1cd5A13dc8134b062d50',
     email: 'email@example.org',
-    details: transformSubscriptionDetailsToSnakeCase(state.subscriptionDetails)
+    details: objectToSnake(state.subscriptionDetails)
   }
 })
 
@@ -43,7 +43,7 @@ describe('when reducing the get subscription success action', () => {
     initialState = {
       ...state,
       loading: [getSubscriptionsRequest()],
-      subscriptionDetails: { ...transformSubscriptionDetailsToCamelCase(subscription.details), ignoreAllInApp: true }
+      subscriptionDetails: { ...objectToCamel(subscription.details), ignoreAllInApp: true }
     }
   })
 
@@ -51,7 +51,7 @@ describe('when reducing the get subscription success action', () => {
     expect(subscriptionReducer(initialState, getSubscriptionsSuccess(subscription))).toEqual({
       ...state,
       email: subscription.email,
-      subscriptionDetails: transformSubscriptionDetailsToCamelCase(subscription.details),
+      subscriptionDetails: objectToCamel(subscription.details),
       loading: [],
       error: null
     })
@@ -94,14 +94,14 @@ describe('when reducing the update of the subscription success action', () => {
     initialState = {
       ...state,
       loading: [saveSubscriptionsRequest(subscription.details)],
-      subscriptionDetails: { ...transformSubscriptionDetailsToCamelCase(subscription.details), ignoreAllInApp: true }
+      subscriptionDetails: { ...objectToCamel(subscription.details), ignoreAllInApp: true }
     }
   })
 
   it('should return a state with the details of subscription set, email set and the loading state cleared', () => {
     expect(subscriptionReducer(initialState, saveSubscriptionsSuccess(subscription.details))).toEqual({
       ...state,
-      subscriptionDetails: transformSubscriptionDetailsToCamelCase(subscription.details),
+      subscriptionDetails: objectToCamel(subscription.details),
       loading: [],
       error: null
     })

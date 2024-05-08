@@ -1,29 +1,14 @@
 import { NotificationChannelType, NotificationType, SubscriptionDetails } from '@dcl/schemas'
 import { LoadingState } from 'decentraland-dapps/dist/modules/loading/reducer'
+import { ObjectToCamel, ToCamel } from 'ts-case-convert/lib/caseConvert'
 
-export type CamelCase<TS extends string> = TS extends `${infer P}_${infer Q}${infer R}`
-  ? `${Lowercase<P>}${Uppercase<Q>}${CamelCase<R>}`
-  : Lowercase<TS>
-
-export type SnakeToCamelCase<T> = {
-  [P in keyof T as CamelCase<string & P>]: T[P]
-}
-
-export type NotificationChannelTypeCamelCase = SnakeToCamelCase<NotificationChannelType>
-
-type Writable<T> = { -readonly [P in keyof T]: T[P] }
-
-export type NotificationTypeCamelCase = Writable<{
-  [K in keyof typeof NotificationType as CamelCase<K>]: (typeof NotificationType)[K]
-}>
+export type NotificationChannelTypeCamelCase = ObjectToCamel<NotificationChannelType>
 
 export type MessageTypeCamelCase = {
-  [notificationType in keyof NotificationTypeCamelCase]: NotificationChannelTypeCamelCase
+  [notificationType in ToCamel<NotificationType>]: NotificationChannelTypeCamelCase
 }
 
-export type SubscriptionDetailsCamelCase = Omit<SnakeToCamelCase<SubscriptionDetails>, 'messageType'> & {
-  messageType: MessageTypeCamelCase
-}
+export type SubscriptionDetailsCamelCase = ObjectToCamel<SubscriptionDetails>
 
 export type SubscriptionState = {
   subscriptionDetails: SubscriptionDetailsCamelCase
@@ -41,6 +26,6 @@ export enum SubscriptionGroupKeys {
   GOVERNANCE = 'governance'
 }
 
-export type SubscriptionGroups = Writable<{
-  [K in keyof typeof SubscriptionGroupKeys as CamelCase<K>]: NotificationType[]
-}>
+export type SubscriptionGroups = {
+  [subscriptionGroupKeys in ToCamel<SubscriptionGroupKeys>]: NotificationType[]
+}

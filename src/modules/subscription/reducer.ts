@@ -1,5 +1,7 @@
 import { NotificationType } from '@dcl/schemas'
 import { loadingReducer } from 'decentraland-dapps/dist/modules/loading/reducer'
+import { objectToCamel, toCamel } from 'ts-case-convert'
+import { ToCamel } from 'ts-case-convert/lib/caseConvert'
 import {
   GET_SUBSCRIPTIONS_FAILURE,
   GET_SUBSCRIPTIONS_REQUEST,
@@ -14,11 +16,10 @@ import {
   SaveSubscriptionsRequestAction,
   SaveSubscriptionsSuccessAction
 } from './actions'
-import { MessageTypeCamelCase, NotificationTypeCamelCase, SubscriptionState } from './types'
-import { toCamelCase, transformSubscriptionDetailsToCamelCase } from './utils'
+import { MessageTypeCamelCase, SubscriptionState } from './types'
 
 const messageTypes: MessageTypeCamelCase = Object.values(NotificationType).reduce((properties, notificationType) => {
-  properties[toCamelCase(notificationType) as keyof NotificationTypeCamelCase] = { email: true, inApp: true }
+  properties[toCamel(notificationType) as ToCamel<NotificationType>] = { email: true, inApp: true }
   return properties
 }, {} as MessageTypeCamelCase)
 
@@ -54,14 +55,14 @@ export function subscriptionReducer(state = buildInitialState(), action: Subscri
 
     case GET_SUBSCRIPTIONS_SUCCESS: {
       const { details, email } = action.payload
-      const newSubscriptinState = { subscriptionDetails: state.subscriptionDetails, email: state.email }
-      newSubscriptinState.subscriptionDetails = transformSubscriptionDetailsToCamelCase(details)
-      email && (newSubscriptinState.email = email)
+      const newSubscriptionState = { subscriptionDetails: state.subscriptionDetails, email: state.email }
+      newSubscriptionState.subscriptionDetails = objectToCamel(details)
+      email && (newSubscriptionState.email = email)
 
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
-        ...newSubscriptinState
+        ...newSubscriptionState
       }
     }
 
@@ -71,7 +72,7 @@ export function subscriptionReducer(state = buildInitialState(), action: Subscri
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
-        subscriptionDetails: transformSubscriptionDetailsToCamelCase(subscriptionDetails)
+        subscriptionDetails: objectToCamel(subscriptionDetails)
       }
     }
 

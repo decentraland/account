@@ -1,4 +1,6 @@
 import { NotificationType } from '@dcl/schemas'
+import { toCamel } from 'ts-case-convert'
+import { ToCamel } from 'ts-case-convert/lib/caseConvert'
 import { RootState } from '../reducer'
 import { getSubscriptionsRequest } from './actions'
 import { buildInitialState } from './reducer'
@@ -11,8 +13,7 @@ import {
   isIgnoringAllInApp,
   isLoadingSubscriptions
 } from './selectors'
-import { MessageTypeCamelCase, SubscriptionState } from './types'
-import { toSnakeCase } from './utils'
+import { SubscriptionState } from './types'
 
 let subscription: SubscriptionState
 
@@ -95,7 +96,7 @@ describe('when asking whether the state is ignoring all in-app notifications', (
 describe('when selecting the subscription setting by notification type', () => {
   it('should return the setting for the given notification type', () => {
     const getSetting = getSubscriptionByNotificationType(state)
-    const notificationType = toSnakeCase(NotificationType.BID_ACCEPTED) as keyof MessageTypeCamelCase
+    const notificationType = toCamel(NotificationType.BID_ACCEPTED) as ToCamel<NotificationType>
     expect(getSetting(notificationType)).toBe(subscription.subscriptionDetails.messageType[notificationType])
   })
 })

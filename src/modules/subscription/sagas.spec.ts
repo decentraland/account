@@ -2,6 +2,7 @@ import { Subscription } from '@dcl/schemas'
 import { call } from '@redux-saga/core/effects'
 import { NotificationsAPI } from 'decentraland-dapps/dist/modules/notifications'
 import { expectSaga } from 'redux-saga-test-plan'
+import { objectToSnake } from 'ts-case-convert'
 import {
   getSubscriptionsFailure,
   getSubscriptionsRequest,
@@ -12,7 +13,6 @@ import {
 } from './actions'
 import { buildInitialState } from './reducer'
 import { subscriptionSagas } from './sagas'
-import { transformSubscriptionDetailsToSnakeCase } from './utils'
 
 let notificationsAPI: NotificationsAPI
 let walletAddress: string
@@ -25,7 +25,7 @@ beforeEach(() => {
 
   subscriptionSettings = {
     email: subscriptionSettingsState.email,
-    details: transformSubscriptionDetailsToSnakeCase(subscriptionSettingsState.subscriptionDetails),
+    details: objectToSnake(subscriptionSettingsState.subscriptionDetails),
     address: walletAddress
   }
 })
