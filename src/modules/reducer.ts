@@ -12,6 +12,7 @@ import { walletReducer as wallet } from 'decentraland-dapps/dist/modules/wallet/
 import { History } from 'history'
 import { combineReducers } from 'redux'
 import { manaReducer as mana } from './mana/reducer'
+import { subscriptionReducer as subscription } from './subscription/reducer'
 
 export const createRootReducer = (history: History) =>
   combineReducers({
@@ -26,6 +27,7 @@ export const createRootReducer = (history: History) =>
     toast,
     gateway,
     features,
+    subscription,
     router: connectRouter(history)
   })
 

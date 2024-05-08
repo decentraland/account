@@ -1,10 +1,13 @@
+import { localStorageGetIdentity } from '@dcl/single-sign-on-client'
 import { Env } from '@dcl/ui-env'
 import { routerMiddleware } from 'connected-react-router'
 import { createAnalyticsMiddleware } from 'decentraland-dapps/dist/modules/analytics/middleware'
 import { SET_PURCHASE } from 'decentraland-dapps/dist/modules/gateway/actions'
+import { NotificationsAPI } from 'decentraland-dapps/dist/modules/notifications'
 import { createStorageMiddleware } from 'decentraland-dapps/dist/modules/storage/middleware'
 import { storageReducerWrapper } from 'decentraland-dapps/dist/modules/storage/reducer'
 import { createTransactionMiddleware } from 'decentraland-dapps/dist/modules/transaction/middleware'
+import { getAddress } from 'decentraland-dapps/dist/modules/wallet'
 import { createBrowserHistory } from 'history'
 import { applyMiddleware, compose, createStore } from 'redux'
 import { createLogger } from 'redux-logger'
@@ -51,7 +54,15 @@ const middleware = applyMiddleware(
 const enhancer = compose(middleware)
 const store = createStore(rootReducer, enhancer)
 
-sagasMiddleware.run(rootSaga)
+const notificationApi = new NotificationsAPI({
+  identity: () => {
+    const address = getAddress(store.getState())
+    const identity = address ? localStorageGetIdentity(address) : null
+    return identity ?? undefined
+  }
+})
+
+sagasMiddleware.run(rootSaga, notificationApi)
 loadStorageMiddleware(store)
 
 if (config.is(Env.DEVELOPMENT)) {
