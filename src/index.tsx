@@ -1,3 +1,5 @@
+// eslint-disable-next-line css-import-order/css-import-order
+import 'semantic-ui-css/semantic.min.css'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
@@ -11,11 +13,13 @@ import * as modals from './components/Modals'
 import { Routes } from './components/Routes'
 import * as locales from './locales'
 import { history, store } from './modules/store'
-import './themes'
 
-import './index.css'
-import 'semantic-ui-css/semantic.min.css'
+// eslint-disable-next-line css-import-order/css-import-order
 import 'decentraland-ui/dist/themes/alternative/light-theme.css'
+// eslint-disable-next-line css-import-order/css-import-order
+import './themes'
+// eslint-disable-next-line css-import-order/css-import-order
+import './index.css'
 
 const component = (
   <Provider store={store}>
