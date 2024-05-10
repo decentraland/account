@@ -44,8 +44,7 @@ type SubscriptionReducerAction =
 
 export function subscriptionReducer(state = buildInitialState(), action: SubscriptionReducerAction): SubscriptionState {
   switch (action.type) {
-    case GET_SUBSCRIPTIONS_REQUEST:
-    case SAVE_SUBSCRIPTIONS_REQUEST: {
+    case GET_SUBSCRIPTIONS_REQUEST: {
       return {
         ...state,
         error: null,
@@ -67,6 +66,17 @@ export function subscriptionReducer(state = buildInitialState(), action: Subscri
       }
     }
 
+    case SAVE_SUBSCRIPTIONS_REQUEST: {
+      const { subscriptionDetails } = action.payload
+
+      return {
+        ...state,
+        error: null,
+        loading: loadingReducer(state.loading, action),
+        subscriptionDetails: objectToCamel(subscriptionDetails)
+      }
+    }
+
     case SAVE_SUBSCRIPTIONS_SUCCESS: {
       const { subscriptionDetails } = action.payload
 
@@ -77,12 +87,20 @@ export function subscriptionReducer(state = buildInitialState(), action: Subscri
       }
     }
 
-    case GET_SUBSCRIPTIONS_FAILURE:
-    case SAVE_SUBSCRIPTIONS_FAILURE: {
+    case GET_SUBSCRIPTIONS_FAILURE: {
       const { error } = action.payload
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
+        error
+      }
+    }
+    case SAVE_SUBSCRIPTIONS_FAILURE: {
+      const { error, subscriptionDetails } = action.payload
+      return {
+        ...state,
+        loading: loadingReducer(state.loading, action),
+        subscriptionDetails: objectToCamel(subscriptionDetails),
         error
       }
     }

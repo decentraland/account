@@ -76,32 +76,49 @@ describe('when reducing the get subscription failure action', () => {
 })
 
 describe('when reducing the update of the subscription request action', () => {
+  let newSubscription: Subscription
   beforeEach(() => {
     initialState = { ...state, error: 'some error' }
+    newSubscription = {
+      ...subscription,
+      details: {
+        ...subscription.details,
+        message_type: { ...subscription.details.message_type, bid_accepted: { in_app: false, email: false } }
+      }
+    }
   })
 
   it('should return a state with the loading state set and the error cleared', () => {
-    expect(subscriptionReducer(initialState, saveSubscriptionsRequest(subscription.details))).toEqual({
+    expect(subscriptionReducer(initialState, saveSubscriptionsRequest(newSubscription.details, subscription.details))).toEqual({
       ...state,
-      loading: [saveSubscriptionsRequest(subscription.details)],
+      subscriptionDetails: objectToCamel(newSubscription.details),
+      loading: [saveSubscriptionsRequest(newSubscription.details, subscription.details)],
       error: null
     })
   })
 })
 
 describe('when reducing the update of the subscription success action', () => {
+  let newSubscription: Subscription
   beforeEach(() => {
+    newSubscription = {
+      ...subscription,
+      details: {
+        ...subscription.details,
+        message_type: { ...subscription.details.message_type, bid_accepted: { in_app: false, email: false } }
+      }
+    }
     initialState = {
       ...state,
-      loading: [saveSubscriptionsRequest(subscription.details)],
-      subscriptionDetails: { ...objectToCamel(subscription.details), ignoreAllInApp: true }
+      loading: [saveSubscriptionsRequest(newSubscription.details, subscription.details)],
+      subscriptionDetails: objectToCamel(subscription.details)
     }
   })
 
   it('should return a state with the details of subscription set and the loading state cleared', () => {
-    expect(subscriptionReducer(initialState, saveSubscriptionsSuccess(subscription.details))).toEqual({
+    expect(subscriptionReducer(initialState, saveSubscriptionsSuccess(newSubscription.details))).toEqual({
       ...state,
-      subscriptionDetails: objectToCamel(subscription.details),
+      subscriptionDetails: objectToCamel(newSubscription.details),
       loading: [],
       error: null
     })
@@ -110,14 +127,22 @@ describe('when reducing the update of the subscription success action', () => {
 
 describe('when reducing update of the subscription failure action', () => {
   let error: string
+  let newSubscription: Subscription
 
   beforeEach(() => {
-    initialState = { ...state, loading: [saveSubscriptionsRequest(subscription.details)] }
+    newSubscription = {
+      ...subscription,
+      details: {
+        ...subscription.details,
+        message_type: { ...subscription.details.message_type, bid_accepted: { in_app: false, email: false } }
+      }
+    }
+    initialState = { ...state, loading: [saveSubscriptionsRequest(newSubscription.details, subscription.details)] }
     error = 'some error'
   })
 
   it('should return a state with the error set and the loading state cleared', () => {
-    expect(subscriptionReducer(initialState, saveSubscriptionsFailure(error))).toEqual({
+    expect(subscriptionReducer(initialState, saveSubscriptionsFailure(subscription.details, error))).toEqual({
       ...state,
       loading: [],
       error: error

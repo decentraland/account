@@ -28,11 +28,13 @@ export function* subscriptionSagas(notificationsAPI: NotificationsAPI) {
 
   function* handlePutSubscriptionsRequest(action: SaveSubscriptionsRequestAction) {
     try {
-      const subscription: Subscription = yield call([notificationsAPI, 'putSubscription'], action.payload.subscriptionDetails)
-
-      yield put(saveSubscriptionsSuccess(subscription.details))
+      console.log('action > ', action)
+      yield call([notificationsAPI, 'putSubscription'], action.payload.subscriptionDetails)
+      console.log('after call')
+      yield put(saveSubscriptionsSuccess(action.payload.subscriptionDetails))
     } catch (error) {
-      yield put(saveSubscriptionsFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
+      console.log('error')
+      yield put(saveSubscriptionsFailure(action.payload.prevSubscriptionDetails, isErrorWithMessage(error) ? error.message : 'Unknown'))
     }
   }
 }
