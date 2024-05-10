@@ -3,7 +3,11 @@ import { SubscriptionDetails } from '@dcl/schemas'
 import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
 import { isConnecting } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { RootState } from '../../../modules/reducer'
-import { SAVE_SUBSCRIPTIONS_REQUEST, saveSubscriptionsRequest } from '../../../modules/subscription/actions'
+import {
+  SAVE_SUBSCRIPTIONS_REQUEST,
+  clearSaveSubscriptionErrorRequest,
+  saveSubscriptionsRequest
+} from '../../../modules/subscription/actions'
 import { getError, getLoading, getSubscriptionDetails } from '../../../modules/subscription/selectors'
 import NotificationGroupCard from './NotificationGroupCard'
 import { MapDispatch, MapDispatchProps, MapStateProps, OwnProps } from './NotificationGroupCard.types'
@@ -20,7 +24,8 @@ const mapStateToProps = (state: RootState, ownProps: OwnProps): MapStateProps =>
 }
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
-  onChangeNotificationSetting: (subscriptionDetails: SubscriptionDetails) => dispatch(saveSubscriptionsRequest(subscriptionDetails))
+  onChangeNotificationSetting: (subscriptionDetails: SubscriptionDetails) => dispatch(saveSubscriptionsRequest(subscriptionDetails)),
+  onClearChangeNotificationSettingError: () => dispatch(clearSaveSubscriptionErrorRequest())
 })
 
 export default connect(mapStateToProps, mapDispatch)(NotificationGroupCard)

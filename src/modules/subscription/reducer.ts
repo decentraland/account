@@ -3,6 +3,8 @@ import { loadingReducer } from 'decentraland-dapps/dist/modules/loading/reducer'
 import { objectToCamel, toCamel } from 'ts-case-convert'
 import { ToCamel } from 'ts-case-convert/lib/caseConvert'
 import {
+  CLEAR_SUBSCRIPTIONS_ERROR_REQUEST,
+  ClearSaveSubscriptionErrorRequestAction,
   GET_SUBSCRIPTIONS_FAILURE,
   GET_SUBSCRIPTIONS_REQUEST,
   GET_SUBSCRIPTIONS_SUCCESS,
@@ -41,6 +43,7 @@ type SubscriptionReducerAction =
   | SaveSubscriptionsRequestAction
   | SaveSubscriptionsSuccessAction
   | SaveSubscriptionsFailureAction
+  | ClearSaveSubscriptionErrorRequestAction
 
 export function subscriptionReducer(state = buildInitialState(), action: SubscriptionReducerAction): SubscriptionState {
   switch (action.type) {
@@ -84,6 +87,13 @@ export function subscriptionReducer(state = buildInitialState(), action: Subscri
         ...state,
         loading: loadingReducer(state.loading, action),
         error
+      }
+    }
+
+    case CLEAR_SUBSCRIPTIONS_ERROR_REQUEST: {
+      return {
+        ...state,
+        error: null
       }
     }
     default: {

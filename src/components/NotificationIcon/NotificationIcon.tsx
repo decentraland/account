@@ -14,37 +14,41 @@ type Props = {
   name: NotificationType
 }
 
+const defaultStyle = { color: '#fcfcfc', fontSize: 16 }
+
 function NotificationIcon(props: Props) {
   const { name } = props
 
-  if (name === NotificationType.GOVERNANCE_ANNOUNCEMENT) {
-    return <CampaignRoundedIcon sx={{ color: '#fcfcfc', fontSize: 16 }} />
-  } else if (name === NotificationType.GOVERNANCE_COAUTHOR_REQUESTED) {
-    return <GroupRoundedIcon sx={{ color: '#fcfcfc', fontSize: 16 }} />
-  } else if (name === NotificationType.GOVERNANCE_AUTHORED_PROPOSAL_FINISHED) {
-    return <HourglassBottomRoundedIcon sx={{ color: '#fcfcfc', fontSize: 16 }} />
-  } else if (name === NotificationType.GOVERNANCE_NEW_COMMENT_ON_PROJECT_UPDATE) {
-    return <MarkChatUnreadRoundedIcon sx={{ color: '#fcfcfc', fontSize: 16 }} />
-  } else if (name === NotificationType.GOVERNANCE_NEW_COMMENT_ON_PROPOSAL) {
-    return <MarkUnreadChatAltRoundedIcon sx={{ color: '#fcfcfc', fontSize: 16 }} />
-  } else if (name === NotificationType.GOVERNANCE_PROPOSAL_ENACTED) {
-    return <QuickreplyRoundedIcon sx={{ color: '#fcfcfc', fontSize: 16 }} />
-  } else if (name === NotificationType.GOVERNANCE_VOTING_ENDED_VOTER) {
-    return <HourglassBottomRoundedIcon sx={{ color: '#fcfcfc', fontSize: 16 }} />
-  } else if (name === NotificationType.GOVERNANCE_PITCH_PASSED) {
-    return <PlaylistAddCheckRoundedIcon sx={{ color: '#fcfcfc', fontSize: 16 }} />
-  } else if (name === NotificationType.GOVERNANCE_TENDER_PASSED) {
-    return <CheckCircleRoundedIcon sx={{ color: '#fcfcfc', fontSize: 16 }} />
-  } else if (name === NotificationType.ROYALTIES_EARNED) {
-    return <InsightsRoundedIcon sx={{ color: '#fcfcfc', fontSize: 16 }} />
+  switch (name) {
+    case NotificationType.GOVERNANCE_ANNOUNCEMENT:
+      return <CampaignRoundedIcon sx={defaultStyle} />
+    case NotificationType.GOVERNANCE_COAUTHOR_REQUESTED:
+      return <GroupRoundedIcon sx={defaultStyle} />
+    case NotificationType.GOVERNANCE_AUTHORED_PROPOSAL_FINISHED:
+      return <HourglassBottomRoundedIcon sx={defaultStyle} />
+    case NotificationType.GOVERNANCE_NEW_COMMENT_ON_PROJECT_UPDATE:
+      return <MarkChatUnreadRoundedIcon sx={defaultStyle} />
+    case NotificationType.GOVERNANCE_NEW_COMMENT_ON_PROPOSAL:
+      return <MarkUnreadChatAltRoundedIcon sx={defaultStyle} />
+    case NotificationType.GOVERNANCE_PROPOSAL_ENACTED:
+      return <QuickreplyRoundedIcon sx={defaultStyle} />
+    case NotificationType.GOVERNANCE_VOTING_ENDED_VOTER:
+      return <HourglassBottomRoundedIcon sx={defaultStyle} />
+    case NotificationType.GOVERNANCE_PITCH_PASSED:
+      return <PlaylistAddCheckRoundedIcon sx={defaultStyle} />
+    case NotificationType.GOVERNANCE_TENDER_PASSED:
+      return <CheckCircleRoundedIcon sx={defaultStyle} />
+    case NotificationType.ROYALTIES_EARNED:
+      return <InsightsRoundedIcon sx={defaultStyle} />
+    default: {
+      const iconName = Object.values(NotificationType).includes(name) ? name : 'mana'
+      return (
+        <IconStyled>
+          <img src={`src/images/icons/${iconName}.svg`} />
+        </IconStyled>
+      )
+    }
   }
-
-  const iconName = Object.values(NotificationType).includes(name) ? name : 'mana'
-  return (
-    <IconStyled>
-      <img src={`src/images/icons/${iconName}.svg`} />
-    </IconStyled>
-  )
 }
 
 export default NotificationIcon

@@ -14,7 +14,7 @@ export const AccordionStyled = styled(Accordion)({
   }
 })
 
-export const AccordingTitle = styled(Typography)({
+export const AccordingTitleStyled = styled(Typography)({
   color: '#FCFCFC',
   fontSize: '16px',
   lineHeight: '19.36px',
@@ -22,7 +22,7 @@ export const AccordingTitle = styled(Typography)({
   marginBottom: '8px'
 })
 
-export const AccordingDescription = styled(Typography)({
+export const AccordingDescriptionStyled = styled(Typography)({
   color: '#fcfcfc99',
   fontSize: '12px',
   lineHeight: '24px',
@@ -44,7 +44,7 @@ export const AccordionSummaryStyled = styled(AccordionSummary)({
   }
 })
 
-export const AccordionSummaryContainer = styled('div')({
+export const AccordionSummaryContainerStyled = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'flex-start',
@@ -54,7 +54,7 @@ export const AccordionSummaryContainer = styled('div')({
 
 export const AccordionDetailsStyled = styled(AccordionDetails)({ paddingLeft: 0, paddingRight: 0 })
 
-export const NotificationItemContainer = styled('div')({
+export const NotificationItemContainerStyled = styled('div')({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
@@ -66,13 +66,13 @@ export const NotificationItemContainer = styled('div')({
   height: '44px'
 })
 
-export const NotificationItemTextIconContainer = styled('div')({
+export const NotificationItemTextIconContainerStyled = styled('div')({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center'
 })
 
-export const NotificationItemText = styled(Typography)({
+export const NotificationItemTextStyled = styled(Typography)({
   color: '#fcfcfc99',
   fontSize: '14px',
   lineHeight: '16.94px',

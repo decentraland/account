@@ -6,15 +6,15 @@ import { objectToSnake, toCamel } from 'ts-case-convert'
 import { Alert, Skeleton, Snackbar, Switch } from 'decentraland-ui2'
 import NotificationIcon from '../../NotificationIcon'
 import {
-  AccordingDescription,
-  AccordingTitle,
+  AccordingDescriptionStyled,
+  AccordingTitleStyled,
   AccordionDetailsStyled,
   AccordionStyled,
-  AccordionSummaryContainer,
+  AccordionSummaryContainerStyled,
   AccordionSummaryStyled,
-  NotificationItemContainer,
-  NotificationItemText,
-  NotificationItemTextIconContainer
+  NotificationItemContainerStyled,
+  NotificationItemTextIconContainerStyled,
+  NotificationItemTextStyled
 } from './NotificationGroupCard.styled'
 import { Props } from './NotificationGroupCard.types'
 
@@ -28,7 +28,8 @@ function NotificationGroupCard(props: Props) {
     disabled,
     subscriptionDetails,
     error,
-    onChangeNotificationSetting
+    onChangeNotificationSetting,
+    onClearChangeNotificationSettingError
   } = props
 
   const [showError, setShowError] = useState(false)
@@ -54,34 +55,35 @@ function NotificationGroupCard(props: Props) {
 
   const handleClose = useCallback(() => {
     setShowError(false)
+    onClearChangeNotificationSettingError()
   }, [])
 
   return (
     <>
       <AccordionStyled defaultExpanded={defaultExpanded}>
         <AccordionSummaryStyled expandIcon={<ExpandMoreIcon />}>
-          <AccordionSummaryContainer>
+          <AccordionSummaryContainerStyled>
             {isLoading ? (
               <Skeleton animation="wave" width={100} height={20} />
             ) : (
-              <AccordingTitle>{t(`settings.notifications.subscription_group_label_${subscriptionGroupKeys}`)}</AccordingTitle>
+              <AccordingTitleStyled>{t(`settings.notifications.subscription_group_label_${subscriptionGroupKeys}`)}</AccordingTitleStyled>
             )}
             {isLoading ? (
               <Skeleton animation="wave" width={200} height={24} />
             ) : (
-              <AccordingDescription>
+              <AccordingDescriptionStyled>
                 {t(`settings.notifications.subscription_group_description_${subscriptionGroupKeys}`)}
-              </AccordingDescription>
+              </AccordingDescriptionStyled>
             )}
-          </AccordionSummaryContainer>
+          </AccordionSummaryContainerStyled>
         </AccordionSummaryStyled>
         <AccordionDetailsStyled>
           {notificationTypesInGroup.map(type => (
-            <NotificationItemContainer key={type}>
-              <NotificationItemTextIconContainer>
+            <NotificationItemContainerStyled key={type}>
+              <NotificationItemTextIconContainerStyled>
                 <NotificationIcon name={type} />
-                <NotificationItemText>{t(`settings.notifications.types.${type}`)}</NotificationItemText>
-              </NotificationItemTextIconContainer>
+                <NotificationItemTextStyled>{t(`settings.notifications.types.${type}`)}</NotificationItemTextStyled>
+              </NotificationItemTextIconContainerStyled>
               {!disabled && (
                 <Switch
                   onChange={(_, checked) => handleOnChangeNotificationSetting(checked, type)}
@@ -89,7 +91,7 @@ function NotificationGroupCard(props: Props) {
                   disabled={isSavingSubscription}
                 />
               )}
-            </NotificationItemContainer>
+            </NotificationItemContainerStyled>
           ))}
         </AccordionDetailsStyled>
       </AccordionStyled>
