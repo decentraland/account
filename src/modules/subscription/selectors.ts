@@ -4,8 +4,8 @@ import { GET_SUBSCRIPTIONS_REQUEST } from './actions'
 import type { MessageTypeCamelCase } from './types'
 
 const getState = (state: RootState) => state.subscription
-const getLoading = (state: RootState) => getState(state).loading
 
+export const getLoading = (state: RootState) => getState(state).loading
 export const getEmail = (state: RootState) => getState(state).email
 export const hasEmail = (state: RootState) => getEmail(state).length > 0
 export const getSubscriptionDetails = (state: RootState) => getState(state).subscriptionDetails

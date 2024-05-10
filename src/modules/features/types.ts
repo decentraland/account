@@ -1,3 +1,4 @@
 export enum FeatureName {
-  AUTH_DAPP = 'auth-dapp'
+  AUTH_DAPP = 'auth-dapp',
+  SUBSCRIPTION = 'show-subscription-setting'
 }
