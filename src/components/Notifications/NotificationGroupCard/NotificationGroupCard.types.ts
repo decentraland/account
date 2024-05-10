@@ -1,6 +1,6 @@
 import { NotificationType } from '@dcl/schemas'
 import { Dispatch } from 'redux'
-import { clearSaveSubscriptionErrorRequest, saveSubscriptionsRequest } from '../../../modules/subscription/actions'
+import { clearSaveSubscriptionError, saveSubscriptionsRequest } from '../../../modules/subscription/actions'
 import { SubscriptionDetailsCamelCase, SubscriptionGroupKeys } from '../../../modules/subscription/types'
 
 export type Props = {
@@ -12,7 +12,7 @@ export type Props = {
   isSavingSubscription?: boolean
   defaultExpanded?: boolean
   onChangeNotificationSetting: typeof saveSubscriptionsRequest
-  onClearChangeNotificationSettingError: typeof clearSaveSubscriptionErrorRequest
+  onClearChangeNotificationSettingError: typeof clearSaveSubscriptionError
   error: string | null
 }
 
