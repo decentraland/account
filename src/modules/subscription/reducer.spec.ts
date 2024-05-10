@@ -89,10 +89,9 @@ describe('when reducing the update of the subscription request action', () => {
   })
 
   it('should return a state with the loading state set and the error cleared', () => {
-    expect(subscriptionReducer(initialState, saveSubscriptionsRequest(newSubscription.details, subscription.details))).toEqual({
+    expect(subscriptionReducer(initialState, saveSubscriptionsRequest(newSubscription.details))).toEqual({
       ...state,
-      subscriptionDetails: objectToCamel(newSubscription.details),
-      loading: [saveSubscriptionsRequest(newSubscription.details, subscription.details)],
+      loading: [saveSubscriptionsRequest(newSubscription.details)],
       error: null
     })
   })
@@ -110,7 +109,7 @@ describe('when reducing the update of the subscription success action', () => {
     }
     initialState = {
       ...state,
-      loading: [saveSubscriptionsRequest(newSubscription.details, subscription.details)],
+      loading: [saveSubscriptionsRequest(newSubscription.details)],
       subscriptionDetails: objectToCamel(subscription.details)
     }
   })
@@ -137,12 +136,12 @@ describe('when reducing update of the subscription failure action', () => {
         message_type: { ...subscription.details.message_type, bid_accepted: { in_app: false, email: false } }
       }
     }
-    initialState = { ...state, loading: [saveSubscriptionsRequest(newSubscription.details, subscription.details)] }
+    initialState = { ...state, loading: [saveSubscriptionsRequest(newSubscription.details)] }
     error = 'some error'
   })
 
   it('should return a state with the error set and the loading state cleared', () => {
-    expect(subscriptionReducer(initialState, saveSubscriptionsFailure(subscription.details, error))).toEqual({
+    expect(subscriptionReducer(initialState, saveSubscriptionsFailure(error))).toEqual({
       ...state,
       loading: [],
       error: error

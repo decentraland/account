@@ -20,12 +20,11 @@ export const SAVE_SUBSCRIPTIONS_REQUEST = '[Request] Save Subscriptions'
 export const SAVE_SUBSCRIPTIONS_SUCCESS = '[Success] Save Subscriptions'
 export const SAVE_SUBSCRIPTIONS_FAILURE = '[Failure] Save Subscriptions'
 
-export const saveSubscriptionsRequest = (subscriptionDetails: SubscriptionDetails, prevSubscriptionDetails: SubscriptionDetails) =>
-  action(SAVE_SUBSCRIPTIONS_REQUEST, { subscriptionDetails, prevSubscriptionDetails })
+export const saveSubscriptionsRequest = (subscriptionDetails: SubscriptionDetails) =>
+  action(SAVE_SUBSCRIPTIONS_REQUEST, { subscriptionDetails })
 export const saveSubscriptionsSuccess = (subscriptionDetails: SubscriptionDetails) =>
   action(SAVE_SUBSCRIPTIONS_SUCCESS, { subscriptionDetails })
-export const saveSubscriptionsFailure = (subscriptionDetails: SubscriptionDetails, error: string) =>
-  action(SAVE_SUBSCRIPTIONS_FAILURE, { subscriptionDetails, error })
+export const saveSubscriptionsFailure = (error: string) => action(SAVE_SUBSCRIPTIONS_FAILURE, { error })
 
 export type SaveSubscriptionsRequestAction = ReturnType<typeof saveSubscriptionsRequest>
 export type SaveSubscriptionsSuccessAction = ReturnType<typeof saveSubscriptionsSuccess>
