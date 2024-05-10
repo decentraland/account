@@ -59,28 +59,37 @@ describe('when handling the request action to fetch the subscription', () => {
 })
 
 describe('when handling the request action to save the subscription', () => {
+  let newSubscription: Subscription
+  beforeEach(() => {
+    newSubscription = {
+      ...subscriptionSettings,
+      details: {
+        ...subscriptionSettings.details,
+        message_type: { ...subscriptionSettings.details.message_type, bid_accepted: { in_app: false, email: false } }
+      }
+    }
+  })
   describe('and the notification API call is successful', () => {
     it('should put a save subscription success action with the subscription', () => {
       return expectSaga(subscriptionSagas, notificationsAPI)
-        .provide([[call([notificationsAPI, 'putSubscription'], subscriptionSettings.details), Promise.resolve(subscriptionSettings)]])
-        .put(saveSubscriptionsSuccess(subscriptionSettings.details))
-        .dispatch(saveSubscriptionsRequest(subscriptionSettings.details))
+        .provide([[call([notificationsAPI, 'putSubscription'], newSubscription.details), Promise.resolve(newSubscription)]])
+        .put(saveSubscriptionsSuccess(newSubscription.details))
+        .dispatch(saveSubscriptionsRequest(newSubscription.details, subscriptionSettings.details))
         .silentRun()
     })
   })
 
   describe('and the notification API call fails', () => {
     let errorMessage: string
-
     beforeEach(() => {
       errorMessage = `Failed to save subscription for ${walletAddress}`
     })
 
     it('should put a save subscription failure action with the error', () => {
       return expectSaga(subscriptionSagas, notificationsAPI)
-        .provide([[call([notificationsAPI, 'putSubscription'], subscriptionSettings.details), Promise.reject(new Error(errorMessage))]])
-        .put(saveSubscriptionsFailure(errorMessage))
-        .dispatch(saveSubscriptionsRequest(subscriptionSettings.details))
+        .provide([[call([notificationsAPI, 'putSubscription'], newSubscription.details), Promise.reject(new Error(errorMessage))]])
+        .put(saveSubscriptionsFailure(subscriptionSettings.details, errorMessage))
+        .dispatch(saveSubscriptionsRequest(newSubscription.details, subscriptionSettings.details))
         .silentRun()
     })
   })

@@ -28,12 +28,9 @@ export function* subscriptionSagas(notificationsAPI: NotificationsAPI) {
 
   function* handlePutSubscriptionsRequest(action: SaveSubscriptionsRequestAction) {
     try {
-      console.log('action > ', action)
       yield call([notificationsAPI, 'putSubscription'], action.payload.subscriptionDetails)
-      console.log('after call')
       yield put(saveSubscriptionsSuccess(action.payload.subscriptionDetails))
     } catch (error) {
-      console.log('error')
       yield put(saveSubscriptionsFailure(action.payload.prevSubscriptionDetails, isErrorWithMessage(error) ? error.message : 'Unknown'))
     }
   }
