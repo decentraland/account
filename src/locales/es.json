@@ -174,5 +174,45 @@
       "title": "Meta transacción",
       "body": "Ocurrió un error publicando la meta transacción.{br}Intentelo de nuevo o ingrese a nuestro {discord_link} para obtener más información."
     }
+  },
+  "settings": {
+    "notifications": {
+      "title": "",
+      "description": "",
+      "subscription_group_label_marketplace": "",
+      "subscription_group_description_marketplace": "",
+      "subscription_group_label_events": "",
+      "subscription_group_description_events": "",
+      "subscription_group_label_dao": "",
+      "subscription_group_description_dao": "",
+      "subscription_group_label_worlds": "",
+      "subscription_group_description_worlds": "",
+      " saving_settings_error": "",
+      "types": {
+        "bid_accepted": "",
+        "bid_received": "",
+        "events_started": "",
+        "events_starts_soon": "",
+        "governance_announcement": "",
+        "governance_authored_proposal_finished": "",
+        "governance_coauthor_requested": "",
+        "governance_new_comment_on_project_update": "",
+        "governance_new_comment_on_proposal": "",
+        "governance_proposal_enacted": "",
+        "governance_voting_ending_voter": "",
+        "governance_pitch_passed": "",
+        "governance_tender_passed": "",
+        "item_sold": "",
+        "rental_ending": "",
+        "rental_started": "",
+        "rewards_assignment": "",
+        "royalties_earned": "",
+        "worlds_missing_resources": "",
+        "worlds_access_restricted": "",
+        "worlds_access_restored": "",
+        "worlds_permission_granted": "",
+        "worlds_permission_revoked": ""
+      }
+    }
   }
 }

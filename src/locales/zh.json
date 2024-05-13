@@ -174,5 +174,45 @@
       "title": "元交易",
       "body": "发送元交易时出错。{br}请重试或加入我们的{discord_link}以获取支持。"
     }
+  },
+  "settings": {
+    "notifications": {
+      "title": "通知",
+      "description": "在此部分中，您可以自訂您想要接收的通知類型。",
+      "subscription_group_label_marketplace": "市場",
+      "subscription_group_description_marketplace": "取得有關您的購買、獎品、銷售、版稅和租賃的通知",
+      "subscription_group_label_events": "活動",
+      "subscription_group_description_events": "取得您已回覆的活動的通知",
+      "subscription_group_label_dao": "DAO",
+      "subscription_group_description_dao": "取得您已投票的 DAO 動議、提案流程等的通知。",
+      "subscription_group_label_worlds": "世界",
+      "subscription_group_description_worlds": "如果您的世界儲存空間不足或您被邀請存取/協作某個世界，則會收到通知",
+      " saving_settings_error": "儲存通知設定時發生錯誤",
+      "types": {
+        "bid_accepted": "出價已接受",
+        "bid_received": "出價已收到",
+        "events_started": "活動開始",
+        "events_starts_soon": "活動即將開始",
+        "governance_announcement": "新 DAO 公告",
+        "governance_authored_proposal_finished": "對您的提案的投票結束",
+        "governance_coauthor_requested": "收到共同撰寫提案的請求",
+        "governance_new_comment_on_project_update": "關於您的專案更新的新評論",
+        "governance_new_comment_on_proposal": "對您的提案的新評論",
+        "governance_proposal_enacted": "提案已頒布",
+        "governance_voting_ending_voter": "投票結束於您投票的提案",
+        "governance_pitch_passed": "您投票的提案已通過",
+        "governance_tender_passed": "您投票的投標已通過",
+        "item_sold": "已售出物品",
+        "rental_ending": "土地租賃期間結束",
+        "rental_started": "土地已出租",
+        "rewards_assignment": "收到免費物品",
+        "royalties_earned": "獲得的版稅",
+        "worlds_missing_resources": "世界儲存不足警告",
+        "worlds_access_restricted": "由於儲存空間不足，世界存取受到限制",
+        "worlds_access_restored": "世界存取已恢復",
+        "worlds_permission_granted": "授予世界存取/部署/串流權限",
+        "worlds_permission_revoked": "世界存取/部署/串流媒體權限已撤銷"
+      }
+    }
   }
 }
