@@ -14,7 +14,7 @@ export const AccordionStyled = styled(Accordion)({
   }
 })
 
-export const AccordingTitleStyled = styled(Typography)({
+export const AccordionTitleStyled = styled(Typography)({
   color: '#FCFCFC',
   fontSize: '16px',
   lineHeight: '19.36px',
@@ -22,7 +22,7 @@ export const AccordingTitleStyled = styled(Typography)({
   marginBottom: '8px'
 })
 
-export const AccordingDescriptionStyled = styled(Typography)({
+export const AccordionDescriptionStyled = styled(Typography)({
   color: '#fcfcfc99',
   fontSize: '12px',
   lineHeight: '24px',

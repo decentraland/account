@@ -6,12 +6,12 @@ import { objectToSnake, toCamel } from 'ts-case-convert'
 import { Alert, Skeleton, Snackbar, Switch } from 'decentraland-ui2'
 import NotificationIcon from '../../NotificationIcon'
 import {
-  AccordingDescriptionStyled,
-  AccordingTitleStyled,
+  AccordionDescriptionStyled,
   AccordionDetailsStyled,
   AccordionStyled,
   AccordionSummaryContainerStyled,
   AccordionSummaryStyled,
+  AccordionTitleStyled,
   NotificationItemContainerStyled,
   NotificationItemTextIconContainerStyled,
   NotificationItemTextStyled
@@ -71,16 +71,16 @@ function NotificationGroupCard(props: Props) {
             {isLoading ? (
               <Skeleton animation="wave" width={100} height={20} data-testid={NOTIFICATION_CARD_LOADING_TEST_ID} />
             ) : (
-              <AccordingTitleStyled data-testid={NOTIFICATION_CARD_TITLE_TEST_ID}>
+              <AccordionTitleStyled data-testid={NOTIFICATION_CARD_TITLE_TEST_ID}>
                 {t(`settings.notifications.subscription_group_label_${subscriptionGroupKeys}`)}
-              </AccordingTitleStyled>
+              </AccordionTitleStyled>
             )}
             {isLoading ? (
               <Skeleton animation="wave" width={200} height={24} />
             ) : (
-              <AccordingDescriptionStyled data-testid={NOTIFICATION_CARD_DESCRIPTION_TEST_ID}>
+              <AccordionDescriptionStyled data-testid={NOTIFICATION_CARD_DESCRIPTION_TEST_ID}>
                 {t(`settings.notifications.subscription_group_description_${subscriptionGroupKeys}`)}
-              </AccordingDescriptionStyled>
+              </AccordionDescriptionStyled>
             )}
           </AccordionSummaryContainerStyled>
         </AccordionSummaryStyled>
