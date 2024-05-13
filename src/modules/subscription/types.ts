@@ -18,10 +18,10 @@ export type SubscriptionState = {
 }
 
 export enum SubscriptionGroupKeys {
-  MARKETPLACE = 'Marketplace',
-  EVENTS = 'Events',
+  MARKETPLACE = 'marketplace',
+  EVENTS = 'events',
   DAO = 'dao',
-  WORLDS = 'Worlds'
+  WORLDS = 'worlds'
 }
 
 export type SubscriptionGroups = {

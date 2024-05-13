@@ -18,6 +18,11 @@ import {
 } from './NotificationGroupCard.styled'
 import { Props } from './NotificationGroupCard.types'
 
+export const NOTIFICATION_CARD_LOADING_TEST_ID = 'notification-card-loading-test-id'
+export const NOTIFICATION_CARD_TITLE_TEST_ID = 'notification-card-title-test-id'
+export const NOTIFICATION_CARD_DESCRIPTION_TEST_ID = 'notification-card-description-test-id'
+export const NOTIFICATION_CARD_SWITCH_TEST_ID = 'notification-card-switch-test-id'
+
 function NotificationGroupCard(props: Props) {
   const {
     isLoading,
@@ -64,14 +69,16 @@ function NotificationGroupCard(props: Props) {
         <AccordionSummaryStyled expandIcon={<ExpandMoreIcon />}>
           <AccordionSummaryContainerStyled>
             {isLoading ? (
-              <Skeleton animation="wave" width={100} height={20} />
+              <Skeleton animation="wave" width={100} height={20} data-testid={NOTIFICATION_CARD_LOADING_TEST_ID} />
             ) : (
-              <AccordingTitleStyled>{t(`settings.notifications.subscription_group_label_${subscriptionGroupKeys}`)}</AccordingTitleStyled>
+              <AccordingTitleStyled data-testid={NOTIFICATION_CARD_TITLE_TEST_ID}>
+                {t(`settings.notifications.subscription_group_label_${subscriptionGroupKeys}`)}
+              </AccordingTitleStyled>
             )}
             {isLoading ? (
               <Skeleton animation="wave" width={200} height={24} />
             ) : (
-              <AccordingDescriptionStyled>
+              <AccordingDescriptionStyled data-testid={NOTIFICATION_CARD_DESCRIPTION_TEST_ID}>
                 {t(`settings.notifications.subscription_group_description_${subscriptionGroupKeys}`)}
               </AccordingDescriptionStyled>
             )}
