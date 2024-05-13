@@ -96,6 +96,7 @@ function NotificationGroupCard(props: Props) {
                   onChange={(_, checked) => handleOnChangeNotificationSetting(checked, type)}
                   checked={subscriptionDetails.messageType[toCamel(type)].email}
                   disabled={isSavingSubscription}
+                  data-testid={NOTIFICATION_CARD_SWITCH_TEST_ID}
                 />
               )}
             </NotificationItemContainerStyled>
