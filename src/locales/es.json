@@ -207,11 +207,11 @@
         "rental_started": "LAND Alquilada",
         "rewards_assignment": "Artículo gratuito recibido",
         "royalties_earned": "Regalías obtenidas",
-        "worlds_missing_resources": "Advertencia de almacenamiento mundial insuficiente",
-        "worlds_access_restricted": "Acceso mundial restringido debido a almacenamiento insuficiente",
-        "worlds_access_restored": "Acceso mundial restaurado",
-        "worlds_permission_granted": "Permisos mundiales para visitar/implementar/transmitir concedidos",
-        "worlds_permission_revoked": "Permisos mundiales para visitar/implementar/transmitir revocados"
+        "worlds_missing_resources": "Advertencia de almacenamiento del World insuficiente",
+        "worlds_access_restricted": "Acceso al World restringido debido a almacenamiento insuficiente",
+        "worlds_access_restored": "Acceso al World restaurado",
+        "worlds_permission_granted": "Permisos al World para visitar/implementar/transmitir concedidos",
+        "worlds_permission_revoked": "Permisos al World para visitar/implementar/transmitir revocados"
       }
     }
   }

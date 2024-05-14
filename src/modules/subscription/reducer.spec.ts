@@ -1,6 +1,7 @@
 import { Subscription } from '@dcl/schemas'
 import { objectToCamel, objectToSnake } from 'ts-case-convert'
 import {
+  clearSaveSubscriptionError,
   getSubscriptionsFailure,
   getSubscriptionsRequest,
   getSubscriptionsSuccess,
@@ -121,6 +122,19 @@ describe('when reducing update of the subscription failure action', () => {
       ...state,
       loading: [],
       error: error
+    })
+  })
+})
+
+describe('when reducing update of the subscription error clear action', () => {
+  beforeEach(() => {
+    initialState = { ...state, error: 'some error' }
+  })
+
+  it('should return a state without the error', () => {
+    expect(subscriptionReducer(initialState, clearSaveSubscriptionError())).toEqual({
+      ...state,
+      error: null
     })
   })
 })
