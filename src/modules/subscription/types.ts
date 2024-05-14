@@ -1,4 +1,4 @@
-import { NotificationChannelType, NotificationType, SubscriptionDetails } from '@dcl/schemas'
+import { NotificationChannelType, NotificationType, Subscription, SubscriptionDetails } from '@dcl/schemas'
 import { LoadingState } from 'decentraland-dapps/dist/modules/loading/reducer'
 import { ObjectToCamel, ToCamel } from 'ts-case-convert/lib/caseConvert'
 
@@ -13,6 +13,7 @@ export type SubscriptionDetailsCamelCase = ObjectToCamel<SubscriptionDetails>
 export type SubscriptionState = {
   subscriptionDetails: SubscriptionDetailsCamelCase
   email: string
+  unconfirmedEmail?: string
   loading: LoadingState
   error: string | null
 }
@@ -26,4 +27,8 @@ export enum SubscriptionGroupKeys {
 
 export type SubscriptionGroups = {
   [subscriptionGroupKeys in SubscriptionGroupKeys]: NotificationType[]
+}
+
+export type SubscriptionFromClient = Subscription & {
+  unconfirmedEmail?: string
 }

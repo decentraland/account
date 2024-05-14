@@ -14,9 +14,21 @@ import {
   SAVE_SUBSCRIPTIONS_FAILURE,
   SAVE_SUBSCRIPTIONS_REQUEST,
   SAVE_SUBSCRIPTIONS_SUCCESS,
+  SAVE_SUBSCRIPTION_EMAIL_FAILURE,
+  SAVE_SUBSCRIPTION_EMAIL_REQUEST,
+  SAVE_SUBSCRIPTION_EMAIL_SUCCESS,
+  SaveSubscriptionEmailFailureAction,
+  SaveSubscriptionEmailRequestAction,
+  SaveSubscriptionEmailSuccessAction,
   SaveSubscriptionsFailureAction,
   SaveSubscriptionsRequestAction,
-  SaveSubscriptionsSuccessAction
+  SaveSubscriptionsSuccessAction,
+  VALIDATE_SUBSCRIPTION_EMAIL_FAILURE,
+  VALIDATE_SUBSCRIPTION_EMAIL_REQUEST,
+  VALIDATE_SUBSCRIPTION_EMAIL_SUCCESS,
+  ValidateSubscriptionEmailFailureAction,
+  ValidateSubscriptionEmailRequestAction,
+  ValidateSubscriptionEmailSuccessAction
 } from './actions'
 import { MessageTypeCamelCase, SubscriptionState } from './types'
 
@@ -44,11 +56,19 @@ type SubscriptionReducerAction =
   | SaveSubscriptionsSuccessAction
   | SaveSubscriptionsFailureAction
   | ClearSaveSubscriptionErrorAction
+  | SaveSubscriptionEmailRequestAction
+  | SaveSubscriptionEmailSuccessAction
+  | SaveSubscriptionEmailFailureAction
+  | ValidateSubscriptionEmailRequestAction
+  | ValidateSubscriptionEmailSuccessAction
+  | ValidateSubscriptionEmailFailureAction
 
 export function subscriptionReducer(state = buildInitialState(), action: SubscriptionReducerAction): SubscriptionState {
   switch (action.type) {
     case GET_SUBSCRIPTIONS_REQUEST:
-    case SAVE_SUBSCRIPTIONS_REQUEST: {
+    case SAVE_SUBSCRIPTIONS_REQUEST:
+    case SAVE_SUBSCRIPTION_EMAIL_REQUEST:
+    case VALIDATE_SUBSCRIPTION_EMAIL_REQUEST: {
       return {
         ...state,
         error: null,
@@ -57,12 +77,13 @@ export function subscriptionReducer(state = buildInitialState(), action: Subscri
     }
 
     case GET_SUBSCRIPTIONS_SUCCESS: {
-      const { details, email } = action.payload
+      const { details, email, unconfirmedEmail } = action.payload
       const newSubscriptionState = { ...state }
       newSubscriptionState.subscriptionDetails = objectToCamel(details)
       if (email) {
         newSubscriptionState.email = email
       }
+      newSubscriptionState.unconfirmedEmail = unconfirmedEmail
 
       return {
         ...newSubscriptionState,
@@ -80,8 +101,29 @@ export function subscriptionReducer(state = buildInitialState(), action: Subscri
       }
     }
 
+    case SAVE_SUBSCRIPTION_EMAIL_SUCCESS: {
+      const { email } = action.payload
+
+      return {
+        ...state,
+        unconfirmedEmail: email,
+        loading: loadingReducer(state.loading, action)
+      }
+    }
+    case VALIDATE_SUBSCRIPTION_EMAIL_SUCCESS: {
+      const newEmail = state.unconfirmedEmail!
+      return {
+        ...state,
+        email: newEmail,
+        unconfirmedEmail: undefined,
+        loading: loadingReducer(state.loading, action)
+      }
+    }
+
     case GET_SUBSCRIPTIONS_FAILURE:
-    case SAVE_SUBSCRIPTIONS_FAILURE: {
+    case SAVE_SUBSCRIPTIONS_FAILURE:
+    case SAVE_SUBSCRIPTION_EMAIL_FAILURE:
+    case VALIDATE_SUBSCRIPTION_EMAIL_FAILURE: {
       const { error } = action.payload
       return {
         ...state,
