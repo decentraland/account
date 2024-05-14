@@ -59,16 +59,6 @@ describe('when handling the request action to fetch the subscription', () => {
 })
 
 describe('when handling the request action to save the subscription', () => {
-  describe('and the notification API call is successful', () => {
-    it('should put a save subscription success action with the subscription', () => {
-      return expectSaga(subscriptionSagas, notificationsAPI)
-        .provide([[call([notificationsAPI, 'putSubscription'], subscriptionSettings.details), Promise.resolve(subscriptionSettings)]])
-        .put(saveSubscriptionsSuccess(subscriptionSettings.details))
-        .dispatch(saveSubscriptionsRequest(subscriptionSettings.details))
-        .silentRun()
-    })
-  })
-
   describe('and the notification API call fails', () => {
     let errorMessage: string
 
@@ -80,6 +70,16 @@ describe('when handling the request action to save the subscription', () => {
       return expectSaga(subscriptionSagas, notificationsAPI)
         .provide([[call([notificationsAPI, 'putSubscription'], subscriptionSettings.details), Promise.reject(new Error(errorMessage))]])
         .put(saveSubscriptionsFailure(errorMessage))
+        .dispatch(saveSubscriptionsRequest(subscriptionSettings.details))
+        .silentRun()
+    })
+  })
+
+  describe('and the notification API call is successful', () => {
+    it('should put a save subscription success action with the subscription', () => {
+      return expectSaga(subscriptionSagas, notificationsAPI)
+        .provide([[call([notificationsAPI, 'putSubscription'], subscriptionSettings.details), Promise.resolve(subscriptionSettings)]])
+        .put(saveSubscriptionsSuccess(subscriptionSettings.details))
         .dispatch(saveSubscriptionsRequest(subscriptionSettings.details))
         .silentRun()
     })

@@ -7,6 +7,8 @@ import ModalProvider from 'decentraland-dapps/dist/providers/ModalProvider'
 import ToastProvider from 'decentraland-dapps/dist/providers/ToastProvider'
 import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
 import WalletProvider from 'decentraland-dapps/dist/providers/WalletProvider'
+import { dark } from 'decentraland-ui2/dist/theme'
+import { ThemeProvider } from 'decentraland-ui2'
 import './modules/analytics/track'
 import './modules/analytics/sentry'
 import * as modals from './components/Modals'
@@ -24,15 +26,17 @@ import './index.css'
 const component = (
   <Provider store={store}>
     <TranslationProvider locales={Object.keys(locales)}>
-      <ToastProvider>
-        <WalletProvider>
-          <ModalProvider components={modals}>
-            <ConnectedRouter history={history}>
-              <Routes />
-            </ConnectedRouter>
-          </ModalProvider>
-        </WalletProvider>
-      </ToastProvider>
+      <ThemeProvider theme={dark}>
+        <ToastProvider>
+          <WalletProvider>
+            <ModalProvider components={modals}>
+              <ConnectedRouter history={history}>
+                <Routes />
+              </ConnectedRouter>
+            </ModalProvider>
+          </WalletProvider>
+        </ToastProvider>
+      </ThemeProvider>
     </TranslationProvider>
   </Provider>
 )

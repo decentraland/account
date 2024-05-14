@@ -174,5 +174,45 @@
       "title": "Meta transaction",
       "body": "There was an error sending the meta transaction.{br}Please try again or join our {discord_link} to get support."
     }
+  },
+  "settings": {
+    "notifications": {
+      "title": "Notifications",
+      "description": "In this section you can customize the type of Notifications you want to receive.",
+      "subscription_group_label_marketplace": "Marketplace",
+      "subscription_group_description_marketplace": "Get notifications about your purchases, prizes, sales, royalties, and rentals",
+      "subscription_group_label_events": "Events",
+      "subscription_group_description_events": "Get notifications about events you’ve RSVP’d to",
+      "subscription_group_label_dao": "DAO",
+      "subscription_group_description_dao": "Get notifications about DAO motions you’ve voted on, your proposal process, and more.",
+      "subscription_group_label_worlds": "Worlds",
+      "subscription_group_description_worlds": "Get notified if your World has insufficient storage or if you’re invited to visit/collaborate on a World",
+      "saving_settings_error": "Error saving notification settings",
+      "types": {
+        "bid_accepted": "Bid Accepted",
+        "bid_received": "Bid Received",
+        "events_started": "Event Started",
+        "events_starts_soon": "Event Starts Soon",
+        "governance_announcement": "New DAO Announcement",
+        "governance_authored_proposal_finished": "Voting Ended on Your Proposal",
+        "governance_coauthor_requested": "Request to Co-Author a Proposal Received",
+        "governance_new_comment_on_project_update": "New Comment on Your Project Update",
+        "governance_new_comment_on_proposal": "New Comment on Your Proposal",
+        "governance_proposal_enacted": "Proposal Enacted",
+        "governance_voting_ended_voter": "Voting Ended on a Proposal You Voted On",
+        "governance_pitch_passed": "Pitch That You Voted on Passed",
+        "governance_tender_passed": "Tender That You Voted on Passed",
+        "item_sold": "Item Sold",
+        "rental_ended": "LAND Rental Period Ended",
+        "rental_started": "LAND Rented",
+        "rewards_assignment": "Free Item Received",
+        "royalties_earned": "Royalties Earned",
+        "worlds_missing_resources": "Insufficient World Storage Warning",
+        "worlds_access_restricted": "World Access Restricted Due to Insufficient Storage",
+        "worlds_access_restored": "World Access Restored",
+        "worlds_permission_granted": "World Permissions to Visit/Deploy/Stream Granted",
+        "worlds_permission_revoked": "World Permissions to Visit/Deploy/Stream Revoked"
+      }
+    }
   }
 }

@@ -9,3 +9,10 @@ export const getIsAuthDappEnabled = (state: RootState) => {
   }
   return false
 }
+
+export const getIsSubscriptionEnabled = (state: RootState) => {
+  if (hasLoadedInitialFlags(state)) {
+    return getIsFeatureEnabled(state, ApplicationName.DAPPS, FeatureName.SUBSCRIPTION)
+  }
+  return false
+}

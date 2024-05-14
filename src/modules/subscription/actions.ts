@@ -29,3 +29,8 @@ export const saveSubscriptionsFailure = (error: string) => action(SAVE_SUBSCRIPT
 export type SaveSubscriptionsRequestAction = ReturnType<typeof saveSubscriptionsRequest>
 export type SaveSubscriptionsSuccessAction = ReturnType<typeof saveSubscriptionsSuccess>
 export type SaveSubscriptionsFailureAction = ReturnType<typeof saveSubscriptionsFailure>
+
+export const CLEAR_SUBSCRIPTIONS_ERROR = 'Clear Subscriptions Error'
+export const clearSaveSubscriptionError = () => action(CLEAR_SUBSCRIPTIONS_ERROR)
+
+export type ClearSaveSubscriptionErrorAction = ReturnType<typeof clearSaveSubscriptionError>

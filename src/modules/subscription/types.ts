@@ -18,14 +18,12 @@ export type SubscriptionState = {
 }
 
 export enum SubscriptionGroupKeys {
-  GENERAL = 'general',
-  BUYING = 'buying',
-  SELLING = 'selling',
-  RENTALS = 'rentals',
-  CREATORS = 'creators',
-  GOVERNANCE = 'governance'
+  MARKETPLACE = 'marketplace',
+  EVENTS = 'events',
+  DAO = 'dao',
+  WORLDS = 'worlds'
 }
 
 export type SubscriptionGroups = {
-  [subscriptionGroupKeys in ToCamel<SubscriptionGroupKeys>]: NotificationType[]
+  [subscriptionGroupKeys in SubscriptionGroupKeys]: NotificationType[]
 }

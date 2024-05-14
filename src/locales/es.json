@@ -174,5 +174,45 @@
       "title": "Meta transacción",
       "body": "Ocurrió un error publicando la meta transacción.{br}Intentelo de nuevo o ingrese a nuestro {discord_link} para obtener más información."
     }
+  },
+  "settings": {
+    "notifications": {
+      "title": "Notificaciones",
+      "description": "En esta sección puedes personalizar el tipo de Notificaciones que deseas recibir.",
+      "subscription_group_label_marketplace": "Marketplace",
+      "subscription_group_description_marketplace": "Recibe notificaciones sobre tus compras, premios, ventas, regalías y alquileres",
+      "subscription_group_label_events": "Eventos",
+      "subscription_group_description_events": "Recibe notificaciones sobre eventos a los que has confirmado tu asistencia",
+      "subscription_group_label_dao": "DAO",
+      "subscription_group_description_dao": "Recibe notificaciones sobre las mociones DAO por las que has votado, el proceso de tu propuesta y más.",
+      "subscription_group_label_worlds": "Worlds",
+      "subscription_group_description_worlds": "Recibe una notificación si tu mundo no tiene suficiente almacenamiento o si estás invitado a visitar/colaborar en un mundo",
+      "saving_settings_error": "Error al guardar la configuración de notificación",
+      "types": {
+        "bid_accepted": "Oferta aceptada",
+        "bid_received": "Oferta recibida",
+        "events_started": "Evento iniciado",
+        "events_starts_soon": "El evento comienza pronto",
+        "governance_announcement": "Anuncio de nuevo DAO",
+        "governance_authored_proposal_finished": "La votación finalizó para su propuesta",
+        "governance_coauthor_requested": "Solicitud de coautoría de una propuesta recibida",
+        "governance_new_comment_on_project_update": "Nuevo comentario sobre la actualización de su proyecto",
+        "governance_new_comment_on_proposal": "Nuevo comentario sobre su propuesta",
+        "governance_proposal_enacted": "Propuesta aprobada",
+        "governance_voting_ended_voter": "La votación finalizó en una propuesta por la que usted votó",
+        "governance_pitch_passed": "Propuesta por la que votaste aprobada",
+        "governance_tender_passed": "La licitación por la que usted votó fue aprobada",
+        "item_sold": "Artículo vendido",
+        "rental_ended": "Periodo de alquiler de la LAND finalizado",
+        "rental_started": "LAND Alquilada",
+        "rewards_assignment": "Artículo gratuito recibido",
+        "royalties_earned": "Regalías obtenidas",
+        "worlds_missing_resources": "Advertencia de almacenamiento del World insuficiente",
+        "worlds_access_restricted": "Acceso al World restringido debido a almacenamiento insuficiente",
+        "worlds_access_restored": "Acceso al World restaurado",
+        "worlds_permission_granted": "Permisos al World para visitar/implementar/transmitir concedidos",
+        "worlds_permission_revoked": "Permisos al World para visitar/implementar/transmitir revocados"
+      }
+    }
   }
 }
