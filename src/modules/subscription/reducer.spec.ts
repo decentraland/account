@@ -59,7 +59,7 @@ describe('when reducing the get subscription success action', () => {
     }
   })
   describe('and there is no email nor unconfirmedEmail', () => {
-    it('should return a state with the default subscription details set without the email and the loading state cleared', () => {
+    it('should return a state with the subscription details set without the email and the loading state cleared', () => {
       expect(subscriptionReducer(initialState, getSubscriptionsSuccess({ ...subscription, email: '' }))).toEqual({
         ...state,
         email: '',
@@ -70,7 +70,7 @@ describe('when reducing the get subscription success action', () => {
     })
   })
   describe('and there is an unconfirmedEmail pending', () => {
-    it('should return a state with the default subscription details set without the email and the loading state cleared', () => {
+    it('should return a state with the subscription details set with the unconfirmed email set and the loading state cleared', () => {
       expect(subscriptionReducer(initialState, getSubscriptionsSuccess({ ...subscription, email: '', unconfirmedEmail }))).toEqual({
         ...state,
         email: '',
@@ -83,7 +83,7 @@ describe('when reducing the get subscription success action', () => {
   })
 
   describe('and there is an email but no unconfirmedEmail', () => {
-    it('should return a state with the  subscription details set, the email set and the loading state cleared', () => {
+    it('should return a state with the subscription details set, the email set and the loading state cleared', () => {
       expect(subscriptionReducer(initialState, getSubscriptionsSuccess(subscription))).toEqual({
         ...state,
         email: subscription.email,
@@ -95,7 +95,7 @@ describe('when reducing the get subscription success action', () => {
   })
 
   describe('and there is an email and an unconfirmedEmail', () => {
-    it('should return a state with the  subscription details set, the email set and the loading state cleared', () => {
+    it('should return a state with the subscription details set, the email and the unconfirmed email set and the loading state cleared', () => {
       expect(subscriptionReducer(initialState, getSubscriptionsSuccess({ ...subscription, unconfirmedEmail }))).toEqual({
         ...state,
         email: subscription.email,
@@ -210,7 +210,7 @@ describe('when reducing the update of the email subscription success action', ()
     }
   })
 
-  it('should return a state with the details of subscription set and the loading state cleared', () => {
+  it('should return a state with the unconfirmed email set and the loading state cleared', () => {
     expect(subscriptionReducer(initialState, saveSubscriptionEmailSuccess(unconfirmedEmail))).toEqual({
       ...state,
       unconfirmedEmail: unconfirmedEmail,

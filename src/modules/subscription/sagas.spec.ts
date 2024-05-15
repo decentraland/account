@@ -112,7 +112,7 @@ describe('when handling the request action to save the subscription`s email', ()
   })
 
   describe('and the notification API call is successful', () => {
-    it('should put a save subscription success action with the subscription', () => {
+    it('should put a save subscription success action with the email', () => {
       return expectSaga(subscriptionSagas, notificationsAPI)
         .provide([[call([notificationsAPI, 'putEmail'], unconfirmedEmail), Promise.resolve(subscriptionSettings)]])
         .put(saveSubscriptionEmailSuccess(unconfirmedEmail))
@@ -146,7 +146,7 @@ describe('when handling the request action to validate the subscription`s email'
   })
 
   describe('and the notification API call is successful', () => {
-    it('should validate the subscription email success action and set the unconfirmedEmail as email', () => {
+    it('should put the validate the subscription email success action', () => {
       return expectSaga(subscriptionSagas, notificationsAPI)
         .provide([
           [
