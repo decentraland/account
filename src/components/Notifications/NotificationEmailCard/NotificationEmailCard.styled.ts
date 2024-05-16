@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Button as ButtonMui, Card as CardMui, TextField as TextFieldMui } from 'decentraland-ui2'
+import { Button as ButtonMui, Card as CardMui, Switch as SwitchMui, TextField as TextFieldMui } from 'decentraland-ui2'
 
 export const Card = styled(CardMui)({
   backgroundColor: '#331636',
@@ -10,8 +10,12 @@ export const Card = styled(CardMui)({
 
 export const TitleContainer = styled('div')({
   display: 'flex',
-  width: '100%'
+  width: '100%',
+  justifyContent: 'space-between',
+  alignItems: 'start'
 })
+
+export const Switch = styled(SwitchMui)({ marginTop: '-10px' })
 
 export const InputContainer = styled('div')({
   display: 'flex',
