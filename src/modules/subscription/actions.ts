@@ -60,8 +60,3 @@ export const validateSubscriptionEmailFailure = (error: string) => action(VALIDA
 export type ValidateSubscriptionEmailRequestAction = ReturnType<typeof validateSubscriptionEmailRequest>
 export type ValidateSubscriptionEmailSuccessAction = ReturnType<typeof validateSubscriptionEmailSuccess>
 export type ValidateSubscriptionEmailFailureAction = ReturnType<typeof validateSubscriptionEmailFailure>
-
-export const CLEAR_SUBSCRIPTION_MAIL_APPROVAL = 'Clear Subscriptions Mail Approval'
-export const clearSubscriptionMailApproval = () => action(CLEAR_SUBSCRIPTION_MAIL_APPROVAL)
-
-export type ClearSubscriptionMailApprovalAction = ReturnType<typeof clearSubscriptionMailApproval>
