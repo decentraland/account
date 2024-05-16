@@ -178,7 +178,7 @@
   "settings": {
     "notifications": {
       "title": "Notificaciones",
-      "description": "En esta sección puedes personalizar el tipo de Notificaciones que deseas recibir.",
+      "description": "¡No te pierdas ninguna notificación de Decentraland cuando estés AFK! Regístrate para recibir notificaciones por correo electrónico y elige cuáles deseas recibir a continuación.",
       "subscription_group_label_marketplace": "Marketplace",
       "subscription_group_description_marketplace": "Recibe notificaciones sobre tus compras, premios, ventas, regalías y alquileres",
       "subscription_group_label_events": "Eventos",
@@ -188,6 +188,22 @@
       "subscription_group_label_worlds": "Worlds",
       "subscription_group_description_worlds": "Recibe una notificación si tu mundo no tiene suficiente almacenamiento o si estás invitado a visitar/colaborar en un mundo",
       "saving_settings_error": "Error al guardar la configuración de notificación",
+      "email": {
+        "title": "Su dirección de correo electrónico",
+        "description": {
+          " without_email ": "Ingrese su correo electrónico, luego revise su bandeja de entrada para ver si hay un correo electrónico con el enlace de confirmación. Después de confirmar, podrá personalizar las notificaciones a continuación.",
+          "pending_approval": "Correo electrónico de confirmación enviado, revisa tu bandeja de entrada.",
+          "confirmed": "Tu correo electrónico ha sido confirmado.",
+          "with_email": "Si deseas actualizar tu dirección de correo electrónico, edítala a continuación. ¡Asegúrate de revisar el correo electrónico de confirmación en tu bandeja de entrada después!"
+        },
+        "placeholder": "ejemplo@decentraland.org",
+        "button_submit_label": "enviar",
+        "button_resend_label": "reenviar",
+        "button_edit_label": "editar",
+        "pending_approval": "pendiente de aprobación",
+        "confirmed": "confirmado",
+        "invalid_email": "Correo electrónico no válido"
+      },
       "types": {
         "bid_accepted": "Oferta aceptada",
         "bid_received": "Oferta recibida",

@@ -178,7 +178,7 @@
   "settings": {
     "notifications": {
       "title": "Notifications",
-      "description": "In this section you can customize the type of Notifications you want to receive.",
+      "description": "Don't miss any Decentraland notifications when you're AFK! Sign up to receive email notifications and pick & choose which ones you want to get below.",
       "subscription_group_label_marketplace": "Marketplace",
       "subscription_group_description_marketplace": "Get notifications about your purchases, prizes, sales, royalties, and rentals",
       "subscription_group_label_events": "Events",
@@ -188,6 +188,22 @@
       "subscription_group_label_worlds": "Worlds",
       "subscription_group_description_worlds": "Get notified if your World has insufficient storage or if you’re invited to visit/collaborate on a World",
       "saving_settings_error": "Error saving notification settings",
+      "email": {
+        "title": "Your Email Address",
+        "description": {
+          "without_email": "Enter your email, then check your inbox for an email with the confirmation link. After confirming, you will be able to customize the notifications below.",
+          "pending_approval": "Confirmation email sent, check your inbox.",
+          "confirmed": "Your email has been confirmed.",
+          "with_email": "If you'd like to update your email address, edit it below. Make sure to check for the confirmation email in your inbox afterwards!"
+        },
+        "placeholder": "example@decentraland.org",
+        "button_submit_label": "submit",
+        "button_resend_label": "resend",
+        "button_edit_label": "edit",
+        "pending_approval": "pending approval",
+        "confirmed": "confirmed",
+        "invalid_email": "Invalid email"
+      },
       "types": {
         "bid_accepted": "Bid Accepted",
         "bid_received": "Bid Received",

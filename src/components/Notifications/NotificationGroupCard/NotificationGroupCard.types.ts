@@ -7,9 +7,9 @@ export type Props = {
   subscriptionGroupKeys: SubscriptionGroupKeys
   notificationTypesInGroup: NotificationType[]
   subscriptionDetails: SubscriptionDetailsCamelCase
-  disabled?: boolean
   isLoading?: boolean
   isSavingSubscription?: boolean
+  hasEmail: boolean
   defaultExpanded?: boolean
   onChangeNotificationSetting: typeof saveSubscriptionsRequest
   onClearChangeNotificationSettingError: typeof clearSaveSubscriptionError
@@ -18,7 +18,7 @@ export type Props = {
 
 export type MapStateProps = Pick<
   Props,
-  'isLoading' | 'subscriptionGroupKeys' | 'notificationTypesInGroup' | 'subscriptionDetails' | 'isSavingSubscription' | 'error'
+  'isLoading' | 'subscriptionGroupKeys' | 'notificationTypesInGroup' | 'subscriptionDetails' | 'isSavingSubscription' | 'error' | 'hasEmail'
 >
 export type OwnProps = Pick<Props, 'isLoading' | 'subscriptionGroupKeys' | 'notificationTypesInGroup'>
 
