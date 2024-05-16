@@ -3,15 +3,14 @@ import { NotificationType } from '@dcl/schemas'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { objectToSnake, toCamel } from 'ts-case-convert'
-import { Alert, Skeleton, Snackbar, Switch } from 'decentraland-ui2'
+import { Alert, Snackbar, Switch } from 'decentraland-ui2'
 import NotificationIcon from '../../NotificationIcon'
+import { Description, Title } from '../../Typography'
 import {
   Accordion,
-  AccordionDescription,
   AccordionDetails,
   AccordionSummary,
   AccordionSummaryContainer,
-  AccordionTitle,
   NotificationItemContainer,
   NotificationItemText,
   NotificationItemTextIconContainer
@@ -31,8 +30,8 @@ function NotificationGroupCard(props: Props) {
     subscriptionGroupKeys,
     notificationTypesInGroup,
     defaultExpanded,
-    disabled,
     subscriptionDetails,
+    hasEmail,
     error,
     onChangeNotificationSetting,
     onClearChangeNotificationSettingError
@@ -60,40 +59,34 @@ function NotificationGroupCard(props: Props) {
       <Accordion defaultExpanded={defaultExpanded}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <AccordionSummaryContainer>
-            {isLoading ? (
-              <Skeleton animation="wave" width={100} height={20} data-testid={NOTIFICATION_CARD_LOADING_TEST_ID} />
-            ) : (
-              <AccordionTitle data-testid={NOTIFICATION_CARD_TITLE_TEST_ID}>
-                {t(`settings.notifications.subscription_group_label_${subscriptionGroupKeys}`)}
-              </AccordionTitle>
-            )}
-            {isLoading ? (
-              <Skeleton animation="wave" width={200} height={24} />
-            ) : (
-              <AccordionDescription data-testid={NOTIFICATION_CARD_DESCRIPTION_TEST_ID}>
-                {t(`settings.notifications.subscription_group_description_${subscriptionGroupKeys}`)}
-              </AccordionDescription>
-            )}
+            <Title variant="h6" data-testid={NOTIFICATION_CARD_TITLE_TEST_ID}>
+              {t(`settings.notifications.subscription_group_label_${subscriptionGroupKeys}`)}
+            </Title>
+            <Description data-testid={NOTIFICATION_CARD_DESCRIPTION_TEST_ID}>
+              {t(`settings.notifications.subscription_group_description_${subscriptionGroupKeys}`)}
+            </Description>
           </AccordionSummaryContainer>
         </AccordionSummary>
-        <AccordionDetails>
-          {notificationTypesInGroup.map(type => (
-            <NotificationItemContainer key={type}>
-              <NotificationItemTextIconContainer>
-                <NotificationIcon name={type} />
-                <NotificationItemText>{t(`settings.notifications.types.${type}`)}</NotificationItemText>
-              </NotificationItemTextIconContainer>
-              {!disabled && (
-                <Switch
-                  onChange={(_, checked) => handleOnChangeNotificationSetting(checked, type)}
-                  checked={subscriptionDetails.messageType[toCamel(type)].email}
-                  disabled={isSavingSubscription}
-                  data-testid={NOTIFICATION_CARD_SWITCH_TEST_ID}
-                />
-              )}
-            </NotificationItemContainer>
-          ))}
-        </AccordionDetails>
+        {!isLoading && (
+          <AccordionDetails data-testid={NOTIFICATION_CARD_LOADING_TEST_ID}>
+            {notificationTypesInGroup.map(type => (
+              <NotificationItemContainer key={type}>
+                <NotificationItemTextIconContainer>
+                  <NotificationIcon name={type} />
+                  <NotificationItemText>{t(`settings.notifications.types.${type}`)}</NotificationItemText>
+                </NotificationItemTextIconContainer>
+                {hasEmail && (
+                  <Switch
+                    onChange={(_, checked) => handleOnChangeNotificationSetting(checked, type)}
+                    checked={subscriptionDetails.messageType[toCamel(type)].email}
+                    disabled={isSavingSubscription}
+                    data-testid={NOTIFICATION_CARD_SWITCH_TEST_ID}
+                  />
+                )}
+              </NotificationItemContainer>
+            ))}
+          </AccordionDetails>
+        )}
       </Accordion>
       <Snackbar open={!!error} onClose={handleClose} autoHideDuration={5000} data-testid={NOTIFICATION_CARD_ERROR_TEST_ID}>
         <Alert severity="error" variant="filled">

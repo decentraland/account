@@ -24,24 +24,25 @@ const renderNotificationGroupCard = (props: Partial<Props>) =>
       onChangeNotificationSetting={() => undefined as any}
       onClearChangeNotificationSettingError={() => undefined as any}
       error={null}
+      hasEmail={true}
       {...props}
     />
   )
 
 describe('when the component is loading', () => {
-  it('should render the Skeleton component in it', () => {
-    const { getByTestId } = renderNotificationGroupCard({ isLoading: true })
-    expect(getByTestId(NOTIFICATION_CARD_LOADING_TEST_ID)).toBeInTheDocument()
+  it('should not render the AccordionDetails component in it', () => {
+    const { queryByTestId } = renderNotificationGroupCard({ isLoading: true })
+    expect(queryByTestId(NOTIFICATION_CARD_LOADING_TEST_ID)).toBe(null)
   })
 })
 
 describe('when the component has finished loading and is connected', () => {
-  it('should render the AccordingTitleStyled component in it', () => {
+  it('should render the Title component in it', () => {
     const { getByTestId } = renderNotificationGroupCard({})
     expect(getByTestId(NOTIFICATION_CARD_TITLE_TEST_ID)).toBeInTheDocument()
   })
 
-  it('should render the AccordingDescriptionStyled component in it', () => {
+  it('should render the Description component in it', () => {
     const { getByTestId } = renderNotificationGroupCard({})
     expect(getByTestId(NOTIFICATION_CARD_DESCRIPTION_TEST_ID)).toBeInTheDocument()
   })
@@ -77,9 +78,9 @@ describe('when the component has finished loading and is connected', () => {
     })
   })
 
-  describe('and the property disabled is set', () => {
+  describe('and has no email', () => {
     it('should not render the Switch component in it', () => {
-      const { queryByTestId } = renderNotificationGroupCard({ disabled: true })
+      const { queryByTestId } = renderNotificationGroupCard({ hasEmail: false })
       expect(queryByTestId(NOTIFICATION_CARD_SWITCH_TEST_ID)).toBeNull()
     })
   })

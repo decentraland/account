@@ -20,21 +20,6 @@ export const Accordion = styled(AccordionMui)({
   }
 })
 
-export const AccordionTitle = styled(Typography)({
-  color: '#FCFCFC',
-  fontSize: '16px',
-  lineHeight: '19.36px',
-  fontWeight: 600,
-  marginBottom: '8px'
-})
-
-export const AccordionDescription = styled(Typography)({
-  color: '#fcfcfc99',
-  fontSize: '12px',
-  lineHeight: '24px',
-  fontWeight: 500
-})
-
 export const AccordionSummary = styled(AccordionSummaryMui)({
   paddingLeft: '24px',
   paddingRight: '24px',
