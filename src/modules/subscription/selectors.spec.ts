@@ -9,7 +9,9 @@ import {
   getError,
   getSubscriptionByNotificationType,
   getSubscriptionDetails,
+  getUnconfirmedEmail,
   hasEmail,
+  hasUnconfirmedEmail,
   isIgnoringAllEmail,
   isIgnoringAllInApp,
   isLoadingSubscriptions
@@ -17,10 +19,11 @@ import {
 import { SubscriptionState } from './types'
 
 let subscription: SubscriptionState
-
+let unconfirmedEmail: string
 let state: RootState
 
 beforeEach(() => {
+  unconfirmedEmail = 'example@decentraland.org'
   subscription = buildInitialState()
   state = {
     subscription: subscription
@@ -124,5 +127,24 @@ describe('when selecting the subscription has failed', () => {
   })
   it('should return the error', () => {
     expect(getError(state)).toBe(state.subscription.error)
+  })
+})
+
+describe('when selecting the unconfirmedEmail', () => {
+  it('should return the unconfirmedEmail from the state', () => {
+    expect(getUnconfirmedEmail({ ...state, subscription: { ...state.subscription, unconfirmedEmail } })).toBe(unconfirmedEmail)
+  })
+})
+
+describe('when asking whether the state has an unconfirmedEmail', () => {
+  describe('and the state doesn`t have an unconfirmedEmail', () => {
+    it('should return false', () => {
+      expect(hasUnconfirmedEmail(state)).toBe(false)
+    })
+  })
+  describe('and the state has an unconfirmedEmail', () => {
+    it('should return true', () => {
+      expect(hasUnconfirmedEmail({ ...state, subscription: { ...state.subscription, unconfirmedEmail } })).toBe(true)
+    })
   })
 })

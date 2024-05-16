@@ -8,6 +8,8 @@ const getState = (state: RootState) => state.subscription
 export const getLoading = (state: RootState) => getState(state).loading
 export const getEmail = (state: RootState) => getState(state).email
 export const hasEmail = (state: RootState) => getEmail(state).length > 0
+export const getUnconfirmedEmail = (state: RootState) => getState(state).unconfirmedEmail
+export const hasUnconfirmedEmail = (state: RootState) => !!getState(state).unconfirmedEmail
 export const getSubscriptionDetails = (state: RootState) => getState(state).subscriptionDetails
 export const getError = (state: RootState) => getState(state).error
 export const isIgnoringAllEmail = (state: RootState) => getSubscriptionDetails(state).ignoreAllEmail

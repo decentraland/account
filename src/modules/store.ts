@@ -13,7 +13,6 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import { createLogger } from 'redux-logger'
 import createSagasMiddleware from 'redux-saga'
 import { config } from '../config'
-import { isTest } from '../lib/environment'
 import { SET_DEPOSIT_STATUS, SET_WITHDRAWAL_STATUS, WATCH_DEPOSIT_STATUS_SUCCESS, WATCH_WITHDRAWAL_STATUS_SUCCESS } from './mana/actions'
 import migrations from './migrations'
 import { createRootReducer } from './reducer'
@@ -27,7 +26,7 @@ const rootReducer = storageReducerWrapper(createRootReducer(history))
 const sagasMiddleware = createSagasMiddleware()
 const loggerMiddleware = createLogger({
   collapsed: () => true,
-  predicate: (_: any, action) => !isTest && (config.is(Env.DEVELOPMENT) || action.type.includes('Failure'))
+  predicate: (_: any, action) => config.is(Env.DEVELOPMENT) || action.type.includes('Failure')
 })
 
 const transactionMiddleware = createTransactionMiddleware()
