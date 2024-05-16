@@ -18,7 +18,6 @@ export const NOTIFICATION_EMAIL_CARD_BUTTON_LOADING_TEST_ID = 'notification-card
 function NotificationEmailCard(props: Props) {
   const {
     isLoading,
-    isSavingEmail,
     email: emailProp,
     unconfirmedEmail,
     isIgnoringAllEmail,
@@ -119,17 +118,8 @@ function NotificationEmailCard(props: Props) {
             disabled={isLoading}
             data-testid={NOTIFICATION_EMAIL_CARD_INPUT_TEST_ID}
           />
-          <Button
-            variant="contained"
-            onClick={handleSaveEmail}
-            disabled={isSavingEmail || isLoading}
-            data-testid={NOTIFICATION_EMAIL_CARD_BUTTON_TEST_ID}
-          >
-            {isSavingEmail || isLoading ? (
-              <CircularProgress size={20} data-testid={NOTIFICATION_EMAIL_CARD_BUTTON_LOADING_TEST_ID} />
-            ) : (
-              buttonText
-            )}
+          <Button variant="contained" onClick={handleSaveEmail} disabled={isLoading} data-testid={NOTIFICATION_EMAIL_CARD_BUTTON_TEST_ID}>
+            {isLoading ? <CircularProgress size={20} data-testid={NOTIFICATION_EMAIL_CARD_BUTTON_LOADING_TEST_ID} /> : buttonText}
           </Button>
         </InputContainer>
       </Card>

@@ -16,7 +16,6 @@ const renderNotificationEmailCard = (props: Partial<Props>) =>
   renderWithProviders(
     <NotificationEmailCard
       isLoading={false}
-      isSavingEmail={false}
       subscriptionDetails={buildInitialState().subscriptionDetails}
       onChangeEmail={() => undefined as any}
       onChangeNotificationSetting={() => undefined as any}
@@ -29,11 +28,11 @@ const renderNotificationEmailCard = (props: Partial<Props>) =>
   )
 
 describe('when the component is loading', () => {
-  it('should not render the TextField component in it with disabled prop', () => {
+  it('should render the TextField component in it with disabled prop', () => {
     const { getByTestId } = renderNotificationEmailCard({ isLoading: true })
     expect(getByTestId(NOTIFICATION_EMAIL_CARD_INPUT_TEST_ID).querySelector('input')).toBeDisabled()
   })
-  it('should not render the Button component in it with disabled prop and with a CircularProgress component in it', () => {
+  it('should render the Button component in it with disabled prop and with a CircularProgress component in it', () => {
     const { getByTestId } = renderNotificationEmailCard({ isLoading: true })
     expect(getByTestId(NOTIFICATION_EMAIL_CARD_BUTTON_TEST_ID)).toBeDisabled()
     expect(getByTestId(NOTIFICATION_EMAIL_CARD_BUTTON_TEST_ID)).toContainElement(
@@ -127,7 +126,7 @@ describe('when the component has finished loading', () => {
     })
   })
 
-  describe('and the email is has been approved', () => {
+  describe('and the email has been approved', () => {
     let email: string
     beforeEach(() => {
       email = 'example@decentraland.org'
@@ -140,13 +139,13 @@ describe('when the component has finished loading', () => {
       const { getByTestId } = renderNotificationEmailCard({ email })
       expect(getByTestId(NOTIFICATION_EMAIL_CARD_SWITCH_TEST_ID)).toBeInTheDocument()
     })
-    describe('and the user had configured to ignore all email notifications.', () => {
+    describe('and the user has configured to ignore all email notifications.', () => {
       it('should set the Switch component as unchecked', () => {
         const { getByTestId } = renderNotificationEmailCard({ email, isIgnoringAllEmail: true })
         expect(getByTestId(NOTIFICATION_EMAIL_CARD_SWITCH_TEST_ID).querySelector('input')).not.toBeChecked()
       })
     })
-    describe('and the user had configured to accept all email notifications.', () => {
+    describe('and the user has configured to accept all email notifications.', () => {
       it('should set the Switch component as checked', () => {
         const { getByTestId } = renderNotificationEmailCard({ email, isIgnoringAllEmail: false })
         console.log(getByTestId(NOTIFICATION_EMAIL_CARD_SWITCH_TEST_ID).querySelector('input'))

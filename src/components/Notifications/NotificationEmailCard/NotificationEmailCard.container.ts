@@ -22,8 +22,11 @@ import { MapDispatch, MapDispatchProps, MapStateProps, OwnProps } from './Notifi
 
 const mapStateToProps = (state: RootState, ownProps: OwnProps): MapStateProps => {
   return {
-    isLoading: ownProps.isLoading || isConnecting(state) || isLoadingType(getLoading(state), GET_SUBSCRIPTIONS_REQUEST),
-    isSavingEmail: isLoadingType(getLoading(state), VALIDATE_SUBSCRIPTION_EMAIL_REQUEST),
+    isLoading:
+      ownProps.isLoading ||
+      isConnecting(state) ||
+      isLoadingType(getLoading(state), GET_SUBSCRIPTIONS_REQUEST) ||
+      isLoadingType(getLoading(state), VALIDATE_SUBSCRIPTION_EMAIL_REQUEST),
     email: getEmail(state),
     unconfirmedEmail: getUnconfirmedEmail(state),
     error: getError(state),

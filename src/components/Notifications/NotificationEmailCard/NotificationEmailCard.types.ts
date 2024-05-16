@@ -6,7 +6,6 @@ export type Props = {
   email: string
   unconfirmedEmail?: string
   isLoading: boolean
-  isSavingEmail: boolean
   isIgnoringAllEmail: boolean
   hasConfirmEmail: boolean
   error: string | null
@@ -17,7 +16,7 @@ export type Props = {
 
 export type MapStateProps = Pick<
   Props,
-  'isLoading' | 'isSavingEmail' | 'email' | 'unconfirmedEmail' | 'error' | 'isIgnoringAllEmail' | 'subscriptionDetails' | 'hasConfirmEmail'
+  'isLoading' | 'email' | 'unconfirmedEmail' | 'error' | 'isIgnoringAllEmail' | 'subscriptionDetails' | 'hasConfirmEmail'
 >
 export type OwnProps = Pick<Props, 'isLoading' | 'hasConfirmEmail'>
 
