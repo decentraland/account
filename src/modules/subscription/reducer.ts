@@ -4,9 +4,7 @@ import { objectToCamel, toCamel } from 'ts-case-convert'
 import { ToCamel } from 'ts-case-convert/lib/caseConvert'
 import {
   CLEAR_SUBSCRIPTIONS_ERROR,
-  CLEAR_SUBSCRIPTION_MAIL_APPROVAL,
   ClearSaveSubscriptionErrorAction,
-  ClearSubscriptionMailApprovalAction,
   GET_SUBSCRIPTIONS_FAILURE,
   GET_SUBSCRIPTIONS_REQUEST,
   GET_SUBSCRIPTIONS_SUCCESS,
@@ -47,8 +45,7 @@ export const buildInitialState = (): SubscriptionState => ({
   },
   email: '',
   loading: [],
-  error: null,
-  hasApprovedEmail: false
+  error: null
 })
 
 type SubscriptionReducerAction =
@@ -65,7 +62,6 @@ type SubscriptionReducerAction =
   | ValidateSubscriptionEmailRequestAction
   | ValidateSubscriptionEmailSuccessAction
   | ValidateSubscriptionEmailFailureAction
-  | ClearSubscriptionMailApprovalAction
 
 export function subscriptionReducer(state = buildInitialState(), action: SubscriptionReducerAction): SubscriptionState {
   switch (action.type) {
@@ -120,7 +116,6 @@ export function subscriptionReducer(state = buildInitialState(), action: Subscri
         ...state,
         email: newEmail,
         unconfirmedEmail: undefined,
-        hasApprovedEmail: true,
         loading: loadingReducer(state.loading, action)
       }
     }
@@ -143,12 +138,7 @@ export function subscriptionReducer(state = buildInitialState(), action: Subscri
         error: null
       }
     }
-    case CLEAR_SUBSCRIPTION_MAIL_APPROVAL: {
-      return {
-        ...state,
-        hasApprovedEmail: false
-      }
-    }
+
     default: {
       return state
     }
