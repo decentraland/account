@@ -16,6 +16,7 @@ export type SubscriptionState = {
   unconfirmedEmail?: string
   loading: LoadingState
   error: string | null
+  hasApprovedEmail: boolean
 }
 
 export enum SubscriptionGroupKeys {

@@ -1,6 +1,7 @@
 import { objectToCamel, objectToSnake } from 'ts-case-convert'
 import {
   clearSaveSubscriptionError,
+  clearSubscriptionMailApproval,
   getSubscriptionsFailure,
   getSubscriptionsRequest,
   getSubscriptionsSuccess,
@@ -273,6 +274,7 @@ describe('when reducing the validation of the email subscription success action'
       ...state,
       email: unconfirmedEmail,
       unconfirmedEmail: undefined,
+      hasApprovedEmail: true,
       loading: [],
       error: null
     })
@@ -296,6 +298,19 @@ describe('when reducing the validation of the email subscription failure action'
       ...state,
       loading: [],
       error: error
+    })
+  })
+})
+
+describe('when reducing update of the subscription has approved email clear action', () => {
+  beforeEach(() => {
+    initialState = { ...state, hasApprovedEmail: true }
+  })
+
+  it('should return a state with the error set and the loading state cleared', () => {
+    expect(subscriptionReducer(initialState, clearSubscriptionMailApproval())).toEqual({
+      ...state,
+      hasApprovedEmail: false
     })
   })
 })
