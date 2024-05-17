@@ -1,6 +1,8 @@
+import { push } from 'connected-react-router'
 import { isErrorWithMessage } from 'decentraland-dapps/dist/lib/error'
 import { NotificationsAPI } from 'decentraland-dapps/dist/modules/notifications'
 import { call, put, takeEvery } from 'redux-saga/effects'
+import { locations } from '../locations'
 import {
   GET_SUBSCRIPTIONS_REQUEST,
   SAVE_SUBSCRIPTIONS_REQUEST,
@@ -58,6 +60,7 @@ export function* subscriptionSagas(notificationsAPI: NotificationsAPI) {
     try {
       yield call([notificationsAPI, 'postEmailConfirmationCode'], action.payload)
       yield put(validateSubscriptionEmailSuccess())
+      yield put(push(locations.root(), { hasConfirmEmail: true, defaultTab: 1 }))
     } catch (error) {
       yield put(validateSubscriptionEmailFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
     }

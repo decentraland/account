@@ -4,7 +4,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { objectToSnake, toCamel } from 'ts-case-convert'
 import { Alert, Snackbar, Switch } from 'decentraland-ui2'
-import NotificationIcon from '../../NotificationIcon'
 import { Description, Title } from '../../Typography'
 import {
   Accordion,
@@ -72,7 +71,6 @@ function NotificationGroupCard(props: Props) {
             {notificationTypesInGroup.map(type => (
               <NotificationItemContainer key={type}>
                 <NotificationItemTextIconContainer>
-                  <NotificationIcon name={type} />
                   <NotificationItemText>{t(`settings.notifications.types.${type}`)}</NotificationItemText>
                 </NotificationItemTextIconContainer>
                 {hasEmail && (

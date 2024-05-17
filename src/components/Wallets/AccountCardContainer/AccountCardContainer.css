@@ -4,3 +4,8 @@
   flex-wrap: wrap;
   padding-right: 50px;
 }
+@media (max-width: 991px) {
+  .AccountCardContainer {
+    padding-left: 50px;
+  }
+}

@@ -148,7 +148,6 @@ describe('when the component has finished loading', () => {
     describe('and the user has configured to accept all email notifications.', () => {
       it('should set the Switch component as checked', () => {
         const { getByTestId } = renderNotificationEmailCard({ email, isIgnoringAllEmail: false })
-        console.log(getByTestId(NOTIFICATION_EMAIL_CARD_SWITCH_TEST_ID).querySelector('input'))
         expect(getByTestId(NOTIFICATION_EMAIL_CARD_SWITCH_TEST_ID).querySelector('input')).toBeChecked()
       })
     })
