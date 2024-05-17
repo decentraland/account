@@ -16,8 +16,8 @@ const Routes = ({ isSubscriptionEnabled }: Props) => {
     <>
       <Switch>
         <Route path={locations.signIn()} component={SignInPage} />
+        <ProtectedRoute exact path={locations.confirmEmail()} component={ConfirmPage} />
         <ProtectedRoute path={locations.root()} component={!isSubscriptionEnabled ? HomePage : MainPage} />
-        <ProtectedRoute path={locations.confirmEmail()} component={ConfirmPage} />
         <Redirect to={locations.root()} />
       </Switch>
       {APP_ID ? <Intercom appId={APP_ID} settings={{ alignment: 'right' }} /> : null}

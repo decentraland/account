@@ -10,6 +10,4 @@ const mapState = (state: RootState): MapStateProps => ({
   isSubscriptionEnabled: !!getIsSubscriptionEnabled(state)
 })
 
-const mapDispatch = () => ({})
-
-export default connect(mapState, mapDispatch)(Routes)
+export default connect(mapState)(Routes)
