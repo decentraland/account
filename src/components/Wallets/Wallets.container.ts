@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import { getTransactionByNetwork, getWalletDeposits, getWalletWithdrawals } from '../../modules/mana/selectors'
 import { RootState } from '../../modules/reducer'
-import HomePage from './HomePage'
-import { MapDispatch, MapDispatchProps, MapStateProps } from './HomePage.types'
+import Wallets from './Wallets'
+import { MapDispatch, MapDispatchProps, MapStateProps } from './Wallets.types'
 
 const mapState = (state: RootState): MapStateProps => {
   return {
@@ -14,4 +14,4 @@ const mapState = (state: RootState): MapStateProps => {
 
 const mapDispatch = (_dispatch: MapDispatch): MapDispatchProps => ({})
 
-export default connect(mapState, mapDispatch)(HomePage)
+export default connect(mapState, mapDispatch)(Wallets)
