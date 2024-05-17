@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { validateSubscriptionEmailRequest } from 'modules/subscription/actions'
+import { ValidateSubscriptionEmailRequestAction, validateSubscriptionEmailRequest } from '../../modules/subscription/actions'
 
 export type Props = {
   onValidateSubscriptionEmailRequest: typeof validateSubscriptionEmailRequest
@@ -9,4 +9,4 @@ export type Props = {
 
 export type MapStateProps = Pick<Props, 'isLoading' | 'address'>
 export type MapDispatchProps = Pick<Props, 'onValidateSubscriptionEmailRequest'>
-export type MapDispatch = Dispatch
+export type MapDispatch = Dispatch<ValidateSubscriptionEmailRequestAction>
