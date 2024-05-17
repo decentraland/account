@@ -177,7 +177,7 @@
   },
   "settings": {
     "notifications": {
-      "title": "通知",
+      "title": "電子郵件通知",
       "description": "當您 AFK 時，不要錯過任何 Decentraland 通知！註冊接收電子郵件通知並在下面選擇您想要接收的通知。",
       "subscription_group_label_marketplace": "市場",
       "subscription_group_description_marketplace": "取得有關您的購買、獎品、銷售、版稅和租賃的通知",

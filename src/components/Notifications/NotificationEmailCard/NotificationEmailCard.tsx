@@ -7,13 +7,13 @@ import { Description, Title } from '../../Typography'
 import { Button, Card, InputContainer, SpanUnconfirmedEmail, Switch, TextField, TitleContainer } from './NotificationEmailCard.styled'
 import { Props } from './NotificationEmailCard.types'
 
-export const NOTIFICATION_EMAIL_CARD_TITLE_TEST_ID = 'notification-card-title-test-id'
-export const NOTIFICATION_EMAIL_CARD_DESCRIPTION_TEST_ID = 'notification-card-description-test-id'
-export const NOTIFICATION_EMAIL_CARD_UNCONFIRMED_TEST_ID = 'notification-card-unconfirmed-test-id'
-export const NOTIFICATION_EMAIL_CARD_SWITCH_TEST_ID = 'notification-card-switch-test-id'
-export const NOTIFICATION_EMAIL_CARD_INPUT_TEST_ID = 'notification-card-input-test-id'
-export const NOTIFICATION_EMAIL_CARD_BUTTON_TEST_ID = 'notification-card-button-test-id'
-export const NOTIFICATION_EMAIL_CARD_BUTTON_LOADING_TEST_ID = 'notification-card-button-loading-test-id'
+export const NOTIFICATION_EMAIL_CARD_TITLE_TEST_ID = 'notification-email-card-title-test-id'
+export const NOTIFICATION_EMAIL_CARD_DESCRIPTION_TEST_ID = 'notification-email-card-description-test-id'
+export const NOTIFICATION_EMAIL_CARD_UNCONFIRMED_TEST_ID = 'notification-email-card-unconfirmed-test-id'
+export const NOTIFICATION_EMAIL_CARD_SWITCH_TEST_ID = 'notification-email-card-switch-test-id'
+export const NOTIFICATION_EMAIL_CARD_INPUT_TEST_ID = 'notification-email-card-input-test-id'
+export const NOTIFICATION_EMAIL_CARD_BUTTON_TEST_ID = 'notification-email-card-button-test-id'
+export const NOTIFICATION_EMAIL_CARD_BUTTON_LOADING_TEST_ID = 'notification-email-card-button-loading-test-id'
 
 function NotificationEmailCard(props: Props) {
   const {

@@ -177,7 +177,7 @@
   },
   "settings": {
     "notifications": {
-      "title": "Notifications",
+      "title": "Email Notifications",
       "description": "Don't miss any Decentraland notifications when you're AFK! Sign up to receive email notifications and pick & choose which ones you want to get below.",
       "subscription_group_label_marketplace": "Marketplace",
       "subscription_group_description_marketplace": "Get notifications about your purchases, prizes, sales, royalties, and rentals",
