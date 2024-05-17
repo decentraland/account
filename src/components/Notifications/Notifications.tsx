@@ -13,7 +13,7 @@ export const NOTIFICATION_TITLE_TEST_ID = 'notification-title-test-id'
 export const NOTIFICATION_DESCRIPTION_TEST_ID = 'notification-description-test-id'
 
 export default function Notifications(props: Props) {
-  const { isLoading, onGetSubscription } = props
+  const { onGetSubscription } = props
 
   const { hasConfirmEmail } = useParams<{ hasConfirmEmail?: string }>()
 
@@ -33,14 +33,9 @@ export default function Notifications(props: Props) {
       </Header>
 
       <Wrapper>
-        <NotificationEmailCard hasConfirmEmail={!!hasConfirmEmail} isLoading={isLoading} />
+        <NotificationEmailCard hasConfirmEmail={!!hasConfirmEmail} />
         {Object.values(SubscriptionGroupKeys).map(key => (
-          <NotificationGroupCard
-            key={key}
-            isLoading={isLoading}
-            subscriptionGroupKeys={key}
-            notificationTypesInGroup={subscriptionGroups[key]}
-          />
+          <NotificationGroupCard key={key} subscriptionGroupKeys={key} notificationTypesInGroup={subscriptionGroups[key]} />
         ))}
       </Wrapper>
     </Container>
