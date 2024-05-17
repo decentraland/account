@@ -17,7 +17,7 @@ import * as locales from './locales'
 import { history, store } from './modules/store'
 
 // eslint-disable-next-line css-import-order/css-import-order
-import 'decentraland-ui/dist/themes/alternative/light-theme.css'
+import 'decentraland-ui/dist/themes/alternative/dark-theme.css'
 // eslint-disable-next-line css-import-order/css-import-order
 import './themes'
 // eslint-disable-next-line css-import-order/css-import-order
