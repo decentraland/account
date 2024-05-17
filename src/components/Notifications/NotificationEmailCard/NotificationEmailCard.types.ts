@@ -18,7 +18,7 @@ export type MapStateProps = Pick<
   Props,
   'isLoading' | 'email' | 'unconfirmedEmail' | 'error' | 'isIgnoringAllEmail' | 'subscriptionDetails' | 'hasConfirmEmail'
 >
-export type OwnProps = Pick<Props, 'isLoading' | 'hasConfirmEmail'>
+export type OwnProps = Pick<Props, 'hasConfirmEmail'>
 
 export type MapDispatch = Dispatch
 export type MapDispatchProps = Pick<Props, 'onChangeEmail' | 'onChangeNotificationSetting'>

@@ -5,7 +5,7 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import { Close } from 'decentraland-ui'
 import { Transaction } from '../../../modules/mana/types'
-import { AccountTransaction } from '../../HomePage/AccountCard/AccountTransactions/AccountTransaction'
+import { AccountTransaction } from '../../Wallets/AccountCard/AccountTransactions/AccountTransaction'
 
 import './SeeAllTransactionModal.css'
 

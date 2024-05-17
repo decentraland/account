@@ -1,0 +1,11 @@
+.Wallets .mana-logo {
+  width: 24px;
+  height: 28px;
+  background-image: url('../../images/mana-red-logo.svg');
+}
+
+.Wallets .matic-logo {
+  width: 24px;
+  height: 24px;
+  background-image: url('../../images/matic-logo.svg');
+}

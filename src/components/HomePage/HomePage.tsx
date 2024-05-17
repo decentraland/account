@@ -1,33 +1,17 @@
 import React from 'react'
-import { Network } from '@dcl/schemas'
 import { Page } from 'decentraland-ui'
-import { DepositStatus, WithdrawalStatus } from '../../modules/mana/types'
 import { Footer } from '../Footer'
 import { Navbar } from '../Navbar'
-import DepositTooltip from '../Tooltips/DepositTooltip'
-import WithdrawalTooltip from '../Tooltips/WithdrawalTooltip'
-import { AccountCard } from './AccountCard'
-import { AccountCardContainer } from './AccountCardContainer'
-import { Props } from './HomePage.types'
+import { Wallets } from '../Wallets'
 
 import './HomePage.css'
 
-const HomePage: React.FC<Props> = ({ withdrawals, deposits, transactionsByNetwork }) => {
-  const ethereumTransactions = transactionsByNetwork[Network.ETHEREUM]
-  const maticTransactions = transactionsByNetwork[Network.MATIC]
-
-  const isFirstWithdrawal = withdrawals.length === 1 && withdrawals[0].status === WithdrawalStatus.PENDING
-  const isFirstDeposits = deposits.length === 1 && deposits[0].status === DepositStatus.PENDING
-
+const HomePage: React.FC = () => {
   return (
     <>
       <Navbar />
       <Page className="HomePage">
-        <AccountCardContainer>
-          <AccountCard network={Network.ETHEREUM} title="Ethereum MANA" transactions={ethereumTransactions} />
-          <AccountCard network={Network.MATIC} title="Polygon MANA" transactions={maticTransactions} />
-        </AccountCardContainer>
-        {isFirstDeposits ? <DepositTooltip /> : isFirstWithdrawal ? <WithdrawalTooltip /> : null}
+        <Wallets />
       </Page>
       <Footer />
     </>

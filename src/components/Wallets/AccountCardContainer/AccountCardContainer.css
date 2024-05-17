@@ -1,4 +1,6 @@
 .AccountCardContainer {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  padding-right: 50px;
 }
