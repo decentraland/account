@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded'
 import MarkEmailUnreadRoundedIcon from '@mui/icons-material/MarkEmailUnreadRounded'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
@@ -10,9 +11,6 @@ import { Title } from '../Typography'
 import { Wallets } from '../Wallets'
 import { Box, PageContainer, Tab, TabPanelContainer, Tabs, TabsWrapper } from './MainPage.styled'
 import { Props } from './MainPage.types'
-
-// eslint-disable-next-line css-import-order/css-import-order
-import 'decentraland-ui/dist/themes/alternative/dark-theme.css'
 
 interface TabPanelProps {
   children: React.ReactNode
@@ -32,7 +30,8 @@ function TabPanel(props: TabPanelProps) {
 
 const MainPage: React.FC<Props> = props => {
   const { isLoading } = props
-  const [value, setValue] = useState(0)
+  const location = useLocation<{ defaultTab?: number }>()
+  const [value, setValue] = useState(location.state?.defaultTab ? location.state.defaultTab : 0)
   const isTabletOrBelow = useMediaQuery('(max-width:991px)')
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {

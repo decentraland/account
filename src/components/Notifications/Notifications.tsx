@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { useMediaQuery } from 'decentraland-ui2'
 import { SubscriptionGroupKeys } from '../../modules/subscription/types'
@@ -16,7 +16,7 @@ export const NOTIFICATION_DESCRIPTION_TEST_ID = 'notification-description-test-i
 export default function Notifications(props: Props) {
   const { onGetSubscription } = props
   const isTabletOrBelow = useMediaQuery('(max-width:991px)')
-  const { hasConfirmEmail } = useParams<{ hasConfirmEmail?: string }>()
+  const location = useLocation<{ hasConfirmEmail?: boolean }>()
 
   useEffect(() => {
     onGetSubscription()
@@ -36,7 +36,7 @@ export default function Notifications(props: Props) {
       )}
 
       <Wrapper>
-        <NotificationEmailCard hasConfirmEmail={!!hasConfirmEmail} />
+        <NotificationEmailCard hasConfirmEmail={!!location.state?.hasConfirmEmail} />
         {Object.values(SubscriptionGroupKeys).map(key => (
           <NotificationGroupCard key={key} subscriptionGroupKeys={key} notificationTypesInGroup={subscriptionGroups[key]} />
         ))}

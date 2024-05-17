@@ -3,12 +3,11 @@ import { isConnecting } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { RootState } from '../../modules/reducer'
 import { getSubscriptionsRequest } from '../../modules/subscription/actions'
 import HomePage from './MainPage'
-import { MapDispatch, MapDispatchProps, MapStateProps, OwnProps } from './MainPage.types'
+import { MapDispatch, MapDispatchProps, MapStateProps } from './MainPage.types'
 
-const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
+const mapState = (state: RootState): MapStateProps => {
   return {
-    isLoading: isConnecting(state),
-    defaultTab: ownProps.defaultTab
+    isLoading: isConnecting(state)
   }
 }
 

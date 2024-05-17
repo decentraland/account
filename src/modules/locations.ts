@@ -1,5 +1,7 @@
 export const locations = {
   root: () => '/',
   confirmEmail: () => '/confirm-email/:token',
-  signIn: () => '/sign-in'
+  signIn: (redirectTo?: string) => {
+    return `/sign-in${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`
+  }
 }
