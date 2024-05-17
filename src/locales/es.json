@@ -12,8 +12,7 @@
   "main_page": {
     "wallets": "Wallets",
     "email_notifications": "Notificaciones",
-    "title": "Configuración de la cuenta",
-    "description": "Administre la experiencia de su cuenta Decentraland en múltiples plataformas, reciba notificaciones por correo electrónico."
+    "title": "Configuración de la cuenta"
   },
   "account_header": {
     "actions": {

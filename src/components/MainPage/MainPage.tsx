@@ -6,7 +6,7 @@ import { Skeleton, useMediaQuery } from 'decentraland-ui2'
 import { Footer } from '../Footer'
 import { Navbar } from '../Navbar'
 import { Notifications } from '../Notifications'
-import { Description, Title } from '../Typography'
+import { Title } from '../Typography'
 import { Wallets } from '../Wallets'
 import { Box, PageContainer, Tab, TabPanelContainer, Tabs, TabsWrapper } from './MainPage.styled'
 import { Props } from './MainPage.types'
@@ -46,16 +46,6 @@ const MainPage: React.FC<Props> = props => {
       <Box>
         <TabsWrapper>
           {isLoading ? <Skeleton animation="wave" width={100} height={20} /> : <Title variant="h1">{t('main_page.title')}</Title>}
-
-          {isTabletOrBelow && (
-            <>
-              {isLoading ? (
-                <Skeleton animation="wave" width={200} height={24} />
-              ) : (
-                <Description variant="subtitle1">{t('main_page.description')}</Description>
-              )}
-            </>
-          )}
 
           <Tabs orientation={isTabletOrBelow ? 'horizontal' : 'vertical'} value={value} onChange={handleChange}>
             <Tab

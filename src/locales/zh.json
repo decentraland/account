@@ -11,8 +11,7 @@
   "main_page": {
     "wallets": "錢包",
     "email_notifications": "電子郵件通知",
-    "title": "帳戶設定",
-    "description": "跨多個平台管理您的 Decentraland 帳戶體驗，接收電子郵件通知。"
+    "title": "帳戶設定"
   },
   "account_header": {
     "actions": {

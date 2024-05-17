@@ -11,8 +11,7 @@
   "main_page": {
     "wallets": "Wallets",
     "email_notifications": "Email Notifications",
-    "title": "Account Settings",
-    "description": "Manage your Decentraland account experience across multiple platforms, Receive Email Notifications."
+    "title": "Account Settings"
   },
   "account_header": {
     "actions": {
