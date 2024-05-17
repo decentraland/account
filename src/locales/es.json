@@ -8,6 +8,13 @@
     "max": "Max",
     "fees_warning": "Recuerde, cualquier transacción que mueva activos dentro, hacia o desde la cadena de bloques Ethereum incurrirá en tarifas de gas. Solo las transacciones realizadas exclusivamente en Polygon son sin gas."
   },
+
+  "main_page": {
+    "wallets": "Wallets",
+    "email_notifications": "Notificaciones",
+    "title": "Configuración de la cuenta",
+    "description": "Administre la experiencia de su cuenta Decentraland en múltiples plataformas, reciba notificaciones por correo electrónico."
+  },
   "account_header": {
     "actions": {
       "change_alias": "Cambiar Alias",

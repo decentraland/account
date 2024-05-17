@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { useMediaQuery } from 'decentraland-ui2'
 import { SubscriptionGroupKeys } from '../../modules/subscription/types'
 import { subscriptionGroups } from '../../modules/subscription/utils'
 import { Description, Title } from '../Typography'
@@ -14,7 +15,7 @@ export const NOTIFICATION_DESCRIPTION_TEST_ID = 'notification-description-test-i
 
 export default function Notifications(props: Props) {
   const { onGetSubscription } = props
-
+  const isTabletOrBelow = useMediaQuery('(max-width:991px)')
   const { hasConfirmEmail } = useParams<{ hasConfirmEmail?: string }>()
 
   useEffect(() => {
@@ -23,14 +24,16 @@ export default function Notifications(props: Props) {
 
   return (
     <Container>
-      <Header>
-        <Title variant="h3" data-testid={NOTIFICATION_TITLE_TEST_ID}>
-          {t('settings.notifications.title')}
-        </Title>
-        <Description variant="subtitle1" data-testid={NOTIFICATION_DESCRIPTION_TEST_ID}>
-          {t('settings.notifications.description')}
-        </Description>
-      </Header>
+      {!isTabletOrBelow && (
+        <Header>
+          <Title variant="h3" data-testid={NOTIFICATION_TITLE_TEST_ID}>
+            {t('settings.notifications.title')}
+          </Title>
+          <Description variant="subtitle1" data-testid={NOTIFICATION_DESCRIPTION_TEST_ID}>
+            {t('settings.notifications.description')}
+          </Description>
+        </Header>
+      )}
 
       <Wrapper>
         <NotificationEmailCard hasConfirmEmail={!!hasConfirmEmail} />

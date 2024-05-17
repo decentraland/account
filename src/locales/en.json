@@ -8,6 +8,12 @@
     "max": "Max",
     "fees_warning": "Remember, any transaction that moves assets within, to, or from the Ethereum blockchain will incur gas fees. Only transactions conducted exclusively on Polygon are gas-less."
   },
+  "main_page": {
+    "wallets": "Wallets",
+    "email_notifications": "Email Notifications",
+    "title": "Account Settings",
+    "description": "Manage your Decentraland account experience across multiple platforms, Receive Email Notifications."
+  },
   "account_header": {
     "actions": {
       "change_alias": "Change Alias",

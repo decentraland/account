@@ -8,6 +8,12 @@
     "max": "最大",
     "fees_warning": "请记住，将资产移入以太坊区块链或从以太坊区块链移出的任何交易都将产生汽油费。 仅在Polygon上专门进行的交易是无耗油的"
   },
+  "main_page": {
+    "wallets": "錢包",
+    "email_notifications": "電子郵件通知",
+    "title": "帳戶設定",
+    "description": "跨多個平台管理您的 Decentraland 帳戶體驗，接收電子郵件通知。"
+  },
   "account_header": {
     "actions": {
       "change_alias": "更改别名",
