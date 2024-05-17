@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { isConnecting } from 'decentraland-dapps/dist/modules/wallet/selectors'
-import { getTransactionByNetwork, getWalletDeposits, getWalletWithdrawals } from '../../modules/mana/selectors'
 import { RootState } from '../../modules/reducer'
 import { getSubscriptionsRequest } from '../../modules/subscription/actions'
 import HomePage from './MainPage'
@@ -9,9 +8,6 @@ import { MapDispatch, MapDispatchProps, MapStateProps, OwnProps } from './MainPa
 const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
   return {
     isLoading: isConnecting(state),
-    transactionsByNetwork: getTransactionByNetwork(state),
-    withdrawals: getWalletWithdrawals(state),
-    deposits: getWalletDeposits(state),
     defaultTab: ownProps.defaultTab
   }
 }
