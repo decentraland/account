@@ -56,7 +56,7 @@ function NotificationEmailCard(props: Props) {
       if (!isLoading) {
         const subscriptionDetailsChanged = {
           ...subscriptionDetails,
-          isIgnoringAllEmail: !checked
+          ignoreAllEmail: !checked
         }
         onChangeNotificationSetting(objectToSnake(subscriptionDetailsChanged))
       }
