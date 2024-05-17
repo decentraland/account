@@ -12,6 +12,7 @@ import {
   VALIDATE_SUBSCRIPTION_EMAIL_REQUEST,
   ValidateSubscriptionEmailRequestAction,
   getSubscriptionsFailure,
+  getSubscriptionsRequest,
   getSubscriptionsSuccess,
   saveSubscriptionEmailFailure,
   saveSubscriptionEmailSuccess,
@@ -60,6 +61,7 @@ export function* subscriptionSagas(notificationsAPI: NotificationsAPI) {
     try {
       yield call([notificationsAPI, 'postEmailConfirmationCode'], action.payload)
       yield put(validateSubscriptionEmailSuccess())
+      yield put(getSubscriptionsRequest())
       yield put(push(locations.root(), { hasConfirmEmail: true, defaultTab: 1 }))
     } catch (error) {
       yield put(validateSubscriptionEmailFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
