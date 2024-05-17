@@ -271,7 +271,6 @@ describe('when reducing the validation of the email subscription success action'
   it('should return a state with the new email set, the unconfirmedEmail undefined and the loading state cleared', () => {
     expect(subscriptionReducer({ ...initialState, unconfirmedEmail }, validateSubscriptionEmailSuccess())).toEqual({
       ...state,
-      email: unconfirmedEmail,
       unconfirmedEmail: undefined,
       loading: [],
       error: null

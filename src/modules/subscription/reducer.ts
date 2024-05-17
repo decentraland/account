@@ -111,10 +111,8 @@ export function subscriptionReducer(state = buildInitialState(), action: Subscri
       }
     }
     case VALIDATE_SUBSCRIPTION_EMAIL_SUCCESS: {
-      const newEmail = state.unconfirmedEmail!
       return {
         ...state,
-        email: newEmail,
         unconfirmedEmail: undefined,
         loading: loadingReducer(state.loading, action)
       }

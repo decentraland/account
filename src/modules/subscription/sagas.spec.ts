@@ -154,6 +154,7 @@ describe('when handling the request action to validate the subscription`s email'
             Promise.resolve({ ...subscriptionSettings, address: unconfirmedEmail })
           ]
         ])
+        .put(getSubscriptionsRequest())
         .put(validateSubscriptionEmailSuccess())
         .dispatch(validateSubscriptionEmailRequest(validationBody))
         .silentRun()
