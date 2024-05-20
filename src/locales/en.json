@@ -226,7 +226,7 @@
         "item_sold": "Item Sold",
         "rental_ended": "LAND Rental Period Ended",
         "rental_started": "LAND Rented",
-        "rewards_assignment": "Free Item Received",
+        "reward_assignment": "Free Item Received",
         "royalties_earned": "Royalties Earned",
         "worlds_missing_resources": "Insufficient World Storage Warning",
         "worlds_access_restricted": "World Access Restricted Due to Insufficient Storage",

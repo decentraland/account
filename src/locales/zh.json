@@ -226,7 +226,7 @@
         "item_sold": "已售出物品",
         "rental_ending": "土地租賃期間結束",
         "rental_started": "土地已出租",
-        "rewards_assignment": "收到免費物品",
+        "reward_assignment": "收到免費物品",
         "royalties_earned": "獲得的版稅",
         "worlds_missing_resources": "世界儲存不足警告",
         "worlds_access_restricted": "由於儲存空間不足，世界存取受到限制",
