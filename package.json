@@ -3,7 +3,7 @@
   "version": "0.0.0-development",
   "type": "module",
   "dependencies": {
-    "@dcl/schemas": "^11.9.0",
+    "@dcl/schemas": "^11.9.1",
     "@dcl/single-sign-on-client": "^0.1.0",
     "@dcl/ui-env": "^1.4.1",
     "@ethersproject/abi": "^5.7.0",
