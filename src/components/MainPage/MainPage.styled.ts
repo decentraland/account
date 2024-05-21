@@ -14,12 +14,17 @@ export const PageContainer = styled('div')({
 export const Box = styled(BoxMui)({
   flexGrow: 1,
   display: 'flex',
-  '@media (max-width: 991px)': { flexDirection: 'column', alignItems: 'center' }
+  paddingBottom: '100px',
+  '@media (max-width: 1080px)': { paddingBottom: '260px' },
+  '@media (max-width: 991px)': { flexDirection: 'column', alignItems: 'center' },
+  '@media (max-width: 768px)': { paddingBottom: '400px' }
 })
 
 export const TabPanelContainer = styled('div')({
   marginTop: '8px',
   padding: 0,
+  marginLeft: 'auto',
+  marginRight: 'auto',
   '@media (max-width: 991px)': { padding: '0 16px' }
 })
 
@@ -52,4 +57,12 @@ export const Tab = styled(TabMui)({
     borderRadius: '8px',
     color: '#161518'
   }
+})
+
+export const FooterContainer = styled('div')({
+  borderTop: '1px solid #736e7d3d',
+  paddingTop: '16px',
+  position: 'absolute',
+  bottom: 0,
+  width: '100%'
 })

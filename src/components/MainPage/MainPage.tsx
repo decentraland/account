@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded'
 import MarkEmailUnreadRoundedIcon from '@mui/icons-material/MarkEmailUnreadRounded'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Skeleton, useMediaQuery } from 'decentraland-ui2'
+import { Alert, Skeleton, Snackbar, useMediaQuery } from 'decentraland-ui2'
 import { Footer } from '../Footer'
 import { Navbar } from '../Navbar'
 import { Notifications } from '../Notifications'
 import { Title } from '../Typography'
 import { Wallets } from '../Wallets'
-import { Box, PageContainer, Tab, TabPanelContainer, Tabs, TabsWrapper } from './MainPage.styled'
+import { Box, FooterContainer, PageContainer, Tab, TabPanelContainer, Tabs, TabsWrapper } from './MainPage.styled'
 import { Props } from './MainPage.types'
 
 interface TabPanelProps {
@@ -22,14 +22,14 @@ function TabPanel(props: TabPanelProps) {
   const { children, value, index } = props
 
   return (
-    <TabPanelContainer role="tabpanel" hidden={value !== index} id={`vertical-tabpanel-${index}`} aria-labelledby={`vertical-tab-${index}`}>
+    <TabPanelContainer role="tabpanel" hidden={value !== index}>
       {value === index && children}
     </TabPanelContainer>
   )
 }
 
 const MainPage: React.FC<Props> = props => {
-  const { isLoading } = props
+  const { isLoading, error, onClearChangeNotificationSettingError } = props
   const location = useLocation<{ defaultTab?: number }>()
   const [value, setValue] = useState(location.state?.defaultTab ? location.state.defaultTab : 0)
   const isTabletOrBelow = useMediaQuery('(max-width:991px)')
@@ -37,6 +37,10 @@ const MainPage: React.FC<Props> = props => {
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
   }
+
+  const handleClose = useCallback(() => {
+    onClearChangeNotificationSettingError()
+  }, [])
 
   return (
     <PageContainer>
@@ -67,8 +71,15 @@ const MainPage: React.FC<Props> = props => {
           <Notifications isLoading={false} />
         </TabPanel>
       </Box>
+      <FooterContainer>
+        <Footer isFullscreen isFullWidth />
+      </FooterContainer>
 
-      <Footer />
+      <Snackbar open={!!error} onClose={handleClose} autoHideDuration={5000}>
+        <Alert severity="error" variant="filled">
+          {error}
+        </Alert>
+      </Snackbar>
     </PageContainer>
   )
 }

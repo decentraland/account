@@ -68,7 +68,7 @@ export const SpanUnconfirmedEmail = styled('span')<{
   fontSize: '14px',
   lineHeight: '16.94px',
   marginLeft: '16px',
-  fontWeight: 400,
+  fontWeight: props.confirmed ? 400 : 600,
   color: props.confirmed ? '#36D41D' : '#FF9EB1',
   textTransform: 'uppercase'
 }))

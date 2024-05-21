@@ -7,7 +7,6 @@ import { subscriptionGroups } from '../../../modules/subscription/utils'
 import { renderWithProviders } from '../../../specs/utils'
 import NotificationGroupCard, {
   NOTIFICATION_CARD_DESCRIPTION_TEST_ID,
-  NOTIFICATION_CARD_ERROR_TEST_ID,
   NOTIFICATION_CARD_LOADING_TEST_ID,
   NOTIFICATION_CARD_SWITCH_TEST_ID,
   NOTIFICATION_CARD_TITLE_TEST_ID
@@ -22,9 +21,11 @@ const renderNotificationGroupCard = (props: Partial<Props>) =>
       notificationTypesInGroup={subscriptionGroups[SubscriptionGroupKeys.DAO]}
       subscriptionDetails={buildInitialState().subscriptionDetails}
       onChangeNotificationSetting={() => undefined as any}
-      onClearChangeNotificationSettingError={() => undefined as any}
-      error={null}
       hasEmail={true}
+      isIgnoringAllEmail={false}
+      isExpanded={false}
+      panelName="panel1"
+      onChangeAccordion={() => undefined as any}
       {...props}
     />
   )
@@ -83,12 +84,5 @@ describe('when the component has finished loading and is connected', () => {
       const { queryByTestId } = renderNotificationGroupCard({ hasEmail: false })
       expect(queryByTestId(NOTIFICATION_CARD_SWITCH_TEST_ID)).toBeNull()
     })
-  })
-})
-
-describe('when there is an error', () => {
-  it('should render the Snackbar component in it', () => {
-    const { getByTestId } = renderNotificationGroupCard({ error: 'some error' })
-    expect(getByTestId(NOTIFICATION_CARD_ERROR_TEST_ID)).toBeInTheDocument()
   })
 })
