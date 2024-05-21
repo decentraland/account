@@ -1,6 +1,6 @@
 import { NotificationType } from '@dcl/schemas'
 import { Dispatch } from 'redux'
-import { clearSaveSubscriptionError, saveSubscriptionsRequest } from '../../../modules/subscription/actions'
+import { saveSubscriptionsRequest } from '../../../modules/subscription/actions'
 import { SubscriptionDetailsCamelCase, SubscriptionGroupKeys } from '../../../modules/subscription/types'
 
 export type Props = {
@@ -11,16 +11,30 @@ export type Props = {
   isSavingSubscription?: boolean
   hasEmail: boolean
   defaultExpanded?: boolean
+  isIgnoringAllEmail: boolean
+  isExpanded: boolean
+  panelName: string
   onChangeNotificationSetting: typeof saveSubscriptionsRequest
-  onClearChangeNotificationSettingError: typeof clearSaveSubscriptionError
-  error: string | null
+  onChangeAccordion: (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => void
 }
 
 export type MapStateProps = Pick<
   Props,
-  'isLoading' | 'subscriptionGroupKeys' | 'notificationTypesInGroup' | 'subscriptionDetails' | 'isSavingSubscription' | 'error' | 'hasEmail'
+  | 'isLoading'
+  | 'subscriptionGroupKeys'
+  | 'notificationTypesInGroup'
+  | 'subscriptionDetails'
+  | 'isSavingSubscription'
+  | 'hasEmail'
+  | 'isIgnoringAllEmail'
+  | 'isExpanded'
+  | 'panelName'
+  | 'onChangeAccordion'
 >
-export type OwnProps = Pick<Props, 'isLoading' | 'subscriptionGroupKeys' | 'notificationTypesInGroup'>
+export type OwnProps = Pick<
+  Props,
+  'isLoading' | 'subscriptionGroupKeys' | 'notificationTypesInGroup' | 'onChangeAccordion' | 'isExpanded' | 'panelName'
+>
 
 export type MapDispatch = Dispatch
-export type MapDispatchProps = Pick<Props, 'onChangeNotificationSetting' | 'onClearChangeNotificationSettingError'>
+export type MapDispatchProps = Pick<Props, 'onChangeNotificationSetting'>

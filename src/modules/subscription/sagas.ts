@@ -64,6 +64,7 @@ export function* subscriptionSagas(notificationsAPI: NotificationsAPI) {
       yield put(getSubscriptionsRequest())
       yield put(push(locations.root(), { hasConfirmEmail: true, defaultTab: 1 }))
     } catch (error) {
+      yield put(push(locations.root()))
       yield put(validateSubscriptionEmailFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
     }
   }

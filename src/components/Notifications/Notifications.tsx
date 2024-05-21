@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { useMediaQuery } from 'decentraland-ui2'
@@ -17,6 +17,14 @@ export default function Notifications(props: Props) {
   const { onGetSubscription } = props
   const isTabletOrBelow = useMediaQuery('(max-width:991px)')
   const location = useLocation<{ hasConfirmEmail?: boolean }>()
+  const [expandedPanel, setExpandedPanel] = useState<string | false>(false)
+
+  const handleChange = useCallback(
+    (panel: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
+      setExpandedPanel(isExpanded ? panel : false)
+    },
+    []
+  )
 
   useEffect(() => {
     onGetSubscription()
@@ -38,7 +46,14 @@ export default function Notifications(props: Props) {
       <Wrapper>
         <NotificationEmailCard hasConfirmEmail={!!location.state?.hasConfirmEmail} />
         {Object.values(SubscriptionGroupKeys).map(key => (
-          <NotificationGroupCard key={key} subscriptionGroupKeys={key} notificationTypesInGroup={subscriptionGroups[key]} />
+          <NotificationGroupCard
+            key={key}
+            subscriptionGroupKeys={key}
+            notificationTypesInGroup={subscriptionGroups[key]}
+            onChangeAccordion={handleChange}
+            isExpanded={expandedPanel === key.toString()}
+            panelName={key.toString()}
+          />
         ))}
       </Wrapper>
     </Container>
