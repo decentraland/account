@@ -23,8 +23,9 @@ export const Box = styled(BoxMui)({
 export const TabPanelContainer = styled('div')({
   marginTop: '8px',
   padding: 0,
-  marginLeft: 'auto',
-  marginRight: 'auto',
+  marginLeft: '200px',
+  '@media (max-width: 1400px)': { marginLeft: '100px' },
+  '@media (max-width: 1200px)': { marginLeft: 'auto', marginRight: 'auto' },
   '@media (max-width: 991px)': { padding: '0 16px' }
 })
 

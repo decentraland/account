@@ -17,6 +17,9 @@ export const Accordion = styled(AccordionMui)({
   '&.Mui-expanded': {
     marginTop: '8px',
     marginBottom: '8px'
+  },
+  '&::before': {
+    display: 'none'
   }
 })
 
@@ -32,9 +35,6 @@ export const AccordionSummary = styled(AccordionSummaryMui)({
   },
   '.MuiAccordionSummary-content': {
     margin: '0'
-  },
-  '&.MuiAccordionSummary-root::before': {
-    display: 'none'
   }
 })
 
