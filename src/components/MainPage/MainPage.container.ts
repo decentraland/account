@@ -9,7 +9,7 @@ import { MapDispatch, MapDispatchProps, MapStateProps } from './MainPage.types'
 const mapState = (state: RootState): MapStateProps => {
   return {
     isLoading: isConnecting(state),
-    error: getError(state)
+    notificationSettingError: getError(state)
   }
 }
 

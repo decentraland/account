@@ -8,11 +8,11 @@ import {
 
 export type Props = {
   isLoading: boolean
-  error: string | null
+  notificationSettingError: string | null
   onGetNotificationSetting: typeof getSubscriptionsRequest
   onClearChangeNotificationSettingError: typeof clearSaveSubscriptionError
 }
 
-export type MapStateProps = Pick<Props, 'isLoading' | 'error'>
+export type MapStateProps = Pick<Props, 'isLoading' | 'notificationSettingError'>
 export type MapDispatchProps = Pick<Props, 'onGetNotificationSetting' | 'onClearChangeNotificationSettingError'>
 export type MapDispatch = Dispatch<GetSubscriptionsRequestAction | ClearSaveSubscriptionErrorAction>

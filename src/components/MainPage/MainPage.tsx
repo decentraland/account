@@ -29,7 +29,7 @@ function TabPanel(props: TabPanelProps) {
 }
 
 const MainPage: React.FC<Props> = props => {
-  const { isLoading, error, onClearChangeNotificationSettingError } = props
+  const { isLoading, notificationSettingError, onClearChangeNotificationSettingError } = props
   const location = useLocation<{ defaultTab?: number }>()
   const [value, setValue] = useState(location.state?.defaultTab ? location.state.defaultTab : 0)
   const isTabletOrBelow = useMediaQuery('(max-width:991px)')
@@ -75,9 +75,9 @@ const MainPage: React.FC<Props> = props => {
         <Footer isFullscreen isFullWidth />
       </FooterContainer>
 
-      <Snackbar open={!!error} onClose={handleClose} autoHideDuration={5000}>
+      <Snackbar open={!!notificationSettingError} onClose={handleClose} autoHideDuration={5000}>
         <Alert severity="error" variant="filled">
-          {error}
+          {notificationSettingError}
         </Alert>
       </Snackbar>
     </PageContainer>
