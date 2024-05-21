@@ -20,7 +20,7 @@ export default function Notifications(props: Props) {
   const [expandedPanel, setExpandedPanel] = useState<string | false>(false)
 
   const handleChange = useCallback(
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    (panel: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpandedPanel(isExpanded ? panel : false)
     },
     []
