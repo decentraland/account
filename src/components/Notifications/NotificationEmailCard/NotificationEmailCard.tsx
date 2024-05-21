@@ -118,7 +118,12 @@ function NotificationEmailCard(props: Props) {
             disabled={isLoading}
             data-testid={NOTIFICATION_EMAIL_CARD_INPUT_TEST_ID}
           />
-          <Button variant="contained" onClick={handleSaveEmail} disabled={isLoading} data-testid={NOTIFICATION_EMAIL_CARD_BUTTON_TEST_ID}>
+          <Button
+            variant="contained"
+            onClick={handleSaveEmail}
+            disabled={isLoading || email === emailProp}
+            data-testid={NOTIFICATION_EMAIL_CARD_BUTTON_TEST_ID}
+          >
             {isLoading ? <CircularProgress size={20} data-testid={NOTIFICATION_EMAIL_CARD_BUTTON_LOADING_TEST_ID} /> : buttonText}
           </Button>
         </InputContainer>
