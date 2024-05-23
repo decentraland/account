@@ -103,10 +103,13 @@ export function subscriptionReducer(state = buildInitialState(), action: Subscri
 
     case SAVE_SUBSCRIPTION_EMAIL_SUCCESS: {
       const { email } = action.payload
-
+      let unconfirmedEmail: string | undefined = email
+      if (state.email === email) {
+        unconfirmedEmail = undefined
+      }
       return {
         ...state,
-        unconfirmedEmail: email,
+        unconfirmedEmail,
         loading: loadingReducer(state.loading, action)
       }
     }

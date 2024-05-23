@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Email } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { objectToSnake } from 'ts-case-convert'
@@ -28,6 +29,7 @@ function NotificationEmailCard(props: Props) {
   } = props
   const [isValidEmail, setIsValidEmail] = useState(true)
   const [email, setEmail] = useState(unconfirmedEmail || emailProp)
+  const history = useHistory()
 
   useEffect(() => {
     if (unconfirmedEmail || emailProp) {
@@ -47,6 +49,7 @@ function NotificationEmailCard(props: Props) {
   const handleOnChangeEmail = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setEmail(event.target.value)
+      history.replace({ state: {} })
     },
     [setEmail]
   )
@@ -78,11 +81,11 @@ function NotificationEmailCard(props: Props) {
   const buttonText = useMemo(() => {
     if (!emailProp && !unconfirmedEmail && !hasConfirmEmail) {
       return t('settings.notifications.email.button_submit_label')
-    } else if (unconfirmedEmail) {
+    } else if (unconfirmedEmail && unconfirmedEmail === email) {
       return t('settings.notifications.email.button_resend_label')
     }
     return t('settings.notifications.email.button_edit_label')
-  }, [emailProp, unconfirmedEmail, hasConfirmEmail])
+  }, [emailProp, unconfirmedEmail, hasConfirmEmail, email])
 
   return (
     <>
@@ -91,9 +94,15 @@ function NotificationEmailCard(props: Props) {
           <Title variant="h6" data-testid={NOTIFICATION_EMAIL_CARD_TITLE_TEST_ID}>
             {t('settings.notifications.email.title')}
 
-            {(unconfirmedEmail || hasConfirmEmail) && (
-              <SpanUnconfirmedEmail confirmed={hasConfirmEmail} data-testid={NOTIFICATION_EMAIL_CARD_UNCONFIRMED_TEST_ID}>
-                {hasConfirmEmail ? t('settings.notifications.email.confirmed') : t('settings.notifications.email.pending_approval')}
+            {unconfirmedEmail && !hasConfirmEmail && (
+              <SpanUnconfirmedEmail data-testid={NOTIFICATION_EMAIL_CARD_UNCONFIRMED_TEST_ID}>
+                {t('settings.notifications.email.pending_approval')}
+              </SpanUnconfirmedEmail>
+            )}
+
+            {hasConfirmEmail && !unconfirmedEmail && (
+              <SpanUnconfirmedEmail confirmed data-testid={NOTIFICATION_EMAIL_CARD_UNCONFIRMED_TEST_ID}>
+                {t('settings.notifications.email.confirmed')}
               </SpanUnconfirmedEmail>
             )}
           </Title>
@@ -121,7 +130,7 @@ function NotificationEmailCard(props: Props) {
           <Button
             variant="contained"
             onClick={handleSaveEmail}
-            disabled={isLoading || email === emailProp}
+            disabled={isLoading || (email === emailProp && !unconfirmedEmail)}
             data-testid={NOTIFICATION_EMAIL_CARD_BUTTON_TEST_ID}
           >
             {isLoading ? <CircularProgress size={20} data-testid={NOTIFICATION_EMAIL_CARD_BUTTON_LOADING_TEST_ID} /> : buttonText}
