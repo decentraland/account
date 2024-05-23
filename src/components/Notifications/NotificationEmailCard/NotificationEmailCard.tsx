@@ -94,15 +94,12 @@ function NotificationEmailCard(props: Props) {
           <Title variant="h6" data-testid={NOTIFICATION_EMAIL_CARD_TITLE_TEST_ID}>
             {t('settings.notifications.email.title')}
 
-            {unconfirmedEmail && !hasConfirmEmail && (
-              <SpanUnconfirmedEmail data-testid={NOTIFICATION_EMAIL_CARD_UNCONFIRMED_TEST_ID}>
-                {t('settings.notifications.email.pending_approval')}
-              </SpanUnconfirmedEmail>
-            )}
-
-            {hasConfirmEmail && !unconfirmedEmail && (
-              <SpanUnconfirmedEmail confirmed data-testid={NOTIFICATION_EMAIL_CARD_UNCONFIRMED_TEST_ID}>
-                {t('settings.notifications.email.confirmed')}
+            {(hasConfirmEmail || unconfirmedEmail) && (
+              <SpanUnconfirmedEmail
+                confirmed={hasConfirmEmail && !unconfirmedEmail}
+                data-testid={NOTIFICATION_EMAIL_CARD_UNCONFIRMED_TEST_ID}
+              >
+                {hasConfirmEmail ? t('settings.notifications.email.confirmed') : t('settings.notifications.email.pending_approval')}
               </SpanUnconfirmedEmail>
             )}
           </Title>
