@@ -24,7 +24,9 @@ export const subscriptionGroups: SubscriptionGroups = {
   [SubscriptionGroupKeys.WORLDS]: [
     NotificationType.WORLDS_ACCESS_RESTORED,
     NotificationType.WORLDS_ACCESS_RESTRICTED,
-    NotificationType.WORLDS_MISSING_RESOURCES
+    NotificationType.WORLDS_MISSING_RESOURCES,
+    NotificationType.WORLDS_PERMISSION_GRANTED,
+    NotificationType.WORLDS_PERMISSION_REVOKED
   ]
 }
 
