@@ -218,6 +218,25 @@ describe('when reducing the update of the email subscription success action', ()
       error: null
     })
   })
+
+  describe('and there is an unconfirmed email and the user set to confirm the same email and the already validated before', () => {
+    beforeEach(() => {
+      state = {
+        ...state,
+        email: subscription.email!,
+        unconfirmedEmail,
+        loading: [saveSubscriptionEmailRequest(unconfirmedEmail)]
+      }
+    })
+    it('should return a state with the unconfirmed email undefined and the loading state cleared', () => {
+      expect(subscriptionReducer(state, saveSubscriptionEmailSuccess(state.email))).toEqual({
+        ...state,
+        unconfirmedEmail: undefined,
+        loading: [],
+        error: null
+      })
+    })
+  })
 })
 
 describe('when reducing update of the email subscription failure action', () => {
