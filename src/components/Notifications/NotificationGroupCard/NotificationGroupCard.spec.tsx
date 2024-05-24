@@ -22,7 +22,6 @@ const renderNotificationGroupCard = (props: Partial<Props>) =>
       subscriptionDetails={buildInitialState().subscriptionDetails}
       onChangeNotificationSetting={() => undefined as any}
       hasEmail={true}
-      isIgnoringAllEmail={false}
       isExpanded={false}
       panelName="panel1"
       onChangeAccordion={() => undefined as any}
