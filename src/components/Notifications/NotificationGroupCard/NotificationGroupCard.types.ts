@@ -11,7 +11,6 @@ export type Props = {
   isSavingSubscription?: boolean
   hasEmail: boolean
   defaultExpanded?: boolean
-  isIgnoringAllEmail: boolean
   isExpanded: boolean
   panelName: string
   onChangeNotificationSetting: typeof saveSubscriptionsRequest
@@ -26,7 +25,6 @@ export type MapStateProps = Pick<
   | 'subscriptionDetails'
   | 'isSavingSubscription'
   | 'hasEmail'
-  | 'isIgnoringAllEmail'
   | 'isExpanded'
   | 'panelName'
   | 'onChangeAccordion'

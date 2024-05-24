@@ -4,7 +4,7 @@ import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors
 import { isConnecting } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { RootState } from '../../../modules/reducer'
 import { SAVE_SUBSCRIPTIONS_REQUEST, saveSubscriptionsRequest } from '../../../modules/subscription/actions'
-import { getLoading, getSubscriptionDetails, hasEmail, isIgnoringAllEmail } from '../../../modules/subscription/selectors'
+import { getLoading, getSubscriptionDetails, hasEmail } from '../../../modules/subscription/selectors'
 import NotificationGroupCard from './NotificationGroupCard'
 import { MapDispatch, MapDispatchProps, MapStateProps, OwnProps } from './NotificationGroupCard.types'
 
@@ -16,7 +16,6 @@ const mapStateToProps = (state: RootState, ownProps: OwnProps): MapStateProps =>
     notificationTypesInGroup: ownProps.notificationTypesInGroup,
     subscriptionDetails: getSubscriptionDetails(state),
     hasEmail: hasEmail(state),
-    isIgnoringAllEmail: isIgnoringAllEmail(state),
     onChangeAccordion: ownProps.onChangeAccordion,
     isExpanded: ownProps.isExpanded,
     panelName: ownProps.panelName
