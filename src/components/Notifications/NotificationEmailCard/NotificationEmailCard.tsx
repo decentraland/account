@@ -4,6 +4,7 @@ import { Email } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { objectToSnake } from 'ts-case-convert'
 import { CircularProgress } from 'decentraland-ui2'
+import { MessageTypeCamelCase } from 'modules/subscription/types'
 import { Description, Title } from '../../Typography'
 import { Button, Card, InputContainer, SpanUnconfirmedEmail, Switch, TextField, TitleContainer } from './NotificationEmailCard.styled'
 import { Props } from './NotificationEmailCard.types'
@@ -57,9 +58,15 @@ function NotificationEmailCard(props: Props) {
   const handleOnChangeNotificationSetting = useCallback(
     (_: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
       if (!isLoading) {
+        const messageType = { ...subscriptionDetails.messageType }
+        Object.keys(messageType).forEach(key => {
+          messageType[key as keyof MessageTypeCamelCase].email = checked
+        })
+
         const subscriptionDetailsChanged = {
           ...subscriptionDetails,
-          ignoreAllEmail: !checked
+          ignoreAllEmail: !checked,
+          messageType
         }
         onChangeNotificationSetting(objectToSnake(subscriptionDetailsChanged))
       }

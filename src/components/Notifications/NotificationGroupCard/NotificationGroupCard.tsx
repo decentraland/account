@@ -30,7 +30,6 @@ function NotificationGroupCard(props: Props) {
     defaultExpanded,
     subscriptionDetails,
     hasEmail,
-    isIgnoringAllEmail,
     isExpanded,
     panelName,
     onChangeAccordion,
@@ -42,6 +41,7 @@ function NotificationGroupCard(props: Props) {
       if (!isLoading) {
         const subscriptionDetailsChanged = {
           ...subscriptionDetails,
+          ignoreAllEmail: false,
           messageType: { ...subscriptionDetails.messageType, [toCamel(type)]: { inApp: true, email: checked } }
         }
         onChangeNotificationSetting(objectToSnake(subscriptionDetailsChanged))
@@ -73,7 +73,7 @@ function NotificationGroupCard(props: Props) {
                 <Switch
                   onChange={(_, checked) => handleOnChangeNotificationSetting(checked, type)}
                   checked={subscriptionDetails.messageType[toCamel(type)].email}
-                  disabled={isSavingSubscription || isIgnoringAllEmail}
+                  disabled={isSavingSubscription}
                   data-testid={NOTIFICATION_CARD_SWITCH_TEST_ID}
                 />
               )}
