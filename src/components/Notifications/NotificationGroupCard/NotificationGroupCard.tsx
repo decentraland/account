@@ -39,9 +39,17 @@ function NotificationGroupCard(props: Props) {
   const handleOnChangeNotificationSetting = useCallback(
     (checked: boolean, type: NotificationType) => {
       if (!isLoading) {
+        let ignoreAllEmail = false
+        const messageType = { ...subscriptionDetails.messageType, [toCamel(type)]: { inApp: true, email: checked } }
+        const allEmailsDisabled = Object.values(messageType).every(({ email }) => !email)
+
+        if (allEmailsDisabled) {
+          ignoreAllEmail = true
+        }
+
         const subscriptionDetailsChanged = {
           ...subscriptionDetails,
-          ignoreAllEmail: false,
+          ignoreAllEmail,
           messageType: { ...subscriptionDetails.messageType, [toCamel(type)]: { inApp: true, email: checked } }
         }
         onChangeNotificationSetting(objectToSnake(subscriptionDetailsChanged))
