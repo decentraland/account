@@ -97,9 +97,9 @@ describe('when the component has finished loading', () => {
       )
     })
 
-    it(`should render the Button component with the label ${t('settings.notifications.email.button_edit_label')}`, () => {
+    it(`should render the Button component with the label ${t('settings.notifications.email.button_save_label')}`, () => {
       const { getByTestId } = renderNotificationEmailCard({ email })
-      expect(getByTestId(NOTIFICATION_EMAIL_CARD_BUTTON_TEST_ID).textContent).toBe(t('settings.notifications.email.button_edit_label'))
+      expect(getByTestId(NOTIFICATION_EMAIL_CARD_BUTTON_TEST_ID).textContent).toBe(t('settings.notifications.email.button_save_label'))
     })
   })
 

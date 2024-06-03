@@ -205,7 +205,7 @@
         "placeholder": "ejemplo@decentraland.org",
         "button_submit_label": "enviar",
         "button_resend_label": "reenviar",
-        "button_edit_label": "guardar",
+        "button_save_label": "guardar",
         "pending_approval": "pendiente de aprobación",
         "confirmed": "confirmado",
         "invalid_email": "Correo electrónico no válido"
