@@ -91,7 +91,7 @@ function NotificationEmailCard(props: Props) {
     } else if (unconfirmedEmail && unconfirmedEmail === email) {
       return t('settings.notifications.email.button_resend_label')
     }
-    return t('settings.notifications.email.button_edit_label')
+    return t('settings.notifications.email.button_save_label')
   }, [emailProp, unconfirmedEmail, hasConfirmEmail, email])
 
   return (
