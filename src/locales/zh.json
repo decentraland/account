@@ -204,7 +204,7 @@
         "placeholder": "example@decentraland.org",
         "button_submit_label": "提交",
         "button_resend_label": "重新傳送",
-        "button_edit_label": "編輯",
+        "button_edit_label": "节省",
         "pending_approval": "待批准",
         "confirmed": "已確認",
         "invalid_email": "無效的電子郵件"
