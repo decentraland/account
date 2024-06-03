@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { Email } from '@dcl/schemas'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { objectToSnake } from 'ts-case-convert'
@@ -31,6 +31,7 @@ function NotificationEmailCard(props: Props) {
   const [isValidEmail, setIsValidEmail] = useState(true)
   const [email, setEmail] = useState(unconfirmedEmail || emailProp)
   const history = useHistory()
+  const location = useLocation<{ hasConfirmEmail?: boolean }>()
 
   useEffect(() => {
     if (unconfirmedEmail || emailProp) {
@@ -50,9 +51,11 @@ function NotificationEmailCard(props: Props) {
   const handleOnChangeEmail = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setEmail(event.target.value)
-      history.replace({ state: {} })
+      if (location.state?.hasConfirmEmail) {
+        history.replace({ state: {} })
+      }
     },
-    [setEmail]
+    [setEmail, location.state]
   )
 
   const handleOnChangeNotificationSetting = useCallback(
