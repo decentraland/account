@@ -1,5 +1,6 @@
 import { Redirect, Route, Switch } from 'react-router-dom'
 import Intercom from 'decentraland-dapps/dist/components/Intercom'
+import { usePageTracking } from 'decentraland-dapps/dist/hooks/usePageTracking'
 import { config } from '../../config'
 import { locations } from '../../modules/locations'
 import { ConfirmPage } from '../ConfirmPage'
@@ -11,6 +12,7 @@ import { Props } from './Routes.types'
 
 const Routes = ({ isSubscriptionEnabled }: Props) => {
   const APP_ID = config.get('INTERCOM_APP_ID')
+  usePageTracking()
 
   return (
     <>
