@@ -4,11 +4,10 @@ import { locations } from '../../modules/locations'
 import { Props } from './ProtectedRoute.types'
 
 const ProtectedRoute = (props: Props) => {
-  const { isConnecting, wallet, isConnected, ...rest } = props
-
+  const { isConnecting, isConnected, ...rest } = props
   const { pathname, search } = useLocation()
 
-  if (!isConnecting && !wallet && !isConnected) {
+  if (!isConnecting && !isConnected) {
     return <Redirect to={locations.signIn(`${pathname}${search}`)} />
   }
 
