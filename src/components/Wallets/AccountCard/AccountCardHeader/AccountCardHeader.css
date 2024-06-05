@@ -17,7 +17,7 @@
 
 .AccountCardHeader .fundsContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .AccountCardHeader .funds {
@@ -26,12 +26,23 @@
 
 .AccountCardHeader .funds .amount {
   display: flex;
-  justify-content: row;
-  align-items: flex-start;
+  justify-content: flex-start;
   align-items: center;
   font-size: 34px;
   font-weight: 600;
   line-height: 42px;
+}
+
+.AccountCardHeader .funds .amount .mana-logo {
+  width: 24px;
+  height: 28px;
+  background-image: url('../../../../images/mana-red-logo.svg');
+}
+
+.AccountCardHeader .funds .amount .matic-logo {
+  width: 24px;
+  height: 24px;
+  background-image: url('../../../../images/matic-logo.svg');
 }
 
 .AccountCardHeader .funds .amount :first-child {
@@ -40,8 +51,8 @@
 
 .AccountCardHeader .actions {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  margin-top: 16px;
 }
 
 .AccountCardHeader .actions .ui.button {
