@@ -7,8 +7,6 @@ import { AccountCard } from './AccountCard'
 import AccountCardContainer from './AccountCardContainer/AccountCardContainer'
 import { Props } from './Wallets.types'
 
-import './Wallets.css'
-
 const Wallets: React.FC<Props> = ({ withdrawals, deposits, transactionsByNetwork }) => {
   const ethereumTransactions = transactionsByNetwork[Network.ETHEREUM]
   const maticTransactions = transactionsByNetwork[Network.MATIC]
