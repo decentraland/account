@@ -12,5 +12,6 @@
 @media (max-width: 768px) {
   .AccountCardContainer {
     padding: 0;
+    flex-direction: column;
   }
 }

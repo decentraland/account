@@ -28,7 +28,12 @@
 
 @media (max-width: 768px) {
   .AccountCard.ui.card {
-    min-width: auto;
     margin: 0 0 12px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .AccountCard.ui.card {
+    min-width: auto;
   }
 }
