@@ -12,7 +12,8 @@
   "main_page": {
     "wallets": "Wallets",
     "email_notifications": "Notificaciones",
-    "title": "Configuración de la cuenta"
+    "title": "Configuración de la cuenta",
+    "copied": "Copiado!"
   },
   "account_header": {
     "actions": {

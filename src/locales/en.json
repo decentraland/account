@@ -11,7 +11,8 @@
   "main_page": {
     "wallets": "Wallets",
     "email_notifications": "Email Notifications",
-    "title": "Account Settings"
+    "title": "Account Settings",
+    "copied": "Copied!"
   },
   "account_header": {
     "actions": {

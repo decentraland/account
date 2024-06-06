@@ -11,7 +11,8 @@
   "main_page": {
     "wallets": "錢包",
     "email_notifications": "電子郵件通知",
-    "title": "帳戶設定"
+    "title": "帳戶設定",
+    "copied": "已复制！"
   },
   "account_header": {
     "actions": {
