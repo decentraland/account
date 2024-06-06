@@ -23,7 +23,7 @@ const basename = /^decentraland.(zone|org|today)$/.test(window.location.host) ? 
 export const history = createBrowserHistory({ basename })
 const rootReducer = storageReducerWrapper(createRootReducer(history))
 
-const sagasMiddleware = createSagasMiddleware()
+const sagasMiddleware = createSagasMiddleware({ context: { history } })
 const loggerMiddleware = createLogger({
   collapsed: () => true,
   predicate: (_: any, action) => config.is(Env.DEVELOPMENT) || action.type.includes('Failure')

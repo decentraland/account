@@ -1,4 +1,4 @@
-import { call } from '@redux-saga/core/effects'
+import { call, getContext } from '@redux-saga/core/effects'
 import { NotificationsAPI } from 'decentraland-dapps/dist/modules/notifications'
 import { expectSaga } from 'redux-saga-test-plan'
 import { objectToSnake } from 'ts-case-convert'
@@ -138,7 +138,10 @@ describe('when handling the request action to validate the subscription`s email'
   describe('and the notification API call fails', () => {
     it('should put a validate subscription email failure action with the error', () => {
       return expectSaga(subscriptionSagas, notificationsAPI)
-        .provide([[call([notificationsAPI, 'postEmailConfirmationCode'], validationBody), Promise.reject(new Error(errorMessage))]])
+        .provide([
+          [getContext('history'), { push: jest.fn() }],
+          [call([notificationsAPI, 'postEmailConfirmationCode'], validationBody), Promise.reject(new Error(errorMessage))]
+        ])
         .put(validateSubscriptionEmailFailure(errorMessage))
         .dispatch(validateSubscriptionEmailRequest(validationBody))
         .silentRun()
@@ -149,6 +152,7 @@ describe('when handling the request action to validate the subscription`s email'
     it('should put the validate the subscription email success action', () => {
       return expectSaga(subscriptionSagas, notificationsAPI)
         .provide([
+          [getContext('history'), { push: jest.fn() }],
           [
             call([notificationsAPI, 'postEmailConfirmationCode'], validationBody),
             Promise.resolve({ ...subscriptionSettings, address: unconfirmedEmail })
