@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
-import { useHistory, useLocation } from 'react-router'
+import { useHistory, useLocation } from 'react-router-dom'
 import { localStorageGetIdentity } from '@dcl/single-sign-on-client'
 import { Navbar as BaseNavbar } from 'decentraland-dapps/dist/containers'
 import { config } from '../../config'
