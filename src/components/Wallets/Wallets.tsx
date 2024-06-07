@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { Network } from '@dcl/schemas'
 import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded'
-import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Tooltip } from 'decentraland-ui2'
 import { DepositStatus, WithdrawalStatus } from '../../modules/mana/types'
@@ -11,7 +10,7 @@ import WithdrawalTooltip from '../Tooltips/WithdrawalTooltip'
 import { Title } from '../Typography'
 import { AccountCard } from './AccountCard'
 import AccountCardContainer from './AccountCardContainer/AccountCardContainer'
-import { Address, Description, Header } from './Wallets.styled'
+import { Address, ContentCopyRoundedIcon, Description, Header } from './Wallets.styled'
 import { Props } from './Wallets.types'
 
 const Wallets: React.FC<Props> = props => {

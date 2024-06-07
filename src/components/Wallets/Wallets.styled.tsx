@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import ContentCopyRoundedIconMui from '@mui/icons-material/ContentCopyRounded'
 import { Typography as TypographyMui } from 'decentraland-ui2'
 import { Description as DescriptionGlobal } from '../Typography'
 
@@ -13,4 +14,8 @@ export const Address = styled(TypographyMui)({
   fontWeight: 500,
   marginLeft: '8px',
   marginRight: '8px'
+})
+
+export const ContentCopyRoundedIcon = styled(ContentCopyRoundedIconMui)({
+  cursor: 'pointer'
 })
