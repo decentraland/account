@@ -5,6 +5,7 @@ import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { NetworkGatewayType, gatewaysNames } from 'decentraland-ui'
 import { Deposit, TransactionStatus, TransactionType, Transfer, Withdrawal, WithdrawalStatus } from '../../../../../modules/mana/types'
 import { getStatusMessage, isPendingAccountTransaction } from '../../../../../modules/mana/utils'
+import { shortening } from '../../../../../modules/wallet/utils'
 import { Props } from './AccountTransaction.types'
 
 import './AccountTransaction.css'
@@ -20,8 +21,6 @@ const AccountTransaction = ({ transaction, onTransactionDetail, onPendingWithdra
       clearTimeout(timer)
     }
   }, [now])
-
-  const shortening = (address: string): string => (address ? `${address.slice(0, 4)}...${address.slice(-4)}` : '')
 
   let data: any = null
   let description = ''

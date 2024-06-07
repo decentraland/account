@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { getTransactionByNetwork, getWalletDeposits, getWalletWithdrawals } from '../../modules/mana/selectors'
 import { RootState } from '../../modules/reducer'
 import Wallets from './Wallets'
@@ -8,7 +9,8 @@ const mapState = (state: RootState): MapStateProps => {
   return {
     transactionsByNetwork: getTransactionByNetwork(state),
     withdrawals: getWalletWithdrawals(state),
-    deposits: getWalletDeposits(state)
+    deposits: getWalletDeposits(state),
+    address: getAddress(state)!
   }
 }
 

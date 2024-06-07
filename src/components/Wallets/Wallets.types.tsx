@@ -6,7 +6,8 @@ export type Props = {
   transactionsByNetwork: Record<Network, Transaction[]>
   withdrawals: Withdrawal[]
   deposits: Deposit[]
+  address: string
 }
-export type MapStateProps = Pick<Props, 'transactionsByNetwork' | 'withdrawals' | 'deposits'>
+export type MapStateProps = Pick<Props, 'transactionsByNetwork' | 'withdrawals' | 'deposits' | 'address'>
 export type MapDispatchProps = {}
 export type MapDispatch = Dispatch
