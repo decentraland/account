@@ -12,7 +12,6 @@
     "@maticnetwork/maticjs-ethers": "^1.0.3",
     "@sentry/react": "^7.64.0",
     "@typechain/ethers-v5": "^10.0.0",
-    "connected-react-router": "^6.9.1",
     "decentraland-dapps": "^22.1.0",
     "decentraland-transactions": "^2.6.0",
     "decentraland-ui": "^6.1.0",

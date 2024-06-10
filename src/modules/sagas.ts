@@ -4,7 +4,6 @@ import { featuresSaga } from 'decentraland-dapps/dist/modules/features/sagas'
 import { ApplicationName } from 'decentraland-dapps/dist/modules/features/types'
 import { createGatewaySaga } from 'decentraland-dapps/dist/modules/gateway/sagas'
 import { FiatGateway } from 'decentraland-dapps/dist/modules/gateway/types'
-import { locationSaga } from 'decentraland-dapps/dist/modules/location/sagas'
 import { NotificationsAPI } from 'decentraland-dapps/dist/modules/notifications'
 import { createProfileSaga } from 'decentraland-dapps/dist/modules/profile/sagas'
 import { toastSaga } from 'decentraland-dapps/dist/modules/toast/sagas'
@@ -71,7 +70,6 @@ export function* rootSaga(notificationsAPI: NotificationsAPI) {
     walletSaga(),
     translationSaga(),
     modalSaga(),
-    locationSaga(),
     localLocationSaga(),
     featuresSaga({
       polling: {

@@ -1,6 +1,5 @@
 import { localStorageGetIdentity } from '@dcl/single-sign-on-client'
 import { Env } from '@dcl/ui-env'
-import { routerMiddleware } from 'connected-react-router'
 import { createAnalyticsMiddleware } from 'decentraland-dapps/dist/modules/analytics/middleware'
 import { SET_PURCHASE } from 'decentraland-dapps/dist/modules/gateway/actions'
 import { NotificationsAPI } from 'decentraland-dapps/dist/modules/notifications'
@@ -21,7 +20,7 @@ import { rootSaga } from './sagas'
 const basename = /^decentraland.(zone|org|today)$/.test(window.location.host) ? '/account' : undefined
 
 export const history = createBrowserHistory({ basename })
-const rootReducer = storageReducerWrapper(createRootReducer(history))
+const rootReducer = storageReducerWrapper(createRootReducer())
 
 const sagasMiddleware = createSagasMiddleware({ context: { history } })
 const loggerMiddleware = createLogger({
@@ -42,14 +41,7 @@ const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
 })
 const analyticsMiddleware = createAnalyticsMiddleware(config.get('SEGMENT_API_KEY'))
 
-const middleware = applyMiddleware(
-  sagasMiddleware,
-  routerMiddleware(history),
-  loggerMiddleware,
-  transactionMiddleware,
-  storageMiddleware,
-  analyticsMiddleware
-)
+const middleware = applyMiddleware(sagasMiddleware, loggerMiddleware, transactionMiddleware, storageMiddleware, analyticsMiddleware)
 const enhancer = compose(middleware)
 const store = createStore(rootReducer, enhancer)
 

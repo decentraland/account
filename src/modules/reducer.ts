@@ -1,4 +1,3 @@
-import { connectRouter } from 'connected-react-router'
 import { authorizationReducer as authorization } from 'decentraland-dapps/dist/modules/authorization/reducer'
 import { featuresReducer as features } from 'decentraland-dapps/dist/modules/features/reducer'
 import { gatewayReducer as gateway } from 'decentraland-dapps/dist/modules/gateway/reducer'
@@ -9,12 +8,11 @@ import { toastReducer as toast } from 'decentraland-dapps/dist/modules/toast/red
 import { transactionReducer as transaction } from 'decentraland-dapps/dist/modules/transaction/reducer'
 import { translationReducer as translation } from 'decentraland-dapps/dist/modules/translation/reducer'
 import { walletReducer as wallet } from 'decentraland-dapps/dist/modules/wallet/reducer'
-import { History } from 'history'
 import { combineReducers } from 'redux'
 import { manaReducer as mana } from './mana/reducer'
 import { subscriptionReducer as subscription } from './subscription/reducer'
 
-export const createRootReducer = (history: History) =>
+export const createRootReducer = () =>
   combineReducers({
     authorization,
     profile,
@@ -27,8 +25,7 @@ export const createRootReducer = (history: History) =>
     toast,
     gateway,
     features,
-    subscription,
-    router: connectRouter(history)
+    subscription
   })
 
 export type RootState = ReturnType<ReturnType<typeof createRootReducer>>

@@ -1,4 +1,5 @@
-import { Redirect, Route, Switch } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom'
 import Intercom from 'decentraland-dapps/dist/components/Intercom'
 import { usePageTracking } from 'decentraland-dapps/dist/hooks/usePageTracking'
 import { config } from '../../config'
@@ -10,9 +11,14 @@ import { ProtectedRoute } from '../ProtectedRoute'
 import { SignInPage } from '../SignInPage'
 import { Props } from './Routes.types'
 
-const Routes = ({ isSubscriptionEnabled }: Props) => {
+const Routes = ({ isSubscriptionEnabled, closeAllModals }: Props) => {
   const APP_ID = config.get('INTERCOM_APP_ID')
+  const location = useLocation()
   usePageTracking()
+
+  useEffect(() => {
+    closeAllModals()
+  }, [location.pathname])
 
   return (
     <>
