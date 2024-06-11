@@ -1,5 +1,4 @@
 import { localStorageGetIdentity } from '@dcl/single-sign-on-client'
-import { routerMiddleware } from 'connected-react-router'
 import { SET_PURCHASE } from 'decentraland-dapps/dist/modules/gateway'
 import { NotificationsAPI } from 'decentraland-dapps/dist/modules/notifications'
 import { createStorageMiddleware } from 'decentraland-dapps/dist/modules/storage/middleware'
@@ -21,8 +20,8 @@ import { rootSaga } from '../modules/sagas'
 
 export function initTestStore(preloadedState = {}) {
   const testHistory = createMemoryHistory({ initialEntries: ['/marketplace'] })
-  const rootReducer = storageReducerWrapper(createRootReducer(testHistory))
-  const sagasMiddleware = createSagasMiddleware()
+  const rootReducer = storageReducerWrapper(createRootReducer())
+  const sagasMiddleware = createSagasMiddleware({ context: { history: testHistory } })
   const transactionMiddleware = createTransactionMiddleware()
   const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
     storageKey: 'account',
@@ -35,7 +34,7 @@ export function initTestStore(preloadedState = {}) {
     migrations
   })
 
-  const middleware = applyMiddleware(sagasMiddleware, routerMiddleware(testHistory), transactionMiddleware, storageMiddleware)
+  const middleware = applyMiddleware(sagasMiddleware, transactionMiddleware, storageMiddleware)
   const enhancer = compose(middleware)
   const store = createStore(rootReducer, preloadedState, enhancer)
 

@@ -2,7 +2,7 @@
 import 'semantic-ui-css/semantic.min.css'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { ConnectedRouter } from 'connected-react-router'
+import { Router } from 'react-router-dom'
 import ModalProvider from 'decentraland-dapps/dist/providers/ModalProvider'
 import ToastProvider from 'decentraland-dapps/dist/providers/ToastProvider'
 import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
@@ -30,9 +30,9 @@ const component = (
         <ToastProvider>
           <WalletProvider>
             <ModalProvider components={modals}>
-              <ConnectedRouter history={history}>
+              <Router history={history}>
                 <Routes />
-              </ConnectedRouter>
+              </Router>
             </ModalProvider>
           </WalletProvider>
         </ToastProvider>

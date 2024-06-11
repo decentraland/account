@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux'
+import { Router } from 'react-router-dom'
 import { render } from '@testing-library/react'
-import { ConnectedRouter } from 'connected-react-router'
 import { en } from 'decentraland-dapps/dist/modules/translation/defaults'
 import { mergeTranslations } from 'decentraland-dapps/dist/modules/translation/utils'
 import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
@@ -38,7 +38,7 @@ export function renderWithProviders(
     return (
       <Provider store={initializedStore}>
         <TranslationProvider locales={['en', 'en-EN']}>
-          <ConnectedRouter history={history}>{children}</ConnectedRouter>
+          <Router history={history}>{children}</Router>
         </TranslationProvider>
       </Provider>
     )
