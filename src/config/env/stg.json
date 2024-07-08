@@ -15,7 +15,6 @@
   "MOON_PAY_POLLING_DELAY": "6000",
   "MOON_PAY_WIDGET_URL": "https://buy-staging.moonpay.io",
   "MATIC_ENV": "mainnet",
-  "MATIC_ROOT_CHAIN_SUBGRAPH": "https://api.thegraph.com/subgraphs/name/maticnetwork/mainnet-root-subgraphs",
   "MANA_CONTRACT_ADDRESS": "0x0f5d2fb29fb7d3cfee444a200298f468908cc942",
   "ERC20_PREDICATE_CONTRACT_ADDRESS": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
   "ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",

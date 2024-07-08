@@ -1,14 +1,13 @@
-import { ChainId, Network } from '@dcl/schemas'
+import { Network } from '@dcl/schemas'
 import { IPOSClientConfig, POSClient } from '@maticnetwork/maticjs'
 import { call, select } from '@redux-saga/core/effects'
 import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
 import { getConnectedProvider } from 'decentraland-dapps/dist/lib/eth'
-import { graphql } from 'decentraland-dapps/dist/lib/graph'
 import { PurchaseStatus } from 'decentraland-dapps/dist/modules/gateway/types'
 import { TransactionStatus as TxStatus } from 'decentraland-dapps/dist/modules/transaction/types'
 import { hasFailed, hasSucceeded, isPending } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { getAddress, getChainId } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { BigNumber, ethers, utils } from 'ethers'
 import { Provider } from 'decentraland-transactions'
 import { config } from '../../config'
@@ -19,9 +18,9 @@ import { DepositStatus, MaticEnv, TransactionStatus, TransactionType, TransferSt
 export const MANA_CONTRACT_ADDRESS = config.get('MANA_CONTRACT_ADDRESS')
 export const ERC20_PREDICATE_CONTRACT_ADDRESS = config.get('ERC20_PREDICATE_CONTRACT_ADDRESS')
 export const ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS = config.get('ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS')
-export const MATIC_ROOT_CHAIN_SUBGRAPH = config.get('MATIC_ROOT_CHAIN_SUBGRAPH')
 export const MATIC_ENV: MaticEnv = getMaticEnv(config.get('MATIC_ENV'))
 export const TRANSACTIONS_API_URL = config.get('TRANSACTIONS_API_URL')
+const CHAIN_ID = +(config.get('CHAIN_ID') || 1)
 
 const POLL_INTERVAL = 30 * 1000 // 30 seconds
 
@@ -47,20 +46,6 @@ function instantiateStateReceiver(provider: Provider) {
     ] as any,
     new ethers.providers.Web3Provider(provider as any)
   )
-}
-
-export async function isWithdrawalSynced(txHash: string, maticProvider: Provider) {
-  const tx = await maticProvider.send!('eth_getTransactionReceipt', [txHash])
-  if (!tx || !tx.blockNumber) return false
-
-  const block = parseInt(tx.blockNumber, 16)
-  const { checkpoints } = await graphql<{ checkpoints: { id: string }[] }>(
-    MATIC_ROOT_CHAIN_SUBGRAPH,
-    `{ checkpoints(first: 1, where: { end_gt: ${block} }) { id } }`
-  )
-
-  const isSynced = checkpoints.length > 0
-  return isSynced
 }
 
 export async function isDepositSynced(txHash: string, ethereumProvider: Provider, maticProvider: Provider) {
@@ -200,7 +185,7 @@ function getMaticEnv(env?: string) {
 }
 
 export function* getMaticPOSClient() {
-  const connectedProvider: Provider = yield call(getConnectedProvider)
+  const connectedProvider: Provider | null = yield call(getConnectedProvider)
 
   if (!connectedProvider) {
     throw new Error('Could not connect to provider')
@@ -214,15 +199,17 @@ export function* getMaticPOSClient() {
     throw new Error('Could not get address')
   }
 
-  const chainId: ChainId = yield select(getChainId)
-  const parentConfig = getChainConfiguration(chainId)
+  // The parent chain id is the site's chain id
+  const parentConfig = getChainConfiguration(CHAIN_ID)
+  // To avoid issues while making calls to the contracts, we need to make sure the provider is connected to the right network
+  const { chainId: providerChainId }: { chainId: number } = yield call([web3Provider, 'getNetwork'])
   const maticConfig = getChainConfiguration(parentConfig.networkMapping[Network.MATIC])
 
   const config: IPOSClientConfig = {
     network: MATIC_ENV,
     version: MATIC_ENV === MaticEnv.MAINNET ? 'v1' : 'amoy',
     parent: {
-      provider: web3Provider,
+      provider: providerChainId !== CHAIN_ID ? new ethers.providers.JsonRpcProvider(parentConfig.rpcURL) : web3Provider,
       defaultConfig: {
         from
       }
