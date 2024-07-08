@@ -84,7 +84,6 @@ import {
   getMaticPOSClient,
   getStoreWithdrawalByHash,
   isDepositSynced,
-  isWithdrawalSynced,
   waitForSync
 } from './utils'
 
@@ -229,10 +228,9 @@ function* handleWatchWithdrawalStatusRequest(action: WatchWithdrawalStatusReques
 
 function* handleWatchWithdrawalStatusSuccess(action: WatchWithdrawalStatusSuccessAction) {
   const { withdrawal: tx } = action.payload
-  const networks: ReturnType<typeof getNetworks> = yield select(getNetworks)
-  const maticProvider: Provider = yield call(() => getNetworkProvider(networks![Network.MATIC].chainId))
+  const maticPOSClient: POSClient = yield call(getMaticPOSClient)
   yield call(() => {
-    return waitForSync(tx.initializeHash, txHash => isWithdrawalSynced(txHash, maticProvider))
+    return waitForSync(tx.initializeHash, txHash => maticPOSClient.isCheckPointed(txHash))
   })
   yield put(setWithdrawalStatus(tx.initializeHash, WithdrawalStatus.CHECKPOINT))
 }
