@@ -190,6 +190,8 @@
       "subscription_group_description_marketplace": "Recibe notificaciones sobre tus compras, premios, ventas, regalías y alquileres",
       "subscription_group_label_events": "Eventos",
       "subscription_group_description_events": "Recibe notificaciones sobre eventos a los que has confirmado tu asistencia",
+      "subscription_group_label_rewards": "Rewards",
+      "subscription_group_description_rewards": "Recibe noticiaciones sobre recompensas",
       "subscription_group_label_dao": "DAO",
       "subscription_group_description_dao": "Recibe notificaciones sobre las mociones DAO por las que has votado, el proceso de tu propuesta y más.",
       "subscription_group_label_worlds": "Worlds",

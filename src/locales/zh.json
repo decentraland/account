@@ -189,6 +189,8 @@
       "subscription_group_description_marketplace": "取得有關您的購買、獎品、銷售、版稅和租賃的通知",
       "subscription_group_label_events": "活動",
       "subscription_group_description_events": "取得您已回覆的活動的通知",
+      "subscription_group_label_rewards": "奖励",
+      "subscription_group_description_rewards": "接收有关奖励的通知",
       "subscription_group_label_dao": "DAO",
       "subscription_group_description_dao": "取得您已投票的 DAO 動議、提案流程等的通知。",
       "subscription_group_label_worlds": "世界",

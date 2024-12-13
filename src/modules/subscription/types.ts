@@ -21,6 +21,7 @@ export type SubscriptionState = {
 export enum SubscriptionGroupKeys {
   MARKETPLACE = 'marketplace',
   EVENTS = 'events',
+  REWARDS = 'rewards',
   DAO = 'dao',
   WORLDS = 'worlds'
 }
