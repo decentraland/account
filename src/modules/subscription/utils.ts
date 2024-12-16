@@ -7,11 +7,15 @@ export const subscriptionGroups: SubscriptionGroups = {
     NotificationType.BID_ACCEPTED,
     NotificationType.BID_RECEIVED,
     NotificationType.ROYALTIES_EARNED,
-    NotificationType.REWARD_ASSIGNED,
     NotificationType.LAND_RENTAL_ENDED,
     NotificationType.LAND_RENTED
   ],
   [SubscriptionGroupKeys.EVENTS]: [NotificationType.EVENTS_STARTED, NotificationType.EVENTS_STARTS_SOON],
+  [SubscriptionGroupKeys.REWARDS]: [
+    NotificationType.REWARD_ASSIGNED,
+    NotificationType.REWARD_CAMPAIGN_OUT_OF_FUNDS,
+    NotificationType.REWARD_CAMPAIGN_OUT_OF_STOCK
+  ],
   [SubscriptionGroupKeys.DAO]: [
     NotificationType.GOVERNANCE_ANNOUNCEMENT,
     NotificationType.GOVERNANCE_AUTHORED_PROPOSAL_FINISHED,
