@@ -7,7 +7,6 @@ export const subscriptionGroups: SubscriptionGroups = {
     NotificationType.BID_ACCEPTED,
     NotificationType.BID_RECEIVED,
     NotificationType.ROYALTIES_EARNED,
-    NotificationType.REWARD_ASSIGNED,
     NotificationType.LAND_RENTAL_ENDED,
     NotificationType.LAND_RENTED
   ],
