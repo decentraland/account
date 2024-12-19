@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom'
-import Intercom from 'decentraland-dapps/dist/components/Intercom'
+import { EnhancedIntercom } from 'decentraland-dapps/dist/containers/EnhancedIntercom'
 import { usePageTracking } from 'decentraland-dapps/dist/hooks/usePageTracking'
 import { config } from '../../config'
 import { locations } from '../../modules/locations'
@@ -28,7 +28,7 @@ const Routes = ({ isSubscriptionEnabled, closeAllModals }: Props) => {
         <ProtectedRoute path={locations.root()} component={!isSubscriptionEnabled ? HomePage : MainPage} />
         <Redirect to={locations.root()} />
       </Switch>
-      {APP_ID ? <Intercom appId={APP_ID} settings={{ alignment: 'right' }} /> : null}
+      {APP_ID ? <EnhancedIntercom appId={APP_ID} settings={{ alignment: 'right' }} /> : null}
     </>
   )
 }
