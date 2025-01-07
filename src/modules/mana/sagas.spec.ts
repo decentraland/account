@@ -1,6 +1,6 @@
 import { ChainId, Network } from '@dcl/schemas'
 import { call, select } from '@redux-saga/core/effects'
-import { getChainIdByNetwork, getNetworkProvider } from 'decentraland-dapps/dist/lib/eth'
+import { getChainIdByNetwork, getNetworkProvider, getNetworkWeb3Provider } from 'decentraland-dapps/dist/lib/eth'
 import { fetchTransactionRequest } from 'decentraland-dapps/dist/modules/transaction/actions'
 import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { expectSaga } from 'redux-saga-test-plan'
@@ -100,7 +100,8 @@ describe('handleImportWithdrawalRequest', () => {
       [select(getAddress), address],
       [call(getChainIdByNetwork, network), chainId],
       [call(getMaticPOSClient), maticPOSClient],
-      [call(getNetworkProvider, chainId), networkProvider]
+      [call(getNetworkProvider, chainId), networkProvider],
+      [call(getNetworkWeb3Provider, chainId), networkProvider]
     ])
 
     expectedActions.forEach(ea => (test = test.put(ea)))
