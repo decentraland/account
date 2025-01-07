@@ -1,7 +1,13 @@
 import { ChainId, Network } from '@dcl/schemas'
 import { ITransactionWriteResult, POSClient, setProofApi, use } from '@maticnetwork/maticjs'
 import { Web3ClientPlugin } from '@maticnetwork/maticjs-ethers'
-import { getChainIdByNetwork, getConnectedProvider, getNetworkProvider, getSigner } from 'decentraland-dapps/dist/lib/eth'
+import {
+  getChainIdByNetwork,
+  getConnectedProvider,
+  getNetworkProvider,
+  getNetworkWeb3Provider,
+  getSigner
+} from 'decentraland-dapps/dist/lib/eth'
 import { closeModal, openModal } from 'decentraland-dapps/dist/modules/modal/actions'
 import {
   FETCH_TRANSACTION_SUCCESS,
@@ -410,7 +416,7 @@ export function* handleImportWithdrawalRequest(action: ImportWithdrawalRequestAc
     }
 
     const chainId: ChainId = yield call(getChainIdByNetwork, Network.MATIC)
-    const provider: Provider = yield call(getNetworkProvider, chainId)
+    const provider: Provider = yield call(getNetworkWeb3Provider, chainId)
 
     const transaction: { input: string; from: string } | undefined = yield call([provider, 'send'], 'eth_getTransactionByHash', [txHash])
 
