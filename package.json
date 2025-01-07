@@ -15,7 +15,7 @@
     "decentraland-dapps": "^23.19.0",
     "decentraland-transactions": "^2.6.0",
     "decentraland-ui": "^6.12.1",
-    "decentraland-ui2": "^0.8.4",
+    "decentraland-ui2": "^0.8.5",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
     "ethers": "^5.7.2",
