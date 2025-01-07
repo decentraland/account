@@ -5,6 +5,7 @@ export type Props = Partial<NavbarProps> & {
   isConnected: boolean
   isAuthDappEnabled: boolean
   address?: string
+  isNavbar2Enabled: boolean
 }
 
-export type MapStateProps = Pick<Props, 'hasActivity' | 'isConnected' | 'isAuthDappEnabled' | 'address'>
+export type MapStateProps = Pick<Props, 'hasActivity' | 'isConnected' | 'isAuthDappEnabled' | 'address' | 'isNavbar2Enabled'>
