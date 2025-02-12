@@ -33,7 +33,8 @@ const AccountCardHeader = ({
   }
 
   const handleAddTokens = () => {
-    analytics.track('Open BUY MANA modal')
+    analytics?.track('Open BUY MANA modal')
+
     onAddTokens(network)
   }
 
