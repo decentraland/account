@@ -53,6 +53,7 @@ const ConvertManaModal: React.FC<Props> = ({
         onClearManaError()
 
         onAuthorizedAction({
+          manual: true,
           authorizationType: AuthorizationType.ALLOWANCE,
           authorizedAddress: ERC20_PREDICATE_CONTRACT_ADDRESS,
           authorizedContractLabel: 'ERC20 Predicate',
