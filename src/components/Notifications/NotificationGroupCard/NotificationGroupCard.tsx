@@ -42,22 +42,10 @@ function NotificationGroupCard(props: Props) {
     isExpanded,
     panelName,
     onChangeAccordion,
-    onChangeNotificationSetting,
-    whitelistedCreditsWallets,
-    address
+    onChangeNotificationSetting
   } = props
 
-  const isWalletWhitelistedOnCredits = address
-    ? whitelistedCreditsWallets?.map(wallet => wallet.toLowerCase())?.includes(address.toLowerCase())
-    : false
-  console.log('isWalletWhitelistedOnCredits', isWalletWhitelistedOnCredits)
-  console.log('whitelistedCreditsWallets', whitelistedCreditsWallets)
   const visibleNotificationTypes = notificationTypesInGroup.filter(type => {
-    // credits FF
-    if (!isWalletWhitelistedOnCredits) {
-      return !type.toLowerCase().includes('credits')
-    }
-
     return !HIDDEN_NOTIFICATIONS.includes(type)
   })
 
@@ -78,8 +66,6 @@ function NotificationGroupCard(props: Props) {
       })
     )
   }
-
-  console.log('filteredSubscriptionDetails', filteredSubscriptionDetails)
 
   const handleOnChangeNotificationSetting = useCallback(
     (checked: boolean, type: NotificationType) => {
@@ -126,7 +112,7 @@ function NotificationGroupCard(props: Props) {
       </AccordionSummary>
       {!isLoading && (
         <AccordionDetails data-testid={NOTIFICATION_CARD_LOADING_TEST_ID}>
-          {Object.keys(filteredSubscriptionDetails.messageType).map(type => (
+          {visibleNotificationTypes.map(type => (
             <NotificationItemContainer key={type}>
               <NotificationItemTextIconContainer>
                 <NotificationItemText>{t(`settings.notifications.types.${type}`)}</NotificationItemText>

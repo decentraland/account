@@ -14,7 +14,7 @@ export const NOTIFICATION_TITLE_TEST_ID = 'notification-title-test-id'
 export const NOTIFICATION_DESCRIPTION_TEST_ID = 'notification-description-test-id'
 
 export default function Notifications(props: Props) {
-  const { onGetSubscription } = props
+  const { onGetSubscription, address, whitelistedCreditsWallets } = props
   const isTabletOrBelow = useMediaQuery('(max-width:991px)')
   const location = useLocation<{ hasConfirmEmail?: boolean }>()
   const [expandedPanel, setExpandedPanel] = useState<string | false>(false)
@@ -25,6 +25,17 @@ export default function Notifications(props: Props) {
     },
     []
   )
+
+  const subscriptionGroupKeysToShow = Object.values(SubscriptionGroupKeys).filter(key => {
+    const isWalletWhitelistedOnCredits =
+      !!address && whitelistedCreditsWallets?.map(wallet => wallet.toLowerCase())?.includes(address.toLowerCase())
+
+    if (!isWalletWhitelistedOnCredits) {
+      return !subscriptionGroups[key].some(type => type.toLowerCase().includes('credits'))
+    }
+
+    return true
+  })
 
   useEffect(() => {
     onGetSubscription()
@@ -45,7 +56,7 @@ export default function Notifications(props: Props) {
 
       <Wrapper>
         <NotificationEmailCard hasConfirmEmail={!!location.state?.hasConfirmEmail} />
-        {Object.values(SubscriptionGroupKeys).map(key => (
+        {subscriptionGroupKeysToShow.map(key => (
           <NotificationGroupCard
             key={key}
             subscriptionGroupKeys={key}

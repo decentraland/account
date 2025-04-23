@@ -1,8 +1,7 @@
 import { connect } from 'react-redux'
 import { SubscriptionDetails } from '@dcl/schemas'
 import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
-import { getAddress, isConnecting } from 'decentraland-dapps/dist/modules/wallet/selectors'
-import { getWhitelistedCreditsWallet } from '../../../modules/features/selectors'
+import { isConnecting } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { RootState } from '../../../modules/reducer'
 import { SAVE_SUBSCRIPTIONS_REQUEST, saveSubscriptionsRequest } from '../../../modules/subscription/actions'
 import { getLoading, getSubscriptionDetails, hasEmail } from '../../../modules/subscription/selectors'
@@ -19,9 +18,7 @@ const mapStateToProps = (state: RootState, ownProps: OwnProps): MapStateProps =>
     hasEmail: hasEmail(state),
     onChangeAccordion: ownProps.onChangeAccordion,
     isExpanded: ownProps.isExpanded,
-    panelName: ownProps.panelName,
-    address: getAddress(state),
-    whitelistedCreditsWallets: getWhitelistedCreditsWallet(state)
+    panelName: ownProps.panelName
   }
 }
 
