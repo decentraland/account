@@ -79,6 +79,8 @@ function NotificationGroupCard(props: Props) {
     )
   }
 
+  console.log('filteredSubscriptionDetails', filteredSubscriptionDetails)
+
   const handleOnChangeNotificationSetting = useCallback(
     (checked: boolean, type: NotificationType) => {
       if (!isLoading) {
