@@ -42,11 +42,20 @@ function NotificationGroupCard(props: Props) {
     isExpanded,
     panelName,
     onChangeAccordion,
-    onChangeNotificationSetting
+    onChangeNotificationSetting,
+    whitelistedCreditsWallets,
+    address
   } = props
 
-  // Filter out hidden notifications from the displayed notification types
-  const visibleNotificationTypes = notificationTypesInGroup.filter(type => !HIDDEN_NOTIFICATIONS.includes(type))
+  const isWalletWhitelistedOnCredits = address ? whitelistedCreditsWallets.includes(address.toLowerCase()) : false
+  const visibleNotificationTypes = notificationTypesInGroup.filter(type => {
+    // credits FF
+    if (!isWalletWhitelistedOnCredits) {
+      return !type.toLowerCase().includes('credits')
+    }
+
+    return !HIDDEN_NOTIFICATIONS.includes(type)
+  })
 
   // Create a filtered version of subscriptionDetails that excludes hidden notification types
   const filteredSubscriptionDetails = {
