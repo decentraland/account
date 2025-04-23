@@ -126,7 +126,7 @@ function NotificationGroupCard(props: Props) {
       </AccordionSummary>
       {!isLoading && (
         <AccordionDetails data-testid={NOTIFICATION_CARD_LOADING_TEST_ID}>
-          {visibleNotificationTypes.map(type => (
+          {Object.keys(filteredSubscriptionDetails.messageType).map(type => (
             <NotificationItemContainer key={type}>
               <NotificationItemTextIconContainer>
                 <NotificationItemText>{t(`settings.notifications.types.${type}`)}</NotificationItemText>
