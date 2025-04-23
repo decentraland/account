@@ -31,6 +31,12 @@ export const subscriptionGroups: SubscriptionGroups = {
     NotificationType.WORLDS_MISSING_RESOURCES,
     NotificationType.WORLDS_PERMISSION_GRANTED,
     NotificationType.WORLDS_PERMISSION_REVOKED
+  ],
+  [SubscriptionGroupKeys.CREDITS]: [
+    NotificationType.CREDITS_REMINDER_COMPLETE_GOALS,
+    NotificationType.CREDITS_REMINDER_CLAIM_CREDITS,
+    NotificationType.CREDITS_REMINDER_USAGE,
+    NotificationType.CREDITS_REMINDER_DO_NOT_MISS_OUT
   ]
 }
 

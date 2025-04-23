@@ -21,6 +21,15 @@ export const NOTIFICATION_CARD_TITLE_TEST_ID = 'notification-card-title-test-id'
 export const NOTIFICATION_CARD_DESCRIPTION_TEST_ID = 'notification-card-description-test-id'
 export const NOTIFICATION_CARD_SWITCH_TEST_ID = 'notification-card-switch-test-id'
 
+// Define linked notification pairs that should be managed together
+const LINKED_NOTIFICATIONS: Record<string, NotificationType[]> = {
+  [NotificationType.CREDITS_REMINDER_USAGE]: [NotificationType.CREDITS_REMINDER_USAGE_24_HOURS],
+  [NotificationType.CREDITS_REMINDER_USAGE_24_HOURS]: [NotificationType.CREDITS_REMINDER_USAGE]
+}
+
+// Define notifications that should be hidden from the UI
+const HIDDEN_NOTIFICATIONS = [NotificationType.CREDITS_REMINDER_USAGE_24_HOURS]
+
 function NotificationGroupCard(props: Props) {
   const {
     isLoading,
@@ -40,7 +49,16 @@ function NotificationGroupCard(props: Props) {
     (checked: boolean, type: NotificationType) => {
       if (!isLoading) {
         let ignoreAllEmail = false
-        const messageType = { ...subscriptionDetails.messageType, [toCamel(type)]: { inApp: true, email: checked } }
+        const messageType = { ...subscriptionDetails.messageType }
+
+        // check if this notifications is linked to another notification which should be updated as well
+        const linkedTypes = LINKED_NOTIFICATIONS[type] || []
+
+        messageType[toCamel(type)] = { inApp: true, email: checked }
+        linkedTypes.forEach((linkedType: NotificationType) => {
+          messageType[toCamel(linkedType)] = { inApp: true, email: checked }
+        })
+
         const allEmailsDisabled = Object.values(messageType).every(({ email }) => !email)
 
         if (allEmailsDisabled) {
@@ -50,13 +68,16 @@ function NotificationGroupCard(props: Props) {
         const subscriptionDetailsChanged = {
           ...subscriptionDetails,
           ignoreAllEmail,
-          messageType: { ...subscriptionDetails.messageType, [toCamel(type)]: { inApp: true, email: checked } }
+          messageType
         }
         onChangeNotificationSetting(objectToSnake(subscriptionDetailsChanged))
       }
     },
     [subscriptionDetails, onChangeNotificationSetting, isLoading]
   )
+
+  // Filter out hidden notifications from the displayed notification types
+  const visibleNotificationTypes = notificationTypesInGroup.filter(type => !HIDDEN_NOTIFICATIONS.includes(type))
 
   return (
     <Accordion defaultExpanded={defaultExpanded} expanded={isExpanded} onChange={onChangeAccordion(panelName)}>
@@ -72,7 +93,7 @@ function NotificationGroupCard(props: Props) {
       </AccordionSummary>
       {!isLoading && (
         <AccordionDetails data-testid={NOTIFICATION_CARD_LOADING_TEST_ID}>
-          {notificationTypesInGroup.map(type => (
+          {visibleNotificationTypes.map(type => (
             <NotificationItemContainer key={type}>
               <NotificationItemTextIconContainer>
                 <NotificationItemText>{t(`settings.notifications.types.${type}`)}</NotificationItemText>
