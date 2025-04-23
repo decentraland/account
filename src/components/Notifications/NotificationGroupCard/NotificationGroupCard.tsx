@@ -74,7 +74,7 @@ function NotificationGroupCard(props: Props) {
         }
 
         // Only filter out if the notification type is in HIDDEN_NOTIFICATIONS
-        return !HIDDEN_NOTIFICATIONS.includes(notificationType)
+        return visibleNotificationTypes.includes(notificationType)
       })
     )
   }
