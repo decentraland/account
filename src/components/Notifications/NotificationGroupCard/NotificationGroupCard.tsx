@@ -45,6 +45,20 @@ function NotificationGroupCard(props: Props) {
     onChangeNotificationSetting
   } = props
 
+  // Filter out hidden notifications from the displayed notification types
+  const visibleNotificationTypes = notificationTypesInGroup.filter(type => !HIDDEN_NOTIFICATIONS.includes(type))
+
+  // Create a filtered version of subscriptionDetails that excludes hidden notification types
+  const filteredSubscriptionDetails = {
+    ...subscriptionDetails,
+    messageType: Object.fromEntries(
+      Object.entries(subscriptionDetails.messageType).filter(([key]) => {
+        const notificationType = Object.entries(NotificationType).find(([_, value]) => toCamel(value) === key)?.[1]
+        return notificationType && !HIDDEN_NOTIFICATIONS.includes(notificationType)
+      })
+    )
+  }
+
   const handleOnChangeNotificationSetting = useCallback(
     (checked: boolean, type: NotificationType) => {
       if (!isLoading) {
@@ -76,9 +90,6 @@ function NotificationGroupCard(props: Props) {
     [subscriptionDetails, onChangeNotificationSetting, isLoading]
   )
 
-  // Filter out hidden notifications from the displayed notification types
-  const visibleNotificationTypes = notificationTypesInGroup.filter(type => !HIDDEN_NOTIFICATIONS.includes(type))
-
   return (
     <Accordion defaultExpanded={defaultExpanded} expanded={isExpanded} onChange={onChangeAccordion(panelName)}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -101,7 +112,7 @@ function NotificationGroupCard(props: Props) {
               {hasEmail && (
                 <Switch
                   onChange={(_, checked) => handleOnChangeNotificationSetting(checked, type)}
-                  checked={subscriptionDetails.messageType[toCamel(type)].email}
+                  checked={filteredSubscriptionDetails.messageType[toCamel(type)].email}
                   disabled={isSavingSubscription}
                   data-testid={NOTIFICATION_CARD_SWITCH_TEST_ID}
                 />
