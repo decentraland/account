@@ -57,7 +57,6 @@ function NotificationGroupCard(props: Props) {
     return !HIDDEN_NOTIFICATIONS.includes(type)
   })
 
-  // Create a filtered version of subscriptionDetails that excludes hidden notification types
   const filteredSubscriptionDetails = {
     ...subscriptionDetails,
     messageType: Object.fromEntries(
