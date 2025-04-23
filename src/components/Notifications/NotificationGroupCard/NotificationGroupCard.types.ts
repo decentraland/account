@@ -15,6 +15,8 @@ export type Props = {
   panelName: string
   onChangeNotificationSetting: typeof saveSubscriptionsRequest
   onChangeAccordion: (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => void
+  whitelistedCreditsWallets: string[]
+  address?: string
 }
 
 export type MapStateProps = Pick<

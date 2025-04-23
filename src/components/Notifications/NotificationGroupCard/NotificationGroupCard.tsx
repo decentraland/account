@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { NotificationType } from '@dcl/schemas'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
@@ -42,14 +42,27 @@ function NotificationGroupCard(props: Props) {
     isExpanded,
     panelName,
     onChangeAccordion,
-    onChangeNotificationSetting
+    onChangeNotificationSetting,
+    whitelistedCreditsWallets,
+    address
   } = props
 
-  // Filter out hidden notifications from the displayed notification types
-  const visibleNotificationTypes = notificationTypesInGroup.filter(type => !HIDDEN_NOTIFICATIONS.includes(type))
+  // Check if the current user's address is whitelisted
+  const isWalletWhitelistedOnCredits = useMemo(() => {
+    return address ? whitelistedCreditsWallets?.map(wallet => wallet.toLowerCase())?.includes(address.toLowerCase()) : false
+  }, [address, whitelistedCreditsWallets])
 
-  console.log('visibleNotificationTypes', visibleNotificationTypes)
-  console.log('subscriptionDetails', subscriptionDetails)
+  // Filter out hidden notifications from the displayed notification types
+  const visibleNotificationTypes = useMemo(() => {
+    return notificationTypesInGroup.filter(type => {
+      // If the user is not whitelisted, hide credit-related notifications
+      if (!isWalletWhitelistedOnCredits) {
+        return !type.toLowerCase().includes('credits')
+      }
+      // Otherwise, only hide notifications in the HIDDEN_NOTIFICATIONS list
+      return !HIDDEN_NOTIFICATIONS.includes(type)
+    })
+  }, [notificationTypesInGroup, isWalletWhitelistedOnCredits])
 
   const handleOnChangeNotificationSetting = useCallback(
     (checked: boolean, type: NotificationType) => {

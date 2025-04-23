@@ -14,7 +14,7 @@ export const NOTIFICATION_TITLE_TEST_ID = 'notification-title-test-id'
 export const NOTIFICATION_DESCRIPTION_TEST_ID = 'notification-description-test-id'
 
 export default function Notifications(props: Props) {
-  const { onGetSubscription, address, whitelistedCreditsWallets } = props
+  const { onGetSubscription, address, whitelistedCreditsWallets = [] } = props
   const isTabletOrBelow = useMediaQuery('(max-width:991px)')
   const location = useLocation<{ hasConfirmEmail?: boolean }>()
   const [expandedPanel, setExpandedPanel] = useState<string | false>(false)
@@ -68,6 +68,8 @@ export default function Notifications(props: Props) {
             onChangeAccordion={handleChange}
             isExpanded={expandedPanel === key.toString()}
             panelName={key.toString()}
+            whitelistedCreditsWallets={whitelistedCreditsWallets}
+            address={address}
           />
         ))}
       </Wrapper>
