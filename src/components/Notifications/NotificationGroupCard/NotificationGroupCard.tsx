@@ -47,7 +47,7 @@ function NotificationGroupCard(props: Props) {
     address
   } = props
 
-  const isWalletWhitelistedOnCredits = address ? whitelistedCreditsWallets.includes(address.toLowerCase()) : false
+  const isWalletWhitelistedOnCredits = address ? whitelistedCreditsWallets?.includes(address.toLowerCase()) : false
   const visibleNotificationTypes = notificationTypesInGroup.filter(type => {
     // credits FF
     if (!isWalletWhitelistedOnCredits) {
