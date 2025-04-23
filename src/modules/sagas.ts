@@ -73,7 +73,7 @@ export function* rootSaga(notificationsAPI: NotificationsAPI) {
     localLocationSaga(),
     featuresSaga({
       polling: {
-        apps: [ApplicationName.DAPPS],
+        apps: [ApplicationName.DAPPS, ApplicationName.EXPLORER],
         delay: 60000 /** 60 seconds */
       }
     }),
