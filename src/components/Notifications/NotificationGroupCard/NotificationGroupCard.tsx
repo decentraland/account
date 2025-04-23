@@ -48,6 +48,9 @@ function NotificationGroupCard(props: Props) {
   // Filter out hidden notifications from the displayed notification types
   const visibleNotificationTypes = notificationTypesInGroup.filter(type => !HIDDEN_NOTIFICATIONS.includes(type))
 
+  console.log('visibleNotificationTypes', visibleNotificationTypes)
+  console.log('subscriptionDetails', subscriptionDetails)
+
   const handleOnChangeNotificationSetting = useCallback(
     (checked: boolean, type: NotificationType) => {
       if (!isLoading) {
