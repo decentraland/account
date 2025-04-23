@@ -67,6 +67,8 @@ function NotificationGroupCard(props: Props) {
     )
   }
 
+  console.log('subscriptionDetails.messageType', subscriptionDetails.messageType)
+  console.log('visibleNotificationTypes', visibleNotificationTypes)
   console.log('filteredSubscriptionDetails', filteredSubscriptionDetails)
 
   const handleOnChangeNotificationSetting = useCallback(
