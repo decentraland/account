@@ -52,24 +52,9 @@ function NotificationGroupCard(props: Props) {
   const filteredSubscriptionDetails = {
     ...subscriptionDetails,
     messageType: Object.fromEntries(
-      Object.entries(subscriptionDetails.messageType).filter(([key]) => {
-        // Find the original NotificationType enum value for this key
-        const notificationType = Object.entries(NotificationType).find(([_, value]) => toCamel(value) === key)?.[1]
-
-        // If we can't find the original NotificationType, keep the key (don't filter it out)
-        if (!notificationType) {
-          return true
-        }
-
-        // Only filter out if the notification type is in HIDDEN_NOTIFICATIONS
-        return visibleNotificationTypes.includes(notificationType)
-      })
+      Object.entries(subscriptionDetails.messageType).filter(([key]) => visibleNotificationTypes.includes(key as NotificationType))
     )
   }
-
-  console.log('subscriptionDetails.messageType', subscriptionDetails.messageType)
-  console.log('visibleNotificationTypes', visibleNotificationTypes)
-  console.log('filteredSubscriptionDetails', filteredSubscriptionDetails)
 
   const handleOnChangeNotificationSetting = useCallback(
     (checked: boolean, type: NotificationType) => {
