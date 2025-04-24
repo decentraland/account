@@ -59,6 +59,7 @@ function NotificationGroupCard(props: Props) {
       if (!isWalletWhitelistedOnCredits) {
         return !type.toLowerCase().includes('credits')
       }
+
       // Otherwise, only hide notifications in the HIDDEN_NOTIFICATIONS list
       return !HIDDEN_NOTIFICATIONS.includes(type)
     })
@@ -94,9 +95,6 @@ function NotificationGroupCard(props: Props) {
     },
     [subscriptionDetails, onChangeNotificationSetting, isLoading]
   )
-
-  console.log('visibleNotificationTypes', visibleNotificationTypes)
-  console.log('subscriptionDetails', subscriptionDetails)
 
   return (
     <Accordion defaultExpanded={defaultExpanded} expanded={isExpanded} onChange={onChangeAccordion(panelName)}>

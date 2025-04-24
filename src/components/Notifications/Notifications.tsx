@@ -37,7 +37,6 @@ export default function Notifications(props: Props) {
     return true
   })
 
-  // Add effect to refresh subscriptions when whitelist status changes
   useEffect(() => {
     onGetSubscription()
   }, [address])
