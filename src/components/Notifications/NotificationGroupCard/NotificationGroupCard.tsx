@@ -56,6 +56,7 @@ function NotificationGroupCard(props: Props) {
   const visibleNotificationTypes = useMemo(() => {
     return notificationTypesInGroup.filter(type => {
       // If the user is not whitelisted, hide credit-related notifications
+      // TODO: remove credits whitelist
       if (!isWalletWhitelistedOnCredits) {
         return !type.toLowerCase().includes('credits')
       }
