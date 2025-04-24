@@ -37,6 +37,13 @@ export const subscriptionGroups: SubscriptionGroups = {
     NotificationType.WORLDS_MISSING_RESOURCES,
     NotificationType.WORLDS_PERMISSION_GRANTED,
     NotificationType.WORLDS_PERMISSION_REVOKED
+  ],
+  [SubscriptionGroupKeys.STREAMING]: [
+    NotificationType.STREAMING_KEY_EXPIRED,
+    NotificationType.STREAMING_KEY_RESET,
+    NotificationType.STREAMING_KEY_REVOKE,
+    NotificationType.STREAMING_PLACE_UPDATED,
+    NotificationType.STREAMING_TIME_EXCEEDED
   ]
 }
 

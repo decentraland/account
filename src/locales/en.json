@@ -197,6 +197,8 @@
       "subscription_group_description_worlds": "Get notified if your World has insufficient storage or if you’re invited to visit/collaborate on a World.",
       "subscription_group_label_credits": "Marketplace Credits",
       "subscription_group_description_credits": "Get notifications about Credit expiration, unclaimed Credits, and incomplete goals.",
+      "subscription_group_label_streaming": "In-World Streaming",
+      "subscription_group_description_streaming": "Get notifications about the status of your scene stream keys and streams.",
       "saving_settings_error": "Error saving notification settings",
       "email": {
         "title": "Your Email Address",
@@ -243,7 +245,12 @@
         "credits_reminder_complete_goals": "Goals Incomplete",
         "credits_reminder_do_not_miss_out": "Goals Not Started",
         "credits_reminder_claim_credits": "Unclaimed Credits",
-        "credits_reminder_usage": "Credits About to Expire"
+        "credits_reminder_usage": "Credits About to Expire",
+        "streaming_key_expired": "Stream Key Expired",
+        "streaming_key_reset": "Stream Key Reset",
+        "streaming_key_revoke": "Stream Key Deactivated",
+        "streaming_place_updated": "Stream Scene Altered",
+        "streaming_time_exceeded": "Stream Timed Out"
       }
     }
   }

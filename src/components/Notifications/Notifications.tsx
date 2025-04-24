@@ -14,7 +14,7 @@ export const NOTIFICATION_TITLE_TEST_ID = 'notification-title-test-id'
 export const NOTIFICATION_DESCRIPTION_TEST_ID = 'notification-description-test-id'
 
 export default function Notifications(props: Props) {
-  const { onGetSubscription, address, whitelistedCreditsWallets = [] } = props
+  const { onGetSubscription, address, whitelistedCreditsWallets = [], isStreamingEnabled } = props
   const isTabletOrBelow = useMediaQuery('(max-width:991px)')
   const location = useLocation<{ hasConfirmEmail?: boolean }>()
   const [expandedPanel, setExpandedPanel] = useState<string | false>(false)
@@ -32,6 +32,10 @@ export default function Notifications(props: Props) {
 
     if (!isWalletWhitelistedOnCredits) {
       return !subscriptionGroups[key].some(type => type.toLowerCase().includes('credits'))
+    }
+
+    if (!isStreamingEnabled && key === SubscriptionGroupKeys.STREAMING) {
+      return false
     }
 
     return true
