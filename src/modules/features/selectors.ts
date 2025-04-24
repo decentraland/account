@@ -10,16 +10,16 @@ export const getIsAuthDappEnabled = (state: RootState) => {
   return false
 }
 
-export const getIsSubscriptionEnabled = (state: RootState) => {
+export const getIsNavbar2Enabled = (state: RootState) => {
   if (hasLoadedInitialFlags(state)) {
-    return getIsFeatureEnabled(state, ApplicationName.DAPPS, FeatureName.SUBSCRIPTION)
+    return getIsFeatureEnabled(state, ApplicationName.DAPPS, FeatureName.NAVBAR_UI2)
   }
   return false
 }
 
-export const getIsNavbar2Enabled = (state: RootState) => {
+export const getIsStreamingEnabled = (state: RootState) => {
   if (hasLoadedInitialFlags(state)) {
-    return getIsFeatureEnabled(state, ApplicationName.DAPPS, FeatureName.NAVBAR_UI2)
+    return getIsFeatureEnabled(state, ApplicationName.DAPPS, FeatureName.STREAMING)
   }
   return false
 }
