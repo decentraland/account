@@ -95,6 +95,9 @@ function NotificationGroupCard(props: Props) {
     [subscriptionDetails, onChangeNotificationSetting, isLoading]
   )
 
+  console.log('visibleNotificationTypes', visibleNotificationTypes)
+  console.log('subscriptionDetails', subscriptionDetails)
+
   return (
     <Accordion defaultExpanded={defaultExpanded} expanded={isExpanded} onChange={onChangeAccordion(panelName)}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
