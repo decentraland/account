@@ -5,7 +5,7 @@ import Notifications, { NOTIFICATION_DESCRIPTION_TEST_ID, NOTIFICATION_TITLE_TES
 import { Props } from './Notifications.types'
 
 const renderNotifications = (props: Partial<Props>) =>
-  renderWithProviders(<Notifications isLoading={false} onGetSubscription={() => undefined as any} {...props} />)
+  renderWithProviders(<Notifications isLoading={false} onGetSubscription={() => undefined as any} {...props} isStreamingEnabled={true} />)
 
 describe('when the component has finished loading and is connected', () => {
   it('should render the Title component in it', () => {
