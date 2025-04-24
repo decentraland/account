@@ -196,6 +196,8 @@
       "subscription_group_description_dao": "Recibe notificaciones sobre las mociones DAO por las que has votado, el proceso de tu propuesta y más.",
       "subscription_group_label_worlds": "Worlds",
       "subscription_group_description_worlds": "Recibe una notificación si tu mundo no tiene suficiente almacenamiento o si estás invitado a visitar/colaborar en un mundo",
+      "subscription_group_label_credits": "Créditos del Marketplace",
+      "subscription_group_description_credits": "Recibe notificaciones sobre la expiración de Créditos, Créditos sin reclamar y objetivos incompletos",
       "saving_settings_error": "Error al guardar la configuración de notificación",
       "email": {
         "title": "Su dirección de correo electrónico",
@@ -238,7 +240,11 @@
         "worlds_access_restricted": "Acceso al World restringido debido a almacenamiento insuficiente",
         "worlds_access_restored": "Acceso al World restaurado",
         "worlds_permission_granted": "Permisos al World para visitar/implementar/transmitir concedidos",
-        "worlds_permission_revoked": "Permisos al World para visitar/implementar/transmitir revocados"
+        "worlds_permission_revoked": "Permisos al World para visitar/implementar/transmitir revocados",
+        "credits_reminder_complete_goals": "Objetivos incompletos",
+        "credits_reminder_do_not_miss_out": "Objetivos no iniciados",
+        "credits_reminder_claim_credits": "Créditos sin reclamar",
+        "credits_reminder_usage": "Créditos a punto de expirar"
       }
     }
   }

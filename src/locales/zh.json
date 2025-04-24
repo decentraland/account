@@ -195,6 +195,8 @@
       "subscription_group_description_dao": "取得您已投票的 DAO 動議、提案流程等的通知。",
       "subscription_group_label_worlds": "世界",
       "subscription_group_description_worlds": "如果您的世界儲存空間不足或您被邀請存取/協作某個世界，則會收到通知",
+      "subscription_group_label_credits": "市场积分",
+      "subscription_group_description_credits": "获取有关积分到期、未领取积分和不完整目标的通知",
       "saving_settings_error": "儲存通知設定時發生錯誤",
       "email": {
         "title": "您的電子郵件地址",
@@ -237,7 +239,11 @@
         "worlds_access_restricted": "由於儲存空間不足，世界存取受到限制",
         "worlds_access_restored": "世界存取已恢復",
         "worlds_permission_granted": "授予世界存取/部署/串流權限",
-        "worlds_permission_revoked": "世界存取/部署/串流媒體權限已撤銷"
+        "worlds_permission_revoked": "世界存取/部署/串流媒體權限已撤銷",
+        "credits_reminder_complete_goals": "目标未完成",
+        "credits_reminder_do_not_miss_out": "目标未开始",
+        "credits_reminder_claim_credits": "未领取的积分",
+        "credits_reminder_usage": "积分即将到期"
       }
     }
   }

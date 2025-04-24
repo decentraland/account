@@ -10,6 +10,12 @@ export const subscriptionGroups: SubscriptionGroups = {
     NotificationType.LAND_RENTAL_ENDED,
     NotificationType.LAND_RENTED
   ],
+  [SubscriptionGroupKeys.CREDITS]: [
+    NotificationType.CREDITS_REMINDER_COMPLETE_GOALS,
+    NotificationType.CREDITS_REMINDER_CLAIM_CREDITS,
+    NotificationType.CREDITS_REMINDER_USAGE,
+    NotificationType.CREDITS_REMINDER_DO_NOT_MISS_OUT
+  ],
   [SubscriptionGroupKeys.EVENTS]: [NotificationType.EVENTS_STARTED, NotificationType.EVENTS_STARTS_SOON],
   [SubscriptionGroupKeys.REWARDS]: [
     NotificationType.REWARD_ASSIGNED,

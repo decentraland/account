@@ -73,7 +73,7 @@ export function* rootSaga(notificationsAPI: NotificationsAPI) {
     localLocationSaga(),
     featuresSaga({
       polling: {
-        apps: [ApplicationName.DAPPS],
+        apps: [ApplicationName.DAPPS, ApplicationName.EXPLORER], // TODO: remove explorer once credits is released
         delay: 60000 /** 60 seconds */
       }
     }),

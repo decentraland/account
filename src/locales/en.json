@@ -186,7 +186,7 @@
       "title": "Email Notifications",
       "description": "Don't miss any Decentraland notifications when you're AFK! Sign up to receive email notifications and pick & choose which ones you want to get below.",
       "subscription_group_label_marketplace": "Marketplace",
-      "subscription_group_description_marketplace": "Get notifications about your purchases, sales, royalties, and rentals.",
+      "subscription_group_description_marketplace": "Get notifications about your bids, sales, royalties, and rentals.",
       "subscription_group_label_events": "Events",
       "subscription_group_description_events": "Get notifications about events you’ve RSVP’d to.",
       "subscription_group_label_rewards": "Giveaways & Rewards",
@@ -195,6 +195,8 @@
       "subscription_group_description_dao": "Get notifications about DAO motions you’ve voted on, your proposal process, and more.",
       "subscription_group_label_worlds": "Worlds",
       "subscription_group_description_worlds": "Get notified if your World has insufficient storage or if you’re invited to visit/collaborate on a World.",
+      "subscription_group_label_credits": "Marketplace Credits",
+      "subscription_group_description_credits": "Get notifications about Credit expiration, unclaimed Credits, and incomplete goals.",
       "saving_settings_error": "Error saving notification settings",
       "email": {
         "title": "Your Email Address",
@@ -237,7 +239,11 @@
         "worlds_access_restricted": "World Access Restricted Due to Insufficient Storage",
         "worlds_access_restored": "World Access Restored",
         "worlds_permission_granted": "World Permissions to Visit/Deploy/Stream Granted",
-        "worlds_permission_revoked": "World Permissions to Visit/Deploy/Stream Revoked"
+        "worlds_permission_revoked": "World Permissions to Visit/Deploy/Stream Revoked",
+        "credits_reminder_complete_goals": "Goals Incomplete",
+        "credits_reminder_do_not_miss_out": "Goals Not Started",
+        "credits_reminder_claim_credits": "Unclaimed Credits",
+        "credits_reminder_usage": "Credits About to Expire"
       }
     }
   }

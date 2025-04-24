@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { NotificationType } from '@dcl/schemas'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
@@ -21,6 +21,15 @@ export const NOTIFICATION_CARD_TITLE_TEST_ID = 'notification-card-title-test-id'
 export const NOTIFICATION_CARD_DESCRIPTION_TEST_ID = 'notification-card-description-test-id'
 export const NOTIFICATION_CARD_SWITCH_TEST_ID = 'notification-card-switch-test-id'
 
+// Define linked notification pairs that should be managed together
+const LINKED_NOTIFICATIONS: Record<string, NotificationType[]> = {
+  [NotificationType.CREDITS_REMINDER_USAGE]: [NotificationType.CREDITS_REMINDER_USAGE_24_HOURS],
+  [NotificationType.CREDITS_REMINDER_USAGE_24_HOURS]: [NotificationType.CREDITS_REMINDER_USAGE]
+}
+
+// Define notifications that should be hidden from the UI
+const HIDDEN_NOTIFICATIONS = [NotificationType.CREDITS_REMINDER_USAGE_24_HOURS]
+
 function NotificationGroupCard(props: Props) {
   const {
     isLoading,
@@ -33,14 +42,44 @@ function NotificationGroupCard(props: Props) {
     isExpanded,
     panelName,
     onChangeAccordion,
-    onChangeNotificationSetting
+    onChangeNotificationSetting,
+    whitelistedCreditsWallets,
+    address
   } = props
+
+  // Check if the current user's address is whitelisted
+  const isWalletWhitelistedOnCredits = useMemo(() => {
+    return address ? whitelistedCreditsWallets?.map(wallet => wallet.toLowerCase())?.includes(address.toLowerCase()) : false
+  }, [address, whitelistedCreditsWallets])
+
+  // Filter out hidden notifications from the displayed notification types
+  const visibleNotificationTypes = useMemo(() => {
+    return notificationTypesInGroup.filter(type => {
+      // If the user is not whitelisted, hide credit-related notifications
+      // TODO: remove credits whitelist
+      if (!isWalletWhitelistedOnCredits) {
+        return !type.toLowerCase().includes('credits')
+      }
+
+      // Otherwise, only hide notifications in the HIDDEN_NOTIFICATIONS list
+      return !HIDDEN_NOTIFICATIONS.includes(type)
+    })
+  }, [notificationTypesInGroup, isWalletWhitelistedOnCredits])
 
   const handleOnChangeNotificationSetting = useCallback(
     (checked: boolean, type: NotificationType) => {
       if (!isLoading) {
         let ignoreAllEmail = false
-        const messageType = { ...subscriptionDetails.messageType, [toCamel(type)]: { inApp: true, email: checked } }
+        const messageType = { ...subscriptionDetails.messageType }
+
+        // check if this notifications is linked to another notification which should be updated as well
+        const linkedTypes = LINKED_NOTIFICATIONS[type] || []
+
+        messageType[toCamel(type)] = { inApp: true, email: checked }
+        linkedTypes.forEach((linkedType: NotificationType) => {
+          messageType[toCamel(linkedType)] = { inApp: true, email: checked }
+        })
+
         const allEmailsDisabled = Object.values(messageType).every(({ email }) => !email)
 
         if (allEmailsDisabled) {
@@ -50,7 +89,7 @@ function NotificationGroupCard(props: Props) {
         const subscriptionDetailsChanged = {
           ...subscriptionDetails,
           ignoreAllEmail,
-          messageType: { ...subscriptionDetails.messageType, [toCamel(type)]: { inApp: true, email: checked } }
+          messageType
         }
         onChangeNotificationSetting(objectToSnake(subscriptionDetailsChanged))
       }
@@ -72,7 +111,7 @@ function NotificationGroupCard(props: Props) {
       </AccordionSummary>
       {!isLoading && (
         <AccordionDetails data-testid={NOTIFICATION_CARD_LOADING_TEST_ID}>
-          {notificationTypesInGroup.map(type => (
+          {visibleNotificationTypes.map(type => (
             <NotificationItemContainer key={type}>
               <NotificationItemTextIconContainer>
                 <NotificationItemText>{t(`settings.notifications.types.${type}`)}</NotificationItemText>

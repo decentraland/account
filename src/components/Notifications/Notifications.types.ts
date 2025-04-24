@@ -4,9 +4,11 @@ import { GetSubscriptionsRequestAction, SaveSubscriptionsRequestAction, getSubsc
 export type Props = {
   isLoading: boolean
   onGetSubscription: typeof getSubscriptionsRequest
+  address?: string
+  whitelistedCreditsWallets?: string[]
 }
 
-export type MapStateProps = Pick<Props, 'isLoading'>
+export type MapStateProps = Pick<Props, 'isLoading' | 'address' | 'whitelistedCreditsWallets'>
 export type OwnProps = Pick<Props, 'isLoading'>
 export type MapDispatchProps = Pick<Props, 'onGetSubscription'>
 export type MapDispatch = Dispatch<SaveSubscriptionsRequestAction | GetSubscriptionsRequestAction>
