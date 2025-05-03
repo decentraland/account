@@ -1,5 +1,7 @@
 import { createAnalyticsSaga } from 'decentraland-dapps/dist/modules/analytics/sagas'
 import { authorizationSaga } from 'decentraland-dapps/dist/modules/authorization/sagas'
+import { CreditsClient } from 'decentraland-dapps/dist/modules/credits/CreditsClient'
+import { creditsSaga } from 'decentraland-dapps/dist/modules/credits/sagas'
 import { featuresSaga } from 'decentraland-dapps/dist/modules/features/sagas'
 import { ApplicationName } from 'decentraland-dapps/dist/modules/features/types'
 import { createGatewaySaga } from 'decentraland-dapps/dist/modules/gateway/sagas'
@@ -61,11 +63,12 @@ const gatewaySaga = createGatewaySaga({
   }
 })
 
-export function* rootSaga(notificationsAPI: NotificationsAPI) {
+export function* rootSaga(notificationsAPI: NotificationsAPI, creditsClient: CreditsClient) {
   yield all([
     analyticsSaga(),
     authorizationSaga(),
     transactionSaga(),
+    creditsSaga({ creditsClient }),
     profileSaga(),
     walletSaga(),
     translationSaga(),

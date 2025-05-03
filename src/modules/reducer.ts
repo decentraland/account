@@ -1,4 +1,5 @@
 import { authorizationReducer as authorization } from 'decentraland-dapps/dist/modules/authorization/reducer'
+import { creditsReducer as credits } from 'decentraland-dapps/dist/modules/credits/reducer'
 import { featuresReducer as features } from 'decentraland-dapps/dist/modules/features/reducer'
 import { gatewayReducer as gateway } from 'decentraland-dapps/dist/modules/gateway/reducer'
 import { modalReducer as modal } from 'decentraland-dapps/dist/modules/modal/reducer'
@@ -15,6 +16,7 @@ import { subscriptionReducer as subscription } from './subscription/reducer'
 export const createRootReducer = () =>
   combineReducers({
     authorization,
+    credits,
     profile,
     storage,
     transaction,
