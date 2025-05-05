@@ -1,6 +1,7 @@
 import { localStorageGetIdentity } from '@dcl/single-sign-on-client'
 import { Env } from '@dcl/ui-env'
 import { createAnalyticsMiddleware } from 'decentraland-dapps/dist/modules/analytics/middleware'
+import { CreditsClient } from 'decentraland-dapps/dist/modules/credits/CreditsClient'
 import { SET_PURCHASE } from 'decentraland-dapps/dist/modules/gateway/actions'
 import { NotificationsAPI } from 'decentraland-dapps/dist/modules/notifications'
 import { createStorageMiddleware } from 'decentraland-dapps/dist/modules/storage/middleware'
@@ -53,7 +54,9 @@ const notificationApi = new NotificationsAPI({
   }
 })
 
-sagasMiddleware.run(rootSaga, notificationApi)
+const creditsClient = new CreditsClient(config.get('CREDITS_SERVER_URL'))
+
+sagasMiddleware.run(rootSaga, notificationApi, creditsClient)
 loadStorageMiddleware(store)
 
 if (config.is(Env.DEVELOPMENT)) {

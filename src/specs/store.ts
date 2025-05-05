@@ -1,4 +1,5 @@
 import { localStorageGetIdentity } from '@dcl/single-sign-on-client'
+import { CreditsClient } from 'decentraland-dapps/dist/modules/credits/CreditsClient'
 import { SET_PURCHASE } from 'decentraland-dapps/dist/modules/gateway'
 import { NotificationsAPI } from 'decentraland-dapps/dist/modules/notifications'
 import { createStorageMiddleware } from 'decentraland-dapps/dist/modules/storage/middleware'
@@ -8,6 +9,7 @@ import { getAddress } from 'ethers/lib/utils'
 import { createMemoryHistory } from 'history'
 import { applyMiddleware, compose, createStore } from 'redux'
 import createSagasMiddleware from 'redux-saga'
+import { config } from '../config'
 import {
   SET_DEPOSIT_STATUS,
   SET_WITHDRAWAL_STATUS,
@@ -45,7 +47,10 @@ export function initTestStore(preloadedState = {}) {
       return identity ?? undefined
     }
   })
-  sagasMiddleware.run(rootSaga, notificationApi)
+
+  const creditsClient = new CreditsClient(config.get('CREDITS_SERVER_URL'))
+
+  sagasMiddleware.run(rootSaga, notificationApi, creditsClient)
   loadStorageMiddleware(store)
 
   return store

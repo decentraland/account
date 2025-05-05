@@ -1,7 +1,6 @@
 export type Props = {
-  isAuthDappEnabled: boolean
   isConnecting: boolean
   isConnected: boolean
 }
 
-export type MapStateProps = Pick<Props, 'isAuthDappEnabled' | 'isConnecting' | 'isConnected'>
+export type MapStateProps = Pick<Props, 'isConnecting' | 'isConnected'>
