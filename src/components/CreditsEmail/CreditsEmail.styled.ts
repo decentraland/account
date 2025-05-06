@@ -8,6 +8,10 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   background: radial-gradient(circle at 50% 40%, #a259ff 0%, #3b006a 100%);
+
+  @media (max-width: 600px) {
+    background: #350f44;
+  }
 `
 
 export const Logo = styled.img`
@@ -32,8 +36,11 @@ export const Card = styled.div`
   box-sizing: border-box;
 
   @media (max-width: 600px) {
-    max-width: 95vw;
-    padding: 32px 8px;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+    max-width: 100vw;
     gap: 20px;
   }
 `
@@ -78,5 +85,8 @@ export const Description = styled.p`
 
   @media (max-width: 600px) {
     font-size: 16px;
+    max-width: 328px;
+    margin-left: auto;
+    margin-right: auto;
   }
 `
