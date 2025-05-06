@@ -20,6 +20,8 @@ const Routes = ({ closeAllModals }: Props) => {
     closeAllModals()
   }, [location.pathname])
 
+  const isCreditsEmailPage = location.pathname === locations.creditsEmail()
+
   return (
     <>
       <Switch>
@@ -29,7 +31,7 @@ const Routes = ({ closeAllModals }: Props) => {
         <ProtectedRoute path={locations.root()} component={MainPage} />
         <Redirect to={locations.root()} />
       </Switch>
-      {APP_ID ? <EnhancedIntercom appId={APP_ID} settings={{ alignment: 'right' }} /> : null}
+      {APP_ID && !isCreditsEmailPage ? <EnhancedIntercom appId={APP_ID} settings={{ alignment: 'right' }} /> : null}
     </>
   )
 }
