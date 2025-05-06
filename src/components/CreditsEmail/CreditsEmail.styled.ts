@@ -7,7 +7,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 50% 40%, #a259ff 0%, #3b006a 100%);
+  background: radial-gradient(circle at 50% 40%, #a326d5 0%, #691fa9 100%);
 
   @media (max-width: 600px) {
     background: #350f44;
