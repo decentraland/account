@@ -4,5 +4,5 @@ export const locations = {
   signIn: (redirectTo?: string) => {
     return `/sign-in${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`
   },
-  creditsEmail: () => '/credits-email-confirmed'
+  creditsEmail: () => '/credits-email-confirmed/:token'
 }

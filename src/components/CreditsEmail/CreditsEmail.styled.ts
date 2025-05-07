@@ -90,3 +90,19 @@ export const Description = styled.p`
     margin-right: auto;
   }
 `
+
+export const Button = styled.button`
+  background-color: #ff2d55;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #ff1a45;
+  }
+`

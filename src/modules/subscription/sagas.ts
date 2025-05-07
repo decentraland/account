@@ -9,6 +9,7 @@ import {
   SAVE_SUBSCRIPTION_EMAIL_REQUEST,
   SaveSubscriptionEmailRequestAction,
   SaveSubscriptionsRequestAction,
+  VALIDATE_CREDITS_EMAIL_REQUEST,
   VALIDATE_SUBSCRIPTION_EMAIL_REQUEST,
   ValidateSubscriptionEmailRequestAction,
   getSubscriptionsFailure,
@@ -18,16 +19,22 @@ import {
   saveSubscriptionEmailSuccess,
   saveSubscriptionsFailure,
   saveSubscriptionsSuccess,
+  validateCreditsEmailFailure,
+  validateCreditsEmailRequest,
+  validateCreditsEmailSuccess,
   validateSubscriptionEmailFailure,
   validateSubscriptionEmailSuccess
 } from './actions'
 import { SubscriptionFromClient } from './types'
+
+type ValidateCreditsEmailRequestAction = ReturnType<typeof validateCreditsEmailRequest>
 
 export function* subscriptionSagas(notificationsAPI: NotificationsAPI) {
   yield takeEvery(GET_SUBSCRIPTIONS_REQUEST, handleGetSubscriptionsRequest)
   yield takeEvery(SAVE_SUBSCRIPTIONS_REQUEST, handlePutSubscriptionsRequest)
   yield takeEvery(SAVE_SUBSCRIPTION_EMAIL_REQUEST, handlePutSubscriptionEmailRequest)
   yield takeEvery(VALIDATE_SUBSCRIPTION_EMAIL_REQUEST, handlePostValidationCodeRequest)
+  yield takeEvery(VALIDATE_CREDITS_EMAIL_REQUEST, handlePostCreditsValidationCodeRequest)
 
   function* handleGetSubscriptionsRequest() {
     try {
@@ -67,6 +74,15 @@ export function* subscriptionSagas(notificationsAPI: NotificationsAPI) {
     } catch (error) {
       history.push(locations.root())
       yield put(validateSubscriptionEmailFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
+    }
+  }
+
+  function* handlePostCreditsValidationCodeRequest(action: ValidateCreditsEmailRequestAction) {
+    try {
+      yield call([notificationsAPI, 'postEmailConfirmationCode'], action.payload)
+      yield put(validateCreditsEmailSuccess())
+    } catch (error) {
+      yield put(validateCreditsEmailFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
     }
   }
 }

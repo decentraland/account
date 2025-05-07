@@ -5,7 +5,7 @@ import { usePageTracking } from 'decentraland-dapps/dist/hooks/usePageTracking'
 import { config } from '../../config'
 import { locations } from '../../modules/locations'
 import { ConfirmPage } from '../ConfirmPage'
-import CreditsEmail from '../CreditsEmail/CreditsEmail'
+import CreditsEmail from '../CreditsEmail/CreditsEmail.container'
 import { MainPage } from '../MainPage'
 import { ProtectedRoute } from '../ProtectedRoute'
 import { SignInPage } from '../SignInPage'
@@ -20,14 +20,14 @@ const Routes = ({ closeAllModals }: Props) => {
     closeAllModals()
   }, [location.pathname])
 
-  const isCreditsEmailPage = location.pathname === locations.creditsEmail()
+  const isCreditsEmailPage = location.pathname.startsWith('/credits-email-confirmed/')
 
   return (
     <>
       <Switch>
+        <Route path={locations.creditsEmail()} component={CreditsEmail} />
         <Route path={locations.signIn()} component={SignInPage} />
-        <ProtectedRoute exact path={locations.confirmEmail()} component={ConfirmPage} />
-        <Route exact path={locations.creditsEmail()} component={CreditsEmail} />
+        <ProtectedRoute path={locations.confirmEmail()} component={ConfirmPage} />
         <ProtectedRoute path={locations.root()} component={MainPage} />
         <Redirect to={locations.root()} />
       </Switch>

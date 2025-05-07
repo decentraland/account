@@ -4,12 +4,13 @@ import { RootState } from '../../modules/reducer'
 import { clearSaveSubscriptionError, getSubscriptionsRequest } from '../../modules/subscription/actions'
 import { getError } from '../../modules/subscription/selectors'
 import HomePage from './MainPage'
-import { MapDispatch, MapDispatchProps, MapStateProps } from './MainPage.types'
+import { MapDispatch, MapDispatchProps, MapStateProps, OwnProps } from './MainPage.types'
 
-const mapState = (state: RootState): MapStateProps => {
+const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
   return {
     isLoading: isConnecting(state),
-    notificationSettingError: getError(state)
+    notificationSettingError: getError(state),
+    skipNotifications: ownProps.skipNotifications
   }
 }
 
