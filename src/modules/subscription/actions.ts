@@ -60,3 +60,16 @@ export const validateSubscriptionEmailFailure = (error: string) => action(VALIDA
 export type ValidateSubscriptionEmailRequestAction = ReturnType<typeof validateSubscriptionEmailRequest>
 export type ValidateSubscriptionEmailSuccessAction = ReturnType<typeof validateSubscriptionEmailSuccess>
 export type ValidateSubscriptionEmailFailureAction = ReturnType<typeof validateSubscriptionEmailFailure>
+
+export const VALIDATE_CREDITS_EMAIL_REQUEST = '[Request] Validate Credits Email'
+export const VALIDATE_CREDITS_EMAIL_SUCCESS = '[Success] Validate Credits Email'
+export const VALIDATE_CREDITS_EMAIL_FAILURE = '[Failure] Validate Credits Email'
+
+export const validateCreditsEmailRequest = (validationBody: { address: string; code: string }) =>
+  action(VALIDATE_CREDITS_EMAIL_REQUEST, validationBody)
+export const validateCreditsEmailSuccess = () => action(VALIDATE_CREDITS_EMAIL_SUCCESS)
+export const validateCreditsEmailFailure = (error: string) => action(VALIDATE_CREDITS_EMAIL_FAILURE, { error })
+
+export type ValidateCreditsEmailRequestAction = ReturnType<typeof validateCreditsEmailRequest>
+export type ValidateCreditsEmailSuccessAction = ReturnType<typeof validateCreditsEmailSuccess>
+export type ValidateCreditsEmailFailureAction = ReturnType<typeof validateCreditsEmailFailure>

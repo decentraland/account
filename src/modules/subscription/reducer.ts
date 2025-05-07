@@ -23,9 +23,15 @@ import {
   SaveSubscriptionsFailureAction,
   SaveSubscriptionsRequestAction,
   SaveSubscriptionsSuccessAction,
+  VALIDATE_CREDITS_EMAIL_FAILURE,
+  VALIDATE_CREDITS_EMAIL_REQUEST,
+  VALIDATE_CREDITS_EMAIL_SUCCESS,
   VALIDATE_SUBSCRIPTION_EMAIL_FAILURE,
   VALIDATE_SUBSCRIPTION_EMAIL_REQUEST,
   VALIDATE_SUBSCRIPTION_EMAIL_SUCCESS,
+  ValidateCreditsEmailFailureAction,
+  ValidateCreditsEmailRequestAction,
+  ValidateCreditsEmailSuccessAction,
   ValidateSubscriptionEmailFailureAction,
   ValidateSubscriptionEmailRequestAction,
   ValidateSubscriptionEmailSuccessAction
@@ -62,13 +68,17 @@ type SubscriptionReducerAction =
   | ValidateSubscriptionEmailRequestAction
   | ValidateSubscriptionEmailSuccessAction
   | ValidateSubscriptionEmailFailureAction
+  | ValidateCreditsEmailRequestAction
+  | ValidateCreditsEmailSuccessAction
+  | ValidateCreditsEmailFailureAction
 
 export function subscriptionReducer(state = buildInitialState(), action: SubscriptionReducerAction): SubscriptionState {
   switch (action.type) {
     case GET_SUBSCRIPTIONS_REQUEST:
     case SAVE_SUBSCRIPTIONS_REQUEST:
     case SAVE_SUBSCRIPTION_EMAIL_REQUEST:
-    case VALIDATE_SUBSCRIPTION_EMAIL_REQUEST: {
+    case VALIDATE_SUBSCRIPTION_EMAIL_REQUEST:
+    case VALIDATE_CREDITS_EMAIL_REQUEST: {
       return {
         ...state,
         error: null,
@@ -113,7 +123,8 @@ export function subscriptionReducer(state = buildInitialState(), action: Subscri
         loading: loadingReducer(state.loading, action)
       }
     }
-    case VALIDATE_SUBSCRIPTION_EMAIL_SUCCESS: {
+    case VALIDATE_SUBSCRIPTION_EMAIL_SUCCESS:
+    case VALIDATE_CREDITS_EMAIL_SUCCESS: {
       return {
         ...state,
         unconfirmedEmail: undefined,
@@ -124,12 +135,12 @@ export function subscriptionReducer(state = buildInitialState(), action: Subscri
     case GET_SUBSCRIPTIONS_FAILURE:
     case SAVE_SUBSCRIPTIONS_FAILURE:
     case SAVE_SUBSCRIPTION_EMAIL_FAILURE:
-    case VALIDATE_SUBSCRIPTION_EMAIL_FAILURE: {
-      const { error } = action.payload
+    case VALIDATE_SUBSCRIPTION_EMAIL_FAILURE:
+    case VALIDATE_CREDITS_EMAIL_FAILURE: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),
-        error
+        error: action.payload.error
       }
     }
 
@@ -140,8 +151,7 @@ export function subscriptionReducer(state = buildInitialState(), action: Subscri
       }
     }
 
-    default: {
+    default:
       return state
-    }
   }
 }

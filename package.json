@@ -21,6 +21,7 @@
     "dotenv-expand": "5.1.0",
     "ethers": "^5.7.2",
     "history": "^4.10.1",
+    "lottie-react": "^2.4.1",
     "react": "^17.0.2",
     "react-app-polyfill": "^2.0.0",
     "react-dev-utils": "^11.0.3",
