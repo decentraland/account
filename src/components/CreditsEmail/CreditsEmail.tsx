@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import Player from 'lottie-react'
+import dclLogo from '../../images/icons/dcl.svg'
 import animationData from './animation.json'
 import { AnimationWrapper, Card, Container, Description, Logo, Title } from './CreditsEmail.styled'
 import { Props } from './CreditsEmail.types'
@@ -30,7 +31,7 @@ const CreditsEmail: React.FC<Props> = props => {
 
   return (
     <Container>
-      <Logo src="/favicon.ico" alt="Logo" />
+      <Logo src={dclLogo} alt="Logo" />
       <Card>
         <AnimationWrapper>
           <Player autoplay loop animationData={animationData} style={{ width: 420, height: 300 }} />
