@@ -13,6 +13,16 @@ import { Props } from './Notifications.types'
 export const NOTIFICATION_TITLE_TEST_ID = 'notification-title-test-id'
 export const NOTIFICATION_DESCRIPTION_TEST_ID = 'notification-description-test-id'
 
+const GROUP_ORDER = [
+  SubscriptionGroupKeys.MARKETPLACE,
+  SubscriptionGroupKeys.CREDITS,
+  SubscriptionGroupKeys.EVENTS,
+  SubscriptionGroupKeys.REWARDS,
+  SubscriptionGroupKeys.DAO,
+  SubscriptionGroupKeys.WORLDS,
+  SubscriptionGroupKeys.STREAMING
+]
+
 export default function Notifications(props: Props) {
   const { onGetSubscription, address, whitelistedCreditsWallets = [], isStreamingEnabled } = props
   const isTabletOrBelow = useMediaQuery('(max-width:991px)')
@@ -41,6 +51,8 @@ export default function Notifications(props: Props) {
     return true
   })
 
+  const orderedKeys = [...subscriptionGroupKeysToShow].sort((a, b) => GROUP_ORDER.indexOf(a) - GROUP_ORDER.indexOf(b))
+
   useEffect(() => {
     onGetSubscription()
   }, [address])
@@ -60,7 +72,7 @@ export default function Notifications(props: Props) {
 
       <Wrapper>
         <NotificationEmailCard hasConfirmEmail={!!location.state?.hasConfirmEmail} />
-        {subscriptionGroupKeysToShow.map(key => (
+        {orderedKeys.map(key => (
           <NotificationGroupCard
             key={key}
             subscriptionGroupKeys={key}
