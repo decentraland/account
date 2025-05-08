@@ -13,7 +13,7 @@
     "@sentry/react": "^7.64.0",
     "@typechain/ethers-v5": "^10.0.0",
     "decentraland-connect": "^9.1.0",
-    "decentraland-dapps": "^24.17.0",
+    "decentraland-dapps": "^24.17.1",
     "decentraland-transactions": "^2.6.0",
     "decentraland-ui": "^6.13.0",
     "decentraland-ui2": "^0.18.0",
