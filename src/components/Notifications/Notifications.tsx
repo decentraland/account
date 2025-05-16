@@ -38,7 +38,9 @@ export default function Notifications(props: Props) {
 
   const subscriptionGroupKeysToShow = Object.values(SubscriptionGroupKeys).filter(key => {
     const isWalletWhitelistedOnCredits =
-      !!address && whitelistedCreditsWallets?.map(wallet => wallet.toLowerCase())?.includes(address.toLowerCase())
+      !!address &&
+      (whitelistedCreditsWallets?.length === 0 ||
+        whitelistedCreditsWallets?.map(wallet => wallet.toLowerCase())?.includes(address.toLowerCase()))
 
     if (!isWalletWhitelistedOnCredits) {
       return !subscriptionGroups[key].some(type => type.toLowerCase().includes('credits'))

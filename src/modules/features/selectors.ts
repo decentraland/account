@@ -15,9 +15,13 @@ export const getWhitelistedCreditsWallet = (state: RootState): string[] => {
     const result = getFeatureVariant(state, ApplicationName.EXPLORER, FeatureName.USER_WALLETS)
 
     if (result?.enabled) {
+      if (!result?.payload?.value) {
+        return []
+      }
+
       return (
-        result?.payload?.value
-          ?.replace('\n', '')
+        result.payload.value
+          .replace('\n', '')
           .split(',')
           .map(wallet => wallet.toLowerCase()) ?? []
       )
