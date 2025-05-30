@@ -1,6 +1,7 @@
 export const locations = {
   root: () => '/',
   confirmEmail: () => '/confirm-email/:token',
+  unifiedEmailConfirmation: () => '/confirm-email/:token',
   signIn: (redirectTo?: string) => {
     return `/sign-in${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`
   },

@@ -10,7 +10,9 @@ import {
   SaveSubscriptionEmailRequestAction,
   SaveSubscriptionsRequestAction,
   VALIDATE_CREDITS_EMAIL_REQUEST,
+  VALIDATE_EMAIL_WITH_TURNSTILE_REQUEST,
   VALIDATE_SUBSCRIPTION_EMAIL_REQUEST,
+  ValidateEmailWithTurnstileRequestAction,
   ValidateSubscriptionEmailRequestAction,
   getSubscriptionsFailure,
   getSubscriptionsRequest,
@@ -22,6 +24,8 @@ import {
   validateCreditsEmailFailure,
   validateCreditsEmailRequest,
   validateCreditsEmailSuccess,
+  validateEmailWithTurnstileFailure,
+  validateEmailWithTurnstileSuccess,
   validateSubscriptionEmailFailure,
   validateSubscriptionEmailSuccess
 } from './actions'
@@ -35,6 +39,7 @@ export function* subscriptionSagas(notificationsAPI: NotificationsAPI) {
   yield takeEvery(SAVE_SUBSCRIPTION_EMAIL_REQUEST, handlePutSubscriptionEmailRequest)
   yield takeEvery(VALIDATE_SUBSCRIPTION_EMAIL_REQUEST, handlePostValidationCodeRequest)
   yield takeEvery(VALIDATE_CREDITS_EMAIL_REQUEST, handlePostCreditsValidationCodeRequest)
+  yield takeEvery(VALIDATE_EMAIL_WITH_TURNSTILE_REQUEST, handlePostEmailValidationWithTurnstileRequest)
 
   function* handleGetSubscriptionsRequest() {
     try {
@@ -83,6 +88,26 @@ export function* subscriptionSagas(notificationsAPI: NotificationsAPI) {
       yield put(validateCreditsEmailSuccess())
     } catch (error) {
       yield put(validateCreditsEmailFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
+    }
+  }
+
+  function* handlePostEmailValidationWithTurnstileRequest(action: ValidateEmailWithTurnstileRequestAction) {
+    const { source } = action.payload
+
+    try {
+      // Call the backend with both email confirmation code and Turnstile token
+      yield call([notificationsAPI, 'postEmailConfirmationCode'], action.payload)
+
+      yield put(validateEmailWithTurnstileSuccess(source))
+
+      // Refresh subscriptions for account flow but don't redirect automatically
+      if (source === 'account') {
+        yield put(getSubscriptionsRequest())
+      }
+      // Both flows now stay on the confirmation page to show success
+    } catch (error) {
+      yield put(validateEmailWithTurnstileFailure(isErrorWithMessage(error) ? error.message : 'Unknown', source))
+      // No automatic redirects on error - users stay on confirmation page
     }
   }
 }

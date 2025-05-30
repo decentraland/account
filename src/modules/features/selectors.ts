@@ -10,6 +10,13 @@ export const getIsStreamingEnabled = (state: RootState) => {
   return false
 }
 
+export const getIsTurnstileVerificationEnabled = (state: RootState) => {
+  if (hasLoadedInitialFlags(state)) {
+    return getIsFeatureEnabled(state, ApplicationName.DAPPS, FeatureName.TURNSTILE_VERIFICATION)
+  }
+  return true
+}
+
 export const getWhitelistedCreditsWallet = (state: RootState): string[] => {
   if (hasLoadedInitialFlags(state)) {
     const result = getFeatureVariant(state, ApplicationName.EXPLORER, FeatureName.USER_WALLETS)
