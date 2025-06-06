@@ -1,14 +1,10 @@
 import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom'
 import { EnhancedIntercom } from 'decentraland-dapps/dist/containers/EnhancedIntercom'
 import { usePageTracking } from 'decentraland-dapps/dist/hooks/usePageTracking'
 import { config } from '../../config'
-import { getIsTurnstileVerificationEnabled } from '../../modules/features/selectors'
 import { locations } from '../../modules/locations'
-import { RootState } from '../../modules/reducer'
-import { ConfirmPage } from '../ConfirmPage'
-import CreditsEmail from '../CreditsEmail/CreditsEmail.container'
+import { LegacyEmailConfirmRedirect } from '../LegacyEmailConfirmRedirect'
 import { MainPage } from '../MainPage'
 import { ProtectedRoute } from '../ProtectedRoute'
 import { SignInPage } from '../SignInPage'
@@ -18,7 +14,6 @@ import { Props } from './Routes.types'
 const Routes = ({ closeAllModals }: Props) => {
   const APP_ID = config.get('INTERCOM_APP_ID')
   const location = useLocation()
-  const isTurnstileEnabled = useSelector((state: RootState) => getIsTurnstileVerificationEnabled(state))
   usePageTracking()
 
   useEffect(() => {
@@ -26,22 +21,17 @@ const Routes = ({ closeAllModals }: Props) => {
   }, [location.pathname])
 
   const isEmailConfirmationPage =
-    location.pathname.startsWith('/confirm-email/') || location.pathname.startsWith('/credits-email-confirmed/')
+    location.pathname.startsWith('/confirm-email/') ||
+    location.pathname.startsWith('/credits-email-confirmed/') ||
+    location.pathname.startsWith('/confirm-email-challenge/')
 
   return (
     <>
       <Switch>
-        {isTurnstileEnabled ? (
-          <>
-            <Route path={locations.unifiedEmailConfirmation()} component={UnifiedEmailConfirmation} />
-            <Route path={locations.creditsEmail()} component={UnifiedEmailConfirmation} />
-          </>
-        ) : (
-          <>
-            <ProtectedRoute path={locations.confirmEmail()} component={ConfirmPage} />
-            <Route path={locations.creditsEmail()} component={CreditsEmail} />
-          </>
-        )}
+        <Route path={locations.unifiedEmailConfirmation()} component={UnifiedEmailConfirmation} />
+        <Route path={locations.confirmEmail()} render={() => <LegacyEmailConfirmRedirect path="/confirm-email/:token" />} />
+        <Route path={locations.creditsEmail()} render={() => <LegacyEmailConfirmRedirect path="/credits-email-confirmed/:token" />} />
+
         <Route path={locations.signIn()} component={SignInPage} />
         <ProtectedRoute path={locations.root()} component={MainPage} />
         <Redirect to={locations.root()} />

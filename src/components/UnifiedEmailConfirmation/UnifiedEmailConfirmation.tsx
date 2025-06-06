@@ -33,7 +33,7 @@ const UnifiedEmailConfirmation: React.FC<Props> = props => {
   if (!source) {
     if (location.pathname.startsWith('/credits-email-confirmed/')) {
       source = 'credits'
-    } else if (location.pathname.startsWith('/confirm-email/')) {
+    } else if (location.pathname.startsWith('/confirm-email/') || location.pathname.startsWith('/confirm-email-challenge/')) {
       source = 'account'
     }
   }
