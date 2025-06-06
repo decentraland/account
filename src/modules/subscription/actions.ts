@@ -73,3 +73,27 @@ export const validateCreditsEmailFailure = (error: string) => action(VALIDATE_CR
 export type ValidateCreditsEmailRequestAction = ReturnType<typeof validateCreditsEmailRequest>
 export type ValidateCreditsEmailSuccessAction = ReturnType<typeof validateCreditsEmailSuccess>
 export type ValidateCreditsEmailFailureAction = ReturnType<typeof validateCreditsEmailFailure>
+
+// Unified Email Confirmation with Cloudflare Turnstile
+export const VALIDATE_EMAIL_WITH_TURNSTILE_REQUEST = '[Request] Validate Email with Turnstile'
+export const VALIDATE_EMAIL_WITH_TURNSTILE_SUCCESS = '[Success] Validate Email with Turnstile'
+export const VALIDATE_EMAIL_WITH_TURNSTILE_FAILURE = '[Failure] Validate Email with Turnstile'
+
+export type EmailConfirmationSource = 'account' | 'credits'
+
+export const validateEmailWithTurnstileRequest = (validationBody: {
+  address: string
+  code: string
+  turnstileToken: string
+  source: EmailConfirmationSource
+}) => action(VALIDATE_EMAIL_WITH_TURNSTILE_REQUEST, validationBody)
+
+export const validateEmailWithTurnstileSuccess = (source: EmailConfirmationSource) =>
+  action(VALIDATE_EMAIL_WITH_TURNSTILE_SUCCESS, { source })
+
+export const validateEmailWithTurnstileFailure = (error: string, source: EmailConfirmationSource) =>
+  action(VALIDATE_EMAIL_WITH_TURNSTILE_FAILURE, { error, source })
+
+export type ValidateEmailWithTurnstileRequestAction = ReturnType<typeof validateEmailWithTurnstileRequest>
+export type ValidateEmailWithTurnstileSuccessAction = ReturnType<typeof validateEmailWithTurnstileSuccess>
+export type ValidateEmailWithTurnstileFailureAction = ReturnType<typeof validateEmailWithTurnstileFailure>

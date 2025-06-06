@@ -4,11 +4,11 @@ import { EnhancedIntercom } from 'decentraland-dapps/dist/containers/EnhancedInt
 import { usePageTracking } from 'decentraland-dapps/dist/hooks/usePageTracking'
 import { config } from '../../config'
 import { locations } from '../../modules/locations'
-import { ConfirmPage } from '../ConfirmPage'
-import CreditsEmail from '../CreditsEmail/CreditsEmail.container'
+import { LegacyEmailConfirmRedirect } from '../LegacyEmailConfirmRedirect'
 import { MainPage } from '../MainPage'
 import { ProtectedRoute } from '../ProtectedRoute'
 import { SignInPage } from '../SignInPage'
+import { UnifiedEmailConfirmation } from '../UnifiedEmailConfirmation'
 import { Props } from './Routes.types'
 
 const Routes = ({ closeAllModals }: Props) => {
@@ -20,18 +20,23 @@ const Routes = ({ closeAllModals }: Props) => {
     closeAllModals()
   }, [location.pathname])
 
-  const isCreditsEmailPage = location.pathname.startsWith('/credits-email-confirmed/')
+  const isEmailConfirmationPage =
+    location.pathname.startsWith('/confirm-email/') ||
+    location.pathname.startsWith('/credits-email-confirmed/') ||
+    location.pathname.startsWith('/confirm-email-challenge/')
 
   return (
     <>
       <Switch>
-        <Route path={locations.creditsEmail()} component={CreditsEmail} />
+        <Route path={locations.unifiedEmailConfirmation()} component={UnifiedEmailConfirmation} />
+        <Route path={locations.confirmEmail()} render={() => <LegacyEmailConfirmRedirect path="/confirm-email/:token" />} />
+        <Route path={locations.creditsEmail()} render={() => <LegacyEmailConfirmRedirect path="/credits-email-confirmed/:token" />} />
+
         <Route path={locations.signIn()} component={SignInPage} />
-        <ProtectedRoute path={locations.confirmEmail()} component={ConfirmPage} />
         <ProtectedRoute path={locations.root()} component={MainPage} />
         <Redirect to={locations.root()} />
       </Switch>
-      {APP_ID && !isCreditsEmailPage ? <EnhancedIntercom appId={APP_ID} settings={{ alignment: 'right' }} /> : null}
+      {APP_ID && !isEmailConfirmationPage ? <EnhancedIntercom appId={APP_ID} settings={{ alignment: 'right' }} /> : null}
     </>
   )
 }
