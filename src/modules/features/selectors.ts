@@ -14,7 +14,7 @@ export const getIsTurnstileVerificationEnabled = (state: RootState) => {
   if (hasLoadedInitialFlags(state)) {
     return getIsFeatureEnabled(state, ApplicationName.DAPPS, FeatureName.TURNSTILE_VERIFICATION)
   }
-  return true
+  return false
 }
 
 export const getWhitelistedCreditsWallet = (state: RootState): string[] => {
