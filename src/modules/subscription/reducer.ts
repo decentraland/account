@@ -26,12 +26,18 @@ import {
   VALIDATE_CREDITS_EMAIL_FAILURE,
   VALIDATE_CREDITS_EMAIL_REQUEST,
   VALIDATE_CREDITS_EMAIL_SUCCESS,
+  VALIDATE_EMAIL_WITH_TURNSTILE_FAILURE,
+  VALIDATE_EMAIL_WITH_TURNSTILE_REQUEST,
+  VALIDATE_EMAIL_WITH_TURNSTILE_SUCCESS,
   VALIDATE_SUBSCRIPTION_EMAIL_FAILURE,
   VALIDATE_SUBSCRIPTION_EMAIL_REQUEST,
   VALIDATE_SUBSCRIPTION_EMAIL_SUCCESS,
   ValidateCreditsEmailFailureAction,
   ValidateCreditsEmailRequestAction,
   ValidateCreditsEmailSuccessAction,
+  ValidateEmailWithTurnstileFailureAction,
+  ValidateEmailWithTurnstileRequestAction,
+  ValidateEmailWithTurnstileSuccessAction,
   ValidateSubscriptionEmailFailureAction,
   ValidateSubscriptionEmailRequestAction,
   ValidateSubscriptionEmailSuccessAction
@@ -71,6 +77,9 @@ type SubscriptionReducerAction =
   | ValidateCreditsEmailRequestAction
   | ValidateCreditsEmailSuccessAction
   | ValidateCreditsEmailFailureAction
+  | ValidateEmailWithTurnstileRequestAction
+  | ValidateEmailWithTurnstileSuccessAction
+  | ValidateEmailWithTurnstileFailureAction
 
 export function subscriptionReducer(state = buildInitialState(), action: SubscriptionReducerAction): SubscriptionState {
   switch (action.type) {
@@ -78,7 +87,8 @@ export function subscriptionReducer(state = buildInitialState(), action: Subscri
     case SAVE_SUBSCRIPTIONS_REQUEST:
     case SAVE_SUBSCRIPTION_EMAIL_REQUEST:
     case VALIDATE_SUBSCRIPTION_EMAIL_REQUEST:
-    case VALIDATE_CREDITS_EMAIL_REQUEST: {
+    case VALIDATE_CREDITS_EMAIL_REQUEST:
+    case VALIDATE_EMAIL_WITH_TURNSTILE_REQUEST: {
       return {
         ...state,
         error: null,
@@ -124,7 +134,8 @@ export function subscriptionReducer(state = buildInitialState(), action: Subscri
       }
     }
     case VALIDATE_SUBSCRIPTION_EMAIL_SUCCESS:
-    case VALIDATE_CREDITS_EMAIL_SUCCESS: {
+    case VALIDATE_CREDITS_EMAIL_SUCCESS:
+    case VALIDATE_EMAIL_WITH_TURNSTILE_SUCCESS: {
       return {
         ...state,
         unconfirmedEmail: undefined,
@@ -136,7 +147,8 @@ export function subscriptionReducer(state = buildInitialState(), action: Subscri
     case SAVE_SUBSCRIPTIONS_FAILURE:
     case SAVE_SUBSCRIPTION_EMAIL_FAILURE:
     case VALIDATE_SUBSCRIPTION_EMAIL_FAILURE:
-    case VALIDATE_CREDITS_EMAIL_FAILURE: {
+    case VALIDATE_CREDITS_EMAIL_FAILURE:
+    case VALIDATE_EMAIL_WITH_TURNSTILE_FAILURE: {
       return {
         ...state,
         loading: loadingReducer(state.loading, action),

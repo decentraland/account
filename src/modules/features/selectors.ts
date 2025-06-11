@@ -10,6 +10,13 @@ export const getIsStreamingEnabled = (state: RootState) => {
   return false
 }
 
+export const getIsTurnstileVerificationEnabled = (state: RootState) => {
+  if (hasLoadedInitialFlags(state)) {
+    return getIsFeatureEnabled(state, ApplicationName.DAPPS, FeatureName.TURNSTILE_VERIFICATION)
+  }
+  return false
+}
+
 export const getIsReferralEnabled = (state: RootState) => {
   if (hasLoadedInitialFlags(state)) {
     return getIsFeatureEnabled(state, ApplicationName.DAPPS, FeatureName.REFERRAL)
