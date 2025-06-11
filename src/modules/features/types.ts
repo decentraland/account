@@ -3,5 +3,6 @@ export enum FeatureName {
   SUBSCRIPTION = 'show-subscription-setting',
   NAVBAR_UI2 = 'navbar-ui2',
   USER_WALLETS = 'alfa-marketplace-credits',
-  STREAMING = 'show-subscription-streaming-setting'
+  STREAMING = 'show-subscription-streaming-setting',
+  REFERRAL = 'show-referral'
 }

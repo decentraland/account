@@ -20,11 +20,12 @@ const GROUP_ORDER = [
   SubscriptionGroupKeys.REWARDS,
   SubscriptionGroupKeys.DAO,
   SubscriptionGroupKeys.WORLDS,
-  SubscriptionGroupKeys.STREAMING
+  SubscriptionGroupKeys.STREAMING,
+  SubscriptionGroupKeys.REFERRAL
 ]
 
 export default function Notifications(props: Props) {
-  const { onGetSubscription, address, whitelistedCreditsWallets = [], isStreamingEnabled } = props
+  const { onGetSubscription, address, whitelistedCreditsWallets = [], isStreamingEnabled, isReferralEnabled } = props
   const isTabletOrBelow = useMediaQuery('(max-width:991px)')
   const location = useLocation<{ hasConfirmEmail?: boolean }>()
   const [expandedPanel, setExpandedPanel] = useState<string | false>(false)
@@ -47,6 +48,10 @@ export default function Notifications(props: Props) {
     }
 
     if (!isStreamingEnabled && key === SubscriptionGroupKeys.STREAMING) {
+      return false
+    }
+
+    if (!isReferralEnabled && key === SubscriptionGroupKeys.REFERRAL) {
       return false
     }
 

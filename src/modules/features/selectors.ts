@@ -10,6 +10,13 @@ export const getIsStreamingEnabled = (state: RootState) => {
   return false
 }
 
+export const getIsReferralEnabled = (state: RootState) => {
+  if (hasLoadedInitialFlags(state)) {
+    return getIsFeatureEnabled(state, ApplicationName.DAPPS, FeatureName.REFERRAL)
+  }
+  return false
+}
+
 export const getWhitelistedCreditsWallet = (state: RootState): string[] => {
   if (hasLoadedInitialFlags(state)) {
     const result = getFeatureVariant(state, ApplicationName.EXPLORER, FeatureName.USER_WALLETS)
