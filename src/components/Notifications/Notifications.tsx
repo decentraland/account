@@ -24,7 +24,7 @@ const GROUP_ORDER = [
 ]
 
 export default function Notifications(props: Props) {
-  const { onGetSubscription, address, whitelistedCreditsWallets = [], isStreamingEnabled } = props
+  const { onGetSubscription, address, isStreamingEnabled } = props
   const isTabletOrBelow = useMediaQuery('(max-width:991px)')
   const location = useLocation<{ hasConfirmEmail?: boolean }>()
   const [expandedPanel, setExpandedPanel] = useState<string | false>(false)
@@ -37,15 +37,6 @@ export default function Notifications(props: Props) {
   )
 
   const subscriptionGroupKeysToShow = Object.values(SubscriptionGroupKeys).filter(key => {
-    const isWalletWhitelistedOnCredits =
-      !!address &&
-      (whitelistedCreditsWallets?.length === 0 ||
-        whitelistedCreditsWallets?.map(wallet => wallet.toLowerCase())?.includes(address.toLowerCase()))
-
-    if (!isWalletWhitelistedOnCredits) {
-      return !subscriptionGroups[key].some(type => type.toLowerCase().includes('credits'))
-    }
-
     if (!isStreamingEnabled && key === SubscriptionGroupKeys.STREAMING) {
       return false
     }
@@ -82,7 +73,6 @@ export default function Notifications(props: Props) {
             onChangeAccordion={handleChange}
             isExpanded={expandedPanel === key.toString()}
             panelName={key.toString()}
-            whitelistedCreditsWallets={whitelistedCreditsWallets}
             address={address}
           />
         ))}
