@@ -8,12 +8,14 @@ import { Props } from './ConfirmPage.types'
 
 const ConfirmPage: React.FC<Props> = props => {
   const { isLoading, address, onValidateSubscriptionEmailRequest } = props
+  const searchParams = new URLSearchParams(location.search)
+  const searchParamsAddress = searchParams.get('address')
 
   const { token } = useParams<{ token: string }>()
 
   useEffect(() => {
-    !isLoading && onValidateSubscriptionEmailRequest({ address, code: token })
-  }, [isLoading, token, address])
+    !isLoading && onValidateSubscriptionEmailRequest({ address: searchParamsAddress || address, code: token })
+  }, [isLoading, token, address, searchParamsAddress])
   return (
     <PageContainer>
       <Navbar />
