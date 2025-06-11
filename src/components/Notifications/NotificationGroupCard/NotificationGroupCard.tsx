@@ -53,9 +53,6 @@ function NotificationGroupCard(props: Props) {
     })
   }, [notificationTypesInGroup])
 
-  console.log(' >>> notificationTypesInGroup', notificationTypesInGroup)
-  console.log(' >>> visibleNotificationTypes', visibleNotificationTypes)
-
   const handleOnChangeNotificationSetting = useCallback(
     (checked: boolean, type: NotificationType) => {
       if (!isLoading) {
