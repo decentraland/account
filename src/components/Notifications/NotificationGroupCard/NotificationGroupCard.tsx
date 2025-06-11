@@ -42,29 +42,16 @@ function NotificationGroupCard(props: Props) {
     isExpanded,
     panelName,
     onChangeAccordion,
-    onChangeNotificationSetting,
-    whitelistedCreditsWallets,
-    address
+    onChangeNotificationSetting
   } = props
-
-  // Check if the current user's address is whitelisted
-  const isWalletWhitelistedOnCredits = useMemo(() => {
-    return address ? whitelistedCreditsWallets?.map(wallet => wallet.toLowerCase())?.includes(address.toLowerCase()) : false
-  }, [address, whitelistedCreditsWallets])
 
   // Filter out hidden notifications from the displayed notification types
   const visibleNotificationTypes = useMemo(() => {
     return notificationTypesInGroup.filter(type => {
-      // If the user is not whitelisted, hide credit-related notifications
-      // TODO: remove credits whitelist
-      if (!isWalletWhitelistedOnCredits) {
-        return !type.toLowerCase().includes('credits')
-      }
-
       // Otherwise, only hide notifications in the HIDDEN_NOTIFICATIONS list
       return !HIDDEN_NOTIFICATIONS.includes(type)
     })
-  }, [notificationTypesInGroup, isWalletWhitelistedOnCredits])
+  }, [notificationTypesInGroup])
 
   const handleOnChangeNotificationSetting = useCallback(
     (checked: boolean, type: NotificationType) => {

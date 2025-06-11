@@ -1,4 +1,4 @@
-import { getFeatureVariant, getIsFeatureEnabled, hasLoadedInitialFlags } from 'decentraland-dapps/dist/modules/features/selectors'
+import { getIsFeatureEnabled, hasLoadedInitialFlags } from 'decentraland-dapps/dist/modules/features/selectors'
 import { ApplicationName } from 'decentraland-dapps/dist/modules/features/types'
 import { RootState } from '../reducer'
 import { FeatureName } from './types'
@@ -15,25 +15,4 @@ export const getIsTurnstileVerificationEnabled = (state: RootState) => {
     return getIsFeatureEnabled(state, ApplicationName.DAPPS, FeatureName.TURNSTILE_VERIFICATION)
   }
   return false
-}
-
-export const getWhitelistedCreditsWallet = (state: RootState): string[] => {
-  if (hasLoadedInitialFlags(state)) {
-    const result = getFeatureVariant(state, ApplicationName.EXPLORER, FeatureName.USER_WALLETS)
-
-    if (result?.enabled) {
-      if (!result?.payload?.value) {
-        return []
-      }
-
-      return (
-        result.payload.value
-          .replace('\n', '')
-          .split(',')
-          .map(wallet => wallet.toLowerCase()) ?? []
-      )
-    }
-  }
-
-  return []
 }
