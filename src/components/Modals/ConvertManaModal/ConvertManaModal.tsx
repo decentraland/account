@@ -8,8 +8,9 @@ import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { ethers } from 'ethers'
 import { ContractName } from 'decentraland-transactions'
 import { Button, Close, Field, Loader } from 'decentraland-ui'
+import { useWithdrawalCost } from '../../../hooks'
 import { getDepositManaStatus, getError } from '../../../modules/mana/selectors'
-import { ERC20_PREDICATE_CONTRACT_ADDRESS, MANA_CONTRACT_ADDRESS, getEstimatedExitTransactionCost } from '../../../modules/mana/utils'
+import { ERC20_PREDICATE_CONTRACT_ADDRESS, MANA_CONTRACT_ADDRESS } from '../../../modules/mana/utils'
 import { Props } from './ConvertManaModal.types'
 
 import './ConvertManaModal.css'
@@ -84,24 +85,7 @@ const ConvertManaModal: React.FC<Props> = ({
   }, [onManaPrice])
 
   const [hasAcceptedWithdrawalCost, setHasAcceptedWithdrawalCost] = useState(false)
-  const [txEstimatedCost, setTxEstimatedCost] = useState<number | null>()
-
-  useEffect(() => {
-    let cancel = false
-    const calculateExitCost = async () => {
-      try {
-        const cost = await getEstimatedExitTransactionCost()
-        if (!cancel) setTxEstimatedCost(cost)
-      } catch (error) {
-        setHasAcceptedWithdrawalCost(true)
-        setTxEstimatedCost(null)
-      }
-    }
-    calculateExitCost()
-    return () => {
-      cancel = true
-    }
-  }, [])
+  const [cost, isLoadingCost] = useWithdrawalCost()
 
   const isButtonLoading = isLoading
   const isDisabledByAmount = network === Network.MATIC ? manaMatic < amount : manaEth < amount
@@ -111,11 +95,11 @@ const ConvertManaModal: React.FC<Props> = ({
     if (!hasAcceptedWithdrawalCost) {
       return (
         <div className="fees-warning">
-          {txEstimatedCost ? (
+          {!isLoadingCost ? (
             <T
               id="convert_mana_modal.withdrawal_cost"
               values={{
-                cost: <b>${txEstimatedCost.toFixed(2)}</b>
+                cost: <b>{cost ?? t('global.unknown')}</b>
               }}
             />
           ) : (
@@ -165,7 +149,8 @@ const ConvertManaModal: React.FC<Props> = ({
     isDisabledByAmount,
     manaPrice,
     network,
-    txEstimatedCost
+    cost,
+    isLoadingCost
   ])
 
   return (

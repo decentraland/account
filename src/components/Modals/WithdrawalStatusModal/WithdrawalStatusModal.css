@@ -2,6 +2,23 @@
   padding: 48px 80px;
 }
 
+.WithdrawalStatusModal .withdrawal_cost {
+  font-size: 14px;
+  color: var(--text);
+  margin-top: 20px;
+  padding: 10px;
+  background-color: rgb(100, 98, 98);
+  border-radius: 6px;
+}
+
+.WithdrawalStatusModal .withdrawal_cost_loader {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .WithdrawalStatusModal .ui.modal {
   width: 520px;
   height: 518px;
@@ -27,31 +44,16 @@
 .WithdrawalStatusModal .amount {
   font-weight: 600;
   font-size: 21px;
-  line-height: 30px;
-  letter-spacing: 0.315px;
+
   color: var(--text);
-  padding-bottom: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .WithdrawalStatusModal .status {
   display: flex;
   flex-direction: column;
-}
-
-.WithdrawalStatusModal .default_cursor.ui.checkbox,
-.WithdrawalStatusModal .default_cursor.ui.checkbox input.hidden + label,
-.WithdrawalStatusModal .default_cursor.ui.checkbox input.hidden:focus + label,
-.WithdrawalStatusModal .default_cursor.ui.checkbox input.hidden:active + label {
-  cursor: default;
-}
-
-.WithdrawalStatusModal .ui.checkbox input.hidden + label,
-.WithdrawalStatusModal .ui.checkbox input.hidden:focus + label,
-.WithdrawalStatusModal .ui.checkbox input.hidden:active + label {
-  font-size: 17px;
-  color: var(--text);
-  margin: 8px 0px;
-  padding: 0px 0px 0px 28px;
+  gap: 10px;
 }
 
 .WithdrawalStatusModal .ui.button.primary {
