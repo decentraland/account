@@ -44,7 +44,8 @@ export const subscriptionGroups: SubscriptionGroups = {
     NotificationType.STREAMING_KEY_REVOKE,
     NotificationType.STREAMING_PLACE_UPDATED,
     NotificationType.STREAMING_TIME_EXCEEDED
-  ]
+  ],
+  [SubscriptionGroupKeys.REFERRAL]: [NotificationType.REFERRAL_INVITED_USERS_ACCEPTED, NotificationType.REFERRAL_NEW_TIER_REACHED]
 }
 
 export function isInSubscriptionGroup(subscriptionGroupsKey: SubscriptionGroupKeys, notificationType: NotificationType) {

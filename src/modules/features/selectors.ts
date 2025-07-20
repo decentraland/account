@@ -16,3 +16,10 @@ export const getIsTurnstileVerificationEnabled = (state: RootState) => {
   }
   return false
 }
+
+export const getIsReferralEnabled = (state: RootState) => {
+  if (hasLoadedInitialFlags(state)) {
+    return getIsFeatureEnabled(state, ApplicationName.DAPPS, FeatureName.REFERRAL)
+  }
+  return false
+}

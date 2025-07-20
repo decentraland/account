@@ -191,6 +191,10 @@
       "subscription_group_description_worlds": "如果您的世界儲存空間不足或您被邀請存取/協作某個世界，則會收到通知",
       "subscription_group_label_credits": "市场积分",
       "subscription_group_description_credits": "获取有关积分到期、未领取积分和不完整目标的通知",
+      "subscription_group_label_streaming": "世界内流",
+      "subscription_group_description_streaming": "获取有关场景流密钥和流状态的通知",
+      "subscription_group_label_referral": "推荐",
+      "subscription_group_description_referral": "获取有关您成功完成的推荐和解锁的奖励的通知",
       "saving_settings_error": "儲存通知設定時發生錯誤",
       "email": {
         "title": "您的電子郵件地址",
@@ -237,7 +241,14 @@
         "credits_reminder_complete_goals": "目标未完成",
         "credits_reminder_do_not_miss_out": "目标未开始",
         "credits_reminder_claim_credits": "未领取的积分",
-        "credits_reminder_usage": "积分即将到期"
+        "credits_reminder_usage": "积分即将到期",
+        "streaming_key_expired": "流密钥已过期",
+        "streaming_key_reset": "流密钥重置",
+        "streaming_key_revoke": "流密钥已停用",
+        "streaming_place_updated": "流场景已更改",
+        "streaming_time_exceeded": "流已超时",
+        "referral_new_tier_reached": "推荐奖励已解锁",
+        "referral_invited_users_accepted": "推荐已完成"
       }
     }
   }

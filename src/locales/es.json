@@ -192,6 +192,10 @@
       "subscription_group_description_worlds": "Recibe una notificación si tu mundo no tiene suficiente almacenamiento o si estás invitado a visitar/colaborar en un mundo",
       "subscription_group_label_credits": "Créditos del Marketplace",
       "subscription_group_description_credits": "Recibe notificaciones sobre la expiración de Créditos, Créditos sin reclamar y objetivos incompletos",
+      "subscription_group_label_streaming": "Transmisión en el mundo",
+      "subscription_group_description_streaming": "Recibe notificaciones sobre el estado de tus claves de transmisión y transmisiones.",
+      "subscription_group_label_referral": "Referencias",
+      "subscription_group_description_referral": "Recibe notificaciones sobre tus referencias completadas y recompensas desbloqueadas.",
       "saving_settings_error": "Error al guardar la configuración de notificación",
       "email": {
         "title": "Su dirección de correo electrónico",
@@ -238,7 +242,14 @@
         "credits_reminder_complete_goals": "Objetivos incompletos",
         "credits_reminder_do_not_miss_out": "Objetivos no iniciados",
         "credits_reminder_claim_credits": "Créditos sin reclamar",
-        "credits_reminder_usage": "Créditos a punto de expirar"
+        "credits_reminder_usage": "Créditos a punto de expirar",
+        "streaming_key_expired": "Clave de transmisión expirada",
+        "streaming_key_reset": "Clave de transmisión restablecida",
+        "streaming_key_revoke": "Clave de transmisión desactivada",
+        "streaming_place_updated": "Escena de transmisión actualizada",
+        "streaming_time_exceeded": "Tiempo de transmisión agotado",
+        "referral_new_tier_reached": "Recompensa de referido desbloquada",
+        "referral_invited_users_accepted": "Referido completado"
       }
     }
   }
