@@ -6,9 +6,10 @@ export type Props = {
   onGetSubscription: typeof getSubscriptionsRequest
   address?: string
   isStreamingEnabled: boolean
+  isReferralEnabled: boolean
 }
 
-export type MapStateProps = Pick<Props, 'isLoading' | 'address' | 'isStreamingEnabled'>
+export type MapStateProps = Pick<Props, 'isLoading' | 'address' | 'isStreamingEnabled' | 'isReferralEnabled'>
 export type OwnProps = Pick<Props, 'isLoading'>
 export type MapDispatchProps = Pick<Props, 'onGetSubscription'>
 export type MapDispatch = Dispatch<SaveSubscriptionsRequestAction | GetSubscriptionsRequestAction>

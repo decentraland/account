@@ -193,6 +193,8 @@
       "subscription_group_description_credits": "Get notifications about Credit expiration, unclaimed Credits, and incomplete goals.",
       "subscription_group_label_streaming": "In-World Streaming",
       "subscription_group_description_streaming": "Get notifications about the status of your scene stream keys and streams.",
+      "subscription_group_label_referral": "Referrals",
+      "subscription_group_description_referral": "Get notifications about your successfully completed referrals and rewards unlocked.",
       "saving_settings_error": "Error saving notification settings",
       "email": {
         "title": "Your Email Address",
@@ -244,7 +246,9 @@
         "streaming_key_reset": "Stream Key Reset",
         "streaming_key_revoke": "Stream Key Deactivated",
         "streaming_place_updated": "Stream Scene Altered",
-        "streaming_time_exceeded": "Stream Timed Out"
+        "streaming_time_exceeded": "Stream Timed Out",
+        "referral_new_tier_reached": "Referral Reward Unlocked",
+        "referral_invited_users_accepted": "Referral Completed"
       }
     }
   }
