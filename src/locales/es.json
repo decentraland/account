@@ -1,12 +1,12 @@
 {
   "global": {
-    "guest": "Invitado",
     "settings": "Configuración",
     "usd_symbol": "USD",
     "mana_symbol": "MANA",
     "done": "Hecho",
     "max": "Max",
-    "fees_warning": "Recuerde, cualquier transacción que mueva activos dentro, hacia o desde la cadena de bloques Ethereum incurrirá en tarifas de gas. Solo las transacciones realizadas exclusivamente en Polygon son sin gas."
+    "fees_warning": "Recuerde, cualquier transacción que mueva activos dentro, hacia o desde la cadena de bloques Ethereum incurrirá en tarifas de gas. Solo las transacciones realizadas exclusivamente en Polygon son sin gas.",
+    "unknown": "Desconocido"
   },
 
   "main_page": {
@@ -14,14 +14,6 @@
     "email_notifications": "Notificaciones",
     "title": "Configuración de la cuenta",
     "copied": "Copiado!"
-  },
-  "account_header": {
-    "actions": {
-      "change_alias": "Cambiar Alias",
-      "get_a_name": "Obtener un nombre",
-      "edit_avatar": "Editar Avatar",
-      "set_description": "Clickea aquí para establecer una descripción..."
-    }
   },
   "account_card_header": {
     "add": "Comprar",
@@ -141,7 +133,9 @@
     "status_checkpoint": "Listo para retirar",
     "status_checkpoint_placeholder": "Usualmente toma 30 minutos",
     "status_completed": "Completar Retiro",
-    "complete_withdrawal": "Completar Retiro"
+    "complete_withdrawal": "Completar Retiro",
+    "withdrawal_cost": "El proceso de retiro costará aproximadamente <bold>{cost} ETH</bold> de tarifas de gas.",
+    "withdrawal_cost_explanation": "Asegúrese de tener suficiente ETH en su billetera para cubrir el retiro o la transacción fallará. Las tarifas de gas pueden variar según la congestión de la red."
   },
   "withdrawal_status": {
     "pending": "Pendiente",

@@ -1,11 +1,10 @@
-import * as React from 'react'
+import { useCallback } from 'react'
 import { Network } from '@dcl/schemas'
 import { NetworkButton } from 'decentraland-dapps/dist/containers'
 import Modal from 'decentraland-dapps/dist/containers/Modal'
-import { isPending } from 'decentraland-dapps/dist/modules/transaction/utils'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Button, Close } from 'decentraland-ui'
-import { FINISH_WITHDRAWAL_SUCCESS } from '../../../modules/mana/actions'
+import { Button, Loader, ModalNavigation } from 'decentraland-ui'
+import { useWithdrawalCost } from '../../../hooks'
 import { WithdrawalStatus } from '../../../modules/mana/types'
 import CompleteWithdrawal from './CompleteWithdrawal'
 import ReadyToWithdraw from './ReadyToWithdraw'
@@ -14,54 +13,72 @@ import WithdrawInitialized from './WithdrawInitialized'
 
 import './WithdrawalStatusModal.css'
 
-export default class WithdrawalStatusModal extends React.PureComponent<Props> {
-  render() {
-    const { name, onClose, metadata, withdrawals, transactions, isLoading, onFinishWithdrawal } = this.props
-    const withdrawal = withdrawals.find(({ initializeHash }) => metadata.txHash === initializeHash)
-    const finalizeTransaction = transactions.find(
-      tx => tx.actionType === FINISH_WITHDRAWAL_SUCCESS && tx.payload.withdrawal.initializeHash === metadata.txHash
-    )
-    const isTxPending = Boolean(finalizeTransaction && isPending(finalizeTransaction.status))
-
-    if (!withdrawal) {
-      return
-    }
-
-    const { status, amount } = withdrawal
-
-    const handleFinishWithdrawal = () => onFinishWithdrawal(withdrawal)
-
-    return (
-      <Modal name={name} closeIcon={<Close onClick={onClose} />} className="WithdrawalStatusModal">
-        <Modal.Header>{t('withdrawal_status_modal.title')}</Modal.Header>
-        <Modal.Content>
-          <div className="amount_placeholder">{t('withdrawal_status_modal.amount_placeholder')}</div>
-          <div className="amount">
-            {amount} {t('global.mana_symbol')}
-          </div>
-          <div className="status">
-            <div className="status_placeholder">{t('withdrawal_status_modal.status_placeholder')}</div>
-            <WithdrawInitialized withdrawal={withdrawal} />
-            <ReadyToWithdraw withdrawal={withdrawal} />
-            <CompleteWithdrawal withdrawal={withdrawal} />
-          </div>
-          {status === WithdrawalStatus.COMPLETE && !isTxPending ? (
-            <Button primary onClick={onClose}>
-              {t('global.done')}
-            </Button>
-          ) : (
-            <NetworkButton
-              primary
-              disabled={status === WithdrawalStatus.PENDING || isLoading || isTxPending}
-              loading={isLoading || isTxPending}
-              onClick={handleFinishWithdrawal}
-              network={Network.ETHEREUM}
-            >
-              {t('withdrawal_status_modal.complete_withdrawal')}
-            </NetworkButton>
-          )}
-        </Modal.Content>
-      </Modal>
-    )
+export default function WithdrawalStatusModal({
+  name,
+  onClose,
+  withdrawal,
+  isFinalizingWithdrawal,
+  isLoading,
+  onFinishWithdrawal
+}: Props): JSX.Element | null {
+  const [cost, isLoadingCost] = useWithdrawalCost()
+  if (!withdrawal) {
+    return null
   }
+
+  const { status, amount } = withdrawal
+  const isReadyToWithdraw = status === WithdrawalStatus.CHECKPOINT || status === WithdrawalStatus.COMPLETE
+  const handleFinishWithdrawal = useCallback(() => onFinishWithdrawal(withdrawal), [withdrawal, onFinishWithdrawal])
+
+  return (
+    <Modal name={name} onClose={onClose} className="WithdrawalStatusModal">
+      <ModalNavigation title={t('withdrawal_status_modal.title')} onClose={onClose} />
+      <Modal.Content>
+        <div className="amount_placeholder">{t('withdrawal_status_modal.amount_placeholder')}</div>
+        <div className="amount">
+          {amount} {t('global.mana_symbol')}
+        </div>
+        <div className="status">
+          <div className="status_placeholder">{t('withdrawal_status_modal.status_placeholder')}</div>
+          <WithdrawInitialized withdrawal={withdrawal} />
+          <ReadyToWithdraw isReadyToWithdraw={isReadyToWithdraw} />
+          <CompleteWithdrawal withdrawal={withdrawal} />
+        </div>
+
+        {isReadyToWithdraw ? (
+          isLoadingCost ? (
+            <div className="withdrawal_cost_loader">
+              <Loader size="tiny" inline />
+            </div>
+          ) : (
+            <div className="withdrawal_cost">
+              <>
+                {t('withdrawal_status_modal.withdrawal_cost', {
+                  cost: cost ?? t('global.unknown'),
+                  bold: (text: string) => <b>{text}</b>
+                })}
+                <br />
+                {t('withdrawal_status_modal.withdrawal_cost_explanation')}
+              </>
+            </div>
+          )
+        ) : null}
+        {status === WithdrawalStatus.COMPLETE && !isFinalizingWithdrawal ? (
+          <Button primary onClick={onClose}>
+            {t('global.done')}
+          </Button>
+        ) : (
+          <NetworkButton
+            primary
+            disabled={status === WithdrawalStatus.PENDING || isLoading || isFinalizingWithdrawal}
+            loading={isLoading || isFinalizingWithdrawal}
+            onClick={handleFinishWithdrawal}
+            network={Network.ETHEREUM}
+          >
+            {t('withdrawal_status_modal.complete_withdrawal')}
+          </NetworkButton>
+        )}
+      </Modal.Content>
+    </Modal>
+  )
 }

@@ -1,26 +1,18 @@
 {
   "global": {
-    "guest": "Guest",
     "settings": "Settings",
     "usd_symbol": "USD",
     "mana_symbol": "MANA",
     "done": "Done",
     "max": "Max",
-    "fees_warning": "Remember, any transaction that moves assets within, to, or from the Ethereum blockchain will incur gas fees. Only transactions conducted exclusively on Polygon are gas-less."
+    "fees_warning": "Remember, any transaction that moves assets within, to, or from the Ethereum blockchain will incur gas fees. Only transactions conducted exclusively on Polygon are gas-less.",
+    "unknown": "Unknown"
   },
   "main_page": {
     "wallets": "Wallets",
     "email_notifications": "Email Notifications",
     "title": "Account Settings",
     "copied": "Copied!"
-  },
-  "account_header": {
-    "actions": {
-      "change_alias": "Change Alias",
-      "get_a_name": "Get a name",
-      "edit_avatar": "Edit Avatar",
-      "set_description": "Click here to set a description..."
-    }
   },
   "account_card_header": {
     "add": "Buy",
@@ -121,7 +113,7 @@
     "subtitle_matic": "Withdraw MANA from Polygon into Ethereum",
     "label_approvement": "MANA Approved",
     "no_balance": "You don't have enough balance",
-    "withdrawal_cost": "This operation consists of two steps. The first step won't have any cost. The second one will cost approximately {cost} of gas fees on Ethereum.",
+    "withdrawal_cost": "This operation consists of two steps. The first step won't have any cost. The second one will cost approximately {cost} ETH of gas fees.",
     "withdrawal_cost_accept": "Proceed",
     "withdrawal_cost_cancel": "Cancel",
     "authorization": {
@@ -140,7 +132,9 @@
     "status_checkpoint": "Ready to withdraw",
     "status_checkpoint_placeholder": "Usually takes 30 minutes",
     "status_completed": "Complete withdrawal",
-    "complete_withdrawal": "Complete Withdrawal"
+    "complete_withdrawal": "Complete Withdrawal",
+    "withdrawal_cost": "The withdrawal process will cost approximately <bold>{cost} ETH</bold> of gas fees.",
+    "withdrawal_cost_explanation": "Be sure to have enough ETH in your wallet to cover the withdrawal or the transaction will fail. Gas fees might vary depending on the network congestion."
   },
   "withdrawal_status": {
     "pending": "Pending",

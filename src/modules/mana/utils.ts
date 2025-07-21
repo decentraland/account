@@ -2,7 +2,7 @@ import { Network } from '@dcl/schemas'
 import { IPOSClientConfig, POSClient } from '@maticnetwork/maticjs'
 import { call, select } from '@redux-saga/core/effects'
 import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
-import { getConnectedProvider } from 'decentraland-dapps/dist/lib/eth'
+import { getChainIdByNetwork, getConnectedProvider, getNetworkWeb3Provider } from 'decentraland-dapps/dist/lib/eth'
 import { PurchaseStatus } from 'decentraland-dapps/dist/modules/gateway/types'
 import { TransactionStatus as TxStatus } from 'decentraland-dapps/dist/modules/transaction/types'
 import { hasFailed, hasSucceeded, isPending } from 'decentraland-dapps/dist/modules/transaction/utils'
@@ -11,7 +11,6 @@ import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { BigNumber, ethers, utils } from 'ethers'
 import { Provider } from 'decentraland-transactions'
 import { config } from '../../config'
-import { gasPriceAPI } from '../../lib/api/gasPrice'
 import { getWithdrawals } from './selectors'
 import { DepositStatus, MaticEnv, TransactionStatus, TransactionType, TransferStatus, Withdrawal, WithdrawalStatus } from './types'
 
@@ -236,14 +235,11 @@ export function* getStoreWithdrawalByHash(hash: string) {
 
 const EXIT_CONTRACT_GAS_CONSUMPTION = 260670 // gas in wei
 
-export async function getEstimatedExitTransactionCost() {
-  const {
-    result: { fast, ethPrice }
-  } = await gasPriceAPI.fetchGasPrice()
-
-  const gasPriceWei = utils.parseUnits(String(fast.feeCap.toFixed(3)), 'gwei')
-  const estimatedTxGasWei = gasPriceWei.mul(EXIT_CONTRACT_GAS_CONSUMPTION)
+export async function getEstimatedExitTransactionCost(): Promise<string> {
+  const appChainId = getChainIdByNetwork(Network.ETHEREUM)
+  const networkWeb3Provider = await getNetworkWeb3Provider(appChainId)
+  const gasPriceInWei = await networkWeb3Provider.getGasPrice()
+  const estimatedTxGasWei = gasPriceInWei.mul(EXIT_CONTRACT_GAS_CONSUMPTION)
   const estimatedTxGasEther = utils.formatEther(estimatedTxGasWei)
-
-  return +estimatedTxGasEther * ethPrice
+  return estimatedTxGasEther
 }

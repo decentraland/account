@@ -1,26 +1,18 @@
 {
   "global": {
-    "guest": "客人",
     "settings": "设定",
     "usd_symbol": "USD",
     "mana_symbol": "MANA",
     "done": "完毕",
     "max": "最大",
-    "fees_warning": "请记住，将资产移入以太坊区块链或从以太坊区块链移出的任何交易都将产生汽油费。 仅在Polygon上专门进行的交易是无耗油的"
+    "fees_warning": "请记住，将资产移入以太坊区块链或从以太坊区块链移出的任何交易都将产生汽油费。 仅在Polygon上专门进行的交易是无耗油的",
+    "unknown": "未知"
   },
   "main_page": {
     "wallets": "錢包",
     "email_notifications": "電子郵件通知",
     "title": "帳戶設定",
     "copied": "已复制！"
-  },
-  "account_header": {
-    "actions": {
-      "change_alias": "更改别名",
-      "get_a_name": "取个名字",
-      "edit_avatar": "编辑头像",
-      "set_description": "单击此处设置说明..."
-    }
   },
   "account_card_header": {
     "add": "买",
@@ -140,7 +132,9 @@
     "status_checkpoint": "检查站",
     "status_checkpoint_placeholder": "通常需要30分钟",
     "status_completed": "完成提款",
-    "complete_withdrawal": "完全取款"
+    "complete_withdrawal": "完全取款",
+    "withdrawal_cost": "提款过程将花费大约 <bold>{cost} ETH</bold> 的汽油费。",
+    "withdrawal_cost_explanation": "请确保您的钱包中有足够的 ETH 以覆盖提款或交易将失败。汽油费可能因网络拥堵而有所不同。"
   },
   "withdrawal_status": {
     "pending": "待办的",
