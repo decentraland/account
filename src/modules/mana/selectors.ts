@@ -14,6 +14,7 @@ import { RootState } from '../reducer'
 import {
   APPROVE_MANA_SUCCESS,
   DEPOSIT_MANA_REQUEST,
+  FINISH_WITHDRAWAL_SUCCESS,
   IMPORT_WITHDRAWAL_REQUEST,
   TRANSFER_MANA_SUCCESS,
   TransferManaSuccessAction
@@ -57,6 +58,16 @@ export const getPendingTransactions = createSelector<RootState, Transaction[], T
 export const isWaitingForApproval = createSelector<RootState, Transaction[], boolean>(getPendingTransactions, transactions =>
   transactions.some(transaction => APPROVE_MANA_SUCCESS === transaction.actionType)
 )
+
+export const getWithdrawalByHash = (state: RootState, hash: string): Withdrawal | undefined =>
+  getWithdrawals(state).find(withdrawal => withdrawal.initializeHash === hash)
+
+export const isFinalizingWithdrawalTransaction = (state: RootState, hash: string): boolean => {
+  const transaction = getTransactions(state).find(
+    tx => tx.actionType === FINISH_WITHDRAWAL_SUCCESS && tx.payload.withdrawal.initializeHash === hash
+  )
+  return Boolean(transaction && isPending(transaction.status))
+}
 
 export const getDeposits = (state: RootState) => getData(state).deposits
 export const getWithdrawals = (state: RootState) => getData(state).withdrawals

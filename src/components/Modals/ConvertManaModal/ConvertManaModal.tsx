@@ -87,9 +87,8 @@ const ConvertManaModal: React.FC<Props> = ({
   const [hasAcceptedWithdrawalCost, setHasAcceptedWithdrawalCost] = useState(false)
   const [cost, isLoadingCost] = useWithdrawalCost()
 
-  const isButtonLoading = isLoading
   const isDisabledByAmount = network === Network.MATIC ? manaMatic < amount : manaEth < amount
-  const isButtonDisabled = isButtonLoading || isDisabledByAmount || amount <= 0
+  const isButtonDisabled = isLoading || isDisabledByAmount || amount <= 0
 
   const content = useMemo(() => {
     if (!hasAcceptedWithdrawalCost) {
@@ -114,6 +113,7 @@ const ConvertManaModal: React.FC<Props> = ({
           label={t('convert_mana_modal.amount_label')}
           placeholder="0"
           value={amount}
+          disabled={isLoading}
           onChange={handleSetAmount}
           className="amount"
           action={t('global.max')}
@@ -131,7 +131,7 @@ const ConvertManaModal: React.FC<Props> = ({
           className="start-transaction-button"
           primary
           onClick={handleConvert}
-          loading={isButtonLoading}
+          loading={isLoading}
           disabled={isButtonDisabled}
           network={network}
         >
@@ -145,7 +145,7 @@ const ConvertManaModal: React.FC<Props> = ({
     handleMax,
     hasAcceptedWithdrawalCost,
     isButtonDisabled,
-    isButtonLoading,
+    isLoading,
     isDisabledByAmount,
     manaPrice,
     network,
