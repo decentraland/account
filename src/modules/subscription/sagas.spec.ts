@@ -156,7 +156,8 @@ describe('when handling the request action to validate the subscription`s email'
           [
             call([notificationsAPI, 'postEmailConfirmationCode'], validationBody),
             Promise.resolve({ ...subscriptionSettings, address: unconfirmedEmail })
-          ]
+          ],
+          [call([notificationsAPI, 'getSubscription']), Promise.resolve(subscriptionSettings)]
         ])
         .put(getSubscriptionsRequest())
         .put(validateSubscriptionEmailSuccess())

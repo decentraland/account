@@ -47,9 +47,7 @@ const gatewaySaga = createGatewaySaga({
     widgetBaseUrl: config.get('MOON_PAY_WIDGET_URL')
   },
   [NetworkGatewayType.TRANSAK]: {
-    apiBaseUrl: config.get('TRANSAK_API_URL'),
-    key: config.get('TRANSAK_KEY'),
-    env: config.get('TRANSAK_ENV'),
+    apiBaseUrl: config.get('MARKETPLACE_API_URL'),
     pollingDelay: +config.get('TRANSAK_POLLING_DELAY'),
     pusher: {
       appKey: config.get('TRANSAK_PUSHER_APP_KEY'),
