@@ -1,6 +1,7 @@
 import { call, getContext } from '@redux-saga/core/effects'
 import { NotificationsAPI } from 'decentraland-dapps/dist/modules/notifications'
 import { expectSaga } from 'redux-saga-test-plan'
+import * as matchers from 'redux-saga-test-plan/matchers'
 import { objectToSnake } from 'ts-case-convert'
 import {
   getSubscriptionsFailure,
@@ -76,7 +77,9 @@ describe('when handling the request action to save the subscription', () => {
 
     it('should put a save subscription failure action with the error', () => {
       return expectSaga(subscriptionSagas, notificationsAPI)
-        .provide([[call([notificationsAPI, 'putSubscription'], subscriptionSettings.details), Promise.reject(new Error(errorMessage))]])
+        .provide([
+          [matchers.call([notificationsAPI, 'putSubscription'], subscriptionSettings.details), Promise.reject(new Error(errorMessage))]
+        ])
         .put(saveSubscriptionsFailure(errorMessage))
         .dispatch(saveSubscriptionsRequest(subscriptionSettings.details))
         .silentRun()
@@ -86,7 +89,9 @@ describe('when handling the request action to save the subscription', () => {
   describe('and the notification API call is successful', () => {
     it('should put a save subscription success action with the subscription', () => {
       return expectSaga(subscriptionSagas, notificationsAPI)
-        .provide([[call([notificationsAPI, 'putSubscription'], subscriptionSettings.details), Promise.resolve(subscriptionSettings)]])
+        .provide([
+          [matchers.call([notificationsAPI, 'putSubscription'], subscriptionSettings.details), Promise.resolve(subscriptionSettings)]
+        ])
         .put(saveSubscriptionsSuccess(subscriptionSettings.details))
         .dispatch(saveSubscriptionsRequest(subscriptionSettings.details))
         .silentRun()
