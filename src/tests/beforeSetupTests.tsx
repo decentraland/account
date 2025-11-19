@@ -26,7 +26,7 @@ Object.assign(globalThis, {
   setImmediate: global.setImmediate || ((fn: (...args: any[]) => void, ...args: any) => global.setTimeout(fn, 0, ...args))
 })
 
-// Mock HTMLCanvasElement.prototype.getContext para lottie-web
+// Mock HTMLCanvasElement.prototype.getContext for lottie-web
 if (typeof HTMLCanvasElement !== 'undefined') {
   const originalGetContext = HTMLCanvasElement.prototype.getContext
   HTMLCanvasElement.prototype.getContext = function (contextType: string, ...args: any[]) {
