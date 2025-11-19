@@ -25,3 +25,89 @@ Object.assign(globalThis, { TextDecoder, TextEncoder })
 Object.assign(globalThis, {
   setImmediate: global.setImmediate || ((fn: (...args: any[]) => void, ...args: any) => global.setTimeout(fn, 0, ...args))
 })
+
+// Mock HTMLCanvasElement.prototype.getContext for lottie-web
+if (typeof HTMLCanvasElement !== 'undefined') {
+  const originalGetContext = HTMLCanvasElement.prototype.getContext
+  HTMLCanvasElement.prototype.getContext = function (contextType: string, ...args: any[]) {
+    if (contextType === '2d') {
+      return {
+        canvas: this,
+        fillStyle: '#000000',
+        strokeStyle: '#000000',
+        lineWidth: 1,
+        lineCap: 'butt',
+        lineJoin: 'miter',
+        miterLimit: 10,
+        globalAlpha: 1.0,
+        globalCompositeOperation: 'source-over',
+        save: jest.fn(),
+        restore: jest.fn(),
+        scale: jest.fn(),
+        rotate: jest.fn(),
+        translate: jest.fn(),
+        transform: jest.fn(),
+        setTransform: jest.fn(),
+        resetTransform: jest.fn(),
+        createLinearGradient: jest.fn(() => ({
+          addColorStop: jest.fn()
+        })),
+        createRadialGradient: jest.fn(() => ({
+          addColorStop: jest.fn()
+        })),
+        createPattern: jest.fn(),
+        clearRect: jest.fn(),
+        fillRect: jest.fn(),
+        strokeRect: jest.fn(),
+        beginPath: jest.fn(),
+        closePath: jest.fn(),
+        moveTo: jest.fn(),
+        lineTo: jest.fn(),
+        bezierCurveTo: jest.fn(),
+        quadraticCurveTo: jest.fn(),
+        arc: jest.fn(),
+        arcTo: jest.fn(),
+        rect: jest.fn(),
+        fill: jest.fn(),
+        stroke: jest.fn(),
+        drawFocusIfNeeded: jest.fn(),
+        clip: jest.fn(),
+        isPointInPath: jest.fn(() => false),
+        isPointInStroke: jest.fn(() => false),
+        fillText: jest.fn(),
+        strokeText: jest.fn(),
+        measureText: jest.fn(() => ({
+          width: 0,
+          actualBoundingBoxLeft: 0,
+          actualBoundingBoxRight: 0,
+          fontBoundingBoxAscent: 0,
+          fontBoundingBoxDescent: 0,
+          actualBoundingBoxAscent: 0,
+          actualBoundingBoxDescent: 0,
+          emHeightAscent: 0,
+          emHeightDescent: 0,
+          hangingBaseline: 0,
+          alphabeticBaseline: 0,
+          ideographicBaseline: 0
+        })),
+        drawImage: jest.fn(),
+        createImageData: jest.fn(() => ({
+          data: new Uint8ClampedArray(0),
+          width: 0,
+          height: 0
+        })),
+        getImageData: jest.fn(() => ({
+          data: new Uint8ClampedArray(0),
+          width: 0,
+          height: 0
+        })),
+        putImageData: jest.fn(),
+        getContextAttributes: jest.fn(() => ({})),
+        setLineDash: jest.fn(),
+        getLineDash: jest.fn(() => []),
+        createImageDataFromImageData: jest.fn()
+      } as any
+    }
+    return originalGetContext ? originalGetContext.call(this, contextType as any, ...args) : null
+  }
+}
