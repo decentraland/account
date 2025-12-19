@@ -46,15 +46,19 @@ const middleware = applyMiddleware(sagasMiddleware, loggerMiddleware, transactio
 const enhancer = compose(middleware)
 const store = createStore(rootReducer, enhancer)
 
+const getIdentity = () => {
+  const address = getAddress(store.getState())
+  const identity = address ? localStorageGetIdentity(address) : null
+  return identity ?? undefined
+}
+
 const notificationApi = new NotificationsAPI({
-  identity: () => {
-    const address = getAddress(store.getState())
-    const identity = address ? localStorageGetIdentity(address) : null
-    return identity ?? undefined
-  }
+  identity: getIdentity
 })
 
-const creditsClient = new CreditsClient(config.get('CREDITS_SERVER_URL'))
+const creditsClient = new CreditsClient(config.get('CREDITS_SERVER_URL'), {
+  identity: getIdentity
+})
 
 sagasMiddleware.run(rootSaga, notificationApi, creditsClient)
 loadStorageMiddleware(store)
