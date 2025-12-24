@@ -15,6 +15,10 @@ module.exports = {
     // TODO: Remove this rule and fix all the ban types issues
     '@typescript-eslint/ban-types': 'off',
     'import/default': 'off',
+    // TODO: Remove these rules and fix all the export issues
+    'import/group-exports': 'off',
+    'import/exports-last': 'off',
+    'import/no-default-export': 'off',
     'autofix/no-debugger': 'error',
     'sort-imports': [
       'error',

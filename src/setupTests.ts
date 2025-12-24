@@ -5,5 +5,5 @@
 import '@testing-library/jest-dom'
 import { TextDecoder, TextEncoder } from 'util'
 document.body.append(document.createElement('script'))
-global.TextEncoder = TextEncoder
-global.TextDecoder = TextDecoder as any
+global.TextEncoder = TextEncoder as typeof globalThis.TextEncoder
+global.TextDecoder = TextDecoder as typeof globalThis.TextDecoder
