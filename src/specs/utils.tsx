@@ -1,9 +1,9 @@
+import { ReactNode } from 'react'
 import { Provider } from 'react-redux'
 import { Router } from 'react-router-dom'
 import { render } from '@testing-library/react'
 import { en } from 'decentraland-dapps/dist/modules/translation/defaults'
-import { mergeTranslations } from 'decentraland-dapps/dist/modules/translation/utils'
-import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
+import { I18nProvider, mergeTranslations } from 'decentraland-dapps/dist/modules/translation/utils'
 import flatten from 'flat'
 import { createMemoryHistory } from 'history'
 import { Store } from 'redux'
@@ -15,31 +15,33 @@ import { initTestStore } from './store'
 const allTranslations = mergeTranslations(flatten(en) as unknown as Record<string, string>, flatten(locales.en))
 
 export function renderWithProviders(
-  component: JSX.Element,
+  component: ReactNode,
   { preloadedState, store }: { preloadedState?: Partial<RootState>; store?: Store } = {}
 ) {
   const initializedStore =
     store ||
     initTestStore({
       ...(preloadedState || {}),
-      storage: { loading: false },
+      storage: { loading: false, version: 1 },
       translation: {
         data: {
           en: allTranslations,
           'en-EN': allTranslations
         },
-        locale: 'en-EN'
+        locale: 'en-EN',
+        loading: [],
+        error: null
       }
     })
 
   const history = createMemoryHistory()
 
-  function AppProviders({ children }: { children: JSX.Element }) {
+  function AppProviders({ children }: { children: ReactNode }) {
     return (
       <Provider store={initializedStore}>
-        <TranslationProvider locales={['en', 'en-EN']}>
+        <I18nProvider locale="en" messages={allTranslations}>
           <Router history={history}>{children}</Router>
-        </TranslationProvider>
+        </I18nProvider>
       </Provider>
     )
   }

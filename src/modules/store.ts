@@ -20,7 +20,7 @@ import { rootSaga } from './sagas'
 
 const basename = /^decentraland.(zone|org|today)$/.test(window.location.host) ? '/account' : undefined
 
-export const history = createBrowserHistory({ basename })
+const history = createBrowserHistory({ basename })
 const rootReducer = storageReducerWrapper(createRootReducer())
 
 const sagasMiddleware = createSagasMiddleware({ context: { history } })
@@ -42,7 +42,7 @@ const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
 })
 const analyticsMiddleware = createAnalyticsMiddleware(config.get('SEGMENT_API_KEY'))
 
-const middleware = applyMiddleware(sagasMiddleware, loggerMiddleware, transactionMiddleware, storageMiddleware, analyticsMiddleware)
+const middleware = applyMiddleware(sagasMiddleware, loggerMiddleware as any, transactionMiddleware, storageMiddleware, analyticsMiddleware)
 const enhancer = compose(middleware)
 const store = createStore(rootReducer, enhancer)
 
@@ -68,4 +68,4 @@ if (config.is(Env.DEVELOPMENT)) {
   _window.store = store
 }
 
-export { store }
+export { history, store }

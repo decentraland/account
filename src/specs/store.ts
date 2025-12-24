@@ -2,6 +2,7 @@ import { localStorageGetIdentity } from '@dcl/single-sign-on-client'
 import { CreditsClient } from 'decentraland-dapps/dist/modules/credits/CreditsClient'
 import { SET_PURCHASE } from 'decentraland-dapps/dist/modules/gateway'
 import { NotificationsAPI } from 'decentraland-dapps/dist/modules/notifications'
+import { STORAGE_LOAD } from 'decentraland-dapps/dist/modules/storage/actions'
 import { createStorageMiddleware } from 'decentraland-dapps/dist/modules/storage/middleware'
 import { storageReducerWrapper } from 'decentraland-dapps/dist/modules/storage/reducer'
 import { createTransactionMiddleware } from 'decentraland-dapps/dist/modules/transaction/middleware'
@@ -25,7 +26,7 @@ export function initTestStore(preloadedState = {}) {
   const rootReducer = storageReducerWrapper(createRootReducer())
   const sagasMiddleware = createSagasMiddleware({ context: { history: testHistory } })
   const transactionMiddleware = createTransactionMiddleware()
-  const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware({
+  const { storageMiddleware } = createStorageMiddleware({
     storageKey: 'account',
     paths: [
       ['mana', 'data', 'deposits'],
@@ -51,7 +52,8 @@ export function initTestStore(preloadedState = {}) {
   const creditsClient = new CreditsClient(config.get('CREDITS_SERVER_URL'))
 
   sagasMiddleware.run(rootSaga, notificationApi, creditsClient)
-  loadStorageMiddleware(store)
+  // Dispatch STORAGE_LOAD synchronously to avoid race conditions in tests
+  store.dispatch({ type: STORAGE_LOAD, payload: {} })
 
   return store
 }
