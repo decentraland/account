@@ -15,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: Use Node.js 20.x
-        uses: actions/setup-node@v4.0.1
+      - name: Use Node.js 24.x
+        uses: actions/setup-node@v6.1.0
         with:
-          node-version: 20.x
+          node-version: 24.x
           cache: 'npm'
       - name: Set package.json version
         uses: decentraland/oddish-action@master
