@@ -3,7 +3,7 @@
   "version": "0.0.0-development",
   "type": "module",
   "dependencies": {
-    "@dcl/schemas": "^19.5.0",
+    "@dcl/schemas": "^22.1.0",
     "@dcl/single-sign-on-client": "^0.1.0",
     "@dcl/ui-env": "^1.5.1",
     "@ethersproject/abi": "^5.7.0",
@@ -81,12 +81,15 @@
     "typescript": "^5.3.3",
     "vite": "^5.2.8"
   },
+  "overrides": {
+    "@dcl/schemas": "^22.1.0"
+  },
   "scripts": {
     "start": "vite",
     "prebuild": "node scripts/prebuild.cjs",
     "test": "jest",
     "test:coverage": "npm run test -- --coverage",
-    "build": "tsc && vite build",
+    "build": "NODE_OPTIONS=--max-old-space-size=8192 tsc && vite build",
     "build:contracts": "typechain --target ethers-v5 --out-dir src/contracts src/contracts/*.json",
     "check:code": "eslint ./src --ext .ts,.tsx,.js,.jsx",
     "fix:code": "npm run check:code -- --fix",

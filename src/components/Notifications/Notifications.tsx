@@ -21,6 +21,7 @@ const GROUP_ORDER = [
   SubscriptionGroupKeys.DAO,
   SubscriptionGroupKeys.WORLDS,
   SubscriptionGroupKeys.STREAMING,
+  SubscriptionGroupKeys.TIPS,
   SubscriptionGroupKeys.REFERRAL
 ]
 
