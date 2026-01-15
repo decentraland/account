@@ -26,7 +26,8 @@ export enum SubscriptionGroupKeys {
   WORLDS = 'worlds',
   CREDITS = 'credits',
   STREAMING = 'streaming',
-  REFERRAL = 'referral'
+  REFERRAL = 'referral',
+  TIPS = 'tips'
 }
 
 export type SubscriptionGroups = {
