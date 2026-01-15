@@ -81,12 +81,15 @@
     "typescript": "^5.3.3",
     "vite": "^5.2.8"
   },
+  "overrides": {
+    "@dcl/schemas": "^22.1.0"
+  },
   "scripts": {
     "start": "vite",
     "prebuild": "node scripts/prebuild.cjs",
     "test": "jest",
     "test:coverage": "npm run test -- --coverage",
-    "build": "tsc && vite build",
+    "build": "NODE_OPTIONS=--max-old-space-size=8192 tsc && vite build",
     "build:contracts": "typechain --target ethers-v5 --out-dir src/contracts src/contracts/*.json",
     "check:code": "eslint ./src --ext .ts,.tsx,.js,.jsx",
     "fix:code": "npm run check:code -- --fix",
