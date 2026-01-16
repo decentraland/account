@@ -1,3 +1,4 @@
+import { UserCreditsStatus } from '../../lib/api/credits'
 import {
   clearCreditsSettingsError,
   getUserCreditsStatusFailure,
@@ -41,9 +42,9 @@ describe('when reducing the get user credits status success action', () => {
 
   describe('and the user is enrolled', () => {
     it('should return a state with status enrolled and the loading state cleared', () => {
-      expect(creditsSettingsReducer(initialState, getUserCreditsStatusSuccess('enrolled', null))).toEqual({
+      expect(creditsSettingsReducer(initialState, getUserCreditsStatusSuccess(UserCreditsStatus.ENROLLED, null))).toEqual({
         ...state,
-        status: 'enrolled',
+        status: UserCreditsStatus.ENROLLED,
         optedOutAt: null,
         loading: [],
         error: null
@@ -55,9 +56,9 @@ describe('when reducing the get user credits status success action', () => {
     const optedOutAt = '2025-01-15T10:00:00.000Z'
 
     it('should return a state with status opted_out and optedOutAt set', () => {
-      expect(creditsSettingsReducer(initialState, getUserCreditsStatusSuccess('opted_out', optedOutAt))).toEqual({
+      expect(creditsSettingsReducer(initialState, getUserCreditsStatusSuccess(UserCreditsStatus.OPTED_OUT, optedOutAt))).toEqual({
         ...state,
-        status: 'opted_out',
+        status: UserCreditsStatus.OPTED_OUT,
         optedOutAt,
         loading: [],
         error: null
@@ -65,11 +66,11 @@ describe('when reducing the get user credits status success action', () => {
     })
   })
 
-  describe('and the user is never registered', () => {
-    it('should return a state with status never_registered', () => {
-      expect(creditsSettingsReducer(initialState, getUserCreditsStatusSuccess('never_registered', null))).toEqual({
+  describe('and the user is not registered', () => {
+    it('should return a state with status not_registered', () => {
+      expect(creditsSettingsReducer(initialState, getUserCreditsStatusSuccess(UserCreditsStatus.NOT_REGISTERED, null))).toEqual({
         ...state,
-        status: 'never_registered',
+        status: UserCreditsStatus.NOT_REGISTERED,
         optedOutAt: null,
         loading: [],
         error: null
@@ -97,7 +98,7 @@ describe('when reducing the get user credits status failure action', () => {
 
 describe('when reducing the opt out from credits request action', () => {
   beforeEach(() => {
-    initialState = { ...state, status: 'enrolled', error: 'some error' }
+    initialState = { ...state, status: UserCreditsStatus.ENROLLED, error: 'some error' }
   })
 
   it('should return a state with the loading state set and the error cleared', () => {
@@ -113,7 +114,7 @@ describe('when reducing the opt out from credits success action', () => {
   beforeEach(() => {
     initialState = {
       ...state,
-      status: 'enrolled',
+      status: UserCreditsStatus.ENROLLED,
       loading: [optOutFromCreditsRequest()]
     }
   })
@@ -121,7 +122,7 @@ describe('when reducing the opt out from credits success action', () => {
   it('should return a state with status opted_out and optedOutAt set to current time', () => {
     const result = creditsSettingsReducer(initialState, optOutFromCreditsSuccess())
 
-    expect(result.status).toBe('opted_out')
+    expect(result.status).toBe(UserCreditsStatus.OPTED_OUT)
     expect(result.optedOutAt).toBeDefined()
     expect(result.loading).toEqual([])
     expect(result.error).toBeNull()
@@ -132,7 +133,7 @@ describe('when reducing the opt out from credits failure action', () => {
   let error: string
 
   beforeEach(() => {
-    initialState = { ...state, status: 'enrolled', loading: [optOutFromCreditsRequest()] }
+    initialState = { ...state, status: UserCreditsStatus.ENROLLED, loading: [optOutFromCreditsRequest()] }
     error = 'You cannot opt out this week because you have already claimed credits'
   })
 

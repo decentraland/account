@@ -13,50 +13,50 @@ export const ContentWrapper = styled('div')({
   marginTop: '24px'
 })
 
-export const StatusCard = styled(Box)(({ theme }) => ({
+export const StatusCard = styled(Box)({
   padding: '24px',
   borderRadius: '12px',
-  backgroundColor: theme.palette.background.paper,
-  border: `1px solid ${theme.palette.divider}`
-}))
+  backgroundColor: 'rgba(255, 255, 255, 0.05)',
+  border: '1px solid rgba(255, 255, 255, 0.1)'
+})
 
-export const StatusLabel = styled(Typography)(({ theme }) => ({
-  color: theme.palette.text.secondary,
+export const StatusLabel = styled(Typography)({
+  color: '#CFCDD4',
   fontSize: '14px',
   marginBottom: '8px'
-}))
+})
 
-export const StatusValue = styled(Typography)(({ theme }) => ({
-  color: theme.palette.text.primary,
+export const StatusValue = styled(Typography)({
+  color: '#FFFFFF',
   fontSize: '16px',
   fontWeight: 500
-}))
+})
 
-export const OptedOutDate = styled(Typography)(({ theme }) => ({
-  color: theme.palette.text.secondary,
+export const OptedOutDate = styled(Typography)({
+  color: '#CFCDD4',
   fontSize: '14px',
   marginTop: '4px'
-}))
+})
 
-export const InfoText = styled(Typography)(({ theme }) => ({
-  color: theme.palette.text.secondary,
+export const InfoText = styled(Typography)({
+  color: '#CFCDD4',
   fontSize: '14px',
   marginTop: '16px'
-}))
+})
 
-export const OptOutButton = styled(MuiButton)(({ theme }) => ({
+export const OptOutButton = styled(MuiButton)({
   marginTop: '24px',
-  backgroundColor: theme.palette.error.main,
-  color: theme.palette.error.contrastText,
+  backgroundColor: '#FF2D55',
+  color: '#FFFFFF',
   '&:hover': {
-    backgroundColor: theme.palette.error.dark
+    backgroundColor: '#D91A40'
   }
-}))
+})
 
-export const MarketplaceLink = styled('a')(({ theme }) => ({
-  color: theme.palette.primary.main,
+export const MarketplaceLink = styled('a')({
+  color: '#FF2D55',
   textDecoration: 'none',
   '&:hover': {
     textDecoration: 'underline'
   }
-}))
+})

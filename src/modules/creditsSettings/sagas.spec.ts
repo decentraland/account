@@ -1,7 +1,7 @@
 import { call } from '@redux-saga/core/effects'
 import { closeModal } from 'decentraland-dapps/dist/modules/modal/actions'
 import { expectSaga } from 'redux-saga-test-plan'
-import { CreditsSettingsAPI, UserStatusResponse } from '../../lib/api/credits'
+import { CreditsSettingsAPI, UserCreditsStatus, UserStatusResponse } from '../../lib/api/credits'
 import {
   getUserCreditsStatusFailure,
   getUserCreditsStatusRequest,
@@ -25,14 +25,14 @@ describe('when handling the request action to get user credits status', () => {
   describe('and the API call is successful', () => {
     describe('and the user is enrolled', () => {
       const response: UserStatusResponse = {
-        status: 'enrolled',
+        status: UserCreditsStatus.ENROLLED,
         optedOutAt: null
       }
 
       it('should put a get user credits status success action with the status', () => {
         return expectSaga(creditsSettingsSagas, creditsSettingsAPI)
           .provide([[call([creditsSettingsAPI, 'getUserStatus']), Promise.resolve(response)]])
-          .put(getUserCreditsStatusSuccess('enrolled', null))
+          .put(getUserCreditsStatusSuccess(UserCreditsStatus.ENROLLED, null))
           .dispatch(getUserCreditsStatusRequest())
           .silentRun()
       })
@@ -41,29 +41,29 @@ describe('when handling the request action to get user credits status', () => {
     describe('and the user is opted out', () => {
       const optedOutAt = '2025-01-15T10:00:00.000Z'
       const response: UserStatusResponse = {
-        status: 'opted_out',
+        status: UserCreditsStatus.OPTED_OUT,
         optedOutAt
       }
 
       it('should put a get user credits status success action with the status and optedOutAt', () => {
         return expectSaga(creditsSettingsSagas, creditsSettingsAPI)
           .provide([[call([creditsSettingsAPI, 'getUserStatus']), Promise.resolve(response)]])
-          .put(getUserCreditsStatusSuccess('opted_out', optedOutAt))
+          .put(getUserCreditsStatusSuccess(UserCreditsStatus.OPTED_OUT, optedOutAt))
           .dispatch(getUserCreditsStatusRequest())
           .silentRun()
       })
     })
 
-    describe('and the user is never registered', () => {
+    describe('and the user is not registered', () => {
       const response: UserStatusResponse = {
-        status: 'never_registered',
+        status: UserCreditsStatus.NOT_REGISTERED,
         optedOutAt: null
       }
 
-      it('should put a get user credits status success action with never_registered status', () => {
+      it('should put a get user credits status success action with not_registered status', () => {
         return expectSaga(creditsSettingsSagas, creditsSettingsAPI)
           .provide([[call([creditsSettingsAPI, 'getUserStatus']), Promise.resolve(response)]])
-          .put(getUserCreditsStatusSuccess('never_registered', null))
+          .put(getUserCreditsStatusSuccess(UserCreditsStatus.NOT_REGISTERED, null))
           .dispatch(getUserCreditsStatusRequest())
           .silentRun()
       })
@@ -85,20 +85,11 @@ describe('when handling the request action to get user credits status', () => {
 
 describe('when handling the request action to opt out from credits', () => {
   describe('and the API call is successful', () => {
-    const statusResponse: UserStatusResponse = {
-      status: 'opted_out',
-      optedOutAt: '2025-01-15T10:00:00.000Z'
-    }
-
-    it('should put an opt out success action, close modal, and refresh status', () => {
+    it('should put an opt out success action and close modal', () => {
       return expectSaga(creditsSettingsSagas, creditsSettingsAPI)
-        .provide([
-          [call([creditsSettingsAPI, 'optOut']), Promise.resolve()],
-          [call([creditsSettingsAPI, 'getUserStatus']), Promise.resolve(statusResponse)]
-        ])
+        .provide([[call([creditsSettingsAPI, 'optOut']), Promise.resolve()]])
         .put(optOutFromCreditsSuccess())
         .put(closeModal('OptOutConfirmationModal'))
-        .put(getUserCreditsStatusRequest())
         .dispatch(optOutFromCreditsRequest())
         .silentRun()
     })

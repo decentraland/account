@@ -1,3 +1,4 @@
+import { UserCreditsStatus } from '../../lib/api/credits'
 import { RootState } from '../reducer'
 import { getUserCreditsStatusRequest, optOutFromCreditsRequest } from './actions'
 import { buildInitialState } from './reducer'
@@ -7,7 +8,7 @@ import {
   getOptedOutAt,
   isEnrolled,
   isLoadingCreditsStatus,
-  isNeverRegistered,
+  isNotRegistered,
   isOptedOut,
   isOptingOut
 } from './selectors'
@@ -33,12 +34,12 @@ describe('when selecting the credits status', () => {
   describe('and the status is enrolled', () => {
     beforeEach(() => {
       state = {
-        creditsSettings: { ...creditsSettings, status: 'enrolled' }
+        creditsSettings: { ...creditsSettings, status: UserCreditsStatus.ENROLLED }
       } as RootState
     })
 
     it('should return enrolled', () => {
-      expect(getCreditsStatus(state)).toBe('enrolled')
+      expect(getCreditsStatus(state)).toBe(UserCreditsStatus.ENROLLED)
     })
   })
 })
@@ -131,7 +132,7 @@ describe('when asking whether the user is enrolled', () => {
   describe('and the status is enrolled', () => {
     beforeEach(() => {
       state = {
-        creditsSettings: { ...creditsSettings, status: 'enrolled' }
+        creditsSettings: { ...creditsSettings, status: UserCreditsStatus.ENROLLED }
       } as RootState
     })
 
@@ -151,7 +152,7 @@ describe('when asking whether the user is opted out', () => {
   describe('and the status is opted_out', () => {
     beforeEach(() => {
       state = {
-        creditsSettings: { ...creditsSettings, status: 'opted_out' }
+        creditsSettings: { ...creditsSettings, status: UserCreditsStatus.OPTED_OUT }
       } as RootState
     })
 
@@ -167,22 +168,22 @@ describe('when asking whether the user is opted out', () => {
   })
 })
 
-describe('when asking whether the user is never registered', () => {
-  describe('and the status is never_registered', () => {
+describe('when asking whether the user is not registered', () => {
+  describe('and the status is not_registered', () => {
     beforeEach(() => {
       state = {
-        creditsSettings: { ...creditsSettings, status: 'never_registered' }
+        creditsSettings: { ...creditsSettings, status: UserCreditsStatus.NOT_REGISTERED }
       } as RootState
     })
 
     it('should return true', () => {
-      expect(isNeverRegistered(state)).toBe(true)
+      expect(isNotRegistered(state)).toBe(true)
     })
   })
 
-  describe('and the status is not never_registered', () => {
+  describe('and the status is not not_registered', () => {
     it('should return false', () => {
-      expect(isNeverRegistered(state)).toBe(false)
+      expect(isNotRegistered(state)).toBe(false)
     })
   })
 })

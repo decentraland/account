@@ -1,4 +1,5 @@
 import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
+import { UserCreditsStatus } from '../../lib/api/credits'
 import { RootState } from '../reducer'
 import { GET_USER_CREDITS_STATUS_REQUEST, OPT_OUT_FROM_CREDITS_REQUEST } from './actions'
 
@@ -12,6 +13,6 @@ export const getLoading = (state: RootState) => getState(state).loading
 export const isLoadingCreditsStatus = (state: RootState) => isLoadingType(getLoading(state), GET_USER_CREDITS_STATUS_REQUEST)
 export const isOptingOut = (state: RootState) => isLoadingType(getLoading(state), OPT_OUT_FROM_CREDITS_REQUEST)
 
-export const isEnrolled = (state: RootState) => getCreditsStatus(state) === 'enrolled'
-export const isOptedOut = (state: RootState) => getCreditsStatus(state) === 'opted_out'
-export const isNeverRegistered = (state: RootState) => getCreditsStatus(state) === 'never_registered'
+export const isEnrolled = (state: RootState) => getCreditsStatus(state) === UserCreditsStatus.ENROLLED
+export const isOptedOut = (state: RootState) => getCreditsStatus(state) === UserCreditsStatus.OPTED_OUT
+export const isNotRegistered = (state: RootState) => getCreditsStatus(state) === UserCreditsStatus.NOT_REGISTERED
