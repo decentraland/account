@@ -181,22 +181,21 @@
     "description": "管理您在市场积分计划中的注册。",
     "status_label": "注册状态",
     "status": {
-      "enrolled": "您目前已注册积分计划",
-      "opted_out": "您已退出积分计划",
-      "not_registered": "您尚未注册积分计划"
+      "enrolled": "您目前已注册市场积分",
+      "opted_out": "您已退出市场积分",
+      "not_registered": "您尚未注册市场积分"
     },
-    "enrolled_info": "您正在通过完成目标和与平台互动来赚取市场积分。",
+    "enrolled_info": "通过完成目标赚取每周奖励，提升您的形象。",
     "opted_out_date": "您于 {date} 退出",
     "opt_out_button": "退出",
-    "opt_in_message": "要重新注册，请通过",
-    "register_message": "要开始赚取积分，",
-    "marketplace_link": "市场",
+    "opt_in_message": "要重新注册，请通过 Explorer。",
+    "register_message": "赚取每周奖励，提升您的形象。",
     "learn_more_link": "了解更多"
   },
   "opt_out_confirmation_modal": {
-    "title": "退出积分计划",
+    "title": "退出市场积分",
     "warning": "您确定要退出吗？",
-    "description": "您将不再赚取市场积分。您可以随时通过市场重新注册。",
+    "description": "您将不再赚取每周奖励。您可以随时通过 Explorer 重新注册。",
     "cancel": "取消",
     "confirm": "确认退出"
   },

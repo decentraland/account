@@ -20,37 +20,28 @@ export class CreditsSettingsAPI extends BaseClient {
   }
 
   async getUserStatus(): Promise<UserStatusResponse> {
-    try {
-      return { status: UserCreditsStatus.OPTED_OUT, optedOutAt: new Date().toISOString() }
-      // Use rawFetch because the credits server response format doesn't match BaseClient's expected format
-      // (credits server returns {ok, status, optedOutAt} instead of {ok, data: {status, optedOutAt}})
-      const response = await this.rawFetch('/users/status')
+    // Use rawFetch because we need to handle 404 specially
+    const response = await this.rawFetch('/users/status')
 
-      if (!response.ok) {
-        if (response.status === 404) {
-          return { status: UserCreditsStatus.NOT_REGISTERED, optedOutAt: null }
-        }
-        const errorBody = await response.json().catch(() => ({}))
-        throw new Error(errorBody.message || errorBody.error || `Request failed with status ${response.status}`)
-      }
-
-      return (await response.json()) as UserStatusResponse
-    } catch (error: any) {
-      // If the user is not found, return not_registered status
-      if (error.status === 404) {
-        return { status: UserCreditsStatus.NOT_REGISTERED, optedOutAt: null }
-      }
-      throw error
+    if (!response.ok && response.status === 404) {
+      return { status: UserCreditsStatus.NOT_REGISTERED, optedOutAt: null }
     }
+
+    if (!response.ok) {
+      const errorBody = await response.json().catch(() => ({}))
+      throw new Error(errorBody.message || errorBody.error || 'Failed to get user status. Please try again later.')
+    }
+
+    const json = await response.json()
+    return json.data as UserStatusResponse
   }
 
   async optOut(): Promise<void> {
-    // Use rawFetch for consistency with getUserStatus
     const response = await this.rawFetch('/users', { method: 'DELETE' })
 
     if (!response.ok) {
       const errorBody = await response.json().catch(() => ({}))
-      throw new Error(errorBody.message || errorBody.error || `Request failed with status ${response.status}`)
+      throw new Error(errorBody.message || errorBody.error || 'Failed to opt out. Please try again later.')
     }
   }
 }

@@ -6,7 +6,6 @@ import {
   GET_USER_CREDITS_STATUS_REQUEST,
   OPT_OUT_FROM_CREDITS_REQUEST,
   getUserCreditsStatusFailure,
-  getUserCreditsStatusRequest,
   getUserCreditsStatusSuccess,
   optOutFromCreditsFailure,
   optOutFromCreditsSuccess
@@ -30,8 +29,6 @@ export function* creditsSettingsSagas(creditsSettingsAPI: CreditsSettingsAPI) {
       yield call([creditsSettingsAPI, 'optOut'])
       yield put(optOutFromCreditsSuccess())
       yield put(closeModal('OptOutConfirmationModal'))
-      // Refresh the status after opt-out
-      yield put(getUserCreditsStatusRequest())
     } catch (error) {
       yield put(optOutFromCreditsFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
     }

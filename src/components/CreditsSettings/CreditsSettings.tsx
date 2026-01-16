@@ -63,12 +63,7 @@ const CreditsSettings: React.FC<Props> = props => {
           <>
             <StatusValue>{t('credits_settings.status.opted_out')}</StatusValue>
             {optedOutAt && <OptedOutDate>{t('credits_settings.opted_out_date', { date: formatDate(optedOutAt) })}</OptedOutDate>}
-            <InfoText>
-              {t('credits_settings.opt_in_message')}{' '}
-              <MarketplaceLink href={CREDITS_INFO_URL} target="_blank" rel="noopener noreferrer">
-                {t('credits_settings.learn_more_link')}
-              </MarketplaceLink>
-            </InfoText>
+            <InfoText>{t('credits_settings.opt_in_message')}</InfoText>
           </>
         )
 
