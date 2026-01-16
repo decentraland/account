@@ -11,6 +11,7 @@
   "main_page": {
     "wallets": "Wallets",
     "email_notifications": "Email Notifications",
+    "credits_settings": "Credits Settings",
     "title": "Account Settings",
     "copied": "Copied!"
   },
@@ -174,6 +175,29 @@
       "title": "Meta transaction",
       "body": "There was an error sending the meta transaction.{br}Please try again or join our {discord_link} to get support."
     }
+  },
+  "credits_settings": {
+    "title": "Marketplace Credits",
+    "description": "Manage your enrollment in the Marketplace Credits program.",
+    "status_label": "Enrollment Status",
+    "status": {
+      "enrolled": "You are currently enrolled in Marketplace Credits",
+      "opted_out": "You have opted out of Marketplace Credits",
+      "not_registered": "You are not registered in Marketplace Credits"
+    },
+    "enrolled_info": "Earn weekly rewards to power up your look by completing goals.",
+    "opted_out_date": "You opted out on {date}",
+    "opt_out_button": "Opt Out",
+    "opt_in_message": "To opt back in, register again through the Explorer.",
+    "register_message": "Earn weekly rewards to power up your look.",
+    "learn_more_link": "Learn more"
+  },
+  "opt_out_confirmation_modal": {
+    "title": "Opt Out of Marketplace Credits",
+    "warning": "Are you sure you want to opt out?",
+    "description": "You will no longer earn weekly rewards. You can opt back in at any time by registering again through the Explorer.",
+    "cancel": "Cancel",
+    "confirm": "Confirm Opt Out"
   },
   "settings": {
     "notifications": {

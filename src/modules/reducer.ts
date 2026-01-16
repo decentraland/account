@@ -10,6 +10,7 @@ import { transactionReducer as transaction } from 'decentraland-dapps/dist/modul
 import { translationReducer as translation } from 'decentraland-dapps/dist/modules/translation/reducer'
 import { walletReducer as wallet } from 'decentraland-dapps/dist/modules/wallet/reducer'
 import { combineReducers } from 'redux'
+import { creditsSettingsReducer as creditsSettings } from './creditsSettings/reducer'
 import { manaReducer as mana } from './mana/reducer'
 import { subscriptionReducer as subscription } from './subscription/reducer'
 
@@ -17,6 +18,7 @@ export const createRootReducer = () =>
   combineReducers({
     authorization,
     credits,
+    creditsSettings,
     profile,
     storage,
     transaction,

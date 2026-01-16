@@ -1,0 +1,75 @@
+.OptOutConfirmationModal .dcl.modal {
+  max-width: 480px;
+}
+
+.OptOutConfirmationModal .modal-header .title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.OptOutConfirmationModal .modal-content {
+  padding: 24px;
+}
+
+.OptOutConfirmationModal .warning-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.OptOutConfirmationModal .warning-icon svg {
+  font-size: 48px;
+  color: var(--danger);
+}
+
+.OptOutConfirmationModal .warning-title {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.OptOutConfirmationModal .description {
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.OptOutConfirmationModal .error-message {
+  background-color: rgba(255, 0, 0, 0.1);
+  border: 1px solid var(--danger);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 16px;
+  color: var(--danger);
+  font-size: 14px;
+  text-align: center;
+}
+
+.OptOutConfirmationModal .button-container {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.OptOutConfirmationModal .button-container .ui.button {
+  min-width: 140px;
+}
+
+.OptOutConfirmationModal .button-container .ui.button.cancel-button {
+  background-color: transparent;
+  border: 1px solid var(--secondary-text);
+  color: var(--text);
+}
+
+.OptOutConfirmationModal .button-container .ui.button.confirm-button {
+  background-color: var(--danger);
+  color: white;
+}
+
+.OptOutConfirmationModal .button-container .ui.button.confirm-button:hover {
+  background-color: #d32f2f;
+}

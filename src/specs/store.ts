@@ -11,6 +11,7 @@ import { createMemoryHistory } from 'history'
 import { applyMiddleware, compose, createStore } from 'redux'
 import createSagasMiddleware from 'redux-saga'
 import { config } from '../config'
+import { CreditsSettingsAPI } from '../lib/api/credits'
 import {
   SET_DEPOSIT_STATUS,
   SET_WITHDRAWAL_STATUS,
@@ -51,7 +52,15 @@ export function initTestStore(preloadedState = {}) {
 
   const creditsClient = new CreditsClient(config.get('CREDITS_SERVER_URL'))
 
-  sagasMiddleware.run(rootSaga, notificationApi, creditsClient)
+  const creditsSettingsAPI = new CreditsSettingsAPI(config.get('CREDITS_SERVER_URL'), {
+    identity: () => {
+      const address = getAddress(store.getState() as any)
+      const identity = address ? localStorageGetIdentity(address) : null
+      return identity ?? undefined
+    }
+  })
+
+  sagasMiddleware.run(rootSaga, notificationApi, creditsClient, creditsSettingsAPI)
   // Dispatch STORAGE_LOAD synchronously to avoid race conditions in tests
   store.dispatch({ type: STORAGE_LOAD, payload: {} })
 

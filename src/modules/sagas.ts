@@ -15,7 +15,9 @@ import { createWalletSaga } from 'decentraland-dapps/dist/modules/wallet/sagas'
 import { all } from 'redux-saga/effects'
 import { NetworkGatewayType } from 'decentraland-ui'
 import { config } from '../config'
+import { CreditsSettingsAPI } from '../lib/api/credits'
 import * as translations from '../locales'
+import { creditsSettingsSagas } from './creditsSettings/sagas'
 import { locationSaga as localLocationSaga } from './location/sagas'
 import { manaSaga } from './mana/sagas'
 import { TRANSACTIONS_API_URL } from './mana/utils'
@@ -61,12 +63,13 @@ const gatewaySaga = createGatewaySaga({
   }
 })
 
-export function* rootSaga(notificationsAPI: NotificationsAPI, creditsClient: CreditsClient) {
+export function* rootSaga(notificationsAPI: NotificationsAPI, creditsClient: CreditsClient, creditsSettingsAPI: CreditsSettingsAPI) {
   yield all([
     analyticsSaga(),
     authorizationSaga(),
     transactionSaga(),
     creditsSaga({ creditsClient }),
+    creditsSettingsSagas(creditsSettingsAPI),
     profileSaga(),
     walletSaga(),
     translationSaga(),

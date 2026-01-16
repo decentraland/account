@@ -12,6 +12,7 @@
   "main_page": {
     "wallets": "Wallets",
     "email_notifications": "Notificaciones",
+    "credits_settings": "Configuración de Créditos",
     "title": "Configuración de la cuenta",
     "copied": "Copiado!"
   },
@@ -175,6 +176,29 @@
       "title": "Meta transacción",
       "body": "Ocurrió un error publicando la meta transacción.{br}Intentelo de nuevo o ingrese a nuestro {discord_link} para obtener más información."
     }
+  },
+  "credits_settings": {
+    "title": "Créditos del Marketplace",
+    "description": "Gestiona tu inscripción en el programa de Créditos del Marketplace.",
+    "status_label": "Estado de Inscripción",
+    "status": {
+      "enrolled": "Actualmente estás inscrito en Créditos del Marketplace",
+      "opted_out": "Te has dado de baja de Créditos del Marketplace",
+      "not_registered": "No estás registrado en Créditos del Marketplace"
+    },
+    "enrolled_info": "Gana recompensas semanales para mejorar tu apariencia completando objetivos.",
+    "opted_out_date": "Te diste de baja el {date}",
+    "opt_out_button": "Darse de Baja",
+    "opt_in_message": "Para volver a inscribirte, regístrate a través del Explorer.",
+    "register_message": "Gana recompensas semanales para mejorar tu apariencia.",
+    "learn_more_link": "Más información"
+  },
+  "opt_out_confirmation_modal": {
+    "title": "Darse de Baja de Créditos del Marketplace",
+    "warning": "¿Estás seguro de que quieres darte de baja?",
+    "description": "Ya no ganarás recompensas semanales. Puedes volver a inscribirte en cualquier momento registrándote nuevamente a través del Explorer.",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar Baja"
   },
   "settings": {
     "notifications": {

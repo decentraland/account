@@ -26,6 +26,13 @@ export default defineConfig(({ command, mode }) => {
           changeOrigin: true,
           secure: false,
           ws: true
+        },
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        '/credits-api': {
+          target: 'http://localhost:5000',
+          changeOrigin: true,
+          secure: false,
+          rewrite: (path) => path.replace(/^\/credits-api/, '')
         }
       }
     },
