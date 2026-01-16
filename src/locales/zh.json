@@ -11,6 +11,7 @@
   "main_page": {
     "wallets": "錢包",
     "email_notifications": "電子郵件通知",
+    "credits_settings": "积分设置",
     "title": "帳戶設定",
     "copied": "已复制！"
   },
@@ -174,6 +175,30 @@
       "title": "元交易",
       "body": "发送元交易时出错。{br}请重试或加入我们的{discord_link}以获取支持。"
     }
+  },
+  "credits_settings": {
+    "title": "市场积分",
+    "description": "管理您在市场积分计划中的注册。",
+    "status_label": "注册状态",
+    "status": {
+      "enrolled": "您目前已注册积分计划",
+      "opted_out": "您已退出积分计划",
+      "not_registered": "您尚未注册积分计划"
+    },
+    "enrolled_info": "您正在通过完成目标和与平台互动来赚取市场积分。",
+    "opted_out_date": "您于 {date} 退出",
+    "opt_out_button": "退出",
+    "opt_in_message": "要重新注册，请通过",
+    "register_message": "要开始赚取积分，",
+    "marketplace_link": "市场",
+    "learn_more_link": "了解更多"
+  },
+  "opt_out_confirmation_modal": {
+    "title": "退出积分计划",
+    "warning": "您确定要退出吗？",
+    "description": "您将不再赚取市场积分。您可以随时通过市场重新注册。",
+    "cancel": "取消",
+    "confirm": "确认退出"
   },
   "settings": {
     "notifications": {
