@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Box, Button as MuiButton, Typography } from 'decentraland-ui2'
+import { Box, Button, Typography } from 'decentraland-ui2'
 
 export const Container = styled('div')({
   maxWidth: '660px'
@@ -49,21 +49,8 @@ export const InfoText = styled(Typography)({
   lineHeight: '24px'
 })
 
-export const OptOutButton = styled(MuiButton)({
-  marginTop: '24px',
-  backgroundColor: '#FF2D55',
-  color: '#FFFFFF',
-  fontWeight: 600,
-  textTransform: 'uppercase',
-  padding: '10px 24px',
-  borderRadius: '4px',
-  '&:hover': {
-    backgroundColor: '#D91A40'
-  },
-  '&:disabled': {
-    backgroundColor: '#FF2D5580',
-    color: '#FFFFFF80'
-  }
+export const OptOutButton = styled(Button)({
+  marginTop: '24px'
 })
 
 export const MarketplaceLink = styled('a')({
@@ -73,4 +60,9 @@ export const MarketplaceLink = styled('a')({
   '&:hover': {
     textDecoration: 'underline'
   }
+})
+
+export const JumpInWrapper = styled('div')({
+  marginTop: '24px',
+  display: 'inline-block'
 })
