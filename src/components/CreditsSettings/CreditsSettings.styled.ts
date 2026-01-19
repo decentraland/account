@@ -10,52 +10,66 @@ export const Header = styled('div')({
 })
 
 export const ContentWrapper = styled('div')({
-  marginTop: '24px'
+  marginTop: '16px'
 })
 
 export const StatusCard = styled(Box)({
   padding: '24px',
-  borderRadius: '12px',
-  backgroundColor: 'rgba(255, 255, 255, 0.05)',
-  border: '1px solid rgba(255, 255, 255, 0.1)'
+  borderRadius: '8px',
+  backgroundColor: '#331636'
 })
 
 export const StatusLabel = styled(Typography)({
-  color: '#CFCDD4',
+  color: '#fcfcfc99',
   fontSize: '14px',
+  fontWeight: 500,
   marginBottom: '8px'
 })
 
 export const StatusValue = styled(Typography)({
-  color: '#FFFFFF',
+  color: '#FCFCFC',
   fontSize: '16px',
-  fontWeight: 500
+  fontWeight: 600,
+  display: 'flex',
+  alignItems: 'center'
 })
 
 export const OptedOutDate = styled(Typography)({
-  color: '#CFCDD4',
+  color: '#fcfcfc99',
   fontSize: '14px',
+  fontWeight: 500,
   marginTop: '4px'
 })
 
 export const InfoText = styled(Typography)({
-  color: '#CFCDD4',
+  color: '#fcfcfc99',
   fontSize: '14px',
-  marginTop: '16px'
+  fontWeight: 500,
+  marginTop: '16px',
+  lineHeight: '24px'
 })
 
 export const OptOutButton = styled(MuiButton)({
   marginTop: '24px',
   backgroundColor: '#FF2D55',
   color: '#FFFFFF',
+  fontWeight: 600,
+  textTransform: 'uppercase',
+  padding: '10px 24px',
+  borderRadius: '4px',
   '&:hover': {
     backgroundColor: '#D91A40'
+  },
+  '&:disabled': {
+    backgroundColor: '#FF2D5580',
+    color: '#FFFFFF80'
   }
 })
 
 export const MarketplaceLink = styled('a')({
   color: '#FF2D55',
   textDecoration: 'none',
+  fontWeight: 600,
   '&:hover': {
     textDecoration: 'underline'
   }
