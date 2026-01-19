@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Button as MuiButton, Typography } from 'decentraland-ui2'
+import { Button, Typography } from 'decentraland-ui2'
 
 export const ModalTitle = styled(Typography)({
   fontWeight: 600,
@@ -50,40 +50,10 @@ export const ButtonContainer = styled('div')({
   justifyContent: 'center'
 })
 
-export const CancelButton = styled(MuiButton)({
-  minWidth: '140px',
-  fontWeight: 600,
-  fontSize: '15px',
-  lineHeight: '24px',
-  borderRadius: '4px',
-  backgroundColor: 'transparent',
-  border: '1px solid #736e7d',
-  color: '#FCFCFC',
-  textTransform: 'uppercase',
-  '&:hover': {
-    backgroundColor: '#ffffff17',
-    borderColor: '#FCFCFC'
-  },
-  '&:disabled': {
-    color: '#FCFCFC80',
-    borderColor: '#736e7d80'
-  }
+export const CancelButton = styled(Button)({
+  minWidth: '140px'
 })
 
-export const ConfirmButton = styled(MuiButton)({
-  minWidth: '140px',
-  fontWeight: 600,
-  fontSize: '15px',
-  lineHeight: '24px',
-  borderRadius: '4px',
-  backgroundColor: '#FF2D55',
-  color: '#FFFFFF',
-  textTransform: 'uppercase',
-  '&:hover': {
-    backgroundColor: '#D91A40'
-  },
-  '&:disabled': {
-    backgroundColor: '#FF2D5580',
-    color: '#FFFFFF80'
-  }
+export const ConfirmButton = styled(Button)({
+  minWidth: '140px'
 })
