@@ -19,9 +19,9 @@ export class CreditsSettingsAPI extends BaseClient {
     super(url, config)
   }
 
-  async getUserStatus(): Promise<UserStatusResponse> {
+  async getUserStatus(address: string): Promise<UserStatusResponse> {
     // Use rawFetch because we need to handle 404 specially
-    const response = await this.rawFetch('/users/status')
+    const response = await this.rawFetch(`/users/${address}/status`)
 
     if (!response.ok && response.status === 404) {
       return { status: UserCreditsStatus.NOT_REGISTERED, optedOutAt: null }
@@ -36,8 +36,8 @@ export class CreditsSettingsAPI extends BaseClient {
     return json.data as UserStatusResponse
   }
 
-  async optOut(): Promise<void> {
-    const response = await this.rawFetch('/users', { method: 'DELETE' })
+  async optOut(address: string): Promise<void> {
+    const response = await this.rawFetch(`/users/${address}`, { method: 'DELETE' })
 
     if (!response.ok) {
       const errorBody = await response.json().catch(() => ({}))

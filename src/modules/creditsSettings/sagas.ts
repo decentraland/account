@@ -1,6 +1,7 @@
 import { isErrorWithMessage } from 'decentraland-dapps/dist/lib/error'
 import { closeModal } from 'decentraland-dapps/dist/modules/modal/actions'
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { CreditsSettingsAPI, UserStatusResponse } from '../../lib/api/credits'
 import {
   GET_USER_CREDITS_STATUS_REQUEST,
@@ -17,7 +18,11 @@ export function* creditsSettingsSagas(creditsSettingsAPI: CreditsSettingsAPI) {
 
   function* handleGetUserCreditsStatusRequest() {
     try {
-      const response: UserStatusResponse = yield call([creditsSettingsAPI, 'getUserStatus'])
+      const address: string | undefined = yield select(getAddress)
+      if (!address) {
+        throw new Error('User is not connected')
+      }
+      const response: UserStatusResponse = yield call([creditsSettingsAPI, 'getUserStatus'], address)
       yield put(getUserCreditsStatusSuccess(response.status, response.optedOutAt))
     } catch (error) {
       yield put(getUserCreditsStatusFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
@@ -26,7 +31,11 @@ export function* creditsSettingsSagas(creditsSettingsAPI: CreditsSettingsAPI) {
 
   function* handleOptOutFromCreditsRequest() {
     try {
-      yield call([creditsSettingsAPI, 'optOut'])
+      const address: string | undefined = yield select(getAddress)
+      if (!address) {
+        throw new Error('User is not connected')
+      }
+      yield call([creditsSettingsAPI, 'optOut'], address)
       yield put(optOutFromCreditsSuccess())
       yield put(closeModal('OptOutConfirmationModal'))
     } catch (error) {
