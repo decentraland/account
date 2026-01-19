@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import CardGiftcardRoundedIcon from '@mui/icons-material/CardGiftcardRounded'
 import ScienceRoundedIcon from '@mui/icons-material/ScienceRounded'
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { ListSubheader, SelectChangeEvent, Skeleton, useMediaQuery } from 'decentraland-ui2'
 import { UserCreditsStatus } from '../../lib/api/credits'
 import {
@@ -24,7 +25,6 @@ import {
   ConfirmButton,
   ErrorMessage,
   ModalDescription,
-  ModalTitle,
   WarningIconContainer,
   WarningTitle
 } from '../Modals/OptOutConfirmationModal/OptOutConfirmationModal.styled'
@@ -51,12 +51,13 @@ const CREDITS_INFO_URL =
 
 const viewOptions: TestingViewOption[] = [
   { value: TestingView.CREDITS_ENROLLED, label: 'Enrolled Status', category: 'Credits Settings' },
-  { value: TestingView.CREDITS_OPTED_OUT, label: 'Opted Out Status', category: 'Credits Settings' },
+  { value: TestingView.CREDITS_OPTED_OUT, label: 'Left Status', category: 'Credits Settings' },
   { value: TestingView.CREDITS_NOT_REGISTERED, label: 'Not Registered Status', category: 'Credits Settings' },
   { value: TestingView.CREDITS_LOADING, label: 'Loading State', category: 'Credits Settings' },
-  { value: TestingView.OPT_OUT_MODAL, label: 'Default State', category: 'Opt Out Modal' },
-  { value: TestingView.OPT_OUT_MODAL_LOADING, label: 'Loading State', category: 'Opt Out Modal' },
-  { value: TestingView.OPT_OUT_MODAL_ERROR, label: 'Error State', category: 'Opt Out Modal' }
+  { value: TestingView.OPT_OUT_MODAL, label: 'Default State', category: 'Leave Modal' },
+  { value: TestingView.OPT_OUT_MODAL_LOADING, label: 'Loading State', category: 'Leave Modal' },
+  { value: TestingView.OPT_OUT_MODAL_ERROR, label: 'Generic Error', category: 'Leave Modal' },
+  { value: TestingView.OPT_OUT_MODAL_ERROR_ALREADY_CLAIMED, label: 'Already Claimed Error', category: 'Leave Modal' }
 ]
 
 const getMockCreditsState = (view: TestingView): MockCreditsState => {
@@ -109,7 +110,9 @@ const getMockOptOutModalState = (view: TestingView): MockOptOutModalState => {
     case TestingView.OPT_OUT_MODAL_LOADING:
       return { isLoading: true, error: null }
     case TestingView.OPT_OUT_MODAL_ERROR:
-      return { isLoading: false, error: 'Failed to opt out. Please try again later.' }
+      return { isLoading: false, error: t('leave_confirmation_modal.errors.generic') }
+    case TestingView.OPT_OUT_MODAL_ERROR_ALREADY_CLAIMED:
+      return { isLoading: false, error: t('leave_confirmation_modal.errors.already_claimed') }
     default:
       return { isLoading: false, error: null }
   }
@@ -138,11 +141,11 @@ const CreditsSettingsPreview: React.FC<{ state: MockCreditsState }> = ({ state }
           <>
             <StatusValue>
               <CardGiftcardRoundedIcon sx={{ verticalAlign: 'middle', marginRight: '8px' }} />
-              You are currently enrolled in Marketplace Credits
+              {t('credits_settings.status.enrolled')}
             </StatusValue>
-            <InfoText>Earn weekly rewards to power up your look by completing goals.</InfoText>
+            <InfoText>{t('credits_settings.enrolled_info')}</InfoText>
             <OptOutButton variant="contained" disabled={isOptingOut}>
-              Opt Out
+              {t('credits_settings.leave_button')}
             </OptOutButton>
           </>
         )
@@ -150,20 +153,20 @@ const CreditsSettingsPreview: React.FC<{ state: MockCreditsState }> = ({ state }
       case UserCreditsStatus.OPTED_OUT:
         return (
           <>
-            <StatusValue>You have opted out of Marketplace Credits</StatusValue>
-            {optedOutAt && <OptedOutDate>You opted out on {formatDate(optedOutAt)}</OptedOutDate>}
-            <InfoText>To opt back in, register again through the Explorer.</InfoText>
+            <StatusValue>{t('credits_settings.status.left')}</StatusValue>
+            {optedOutAt && <OptedOutDate>{t('credits_settings.left_date', { date: formatDate(optedOutAt) })}</OptedOutDate>}
+            <InfoText>{t('credits_settings.rejoin_message')}</InfoText>
           </>
         )
 
       case UserCreditsStatus.NOT_REGISTERED:
         return (
           <>
-            <StatusValue>You are not registered in Marketplace Credits</StatusValue>
+            <StatusValue>{t('credits_settings.status.not_registered')}</StatusValue>
             <InfoText>
-              Earn weekly rewards to power up your look.{' '}
+              {t('credits_settings.register_message')}{' '}
               <MarketplaceLink href={CREDITS_INFO_URL} target="_blank" rel="noopener noreferrer">
-                Learn more
+                {t('credits_settings.learn_more_link')}
               </MarketplaceLink>
             </InfoText>
           </>
@@ -177,13 +180,13 @@ const CreditsSettingsPreview: React.FC<{ state: MockCreditsState }> = ({ state }
   return (
     <Container>
       <CreditsHeader>
-        <Title variant="h3">Marketplace Credits</Title>
-        <TypographyDescription variant="subtitle1">Manage your enrollment in the Marketplace Credits program.</TypographyDescription>
+        <Title variant="h3">{t('credits_settings.title')}</Title>
+        <TypographyDescription variant="subtitle1">{t('credits_settings.description')}</TypographyDescription>
       </CreditsHeader>
 
       <ContentWrapper>
         <StatusCard>
-          <StatusLabel>Enrollment Status</StatusLabel>
+          <StatusLabel>{t('credits_settings.status_label')}</StatusLabel>
           {renderStatusContent()}
         </StatusCard>
       </ContentWrapper>
@@ -191,7 +194,7 @@ const CreditsSettingsPreview: React.FC<{ state: MockCreditsState }> = ({ state }
   )
 }
 
-const OptOutModalPreview: React.FC<{ state: MockOptOutModalState }> = ({ state }) => {
+const LeaveModalPreview: React.FC<{ state: MockOptOutModalState }> = ({ state }) => {
   const { isLoading, error } = state
 
   return (
@@ -204,26 +207,22 @@ const OptOutModalPreview: React.FC<{ state: MockOptOutModalState }> = ({ state }
         border: '1px solid #ffffff17'
       }}
     >
-      <ModalTitle sx={{ marginBottom: '16px' }}>Opt Out of Marketplace Credits</ModalTitle>
-
       <WarningIconContainer>
         <WarningAmberRoundedIcon sx={{ fontSize: 48, color: '#FF2D55' }} />
       </WarningIconContainer>
 
-      <WarningTitle>Are you sure you want to opt out?</WarningTitle>
+      <WarningTitle>{t('leave_confirmation_modal.warning')}</WarningTitle>
 
-      <ModalDescription>
-        You will no longer earn weekly rewards. You can opt back in at any time by registering again through the Explorer.
-      </ModalDescription>
+      <ModalDescription>{t('leave_confirmation_modal.description')}</ModalDescription>
 
       {error && <ErrorMessage>{error}</ErrorMessage>}
 
       <ButtonContainer>
         <CancelButton variant="outlined" disabled={isLoading}>
-          Cancel
+          {t('leave_confirmation_modal.cancel')}
         </CancelButton>
         <ConfirmButton variant="contained" disabled={isLoading}>
-          {isLoading ? 'Loading...' : 'Confirm Opt Out'}
+          {isLoading ? 'Loading...' : t('leave_confirmation_modal.confirm')}
         </ConfirmButton>
       </ButtonContainer>
     </div>
@@ -248,7 +247,7 @@ const TestingPage: React.FC = () => {
   }, [selectedView])
 
   const creditsSettingsCategories = viewOptions.filter(opt => opt.category === 'Credits Settings')
-  const optOutModalCategories = viewOptions.filter(opt => opt.category === 'Opt Out Modal')
+  const leaveModalCategories = viewOptions.filter(opt => opt.category === 'Leave Modal')
 
   return (
     <PageContainer>
@@ -289,9 +288,9 @@ const TestingPage: React.FC = () => {
                   </MenuItem>
                 ))}
                 <ListSubheader>
-                  <CategoryLabel>Opt Out Modal</CategoryLabel>
+                  <CategoryLabel>Leave Modal</CategoryLabel>
                 </ListSubheader>
-                {optOutModalCategories.map(option => (
+                {leaveModalCategories.map(option => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -305,7 +304,7 @@ const TestingPage: React.FC = () => {
             {isCreditsSettingsView ? (
               <CreditsSettingsPreview state={getMockCreditsState(selectedView)} />
             ) : (
-              <OptOutModalPreview state={getMockOptOutModalState(selectedView)} />
+              <LeaveModalPreview state={getMockOptOutModalState(selectedView)} />
             )}
           </PreviewContainer>
         </TabPanelContainer>

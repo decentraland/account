@@ -177,27 +177,30 @@
     }
   },
   "credits_settings": {
-    "title": "Marketplace Credits",
-    "description": "Manage your enrollment in the Marketplace Credits program.",
+    "title": "Marketplace Credits Program",
+    "description": "Manage your enrollment in the Marketplace Credits Program.",
     "status_label": "Enrollment Status",
     "status": {
-      "enrolled": "You are currently enrolled in Marketplace Credits",
-      "opted_out": "You have opted out of Marketplace Credits",
-      "not_registered": "You are not registered in Marketplace Credits"
+      "enrolled": "You are currently enrolled in the Marketplace Credits Program",
+      "left": "You have left the Marketplace Credits Program",
+      "not_registered": "Join the Marketplace Credits Program and earn weekly rewards!"
     },
     "enrolled_info": "Earn weekly rewards to power up your look by completing goals.",
-    "opted_out_date": "You opted out on {date}",
-    "opt_out_button": "Opt Out",
-    "opt_in_message": "To opt back in, register again through the Explorer.",
+    "left_date": "You left on {date}",
+    "leave_button": "Leave Program",
+    "rejoin_message": "If you'd like to rejoin, please register again through the Explorer.",
     "register_message": "Earn weekly rewards to power up your look.",
     "learn_more_link": "Learn more"
   },
-  "opt_out_confirmation_modal": {
-    "title": "Opt Out of Marketplace Credits",
-    "warning": "Are you sure you want to opt out?",
-    "description": "You will no longer earn weekly rewards. You can opt back in at any time by registering again through the Explorer.",
+  "leave_confirmation_modal": {
+    "warning": "Are you sure you want to leave the Marketplace Credits Program?",
+    "description": "You will no longer earn weekly rewards. You can rejoin at any time by registering again through the Explorer.",
     "cancel": "Cancel",
-    "confirm": "Confirm Opt Out"
+    "confirm": "Confirm",
+    "errors": {
+      "generic": "Something went wrong while trying to leave. Please try again later.",
+      "already_claimed": "You can't leave this week because you've already claimed credits. Please try again next week."
+    }
   },
   "settings": {
     "notifications": {
@@ -206,13 +209,13 @@
       "subscription_group_label_marketplace": "Marketplace",
       "subscription_group_description_marketplace": "Get notifications about your bids, sales, royalties, and rentals.",
       "subscription_group_label_events": "Events",
-      "subscription_group_description_events": "Get notifications about events you’ve RSVP’d to.",
+      "subscription_group_description_events": "Get notifications about events you've RSVP'd to.",
       "subscription_group_label_rewards": "Giveaways & Rewards",
       "subscription_group_description_rewards": "Get notifications about free items you receive and your giveaway campaigns.",
       "subscription_group_label_dao": "DAO",
-      "subscription_group_description_dao": "Get notifications about DAO motions you’ve voted on, your proposal process, and more.",
+      "subscription_group_description_dao": "Get notifications about DAO motions you've voted on, your proposal process, and more.",
       "subscription_group_label_worlds": "Worlds",
-      "subscription_group_description_worlds": "Get notified if your World has insufficient storage or if you’re invited to visit/collaborate on a World.",
+      "subscription_group_description_worlds": "Get notified if your World has insufficient storage or if you're invited to visit/collaborate on a World.",
       "subscription_group_label_credits": "Marketplace Credits",
       "subscription_group_description_credits": "Get notifications about Credit expiration, unclaimed Credits, and incomplete goals.",
       "subscription_group_label_streaming": "In-World Streaming",

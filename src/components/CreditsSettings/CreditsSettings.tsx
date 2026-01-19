@@ -53,7 +53,7 @@ const CreditsSettings: React.FC<Props> = props => {
             </StatusValue>
             <InfoText>{t('credits_settings.enrolled_info')}</InfoText>
             <OptOutButton variant="contained" onClick={onOpenOptOutModal} disabled={isOptingOut}>
-              {t('credits_settings.opt_out_button')}
+              {t('credits_settings.leave_button')}
             </OptOutButton>
           </>
         )
@@ -61,9 +61,9 @@ const CreditsSettings: React.FC<Props> = props => {
       case UserCreditsStatus.OPTED_OUT:
         return (
           <>
-            <StatusValue>{t('credits_settings.status.opted_out')}</StatusValue>
-            {optedOutAt && <OptedOutDate>{t('credits_settings.opted_out_date', { date: formatDate(optedOutAt) })}</OptedOutDate>}
-            <InfoText>{t('credits_settings.opt_in_message')}</InfoText>
+            <StatusValue>{t('credits_settings.status.left')}</StatusValue>
+            {optedOutAt && <OptedOutDate>{t('credits_settings.left_date', { date: formatDate(optedOutAt) })}</OptedOutDate>}
+            <InfoText>{t('credits_settings.rejoin_message')}</InfoText>
           </>
         )
 

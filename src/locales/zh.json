@@ -177,27 +177,30 @@
     }
   },
   "credits_settings": {
-    "title": "市场积分",
+    "title": "市场积分计划",
     "description": "管理您在市场积分计划中的注册。",
     "status_label": "注册状态",
     "status": {
-      "enrolled": "您目前已注册市场积分",
-      "opted_out": "您已退出市场积分",
-      "not_registered": "您尚未注册市场积分"
+      "enrolled": "您目前已注册市场积分计划",
+      "left": "您已离开市场积分计划",
+      "not_registered": "加入市场积分计划，赚取每周奖励！"
     },
     "enrolled_info": "通过完成目标赚取每周奖励，提升您的形象。",
-    "opted_out_date": "您于 {date} 退出",
-    "opt_out_button": "退出",
-    "opt_in_message": "要重新注册，请通过 Explorer。",
+    "left_date": "您于 {date} 离开",
+    "leave_button": "离开计划",
+    "rejoin_message": "如果您想重新加入，请通过 Explorer 重新注册。",
     "register_message": "赚取每周奖励，提升您的形象。",
     "learn_more_link": "了解更多"
   },
-  "opt_out_confirmation_modal": {
-    "title": "退出市场积分",
-    "warning": "您确定要退出吗？",
-    "description": "您将不再赚取每周奖励。您可以随时通过 Explorer 重新注册。",
+  "leave_confirmation_modal": {
+    "warning": "您确定要离开市场积分计划吗？",
+    "description": "您将不再赚取每周奖励。您可以随时通过 Explorer 重新注册来重新加入。",
     "cancel": "取消",
-    "confirm": "确认退出"
+    "confirm": "确认",
+    "errors": {
+      "generic": "离开时出现问题。请稍后再试。",
+      "already_claimed": "您本周无法离开，因为您已经领取了积分。请下周再试。"
+    }
   },
   "settings": {
     "notifications": {

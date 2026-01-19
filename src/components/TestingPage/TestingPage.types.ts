@@ -7,13 +7,14 @@ export enum TestingView {
   CREDITS_LOADING = 'credits_loading',
   OPT_OUT_MODAL = 'opt_out_modal',
   OPT_OUT_MODAL_LOADING = 'opt_out_modal_loading',
-  OPT_OUT_MODAL_ERROR = 'opt_out_modal_error'
+  OPT_OUT_MODAL_ERROR = 'opt_out_modal_error',
+  OPT_OUT_MODAL_ERROR_ALREADY_CLAIMED = 'opt_out_modal_error_already_claimed'
 }
 
 export interface TestingViewOption {
   value: TestingView
   label: string
-  category: 'Credits Settings' | 'Opt Out Modal'
+  category: 'Credits Settings' | 'Leave Modal'
 }
 
 export interface MockCreditsState {

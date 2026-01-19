@@ -178,27 +178,30 @@
     }
   },
   "credits_settings": {
-    "title": "Créditos del Marketplace",
-    "description": "Gestiona tu inscripción en el programa de Créditos del Marketplace.",
+    "title": "Programa de Créditos del Marketplace",
+    "description": "Gestiona tu inscripción en el Programa de Créditos del Marketplace.",
     "status_label": "Estado de Inscripción",
     "status": {
-      "enrolled": "Actualmente estás inscrito en Créditos del Marketplace",
-      "opted_out": "Te has dado de baja de Créditos del Marketplace",
-      "not_registered": "No estás registrado en Créditos del Marketplace"
+      "enrolled": "Actualmente estás inscrito en el Programa de Créditos del Marketplace",
+      "left": "Has abandonado el Programa de Créditos del Marketplace",
+      "not_registered": "¡Únete al Programa de Créditos del Marketplace y gana recompensas semanales!"
     },
     "enrolled_info": "Gana recompensas semanales para mejorar tu apariencia completando objetivos.",
-    "opted_out_date": "Te diste de baja el {date}",
-    "opt_out_button": "Darse de Baja",
-    "opt_in_message": "Para volver a inscribirte, regístrate a través del Explorer.",
+    "left_date": "Abandonaste el {date}",
+    "leave_button": "Abandonar Programa",
+    "rejoin_message": "Si deseas volver a unirte, regístrate nuevamente a través del Explorer.",
     "register_message": "Gana recompensas semanales para mejorar tu apariencia.",
     "learn_more_link": "Más información"
   },
-  "opt_out_confirmation_modal": {
-    "title": "Darse de Baja de Créditos del Marketplace",
-    "warning": "¿Estás seguro de que quieres darte de baja?",
-    "description": "Ya no ganarás recompensas semanales. Puedes volver a inscribirte en cualquier momento registrándote nuevamente a través del Explorer.",
+  "leave_confirmation_modal": {
+    "warning": "¿Estás seguro de que quieres abandonar el Programa de Créditos del Marketplace?",
+    "description": "Ya no ganarás recompensas semanales. Puedes volver a unirte en cualquier momento registrándote nuevamente a través del Explorer.",
     "cancel": "Cancelar",
-    "confirm": "Confirmar Baja"
+    "confirm": "Confirmar",
+    "errors": {
+      "generic": "Algo salió mal al intentar abandonar. Por favor, inténtalo de nuevo más tarde.",
+      "already_claimed": "No puedes abandonar esta semana porque ya has reclamado créditos. Por favor, inténtalo de nuevo la próxima semana."
+    }
   },
   "settings": {
     "notifications": {
