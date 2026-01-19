@@ -3,13 +3,14 @@ import CardGiftcardRoundedIcon from '@mui/icons-material/CardGiftcardRounded'
 import ScienceRoundedIcon from '@mui/icons-material/ScienceRounded'
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { ListSubheader, SelectChangeEvent, Skeleton, useMediaQuery } from 'decentraland-ui2'
+import { JumpIn, ListSubheader, SelectChangeEvent, Skeleton, useMediaQuery } from 'decentraland-ui2'
 import { UserCreditsStatus } from '../../lib/api/credits'
 import {
   Container,
   ContentWrapper,
   Header as CreditsHeader,
   InfoText,
+  JumpInWrapper,
   MarketplaceLink,
   OptOutButton,
   OptedOutDate,
@@ -156,6 +157,18 @@ const CreditsSettingsPreview: React.FC<{ state: MockCreditsState }> = ({ state }
             <StatusValue>{t('credits_settings.status.left')}</StatusValue>
             {optedOutAt && <OptedOutDate>{t('credits_settings.left_date', { date: formatDate(optedOutAt) })}</OptedOutDate>}
             <InfoText>{t('credits_settings.rejoin_message')}</InfoText>
+            <JumpInWrapper>
+              <JumpIn
+                variant="button"
+                buttonText={t('credits_settings.jump_in_button')}
+                buttonProps={{ variant: 'contained' }}
+                modalProps={{
+                  title: t('credits_settings.title'),
+                  description: t('credits_settings.rejoin_message'),
+                  buttonLabel: t('credits_settings.jump_in_button')
+                }}
+              />
+            </JumpInWrapper>
           </>
         )
 
@@ -169,6 +182,18 @@ const CreditsSettingsPreview: React.FC<{ state: MockCreditsState }> = ({ state }
                 {t('credits_settings.learn_more_link')}
               </MarketplaceLink>
             </InfoText>
+            <JumpInWrapper>
+              <JumpIn
+                variant="button"
+                buttonText={t('credits_settings.jump_in_button')}
+                buttonProps={{ variant: 'contained' }}
+                modalProps={{
+                  title: t('credits_settings.title'),
+                  description: t('credits_settings.register_message'),
+                  buttonLabel: t('credits_settings.jump_in_button')
+                }}
+              />
+            </JumpInWrapper>
           </>
         )
 
