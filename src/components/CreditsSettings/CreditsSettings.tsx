@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import CardGiftcardRoundedIcon from '@mui/icons-material/CardGiftcardRounded'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { JumpIn, Skeleton, useMediaQuery } from 'decentraland-ui2'
+import { JumpIn, Skeleton, useTabletAndBelowMediaQuery } from 'decentraland-ui2'
 import { UserCreditsStatus } from '../../lib/api/credits'
 import { Description, Title } from '../Typography'
 import {
@@ -24,7 +24,7 @@ const CREDITS_INFO_URL =
 
 const CreditsSettings: React.FC<Props> = props => {
   const { status, optedOutAt, isLoading, isOptingOut, onGetUserCreditsStatus, onOpenOptOutModal } = props
-  const isTabletOrBelow = useMediaQuery('(max-width:991px)')
+  const isTabletOrBelow = useTabletAndBelowMediaQuery()
 
   useEffect(() => {
     onGetUserCreditsStatus()

@@ -3,7 +3,7 @@ import CardGiftcardRoundedIcon from '@mui/icons-material/CardGiftcardRounded'
 import ScienceRoundedIcon from '@mui/icons-material/ScienceRounded'
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { JumpIn, ListSubheader, SelectChangeEvent, Skeleton, useMediaQuery } from 'decentraland-ui2'
+import { JumpIn, ListSubheader, SelectChangeEvent, Skeleton, useTabletAndBelowMediaQuery } from 'decentraland-ui2'
 import { UserCreditsStatus } from '../../lib/api/credits'
 import {
   Container,
@@ -256,7 +256,7 @@ const LeaveModalPreview: React.FC<{ state: MockOptOutModalState }> = ({ state })
 
 const TestingPage: React.FC = () => {
   const [selectedView, setSelectedView] = useState<TestingView>(TestingView.CREDITS_ENROLLED)
-  const isTabletOrBelow = useMediaQuery('(max-width:991px)')
+  const isTabletOrBelow = useTabletAndBelowMediaQuery()
 
   const handleViewChange = useCallback((event: SelectChangeEvent<unknown>) => {
     setSelectedView(event.target.value as TestingView)
