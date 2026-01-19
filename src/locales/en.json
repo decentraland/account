@@ -190,7 +190,8 @@
     "leave_button": "Leave Program",
     "rejoin_message": "If you'd like to rejoin, please register again through the Explorer.",
     "register_message": "Earn weekly rewards to power up your look.",
-    "learn_more_link": "Learn more"
+    "learn_more_link": "Learn more",
+    "jump_in_button": "Jump In"
   },
   "leave_confirmation_modal": {
     "warning": "Are you sure you want to leave the Marketplace Credits Program?",

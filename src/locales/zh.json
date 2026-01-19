@@ -190,7 +190,8 @@
     "leave_button": "离开计划",
     "rejoin_message": "如果您想重新加入，请通过 Explorer 重新注册。",
     "register_message": "赚取每周奖励，提升您的形象。",
-    "learn_more_link": "了解更多"
+    "learn_more_link": "了解更多",
+    "jump_in_button": "进入"
   },
   "leave_confirmation_modal": {
     "warning": "您确定要离开市场积分计划吗？",

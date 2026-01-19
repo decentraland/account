@@ -191,7 +191,8 @@
     "leave_button": "Abandonar Programa",
     "rejoin_message": "Si deseas volver a unirte, regístrate nuevamente a través del Explorer.",
     "register_message": "Gana recompensas semanales para mejorar tu apariencia.",
-    "learn_more_link": "Más información"
+    "learn_more_link": "Más información",
+    "jump_in_button": "Entrar"
   },
   "leave_confirmation_modal": {
     "warning": "¿Estás seguro de que quieres abandonar el Programa de Créditos del Marketplace?",
