@@ -1,9 +1,11 @@
 import React, { useCallback, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded'
+import CardGiftcardRoundedIcon from '@mui/icons-material/CardGiftcardRounded'
 import MarkEmailUnreadRoundedIcon from '@mui/icons-material/MarkEmailUnreadRounded'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Alert, Skeleton, Snackbar, useMediaQuery } from 'decentraland-ui2'
+import { CreditsSettings } from '../CreditsSettings'
 import { Footer } from '../Footer'
 import { Navbar } from '../Navbar'
 import { Notifications } from '../Notifications'
@@ -61,6 +63,11 @@ const MainPage: React.FC<Props> = props => {
               icon={<MarkEmailUnreadRoundedIcon />}
               iconPosition="start"
             />
+            <Tab
+              label={isLoading ? <Skeleton animation="wave" width={100} height={20} /> : t('main_page.credits_settings')}
+              icon={<CardGiftcardRoundedIcon />}
+              iconPosition="start"
+            />
           </Tabs>
         </TabsWrapper>
 
@@ -69,6 +76,9 @@ const MainPage: React.FC<Props> = props => {
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Notifications isLoading={false} />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <CreditsSettings />
         </TabPanel>
       </Box>
       <FooterContainer>

@@ -12,6 +12,7 @@
   "main_page": {
     "wallets": "Wallets",
     "email_notifications": "Notificaciones",
+    "credits_settings": "Configuración de Créditos",
     "title": "Configuración de la cuenta",
     "copied": "Copiado!"
   },
@@ -174,6 +175,39 @@
     "meta_transaction_failure": {
       "title": "Meta transacción",
       "body": "Ocurrió un error publicando la meta transacción.{br}Intentelo de nuevo o ingrese a nuestro {discord_link} para obtener más información."
+    }
+  },
+  "credits_settings": {
+    "title": "Programa de Créditos del Marketplace",
+    "description": "Gestiona tu inscripción en el Programa de Créditos del Marketplace.",
+    "status_label": "Estado: {status}",
+    "status": {
+      "enrolled": "Inscrito",
+      "left": "Abandonado",
+      "not_registered": "No Registrado"
+    },
+    "status_description": {
+      "enrolled": "Actualmente estás inscrito en el Programa de Créditos del Marketplace",
+      "left": "Has abandonado el Programa de Créditos del Marketplace",
+      "not_registered": "¡Únete al Programa de Créditos del Marketplace y gana recompensas semanales!"
+    },
+    "enrolled_info": "Gana créditos semanales completando objetivos en el mundo.",
+    "leave_button": "Abandonar Programa",
+    "rejoin_message": "Ya no estás ganando Créditos del Marketplace.",
+    "rejoin_button": "Volver a Unirse",
+    "register_message": "Gana créditos semanales completando objetivos en el mundo.",
+    "join_button": "Unirse al Programa",
+    "learn_more_link": "Más información",
+    "jump_in_button": "Entrar"
+  },
+  "leave_confirmation_modal": {
+    "warning": "¿Abandonar Créditos del Marketplace?",
+    "description": "Dejarás de ganar créditos semanales. Puedes volver a unirte en cualquier momento.",
+    "cancel": "Cancelar",
+    "confirm": "Abandonar Programa",
+    "errors": {
+      "generic": "No se pudo abandonar el programa en este momento. Por favor, inténtalo de nuevo.",
+      "already_claimed": "No puedes abandonar esta semana porque ya has reclamado créditos. Por favor, inténtalo de nuevo la próxima semana."
     }
   },
   "settings": {
