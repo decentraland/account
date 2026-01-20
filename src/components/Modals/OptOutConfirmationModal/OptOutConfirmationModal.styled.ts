@@ -51,12 +51,7 @@ export const ButtonContainer = styled('div')({
 })
 
 export const CancelButton = styled(Button)({
-  minWidth: '140px',
-  color: '#FCFCFC !important',
-  borderColor: '#FCFCFC',
-  '&:hover': {
-    borderColor: '#FCFCFC'
-  }
+  minWidth: '140px'
 })
 
 export const ConfirmButton = styled(Button)({
