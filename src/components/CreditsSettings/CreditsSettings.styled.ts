@@ -42,10 +42,10 @@ export const OptedOutDate = styled(Typography)({
 })
 
 export const InfoText = styled(Typography)({
-  color: '#fcfcfc99',
-  fontSize: '14px',
-  fontWeight: 500,
-  marginTop: '16px',
+  color: '#FCFCFC',
+  fontSize: '16px',
+  fontWeight: 600,
+  marginTop: '8px',
   lineHeight: '24px'
 })
 
