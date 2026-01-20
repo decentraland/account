@@ -180,27 +180,33 @@
   "credits_settings": {
     "title": "Programa de Créditos del Marketplace",
     "description": "Gestiona tu inscripción en el Programa de Créditos del Marketplace.",
-    "status_label": "Estado de Inscripción",
+    "status_label": "Estado: {status}",
     "status": {
+      "enrolled": "Inscrito",
+      "left": "Abandonado",
+      "not_registered": "No Registrado"
+    },
+    "status_description": {
       "enrolled": "Actualmente estás inscrito en el Programa de Créditos del Marketplace",
       "left": "Has abandonado el Programa de Créditos del Marketplace",
       "not_registered": "¡Únete al Programa de Créditos del Marketplace y gana recompensas semanales!"
     },
-    "enrolled_info": "Gana recompensas semanales para mejorar tu apariencia completando objetivos.",
-    "left_date": "Abandonaste el {date}",
+    "enrolled_info": "Gana créditos semanales completando objetivos en el mundo.",
     "leave_button": "Abandonar Programa",
-    "rejoin_message": "Si deseas volver a unirte, regístrate nuevamente a través del Explorer.",
-    "register_message": "Gana recompensas semanales para mejorar tu apariencia.",
+    "rejoin_message": "Ya no estás ganando Créditos del Marketplace.",
+    "rejoin_button": "Volver a Unirse",
+    "register_message": "Gana créditos semanales completando objetivos en el mundo.",
+    "join_button": "Unirse al Programa",
     "learn_more_link": "Más información",
     "jump_in_button": "Entrar"
   },
   "leave_confirmation_modal": {
-    "warning": "¿Estás seguro de que quieres abandonar el Programa de Créditos del Marketplace?",
-    "description": "Ya no ganarás recompensas semanales. Puedes volver a unirte en cualquier momento registrándote nuevamente a través del Explorer.",
+    "warning": "¿Abandonar Créditos del Marketplace?",
+    "description": "Dejarás de ganar créditos semanales. Puedes volver a unirte en cualquier momento.",
     "cancel": "Cancelar",
-    "confirm": "Confirmar",
+    "confirm": "Abandonar Programa",
     "errors": {
-      "generic": "Algo salió mal al intentar abandonar. Por favor, inténtalo de nuevo más tarde.",
+      "generic": "No se pudo abandonar el programa en este momento. Por favor, inténtalo de nuevo.",
       "already_claimed": "No puedes abandonar esta semana porque ya has reclamado créditos. Por favor, inténtalo de nuevo la próxima semana."
     }
   },

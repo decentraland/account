@@ -179,27 +179,33 @@
   "credits_settings": {
     "title": "Marketplace Credits Program",
     "description": "Manage your enrollment in the Marketplace Credits Program.",
-    "status_label": "Enrollment Status",
+    "status_label": "Status: {status}",
     "status": {
+      "enrolled": "Enrolled",
+      "left": "Left",
+      "not_registered": "Not Registered"
+    },
+    "status_description": {
       "enrolled": "You are currently enrolled in the Marketplace Credits Program",
       "left": "You have left the Marketplace Credits Program",
       "not_registered": "Join the Marketplace Credits Program and earn weekly rewards!"
     },
-    "enrolled_info": "Earn weekly rewards to power up your look by completing goals.",
-    "left_date": "You left on {date}",
+    "enrolled_info": "Earn weekly credits by completing in-world goals.",
     "leave_button": "Leave Program",
-    "rejoin_message": "If you'd like to rejoin, please register again through the Explorer.",
-    "register_message": "Earn weekly rewards to power up your look.",
+    "rejoin_message": "You're no longer earning Marketplace Credits.",
+    "rejoin_button": "Rejoin Program",
+    "register_message": "Earn weekly credits by completing in-world goals.",
+    "join_button": "Join Program",
     "learn_more_link": "Learn more",
     "jump_in_button": "Jump In"
   },
   "leave_confirmation_modal": {
-    "warning": "Are you sure you want to leave the Marketplace Credits Program?",
-    "description": "You will no longer earn weekly rewards. You can rejoin at any time by registering again through the Explorer.",
+    "warning": "Leave Marketplace Credits?",
+    "description": "You'll stop earning weekly credits. You can rejoin at any time.",
     "cancel": "Cancel",
-    "confirm": "Confirm",
+    "confirm": "Leave Program",
     "errors": {
-      "generic": "Something went wrong while trying to leave. Please try again later.",
+      "generic": "Couldn't leave the program right now. Please try again.",
       "already_claimed": "You can't leave this week because you've already claimed credits. Please try again next week."
     }
   },
