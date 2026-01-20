@@ -71,7 +71,7 @@ const OptOutConfirmationModal: React.FC<Props> = ({ name, isLoading, error, onCl
         {translatedError && <ErrorMessage>{translatedError}</ErrorMessage>}
 
         <ButtonContainer>
-          <CancelButton variant="outlined" onClick={onClose} disabled={isLoading}>
+          <CancelButton variant="outlined" onClick={onClose} disabled={isLoading} color="secondary">
             {t('leave_confirmation_modal.cancel')}
           </CancelButton>
           <ConfirmButton variant="contained" onClick={handleOptOut} disabled={isLoading}>

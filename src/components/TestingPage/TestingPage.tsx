@@ -244,7 +244,7 @@ const LeaveModalPreview: React.FC<{ state: MockOptOutModalState }> = ({ state })
       {error && <ErrorMessage>{error}</ErrorMessage>}
 
       <ButtonContainer>
-        <CancelButton variant="outlined" disabled={isLoading}>
+        <CancelButton variant="outlined" disabled={isLoading} color="secondary">
           {t('leave_confirmation_modal.cancel')}
         </CancelButton>
         <ConfirmButton variant="contained" disabled={isLoading}>
