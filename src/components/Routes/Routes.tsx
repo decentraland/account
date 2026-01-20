@@ -8,7 +8,6 @@ import { LegacyEmailConfirmRedirect } from '../LegacyEmailConfirmRedirect'
 import { MainPage } from '../MainPage'
 import { ProtectedRoute } from '../ProtectedRoute'
 import { SignInPage } from '../SignInPage'
-import { TestingPage } from '../TestingPage'
 import { UnifiedEmailConfirmation } from '../UnifiedEmailConfirmation'
 import { Props } from './Routes.types'
 
@@ -33,7 +32,6 @@ const Routes = ({ closeAllModals }: Props) => {
         <Route path={locations.confirmEmail()} render={() => <LegacyEmailConfirmRedirect path="/confirm-email/:token" />} />
         <Route path={locations.creditsEmail()} render={() => <LegacyEmailConfirmRedirect path="/credits-email-confirmed/:token" />} />
 
-        <Route path={locations.testing()} component={TestingPage} />
         <Route path={locations.signIn()} component={SignInPage} />
         <ProtectedRoute path={locations.root()} component={MainPage} />
         <Redirect to={locations.root()} />
