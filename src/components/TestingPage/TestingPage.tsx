@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import CardGiftcardRoundedIcon from '@mui/icons-material/CardGiftcardRounded'
 import ScienceRoundedIcon from '@mui/icons-material/ScienceRounded'
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
@@ -13,10 +12,8 @@ import {
   JumpInWrapper,
   MarketplaceLink,
   OptOutButton,
-  OptedOutDate,
   StatusCard,
-  StatusLabel,
-  StatusValue
+  StatusLabel
 } from '../CreditsSettings/CreditsSettings.styled'
 import { Footer } from '../Footer'
 import { Box, FooterContainer, PageContainer, Tab, TabPanelContainer, Tabs, TabsWrapper } from '../MainPage/MainPage.styled'
@@ -30,7 +27,7 @@ import {
   WarningTitle
 } from '../Modals/OptOutConfirmationModal/OptOutConfirmationModal.styled'
 import { Navbar } from '../Navbar'
-import { Title, Description as TypographyDescription } from '../Typography'
+import { Title } from '../Typography'
 import {
   CategoryLabel,
   Description,
@@ -119,17 +116,21 @@ const getMockOptOutModalState = (view: TestingView): MockOptOutModalState => {
   }
 }
 
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString)
-  return date.toLocaleDateString(undefined, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
-}
-
 const CreditsSettingsPreview: React.FC<{ state: MockCreditsState }> = ({ state }) => {
-  const { status, optedOutAt, isLoading, isOptingOut } = state
+  const { status, isLoading, isOptingOut } = state
+
+  const getStatusKey = () => {
+    switch (status) {
+      case UserCreditsStatus.ENROLLED:
+        return 'enrolled'
+      case UserCreditsStatus.OPTED_OUT:
+        return 'left'
+      case UserCreditsStatus.NOT_REGISTERED:
+        return 'not_registered'
+      default:
+        return ''
+    }
+  }
 
   const renderStatusContent = () => {
     if (isLoading) {
@@ -140,10 +141,6 @@ const CreditsSettingsPreview: React.FC<{ state: MockCreditsState }> = ({ state }
       case UserCreditsStatus.ENROLLED:
         return (
           <>
-            <StatusValue>
-              <CardGiftcardRoundedIcon sx={{ verticalAlign: 'middle', marginRight: '8px' }} />
-              {t('credits_settings.status.enrolled')}
-            </StatusValue>
             <InfoText>{t('credits_settings.enrolled_info')}</InfoText>
             <OptOutButton variant="contained" disabled={isOptingOut}>
               {t('credits_settings.leave_button')}
@@ -154,18 +151,16 @@ const CreditsSettingsPreview: React.FC<{ state: MockCreditsState }> = ({ state }
       case UserCreditsStatus.OPTED_OUT:
         return (
           <>
-            <StatusValue>{t('credits_settings.status.left')}</StatusValue>
-            {optedOutAt && <OptedOutDate>{t('credits_settings.left_date', { date: formatDate(optedOutAt) })}</OptedOutDate>}
             <InfoText>{t('credits_settings.rejoin_message')}</InfoText>
             <JumpInWrapper>
               <JumpIn
                 variant="button"
-                buttonText={t('credits_settings.jump_in_button')}
+                buttonText={t('credits_settings.rejoin_button')}
                 buttonProps={{ variant: 'contained' }}
                 modalProps={{
                   title: t('credits_settings.title'),
                   description: t('credits_settings.rejoin_message'),
-                  buttonLabel: t('credits_settings.jump_in_button')
+                  buttonLabel: t('credits_settings.rejoin_button')
                 }}
               />
             </JumpInWrapper>
@@ -175,7 +170,6 @@ const CreditsSettingsPreview: React.FC<{ state: MockCreditsState }> = ({ state }
       case UserCreditsStatus.NOT_REGISTERED:
         return (
           <>
-            <StatusValue>{t('credits_settings.status.not_registered')}</StatusValue>
             <InfoText>
               {t('credits_settings.register_message')}{' '}
               <MarketplaceLink href={CREDITS_INFO_URL} target="_blank" rel="noopener noreferrer">
@@ -185,12 +179,12 @@ const CreditsSettingsPreview: React.FC<{ state: MockCreditsState }> = ({ state }
             <JumpInWrapper>
               <JumpIn
                 variant="button"
-                buttonText={t('credits_settings.jump_in_button')}
+                buttonText={t('credits_settings.join_button')}
                 buttonProps={{ variant: 'contained' }}
                 modalProps={{
                   title: t('credits_settings.title'),
                   description: t('credits_settings.register_message'),
-                  buttonLabel: t('credits_settings.jump_in_button')
+                  buttonLabel: t('credits_settings.join_button')
                 }}
               />
             </JumpInWrapper>
@@ -206,12 +200,17 @@ const CreditsSettingsPreview: React.FC<{ state: MockCreditsState }> = ({ state }
     <Container>
       <CreditsHeader>
         <Title variant="h3">{t('credits_settings.title')}</Title>
-        <TypographyDescription variant="subtitle1">{t('credits_settings.description')}</TypographyDescription>
       </CreditsHeader>
 
       <ContentWrapper>
         <StatusCard>
-          <StatusLabel>{t('credits_settings.status_label')}</StatusLabel>
+          <StatusLabel>
+            {isLoading ? (
+              <Skeleton animation="wave" width={120} height={20} />
+            ) : (
+              t('credits_settings.status_label', { status: t(`credits_settings.status.${getStatusKey()}`) })
+            )}
+          </StatusLabel>
           {renderStatusContent()}
         </StatusCard>
       </ContentWrapper>
