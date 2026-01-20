@@ -63,6 +63,7 @@ const CreditsSettings: React.FC<Props> = props => {
             <JumpInWrapper>
               <JumpIn
                 variant="button"
+                hideIcon
                 buttonText={t('credits_settings.rejoin_button')}
                 buttonProps={{ variant: 'contained' }}
                 modalProps={{
@@ -87,6 +88,7 @@ const CreditsSettings: React.FC<Props> = props => {
             <JumpInWrapper>
               <JumpIn
                 variant="button"
+                hideIcon
                 buttonText={t('credits_settings.join_button')}
                 buttonProps={{ variant: 'contained' }}
                 modalProps={{

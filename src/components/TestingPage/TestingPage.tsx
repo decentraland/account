@@ -155,6 +155,7 @@ const CreditsSettingsPreview: React.FC<{ state: MockCreditsState }> = ({ state }
             <JumpInWrapper>
               <JumpIn
                 variant="button"
+                hideIcon
                 buttonText={t('credits_settings.rejoin_button')}
                 buttonProps={{ variant: 'contained' }}
                 modalProps={{
@@ -179,6 +180,7 @@ const CreditsSettingsPreview: React.FC<{ state: MockCreditsState }> = ({ state }
             <JumpInWrapper>
               <JumpIn
                 variant="button"
+                hideIcon
                 buttonText={t('credits_settings.join_button')}
                 buttonProps={{ variant: 'contained' }}
                 modalProps={{
