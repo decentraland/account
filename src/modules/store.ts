@@ -13,6 +13,7 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import { createLogger } from 'redux-logger'
 import createSagasMiddleware from 'redux-saga'
 import { config } from '../config'
+import { CreditsSettingsAPI } from '../lib/api/credits'
 import { SET_DEPOSIT_STATUS, SET_WITHDRAWAL_STATUS, WATCH_DEPOSIT_STATUS_SUCCESS, WATCH_WITHDRAWAL_STATUS_SUCCESS } from './mana/actions'
 import migrations from './migrations'
 import { createRootReducer } from './reducer'
@@ -60,7 +61,11 @@ const creditsClient = new CreditsClient(config.get('CREDITS_SERVER_URL'), {
   identity: getIdentity
 })
 
-sagasMiddleware.run(rootSaga, notificationApi, creditsClient)
+const creditsSettingsAPI = new CreditsSettingsAPI(config.get('CREDITS_SERVER_URL'), {
+  identity: getIdentity
+})
+
+sagasMiddleware.run(rootSaga, notificationApi, creditsClient, creditsSettingsAPI)
 loadStorageMiddleware(store)
 
 if (config.is(Env.DEVELOPMENT)) {

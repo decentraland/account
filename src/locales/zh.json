@@ -11,6 +11,7 @@
   "main_page": {
     "wallets": "錢包",
     "email_notifications": "電子郵件通知",
+    "credits_settings": "积分设置",
     "title": "帳戶設定",
     "copied": "已复制！"
   },
@@ -173,6 +174,39 @@
     "meta_transaction_failure": {
       "title": "元交易",
       "body": "发送元交易时出错。{br}请重试或加入我们的{discord_link}以获取支持。"
+    }
+  },
+  "credits_settings": {
+    "title": "市场积分计划",
+    "description": "管理您在市场积分计划中的注册。",
+    "status_label": "状态: {status}",
+    "status": {
+      "enrolled": "已注册",
+      "left": "已离开",
+      "not_registered": "未注册"
+    },
+    "status_description": {
+      "enrolled": "您目前已注册市场积分计划",
+      "left": "您已离开市场积分计划",
+      "not_registered": "加入市场积分计划，赚取每周奖励！"
+    },
+    "enrolled_info": "通过完成世界内的目标赚取每周积分。",
+    "leave_button": "离开计划",
+    "rejoin_message": "您已不再赚取市场积分。",
+    "rejoin_button": "重新加入计划",
+    "register_message": "通过完成世界内的目标赚取每周积分。",
+    "join_button": "加入计划",
+    "learn_more_link": "了解更多",
+    "jump_in_button": "进入"
+  },
+  "leave_confirmation_modal": {
+    "warning": "离开市场积分？",
+    "description": "您将停止赚取每周积分。您可以随时重新加入。",
+    "cancel": "取消",
+    "confirm": "离开计划",
+    "errors": {
+      "generic": "目前无法离开计划。请重试。",
+      "already_claimed": "您本周无法离开，因为您已经领取了积分。请下周再试。"
     }
   },
   "settings": {

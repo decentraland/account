@@ -1,0 +1,12 @@
+.OptOutConfirmationModal.ui.modal {
+  max-width: 520px;
+  padding: 26px;
+}
+
+.OptOutConfirmationModal .modal-header {
+  padding-bottom: 8px;
+}
+
+.OptOutConfirmationModal .modal-content {
+  padding: 24px;
+}

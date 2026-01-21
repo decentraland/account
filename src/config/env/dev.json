@@ -22,6 +22,7 @@
   "ENVIRONMENT": "development",
   "SENTRY_DSN": "https://ccdcf39586db1c2f87e7774bb4027767@o4504361728212992.ingest.sentry.io/4505748383727616",
   "AUTH_URL": "/auth",
+  "CREDITS_SERVER_URL": "https://credits.decentraland.zone/",
   "REACT_APP_CLOUDFLARE_TURNSTILE_SITE_KEY": "0x4AAAAAABgMRzn7-vLyDB_X",
   "MARKETPLACE_URL": "https://decentraland.zone/marketplace",
   "ACCOUNT_URL": "https://decentraland.zone/account"

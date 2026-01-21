@@ -11,6 +11,7 @@
   "main_page": {
     "wallets": "Wallets",
     "email_notifications": "Email Notifications",
+    "credits_settings": "Credits Settings",
     "title": "Account Settings",
     "copied": "Copied!"
   },
@@ -175,6 +176,39 @@
       "body": "There was an error sending the meta transaction.{br}Please try again or join our {discord_link} to get support."
     }
   },
+  "credits_settings": {
+    "title": "Marketplace Credits Program",
+    "description": "Manage your enrollment in the Marketplace Credits Program.",
+    "status_label": "Status: {status}",
+    "status": {
+      "enrolled": "Enrolled",
+      "left": "Left",
+      "not_registered": "Not Registered"
+    },
+    "status_description": {
+      "enrolled": "You are currently enrolled in the Marketplace Credits Program",
+      "left": "You have left the Marketplace Credits Program",
+      "not_registered": "Join the Marketplace Credits Program and earn weekly rewards!"
+    },
+    "enrolled_info": "Earn weekly credits by completing in-world goals.",
+    "leave_button": "Leave Program",
+    "rejoin_message": "You're no longer earning Marketplace Credits.",
+    "rejoin_button": "Rejoin Program",
+    "register_message": "Earn weekly credits by completing in-world goals.",
+    "join_button": "Join Program",
+    "learn_more_link": "Learn more",
+    "jump_in_button": "Jump In"
+  },
+  "leave_confirmation_modal": {
+    "warning": "Leave Marketplace Credits?",
+    "description": "You'll stop earning weekly credits. You can rejoin at any time.",
+    "cancel": "Cancel",
+    "confirm": "Leave Program",
+    "errors": {
+      "generic": "Couldn't leave the program right now. Please try again.",
+      "already_claimed": "You can't leave this week because you've already claimed credits. Please try again next week."
+    }
+  },
   "settings": {
     "notifications": {
       "title": "Email Notifications",
@@ -182,13 +216,13 @@
       "subscription_group_label_marketplace": "Marketplace",
       "subscription_group_description_marketplace": "Get notifications about your bids, sales, royalties, and rentals.",
       "subscription_group_label_events": "Events",
-      "subscription_group_description_events": "Get notifications about events you’ve RSVP’d to.",
+      "subscription_group_description_events": "Get notifications about events you've RSVP'd to.",
       "subscription_group_label_rewards": "Giveaways & Rewards",
       "subscription_group_description_rewards": "Get notifications about free items you receive and your giveaway campaigns.",
       "subscription_group_label_dao": "DAO",
-      "subscription_group_description_dao": "Get notifications about DAO motions you’ve voted on, your proposal process, and more.",
+      "subscription_group_description_dao": "Get notifications about DAO motions you've voted on, your proposal process, and more.",
       "subscription_group_label_worlds": "Worlds",
-      "subscription_group_description_worlds": "Get notified if your World has insufficient storage or if you’re invited to visit/collaborate on a World.",
+      "subscription_group_description_worlds": "Get notified if your World has insufficient storage or if you're invited to visit/collaborate on a World.",
       "subscription_group_label_credits": "Marketplace Credits",
       "subscription_group_description_credits": "Get notifications about Credit expiration, unclaimed Credits, and incomplete goals.",
       "subscription_group_label_streaming": "In-World Streaming",
