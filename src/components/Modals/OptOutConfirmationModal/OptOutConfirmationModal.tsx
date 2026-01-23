@@ -17,6 +17,11 @@ import { Props } from './OptOutConfirmationModal.types'
 
 import './OptOutConfirmationModal.css'
 
+// Error patterns from the API - keep in sync with backend
+const ERROR_PATTERNS = {
+  CLAIMED_CREDITS: 'cannot unregister after claiming credits'
+} as const
+
 const CloseButton: React.FC<{ onClick: () => void }> = ({ onClick }) => (
   <IconButton
     onClick={onClick}
@@ -39,12 +44,12 @@ const CloseButton: React.FC<{ onClick: () => void }> = ({ onClick }) => (
 const getErrorMessage = (error: string | null): string | null => {
   if (!error) return null
 
-  // Check for specific error patterns from the API
-  if (error.toLowerCase().includes('already claimed') || error.toLowerCase().includes('claimed credits')) {
+  const lowerError = error.toLowerCase()
+
+  if (lowerError.includes(ERROR_PATTERNS.CLAIMED_CREDITS)) {
     return t('leave_confirmation_modal.errors.already_claimed')
   }
 
-  // Default to generic error message
   return t('leave_confirmation_modal.errors.generic')
 }
 
