@@ -62,7 +62,8 @@ export default defineConfig(({ command, mode }) => {
           rollupOptions: {
             plugins: [rollupNodePolyFill()]
           },
-          sourcemap: true
+          // Disable sourcemaps in CI/Vercel to reduce memory usage (avoids OOM on 8GB build)
+          sourcemap: !process.env.CI && !process.env.VERCEL
         }
       }
       : undefined)
