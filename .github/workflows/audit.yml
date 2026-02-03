@@ -14,6 +14,6 @@ jobs:
           node-version: 24.x
           cache: 'npm'
       - name: Install
-        run: npm install
+        run: npm install --legacy-peer-deps
       - name: Audit signatures
         run: npm audit signatures
