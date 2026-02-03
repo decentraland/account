@@ -27,7 +27,7 @@ export default async (): Promise<Config> => {
       '\\.(css|less)$': 'identity-obj-proxy'
     },
     transformIgnorePatterns: [
-      'node_modules/(?!(multiformats|uint8arrays|@dcl/single-sign-on-client|@dcl/hooks|decentraland-connect|uuid|decentraland-dapps|decentraland-ui|decentraland-ui2|@transak|query-string|decode-uri-component|split-on-first|filter-obj|@mui|@babel|@emotion|react-intl|@formatjs|intl-messageformat)/)'
+      'node_modules/(?!(multiformats|uint8arrays|@dcl/single-sign-on-client|@dcl/hooks|decentraland-connect|uuid|decentraland-dapps|decentraland-ui|decentraland-ui2|@transak|query-string|decode-uri-component|split-on-first|filter-obj|@mui|@babel|@emotion|react-intl|@formatjs|intl-messageformat)/|@dcl/ui-env)'
     ]
   }
 }
