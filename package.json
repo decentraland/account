@@ -12,6 +12,7 @@
     "@marsidev/react-turnstile": "^1.1.0",
     "@maticnetwork/maticjs": "^3.8.2",
     "@maticnetwork/maticjs-ethers": "^1.1.0",
+    "@module-federation/vite": "^1.11.0",
     "@sentry/react": "^7.64.0",
     "@typechain/ethers-v5": "^10.0.0",
     "decentraland-connect": "^11.2.0",
@@ -82,7 +83,7 @@
     "rollup-plugin-polyfill-node": "^0.13.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
-    "vite": "^5.2.8"
+    "vite": "^6.4.1"
   },
   "scripts": {
     "start": "vite",

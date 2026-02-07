@@ -19,7 +19,7 @@ import migrations from './migrations'
 import { createRootReducer } from './reducer'
 import { rootSaga } from './sagas'
 
-const basename = /^decentraland.(zone|org|today)$/.test(window.location.host) ? '/account' : undefined
+const basename = /^decentraland.(zone|org|today)$/.test(window.location.host) || window.location.pathname.startsWith('/account') ? '/account' : undefined
 
 const history = createBrowserHistory({ basename })
 const rootReducer = storageReducerWrapper(createRootReducer())
