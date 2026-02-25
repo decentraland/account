@@ -1,12 +1,12 @@
 import { Env } from '@dcl/ui-env/dist/env'
-import { BrowserTracing, Replay, init } from '@sentry/react'
+import { browserTracingIntegration, init, replayIntegration } from '@sentry/react'
 import { config } from '../../config'
 
 init({
   environment: config.get('ENVIRONMENT'),
   release: `${config.get('SENTRY_RELEASE_PREFIX', 'account')}@${process.env.REACT_APP_WEBSITE_VERSION}`,
   dsn: config.get('SENTRY_DSN'),
-  integrations: [new BrowserTracing(), new Replay()],
+  integrations: [browserTracingIntegration(), replayIntegration()],
   // Performance Monitoring
   tracesSampleRate: 0.001,
   // Session Replay
