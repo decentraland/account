@@ -8,6 +8,10 @@
   margin: 0 12px 12px 0;
 }
 
+.AccountCard.ui.card:last-child {
+  margin-right: 0;
+}
+
 .AccountCard:hover .see-all {
   color: var(--primary);
   opacity: 1;
