@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding-right: 50px;
   margin-top: 16px;
 }
 @media (max-width: 991px) {
