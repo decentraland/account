@@ -23,7 +23,6 @@ const Wallets: React.FC<Props> = props => {
 
   const isFirstWithdrawal = withdrawals.length === 1 && withdrawals[0].status === WithdrawalStatus.PENDING
   const isFirstDeposits = deposits.length === 1 && deposits[0].status === DepositStatus.PENDING
-  console.log('Provider type', providerType)
 
   const handleCopyAddres = useCallback(() => {
     setOpenTooltip(true)
