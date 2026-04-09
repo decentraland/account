@@ -1,9 +1,5 @@
-import { NavbarProps } from 'decentraland-ui/dist/components/Navbar/Navbar.types'
-
-export type Props = Partial<NavbarProps> & {
-  hasActivity: boolean
-  isConnected: boolean
+export type Props = {
   address?: string
 }
 
-export type MapStateProps = Pick<Props, 'hasActivity' | 'isConnected' | 'address'>
+export type MapStateProps = Pick<Props, 'address'>
