@@ -1,6 +1,4 @@
 export type Props = {
-  enablePartialSupportAlert?: boolean
-  identity?: any
   address?: string
 }
 
