@@ -20,7 +20,7 @@ const Navbar = (props: Props) => {
     return undefined
   }, [address])
 
-  return <BaseNavbar2 withNotifications identity={identity} onSignIn={handleOnSignIn} />
+  return <BaseNavbar2 withNotifications identity={identity ?? undefined} onSignIn={handleOnSignIn} />
 }
 
 export default React.memo(Navbar)
