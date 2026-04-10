@@ -5,6 +5,8 @@ import { Navbar2 as BaseNavbar2 } from 'decentraland-dapps/dist/containers'
 import { config } from '../../config'
 import { Props } from './Navbar.types'
 
+import './Navbar.css'
+
 const Navbar = (props: Props) => {
   const { address } = props
 
@@ -19,7 +21,11 @@ const Navbar = (props: Props) => {
     return undefined
   }, [address])
 
-  return <BaseNavbar2 withNotifications withCredits={false} identity={identity} onSignIn={handleOnSignIn} />
+  return (
+    <div className="navbar-wrapper">
+      <BaseNavbar2 withChainSelector withNotifications withCredits={false} identity={identity} onSignIn={handleOnSignIn} />
+    </div>
+  )
 }
 
 export default React.memo(Navbar)
