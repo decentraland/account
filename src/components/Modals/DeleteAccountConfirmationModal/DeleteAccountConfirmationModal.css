@@ -1,0 +1,12 @@
+.DeleteAccountConfirmationModal.ui.modal {
+  max-width: 520px;
+  padding: 26px;
+}
+
+.DeleteAccountConfirmationModal .modal-header {
+  padding-bottom: 8px;
+}
+
+.DeleteAccountConfirmationModal .modal-content {
+  padding: 24px;
+}

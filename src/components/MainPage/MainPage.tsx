@@ -1,17 +1,20 @@
 import React, { useCallback, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { ProviderType } from '@dcl/schemas'
 import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded'
 import CardGiftcardRoundedIcon from '@mui/icons-material/CardGiftcardRounded'
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded'
 import MarkEmailUnreadRoundedIcon from '@mui/icons-material/MarkEmailUnreadRounded'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Alert, Skeleton, Snackbar, useMediaQuery } from 'decentraland-ui2'
 import { CreditsSettings } from '../CreditsSettings'
+import { DeleteAccount } from '../DeleteAccount'
 import { Footer } from '../Footer'
 import { Navbar } from '../Navbar'
 import { Notifications } from '../Notifications'
 import { Title } from '../Typography'
 import { Wallets } from '../Wallets'
-import { Box, FooterContainer, PageContainer, Tab, TabPanelContainer, Tabs, TabsWrapper } from './MainPage.styled'
+import { Box, DeleteTab, FooterContainer, PageContainer, Tab, TabPanelContainer, Tabs, TabsWrapper } from './MainPage.styled'
 import { Props } from './MainPage.types'
 
 interface TabPanelProps {
@@ -31,7 +34,8 @@ function TabPanel(props: TabPanelProps) {
 }
 
 const MainPage: React.FC<Props> = props => {
-  const { isLoading, notificationSettingError, onClearChangeNotificationSettingError } = props
+  const { isLoading, providerType, notificationSettingError, onClearChangeNotificationSettingError } = props
+  const isThirdweb = providerType === ProviderType.THIRDWEB
   const location = useLocation<{ defaultTab?: number }>()
   const [value, setValue] = useState(location.state?.defaultTab ? location.state.defaultTab : 0)
   const isTabletOrBelow = useMediaQuery('(max-width:991px)')
@@ -39,6 +43,10 @@ const MainPage: React.FC<Props> = props => {
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
   }
+
+  const handleGoToWallets = useCallback(() => {
+    setValue(0)
+  }, [])
 
   const handleClose = useCallback(() => {
     onClearChangeNotificationSettingError()
@@ -52,7 +60,13 @@ const MainPage: React.FC<Props> = props => {
         <TabsWrapper>
           {isLoading ? <Skeleton animation="wave" width={100} height={20} /> : <Title variant="h1">{t('main_page.title')}</Title>}
 
-          <Tabs orientation={isTabletOrBelow ? 'horizontal' : 'vertical'} value={value} onChange={handleChange}>
+          <Tabs
+            orientation={isTabletOrBelow ? 'horizontal' : 'vertical'}
+            variant={isTabletOrBelow ? 'scrollable' : 'standard'}
+            scrollButtons={false}
+            value={value}
+            onChange={handleChange}
+          >
             <Tab
               label={isLoading ? <Skeleton animation="wave" width={100} height={20} /> : t('main_page.wallets')}
               icon={<AccountBalanceWalletRoundedIcon />}
@@ -68,6 +82,13 @@ const MainPage: React.FC<Props> = props => {
               icon={<CardGiftcardRoundedIcon />}
               iconPosition="start"
             />
+            {isThirdweb && (
+              <DeleteTab
+                label={isLoading ? <Skeleton animation="wave" width={100} height={20} /> : t('main_page.delete_account')}
+                icon={<DeleteForeverRoundedIcon />}
+                iconPosition="start"
+              />
+            )}
           </Tabs>
         </TabsWrapper>
 
@@ -80,6 +101,11 @@ const MainPage: React.FC<Props> = props => {
         <TabPanel value={value} index={2}>
           <CreditsSettings />
         </TabPanel>
+        {isThirdweb && (
+          <TabPanel value={value} index={3}>
+            <DeleteAccount onGoToWallets={handleGoToWallets} />
+          </TabPanel>
+        )}
       </Box>
       <FooterContainer>
         <Footer isFullscreen isFullWidth />

@@ -12,6 +12,7 @@
     "wallets": "錢包",
     "email_notifications": "電子郵件通知",
     "credits_settings": "积分设置",
+    "delete_account": "删除账户",
     "title": "帳戶設定",
     "copied": "已复制！"
   },
@@ -208,6 +209,52 @@
       "generic": "目前无法离开计划。请重试。",
       "already_claimed": "您本周无法离开，因为您已经领取了积分。请下周再试。"
     }
+  },
+  "delete_account": {
+    "title": "删除账户",
+    "danger_zone": "危险区域",
+    "danger_description": "一旦删除账户，将无法恢复。请确认您的决定。",
+    "warning": "以下内容将永久丢失：",
+    "consequences": {
+      "profile": {
+        "title": "个人资料",
+        "description": "您的用户名、头像、简介和显示名称"
+      },
+      "social": {
+        "title": "社交关系",
+        "description": "好友列表和已屏蔽的用户"
+      },
+      "marketplace": {
+        "title": "市场活动",
+        "description": "公开列表、购买历史和报价"
+      },
+      "credits": {
+        "title": "平台内积分",
+        "description": "任何未使用的余额或奖励"
+      },
+      "favorites": {
+        "title": "收藏和历史",
+        "description": "保存的地点、最近活动和活动回复"
+      },
+      "notifications": {
+        "title": "通知和偏好设置",
+        "description": "所有设置和通知历史"
+      }
+    },
+    "asset_warning_title": "链上资产面临风险",
+    "asset_warning_description": "删除账户可能导致您永久失去对链上资产（可穿戴设备、表情、LAND 等）的访问权限。请确保在继续之前导出您的私钥。",
+    "export_key_description": "前往钱包选项卡，使用地址下方的钱包管理器导出您的私钥。",
+    "export_key_link": "前往钱包",
+    "delete_button": "删除账户"
+  },
+  "delete_account_modal": {
+    "title": "您确定要删除您的账户吗？",
+    "description": "此操作是永久性的，无法撤消。您的所有数据将永久丢失。",
+    "confirmation_label": "输入 DELETE 以确认",
+    "confirmation_placeholder": "DELETE",
+    "deleting": "删除中...",
+    "delete": "删除账户",
+    "cancel": "取消"
   },
   "settings": {
     "notifications": {

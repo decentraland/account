@@ -13,6 +13,7 @@
     "wallets": "Wallets",
     "email_notifications": "Notificaciones",
     "credits_settings": "Configuración de Créditos",
+    "delete_account": "Eliminar Cuenta",
     "title": "Configuración de la cuenta",
     "copied": "Copiado!"
   },
@@ -209,6 +210,52 @@
       "generic": "No se pudo abandonar el programa en este momento. Por favor, inténtalo de nuevo.",
       "already_claimed": "No puedes abandonar esta semana porque ya has reclamado créditos. Por favor, inténtalo de nuevo la próxima semana."
     }
+  },
+  "delete_account": {
+    "title": "Eliminar Cuenta",
+    "danger_zone": "Zona de Peligro",
+    "danger_description": "Una vez que elimines tu cuenta, no hay vuelta atrás. Por favor, asegúrate.",
+    "warning": "Lo siguiente se perderá para siempre:",
+    "consequences": {
+      "profile": {
+        "title": "Perfil",
+        "description": "tu nombre de usuario, avatar, biografía y nombre para mostrar"
+      },
+      "social": {
+        "title": "Conexiones sociales",
+        "description": "lista de amigos y usuarios bloqueados"
+      },
+      "marketplace": {
+        "title": "Actividad del Marketplace",
+        "description": "listados abiertos, historial de compras y ofertas"
+      },
+      "credits": {
+        "title": "Créditos en la plataforma",
+        "description": "cualquier saldo o recompensa sin gastar"
+      },
+      "favorites": {
+        "title": "Favoritos e historial",
+        "description": "lugares guardados, actividad reciente y confirmaciones de eventos"
+      },
+      "notifications": {
+        "title": "Notificaciones y preferencias",
+        "description": "todas tus configuraciones e historial de notificaciones"
+      }
+    },
+    "asset_warning_title": "Activos en cadena en riesgo",
+    "asset_warning_description": "Eliminar tu cuenta puede hacer que pierdas permanentemente el acceso a tus activos en cadena (wearables, emotes, LAND, etc). Asegúrate de exportar tu clave privada antes de continuar.",
+    "export_key_description": "Ve a la pestaña Wallets y usa el administrador de billetera debajo de tu dirección para exportar tu clave privada.",
+    "export_key_link": "Ir a Wallets",
+    "delete_button": "Eliminar Cuenta"
+  },
+  "delete_account_modal": {
+    "title": "¿Realmente quieres eliminar tu cuenta?",
+    "description": "Esta acción es permanente y no se puede deshacer. Todos tus datos se perderán para siempre.",
+    "confirmation_label": "Escribe DELETE para confirmar",
+    "confirmation_placeholder": "DELETE",
+    "deleting": "Eliminando...",
+    "delete": "Eliminar Cuenta",
+    "cancel": "Cancelar"
   },
   "settings": {
     "notifications": {

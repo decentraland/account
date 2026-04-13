@@ -33,6 +33,7 @@
 @media (max-width: 768px) {
   .AccountCard.ui.card {
     margin: 0 0 12px 0;
+    width: 100%;
   }
 }
 

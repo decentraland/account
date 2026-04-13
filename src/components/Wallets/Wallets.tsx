@@ -2,7 +2,7 @@ import React, { Suspense, lazy, useCallback, useState } from 'react'
 import { Network, ProviderType } from '@dcl/schemas'
 import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Tooltip } from 'decentraland-ui2'
+import { Skeleton, Tooltip } from 'decentraland-ui2'
 import { DepositStatus, WithdrawalStatus } from '../../modules/mana/types'
 import { shortening } from '../../modules/wallet/utils'
 import DepositTooltip from '../Tooltips/DepositTooltip'
@@ -41,7 +41,7 @@ const Wallets: React.FC<Props> = props => {
       <Header>
         <Title variant="h3">{t('main_page.wallets')}</Title>
         {providerType === ProviderType.THIRDWEB ? (
-          <Suspense fallback={null}>
+          <Suspense fallback={<Skeleton animation="wave" width={200} height={40} />}>
             <ThirdwebWalletManager />
           </Suspense>
         ) : (

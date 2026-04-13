@@ -3,6 +3,7 @@ import { createThirdwebClient } from 'thirdweb'
 import { ConnectButton, ThirdwebProvider, useConnect } from 'thirdweb/react'
 import { inAppWallet } from 'thirdweb/wallets'
 import { getConfiguration } from 'decentraland-connect'
+import { Container, LoadingSkeleton } from './ThirdwebWalletManager.styled'
 
 const thirdwebConfig = getConfiguration().thirdweb
 const client = createThirdwebClient({ clientId: thirdwebConfig.clientId })
@@ -10,6 +11,7 @@ const client = createThirdwebClient({ clientId: thirdwebConfig.clientId })
 const ThirdwebWalletManagerContent: React.FC = () => {
   const { connect } = useConnect()
   const [isConnected, setIsConnected] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     connect(async () => {
@@ -25,7 +27,14 @@ const ThirdwebWalletManagerContent: React.FC = () => {
       .catch(() => {
         // Session not available — user may need to re-authenticate
       })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }, [connect])
+
+  if (isLoading) {
+    return <LoadingSkeleton animation="wave" width="100%" height={50} />
+  }
 
   if (!isConnected) {
     return null
@@ -44,9 +53,11 @@ const ThirdwebWalletManagerContent: React.FC = () => {
 
 const ThirdwebWalletManager: React.FC = () => {
   return (
-    <ThirdwebProvider>
-      <ThirdwebWalletManagerContent />
-    </ThirdwebProvider>
+    <Container>
+      <ThirdwebProvider>
+        <ThirdwebWalletManagerContent />
+      </ThirdwebProvider>
+    </Container>
   )
 }
 
