@@ -12,11 +12,11 @@ import {
   CancelButton,
   CloseIconButton,
   ConfirmationInput,
-  ConfirmationLabel,
   DeleteButton,
   ErrorMessage,
   ModalDescription,
   WarningIcon,
+  WarningIconCircle,
   WarningIconContainer,
   WarningTitle
 } from './DeleteAccountConfirmationModal.styled'
@@ -32,12 +32,19 @@ const CloseButton: React.FC<{ onClick: () => void; disabled: boolean }> = ({ onC
   </CloseIconButton>
 )
 
+/**
+ * Deletes the user's thirdweb in-app wallet account by unlinking all profiles.
+ * The last profile is unlinked with allowAccountDeletion set to true,
+ * which triggers thirdweb's backend account deletion.
+ */
 async function deleteAccount() {
   const thirdwebConfig = getConfiguration().thirdweb
   const client = createThirdwebClient({ clientId: thirdwebConfig.clientId })
 
+  // Fetch all authentication profiles linked to the in-app wallet
   const profiles = await getProfiles({ client })
 
+  // Unlink each profile; allowAccountDeletion on the last one deletes the account
   for (let i = 0; i < profiles.length; i++) {
     const isLast = i === profiles.length - 1
     await unlinkProfile({
@@ -61,13 +68,23 @@ const DeleteAccountConfirmationModal: React.FC<Props> = ({ name, onClose }) => {
     try {
       await deleteAccount()
 
+      // Clear Decentraland SSO identity
       const address = Object.keys(localStorage).find(key => key.startsWith('0x'))
       if (address) {
         localStorageClearIdentity(address)
       }
 
+      // Clear thirdweb session data (auth cookies, device shares, wallet user ID)
+      Object.keys(localStorage)
+        .filter(key => key.startsWith('thirdweb'))
+        .forEach(key => localStorage.removeItem(key))
+
+      // Clear decentraland-connect connection
+      localStorage.removeItem('decentraland-connect-storage-key')
+
       onClose()
 
+      // Redirect to login page; full page reload destroys all in-memory state
       const authUrl = config.get('AUTH_URL')
       window.location.replace(`${authUrl}/login?redirectTo=${encodeURIComponent(window.location.pathname)}`)
     } catch (err) {
@@ -80,29 +97,32 @@ const DeleteAccountConfirmationModal: React.FC<Props> = ({ name, onClose }) => {
     <Modal name={name} className="DeleteAccountConfirmationModal" closeIcon={<CloseButton onClick={onClose} disabled={isLoading} />}>
       <Modal.Content>
         <WarningIconContainer>
-          <WarningIcon />
+          <WarningIconCircle>
+            <WarningIcon />
+          </WarningIconCircle>
         </WarningIconContainer>
         <WarningTitle>{t('delete_account_modal.title')}</WarningTitle>
         <ModalDescription>{t('delete_account_modal.description')}</ModalDescription>
 
         {error && <ErrorMessage>{error}</ErrorMessage>}
 
-        <ConfirmationLabel>{t('delete_account_modal.confirmation_label')}</ConfirmationLabel>
         <ConfirmationInput
+          label={t('delete_account_modal.input_label')}
           value={confirmationText}
           onChange={e => setConfirmationText(e.target.value)}
           placeholder={t('delete_account_modal.confirmation_placeholder')}
           disabled={isLoading}
           autoComplete="off"
+          variant="outlined"
         />
 
         <ButtonContainer>
+          <CancelButton variant="contained" onClick={onClose} disabled={isLoading} color="secondary">
+            {t('delete_account_modal.cancel')}
+          </CancelButton>
           <DeleteButton variant="contained" onClick={handleDeleteAccount} disabled={!isConfirmed || isLoading}>
             {isLoading ? t('delete_account_modal.deleting') : t('delete_account_modal.delete')}
           </DeleteButton>
-          <CancelButton variant="outlined" onClick={onClose} disabled={isLoading} color="secondary">
-            {t('delete_account_modal.cancel')}
-          </CancelButton>
         </ButtonContainer>
       </Modal.Content>
     </Modal>

@@ -249,8 +249,8 @@
   },
   "delete_account_modal": {
     "title": "您确定要删除您的账户吗？",
-    "description": "此操作是永久性的，无法撤消。您的所有数据将永久丢失。",
-    "confirmation_label": "输入 DELETE 以确认",
+    "description": "此操作不可逆。您的所有数据将被永久删除。要确认，请在下方输入 DELETE 并确认。",
+    "input_label": "输入 DELETE",
     "confirmation_placeholder": "DELETE",
     "deleting": "删除中...",
     "delete": "删除账户",

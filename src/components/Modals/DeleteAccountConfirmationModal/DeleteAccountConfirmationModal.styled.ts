@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded'
+import WarningRoundedIcon from '@mui/icons-material/WarningRounded'
 import { Button, IconButton, TextField, Typography } from 'decentraland-ui2'
 
 export const CloseIconButton = styled(IconButton)({
@@ -14,15 +14,25 @@ export const CloseIconButton = styled(IconButton)({
   }
 })
 
-export const WarningIcon = styled(WarningAmberRoundedIcon)({
-  fontSize: 48,
-  color: '#FF2D55'
+export const WarningIcon = styled(WarningRoundedIcon)({
+  fontSize: 40,
+  color: '#FCFCFC'
 })
 
 export const WarningIconContainer = styled('div')({
   display: 'flex',
   justifyContent: 'center',
   marginBottom: '16px'
+})
+
+export const WarningIconCircle = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '64px',
+  height: '64px',
+  borderRadius: '50%',
+  backgroundColor: '#FF2D55'
 })
 
 export const WarningTitle = styled(Typography)({
@@ -37,41 +47,19 @@ export const WarningTitle = styled(Typography)({
 export const ModalDescription = styled(Typography)({
   fontSize: '15px',
   lineHeight: '24px',
-  color: '#736e7d',
-  textAlign: 'center',
+  color: '#CFCDD4',
+  textAlign: 'left',
   marginBottom: '24px'
-})
-
-export const ConfirmationLabel = styled(Typography)({
-  fontSize: '13px',
-  lineHeight: '20px',
-  color: '#fcfcfc99',
-  marginBottom: '8px'
 })
 
 export const ConfirmationInput = styled(TextField)({
   width: '100%',
   marginBottom: '20px',
-  '& .MuiInputBase-root': {
-    backgroundColor: '#ffffff0a',
-    borderRadius: '8px',
-    color: '#FCFCFC',
-    fontSize: '14px'
-  },
-  '& .MuiInputBase-input': {
-    padding: '12px 16px',
-    textAlign: 'center',
-    letterSpacing: '2px',
-    fontWeight: 600
-  },
   '& .MuiOutlinedInput-notchedOutline': {
-    borderColor: '#ffffff1a'
-  },
-  '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
     borderColor: '#ffffff30'
   },
-  '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-    borderColor: '#FF2D55'
+  '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+    borderColor: '#ffffff50'
   }
 })
 
@@ -88,23 +76,14 @@ export const ErrorMessage = styled('div')({
 
 export const ButtonContainer = styled('div')({
   display: 'flex',
-  flexDirection: 'column',
-  gap: '12px',
-  alignItems: 'center'
-})
-
-export const DeleteButton = styled(Button)({
-  width: '100%',
-  backgroundColor: '#FF2D55',
-  '&:hover': {
-    backgroundColor: '#e0264b'
-  },
-  '&.Mui-disabled': {
-    backgroundColor: 'rgba(255, 45, 85, 0.2)',
-    color: 'rgba(255, 255, 255, 0.3)'
-  }
+  flexDirection: 'row',
+  gap: '12px'
 })
 
 export const CancelButton = styled(Button)({
-  width: '100%'
+  flex: 1
+})
+
+export const DeleteButton = styled(Button)({
+  flex: 1
 })

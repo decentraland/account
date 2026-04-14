@@ -1,6 +1,15 @@
+.DeleteAccountConfirmationModal.ui.modal,
+.DeleteAccountConfirmationModal.ui.modal > .content,
+.DeleteAccountConfirmationModal.ui.modal > .header,
+.DeleteAccountConfirmationModal.ui.modal > .description,
+.DeleteAccountConfirmationModal.ui.modal > .actions {
+  background: transparent;
+}
+
 .DeleteAccountConfirmationModal.ui.modal {
   max-width: 520px;
   padding: 26px;
+  background: radial-gradient(71.22% 102.85% at 50.08% 77.11%, #7434B1 0%, #481C6C 37.11%, #2B1040 100%);
 }
 
 .DeleteAccountConfirmationModal .modal-header {

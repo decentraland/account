@@ -249,9 +249,9 @@
     "delete_button": "Eliminar Cuenta"
   },
   "delete_account_modal": {
-    "title": "¿Realmente quieres eliminar tu cuenta?",
-    "description": "Esta acción es permanente y no se puede deshacer. Todos tus datos se perderán para siempre.",
-    "confirmation_label": "Escribe DELETE para confirmar",
+    "title": "¿Estás seguro de que quieres eliminar tu cuenta?",
+    "description": "Esta acción es irreversible. Todos tus datos serán eliminados permanentemente. Para confirmar, escribe DELETE en el campo de abajo y confirma.",
+    "input_label": "Escribe DELETE",
     "confirmation_placeholder": "DELETE",
     "deleting": "Eliminando...",
     "delete": "Eliminar Cuenta",

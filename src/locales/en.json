@@ -248,9 +248,9 @@
     "delete_button": "Delete Account"
   },
   "delete_account_modal": {
-    "title": "Do you really want to delete your account?",
-    "description": "This action is permanent and cannot be undone. All your data will be lost forever.",
-    "confirmation_label": "Type DELETE to confirm",
+    "title": "Are you sure you want to delete your account?",
+    "description": "This action is irreversible. All your data will be permanently deleted. To confirm, please type DELETE in the field below and confirm.",
+    "input_label": "Type DELETE",
     "confirmation_placeholder": "DELETE",
     "deleting": "Deleting...",
     "delete": "Delete Account",
