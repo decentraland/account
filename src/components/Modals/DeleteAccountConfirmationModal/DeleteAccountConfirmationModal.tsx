@@ -117,11 +117,11 @@ const DeleteAccountConfirmationModal: React.FC<Props> = ({ name, metadata, onClo
   const [confirmationText, setConfirmationText] = useState('')
   const isDeleting = useRef(false)
 
-  const address: string | undefined = metadata?.address
+  const address = metadata?.address
   const isConfirmed = confirmationText === CONFIRMATION_WORD
 
   const handleDeleteAccount = useCallback(async () => {
-    if (!address || isDeleting.current) return
+    if (!address || !isConfirmed || isDeleting.current) return
 
     isDeleting.current = true
     setIsLoading(true)
@@ -153,7 +153,7 @@ const DeleteAccountConfirmationModal: React.FC<Props> = ({ name, metadata, onClo
     // Redirect to login page; full page reload destroys all in-memory state
     const authUrl = config.get('AUTH_URL')
     window.location.replace(`${authUrl}/login?redirectTo=${encodeURIComponent(window.location.pathname)}`)
-  }, [address])
+  }, [address, isConfirmed])
 
   // Prevent dismissal via ESC or backdrop click while deletion is in flight
   const canDismiss = !isLoading
@@ -168,6 +168,7 @@ const DeleteAccountConfirmationModal: React.FC<Props> = ({ name, metadata, onClo
         </CloseIconButton>
       }
       closeOnDimmerClick={canDismiss}
+      closeOnEscape={canDismiss}
       closeOnDocumentClick={false}
     >
       <Modal.Content>

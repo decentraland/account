@@ -92,7 +92,7 @@ const DeleteAccount: React.FC<Props> = ({ address, onOpenDeleteAccountModal, onG
           </AssetWarningTextWrapper>
         </AssetWarningBox>
 
-        <DeleteButton variant="contained" onClick={() => address && onOpenDeleteAccountModal(address)}>
+        <DeleteButton variant="contained" disabled={!address} onClick={() => address && onOpenDeleteAccountModal(address)}>
           {t('delete_account.delete_button')}
         </DeleteButton>
       </ContentWrapper>

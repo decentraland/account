@@ -74,16 +74,14 @@ describe('DeleteAccount', () => {
   })
 
   describe('when address is undefined', () => {
-    it('should not call onOpenDeleteAccountModal when clicking delete', async () => {
+    it('should disable the delete button', () => {
       const { getByRole } = renderDeleteAccount({
         address: undefined,
         onOpenDeleteAccountModal,
         onGoToWallets
       })
 
-      await userEvent.click(getByRole('button', { name: t('delete_account.delete_button') }))
-
-      expect(onOpenDeleteAccountModal).not.toHaveBeenCalled()
+      expect(getByRole('button', { name: t('delete_account.delete_button') })).toBeDisabled()
     })
   })
 })
