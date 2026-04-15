@@ -26,7 +26,13 @@ export const TabPanelContainer = styled('div')({
   marginLeft: '200px',
   '@media (max-width: 1400px)': { marginLeft: '100px' },
   '@media (max-width: 1200px)': { marginLeft: 'auto', marginRight: 'auto' },
-  '@media (max-width: 991px)': { padding: '0 16px' }
+  '@media (max-width: 991px)': {
+    padding: '0 24px',
+    width: '100%',
+    boxSizing: 'border-box' as const,
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  }
 })
 
 export const TabsWrapper = styled('div')({
@@ -57,6 +63,22 @@ export const Tab = styled(TabMui)({
     backgroundColor: '#FFFFFF',
     borderRadius: '8px',
     color: '#161518'
+  }
+})
+
+export const DeleteTab = styled(TabMui)({
+  justifyContent: 'flex-start',
+  color: '#CFCDD4',
+  '&.MuiButtonBase-root.MuiTab-root': {
+    maxHeight: '40px',
+    minHeight: '40px',
+    height: '40px',
+    marginBottom: '8px'
+  },
+  '&.Mui-selected': {
+    backgroundColor: 'rgba(255, 45, 85, 0.15)',
+    borderRadius: '8px',
+    color: '#FF2D55'
   }
 })
 

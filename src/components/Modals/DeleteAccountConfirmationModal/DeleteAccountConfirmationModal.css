@@ -1,0 +1,29 @@
+/*
+ * CSS overrides for the Semantic UI Modal wrapper from decentraland-dapps.
+ * These cannot be done via Emotion styled components because the base
+ * .ui.modal styles from Semantic UI apply a background-color that
+ * overrides Emotion's specificity. This file targets the Semantic UI
+ * selectors directly to set transparent backgrounds and the custom
+ * radial gradient.
+ */
+.DeleteAccountConfirmationModal.ui.modal,
+.DeleteAccountConfirmationModal.ui.modal > .content,
+.DeleteAccountConfirmationModal.ui.modal > .header,
+.DeleteAccountConfirmationModal.ui.modal > .description,
+.DeleteAccountConfirmationModal.ui.modal > .actions {
+  background: transparent;
+}
+
+.DeleteAccountConfirmationModal.ui.modal {
+  max-width: 520px;
+  padding: 26px;
+  background: radial-gradient(71.22% 102.85% at 50.08% 77.11%, #7434B1 0%, #481C6C 37.11%, #2B1040 100%);
+}
+
+.DeleteAccountConfirmationModal .modal-header {
+  padding-bottom: 8px;
+}
+
+.DeleteAccountConfirmationModal .modal-content {
+  padding: 24px;
+}

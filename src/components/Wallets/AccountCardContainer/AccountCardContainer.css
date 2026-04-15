@@ -13,5 +13,6 @@
   .AccountCardContainer {
     padding: 0;
     flex-direction: column;
+    width: 100%;
   }
 }

@@ -12,6 +12,7 @@
     "wallets": "Wallets",
     "email_notifications": "Email Notifications",
     "credits_settings": "Credits Settings",
+    "delete_account": "Delete Account",
     "title": "Account Settings",
     "copied": "Copied!"
   },
@@ -208,6 +209,53 @@
       "generic": "Couldn't leave the program right now. Please try again.",
       "already_claimed": "You can't leave this week because you've already claimed credits. Please try again next week."
     }
+  },
+  "delete_account": {
+    "title": "Delete Account",
+    "danger_zone": "Danger Zone",
+    "danger_description": "Once you delete your account, there is no going back. Please be certain.",
+    "warning": "The following will be lost forever:",
+    "consequences": {
+      "profile": {
+        "title": "Profile",
+        "description": "your username, avatar, bio and display name"
+      },
+      "social": {
+        "title": "Social connections",
+        "description": "friends list and blocked users"
+      },
+      "marketplace": {
+        "title": "Marketplace activity",
+        "description": "open listings, purchase history and offers"
+      },
+      "credits": {
+        "title": "In-platform credits",
+        "description": "any unspent balances or rewards"
+      },
+      "favorites": {
+        "title": "Favorites & history",
+        "description": "saved places, recent activity and event RSVPs"
+      },
+      "notifications": {
+        "title": "Notifications & preferences",
+        "description": "all your settings and notification history"
+      }
+    },
+    "asset_warning_title": "On-chain assets at risk",
+    "asset_warning_description": "Deleting your account may cause you to permanently lose access to your on-chain assets (wearables, emotes, LAND, etc). Make sure to export your private key before proceeding.",
+    "export_key_description": "Go to the Wallets tab and use the wallet manager below your address to export your private key.",
+    "export_key_link": "Go to Wallets",
+    "delete_button": "Delete Account"
+  },
+  "delete_account_modal": {
+    "title": "Are you sure you want to delete your account?",
+    "description": "This action is irreversible. All your data will be permanently deleted. To confirm, please type DELETE in the field below and confirm.",
+    "input_label": "Type DELETE",
+    "confirmation_placeholder": "DELETE",
+    "deleting": "Deleting...",
+    "delete": "Delete Account",
+    "cancel": "Cancel",
+    "generic_error": "Failed to delete your account. Please try again later."
   },
   "settings": {
     "notifications": {
