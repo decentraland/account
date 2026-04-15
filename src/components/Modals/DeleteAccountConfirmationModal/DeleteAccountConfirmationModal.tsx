@@ -61,7 +61,7 @@ async function deleteThirdwebAccount() {
  * This runs regardless of whether the redirect succeeds, to ensure
  * no stale session persists after account deletion.
  */
-function clearLocalSession(address: string) {
+async function clearLocalSession(address: string) {
   // Clear Decentraland SSO identity for the connected address
   localStorageClearIdentity(address)
 
@@ -75,24 +75,32 @@ function clearLocalSession(address: string) {
     .filter(key => key.startsWith('thirdweb'))
     .forEach(key => sessionStorage.removeItem(key))
 
-  // Clear thirdweb IndexedDB databases (device shares, wallet encryption keys)
+  // Clear thirdweb IndexedDB databases (device shares, wallet encryption keys).
+  // indexedDB.deleteDatabase() returns an IDBOpenDBRequest, not a Promise,
+  // so we wrap each call to await completion before redirecting.
   if (typeof indexedDB.databases === 'function') {
-    indexedDB
-      .databases()
-      .then(databases =>
+    try {
+      const databases = await indexedDB.databases()
+      await Promise.all(
         databases
           .filter(db => db.name?.includes('thirdweb'))
-          .forEach(db => {
-            if (db.name) indexedDB.deleteDatabase(db.name)
-          })
+          .map(
+            db =>
+              new Promise<void>((resolve, reject) => {
+                if (!db.name) return resolve()
+                const request = indexedDB.deleteDatabase(db.name)
+                request.onsuccess = () => resolve()
+                request.onerror = () => reject(request.error)
+              })
+          )
       )
-      .catch(() => {
-        // Best-effort: not all browsers support indexedDB.databases()
-      })
+    } catch {
+      // Best-effort: not all browsers support indexedDB.databases()
+    }
   }
 
   // Disconnect via decentraland-connect (clears its storage key)
-  connection.disconnect().catch(() => {
+  await connection.disconnect().catch(() => {
     // Best-effort: page is about to redirect anyway
   })
 }
@@ -131,7 +139,7 @@ const DeleteAccountConfirmationModal: React.FC<Props> = ({ name, metadata, onClo
     // Past point of no return: always clear local session and redirect,
     // even if individual cleanup steps fail
     try {
-      clearLocalSession(address)
+      await clearLocalSession(address)
     } catch (err) {
       console.error('Local session cleanup failed:', err)
     }
@@ -149,7 +157,7 @@ const DeleteAccountConfirmationModal: React.FC<Props> = ({ name, metadata, onClo
       name={name}
       className="DeleteAccountConfirmationModal"
       closeIcon={
-        <CloseIconButton onClick={onClose} disabled={!canDismiss}>
+        <CloseIconButton onClick={onClose} disabled={!canDismiss} aria-label="Close">
           <CloseIcon />
         </CloseIconButton>
       }
