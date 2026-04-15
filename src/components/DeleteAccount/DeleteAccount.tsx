@@ -42,7 +42,7 @@ const CONSEQUENCES = [
   { key: 'notifications', icon: NotificationsRoundedIcon }
 ] as const
 
-const DeleteAccount: React.FC<Props> = ({ onOpenDeleteAccountModal, onGoToWallets }) => {
+const DeleteAccount: React.FC<Props> = ({ address, onOpenDeleteAccountModal, onGoToWallets }) => {
   const isTabletOrBelow = useTabletAndBelowMediaQuery()
 
   return (
@@ -90,7 +90,7 @@ const DeleteAccount: React.FC<Props> = ({ onOpenDeleteAccountModal, onGoToWallet
           </AssetWarningTextWrapper>
         </AssetWarningBox>
 
-        <DeleteButton variant="contained" onClick={onOpenDeleteAccountModal}>
+        <DeleteButton variant="contained" onClick={() => address && onOpenDeleteAccountModal(address)}>
           {t('delete_account.delete_button')}
         </DeleteButton>
       </ContentWrapper>

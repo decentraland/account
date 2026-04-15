@@ -3,7 +3,8 @@ import { createThirdwebClient } from 'thirdweb'
 import { ConnectButton, ThirdwebProvider, useConnect } from 'thirdweb/react'
 import { inAppWallet } from 'thirdweb/wallets'
 import { getConfiguration } from 'decentraland-connect'
-import { Container, LoadingSkeleton } from './ThirdwebWalletManager.styled'
+import { Skeleton } from 'decentraland-ui2'
+import { Container } from './ThirdwebWalletManager.styled'
 
 const thirdwebConfig = getConfiguration().thirdweb
 const client = createThirdwebClient({ clientId: thirdwebConfig.clientId })
@@ -33,7 +34,7 @@ const ThirdwebWalletManagerContent: React.FC = () => {
   }, [connect])
 
   if (isLoading) {
-    return <LoadingSkeleton animation="wave" width="100%" height={50} />
+    return <Skeleton animation="wave" width="100%" height={50} />
   }
 
   if (!isConnected) {

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { ProviderType } from '@dcl/schemas'
 import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded'
@@ -43,6 +43,13 @@ const MainPage: React.FC<Props> = props => {
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
   }
+
+  // Reset to Wallets tab if the Delete Account tab disappears (e.g. provider change)
+  useEffect(() => {
+    if (!isThirdweb && value === 3) {
+      setValue(0)
+    }
+  }, [isThirdweb, value])
 
   const handleGoToWallets = useCallback(() => {
     setValue(0)

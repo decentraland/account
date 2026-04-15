@@ -254,7 +254,8 @@
     "confirmation_placeholder": "DELETE",
     "deleting": "删除中...",
     "delete": "删除账户",
-    "cancel": "取消"
+    "cancel": "取消",
+    "generic_error": "无法删除您的账户。请稍后重试。"
   },
   "settings": {
     "notifications": {

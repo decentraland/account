@@ -255,7 +255,8 @@
     "confirmation_placeholder": "DELETE",
     "deleting": "Eliminando...",
     "delete": "Eliminar Cuenta",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "generic_error": "No se pudo eliminar tu cuenta. Por favor, inténtalo más tarde."
   },
   "settings": {
     "notifications": {

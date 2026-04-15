@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { getProviderType, isConnecting } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { RootState } from '../../modules/reducer'
-import { clearSaveSubscriptionError, getSubscriptionsRequest } from '../../modules/subscription/actions'
+import { clearSaveSubscriptionError } from '../../modules/subscription/actions'
 import { getError } from '../../modules/subscription/selectors'
 import HomePage from './MainPage'
 import { MapDispatch, MapDispatchProps, MapStateProps } from './MainPage.types'
@@ -15,7 +15,6 @@ const mapState = (state: RootState): MapStateProps => {
 }
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
-  onGetNotificationSetting: () => dispatch(getSubscriptionsRequest()),
   onClearChangeNotificationSettingError: () => dispatch(clearSaveSubscriptionError())
 })
 

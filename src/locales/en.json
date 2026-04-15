@@ -254,7 +254,8 @@
     "confirmation_placeholder": "DELETE",
     "deleting": "Deleting...",
     "delete": "Delete Account",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "generic_error": "Failed to delete your account. Please try again later."
   },
   "settings": {
     "notifications": {

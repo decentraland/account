@@ -1,11 +1,17 @@
 import { connect } from 'react-redux'
 import { openModal } from 'decentraland-dapps/dist/modules/modal/actions'
+import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { Dispatch } from 'redux'
+import { RootState } from '../../modules/reducer'
 import DeleteAccount from './DeleteAccount'
-import { MapDispatchProps, OwnProps } from './DeleteAccount.types'
+import { MapDispatchProps, MapStateProps } from './DeleteAccount.types'
 
-const mapDispatch = (dispatch: Dispatch): MapDispatchProps => ({
-  onOpenDeleteAccountModal: () => dispatch(openModal('DeleteAccountConfirmationModal'))
+const mapState = (state: RootState): MapStateProps => ({
+  address: getAddress(state)
 })
 
-export default connect<{}, MapDispatchProps, OwnProps>(null, mapDispatch)(DeleteAccount)
+const mapDispatch = (dispatch: Dispatch): MapDispatchProps => ({
+  onOpenDeleteAccountModal: (address: string) => dispatch(openModal('DeleteAccountConfirmationModal', { address }))
+})
+
+export default connect(mapState, mapDispatch)(DeleteAccount)
