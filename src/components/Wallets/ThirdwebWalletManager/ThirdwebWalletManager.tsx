@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { createThirdwebClient } from 'thirdweb'
 import { ConnectButton, ThirdwebProvider, useConnect } from 'thirdweb/react'
 import { inAppWallet } from 'thirdweb/wallets'
-import { getConfiguration } from 'decentraland-connect'
 import { Skeleton } from 'decentraland-ui2'
+import { thirdwebClient } from '../../../lib/thirdweb'
 import { Container } from './ThirdwebWalletManager.styled'
-
-const thirdwebConfig = getConfiguration().thirdweb
-const client = createThirdwebClient({ clientId: thirdwebConfig.clientId })
 
 const ThirdwebWalletManagerContent: React.FC = () => {
   const { connect } = useConnect()
@@ -17,7 +13,7 @@ const ThirdwebWalletManagerContent: React.FC = () => {
   useEffect(() => {
     connect(async () => {
       const wallet = inAppWallet()
-      await wallet.autoConnect({ client })
+      await wallet.autoConnect({ client: thirdwebClient })
       return wallet
     })
       .then(wallet => {
@@ -43,7 +39,7 @@ const ThirdwebWalletManagerContent: React.FC = () => {
 
   return (
     <ConnectButton
-      client={client}
+      client={thirdwebClient}
       wallets={[inAppWallet()]}
       theme="dark"
       connectModal={{ size: 'compact' }}

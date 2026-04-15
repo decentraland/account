@@ -23,6 +23,13 @@ interface TabPanelProps {
   value: number
 }
 
+enum TabIndex {
+  WALLETS = 0,
+  NOTIFICATIONS = 1,
+  CREDITS = 2,
+  DELETE_ACCOUNT = 3
+}
+
 function TabPanel(props: TabPanelProps) {
   const { children, value, index } = props
 
@@ -46,18 +53,18 @@ const MainPage: React.FC<Props> = props => {
 
   // Reset to Wallets tab if the Delete Account tab disappears (e.g. provider change)
   useEffect(() => {
-    if (!isThirdweb && value === 3) {
-      setValue(0)
+    if (!isThirdweb && value === TabIndex.DELETE_ACCOUNT) {
+      setValue(TabIndex.WALLETS)
     }
   }, [isThirdweb, value])
 
   const handleGoToWallets = useCallback(() => {
-    setValue(0)
+    setValue(TabIndex.WALLETS)
   }, [])
 
   const handleClose = useCallback(() => {
     onClearChangeNotificationSettingError()
-  }, [])
+  }, [onClearChangeNotificationSettingError])
 
   return (
     <PageContainer>
@@ -99,17 +106,17 @@ const MainPage: React.FC<Props> = props => {
           </Tabs>
         </TabsWrapper>
 
-        <TabPanel value={value} index={0}>
+        <TabPanel value={value} index={TabIndex.WALLETS}>
           <Wallets></Wallets>
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        <TabPanel value={value} index={TabIndex.NOTIFICATIONS}>
           <Notifications isLoading={false} />
         </TabPanel>
-        <TabPanel value={value} index={2}>
+        <TabPanel value={value} index={TabIndex.CREDITS}>
           <CreditsSettings />
         </TabPanel>
         {isThirdweb && (
-          <TabPanel value={value} index={3}>
+          <TabPanel value={value} index={TabIndex.DELETE_ACCOUNT}>
             <DeleteAccount onGoToWallets={handleGoToWallets} />
           </TabPanel>
         )}

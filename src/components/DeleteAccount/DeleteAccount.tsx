@@ -86,7 +86,9 @@ const DeleteAccount: React.FC<Props> = ({ address, onOpenDeleteAccountModal, onG
             <AssetWarningTitle>{t('delete_account.asset_warning_title')}</AssetWarningTitle>
             <AssetWarningDescription>{t('delete_account.asset_warning_description')}</AssetWarningDescription>
             <ExportKeyDescription>{t('delete_account.export_key_description')}</ExportKeyDescription>
-            <ExportKeyLink onClick={onGoToWallets}>{t('delete_account.export_key_link')}</ExportKeyLink>
+            <ExportKeyLink variant="text" onClick={onGoToWallets}>
+              {t('delete_account.export_key_link')}
+            </ExportKeyLink>
           </AssetWarningTextWrapper>
         </AssetWarningBox>
 

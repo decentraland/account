@@ -146,15 +146,18 @@ export const ExportKeyDescription = styled(Typography)({
   marginTop: '4px'
 })
 
-export const ExportKeyLink = styled('span')({
+export const ExportKeyLink = styled(Button)({
   color: '#FFA500',
   fontSize: '13px',
   fontWeight: 600,
-  cursor: 'pointer',
   marginTop: '4px',
-  display: 'inline-block',
+  padding: 0,
+  minWidth: 'auto',
+  textTransform: 'none',
+  justifyContent: 'flex-start',
   '&:hover': {
-    textDecoration: 'underline'
+    textDecoration: 'underline',
+    backgroundColor: 'transparent'
   }
 })
 

@@ -7,30 +7,24 @@ import { Props } from './DeleteAccountConfirmationModal.types'
 
 const mockGetProfiles = jest.fn()
 const mockUnlinkProfile = jest.fn()
-const mockCreateThirdwebClient = jest.fn()
-const mockGetConfiguration = jest.fn()
-const mockConnectionDisconnect = jest.fn()
 const mockLocalStorageClearIdentity = jest.fn()
+const mockAnalyticsTrack = jest.fn()
 
 jest.mock('thirdweb/wallets/in-app', () => ({
   getProfiles: (...args: unknown[]) => mockGetProfiles(...args),
   unlinkProfile: (...args: unknown[]) => mockUnlinkProfile(...args)
 }))
 
-jest.mock('thirdweb', () => ({
-  createThirdwebClient: (...args: unknown[]) => mockCreateThirdwebClient(...args)
-}))
-
-jest.mock('decentraland-connect', () => ({
-  ...jest.requireActual('decentraland-connect'),
-  getConfiguration: () => mockGetConfiguration(),
-  connection: {
-    disconnect: () => mockConnectionDisconnect()
-  }
+jest.mock('../../../lib/thirdweb', () => ({
+  thirdwebClient: { clientId: 'test-client' }
 }))
 
 jest.mock('@dcl/single-sign-on-client', () => ({
   localStorageClearIdentity: (...args: unknown[]) => mockLocalStorageClearIdentity(...args)
+}))
+
+jest.mock('decentraland-dapps/dist/modules/analytics/utils', () => ({
+  getAnalytics: () => ({ track: mockAnalyticsTrack })
 }))
 
 const renderModal = (props: Partial<Props> = {}) =>
@@ -51,9 +45,6 @@ describe('DeleteAccountConfirmationModal', () => {
     onClose = jest.fn()
     mockGetProfiles.mockResolvedValue([{ type: 'google', details: { email: 'test@test.com' } }])
     mockUnlinkProfile.mockResolvedValue(undefined)
-    mockCreateThirdwebClient.mockReturnValue({ clientId: 'test-client' })
-    mockGetConfiguration.mockReturnValue({ thirdweb: { clientId: 'test-client' } })
-    mockConnectionDisconnect.mockResolvedValue(undefined)
     mockLocalStorageClearIdentity.mockReturnValue(undefined)
 
     Object.defineProperty(window, 'location', {
@@ -131,7 +122,7 @@ describe('DeleteAccountConfirmationModal', () => {
       mockUnlinkProfile.mockResolvedValue(undefined)
     })
 
-    it('should clear SSO identity, thirdweb storage, and call connection.disconnect()', async () => {
+    it('should clear SSO identity for the connected address', async () => {
       const { getByText, getByRole } = renderModal({ onClose, metadata: { address: '0xABC' } })
 
       await userEvent.type(getByRole('textbox'), 'DELETE')
@@ -140,7 +131,6 @@ describe('DeleteAccountConfirmationModal', () => {
       await waitFor(() => {
         expect(mockLocalStorageClearIdentity).toHaveBeenCalledWith('0xABC')
       })
-      expect(mockConnectionDisconnect).toHaveBeenCalled()
     })
 
     it('should redirect to the login page', async () => {
@@ -151,6 +141,18 @@ describe('DeleteAccountConfirmationModal', () => {
 
       await waitFor(() => {
         expect(window.location.replace).toHaveBeenCalledWith(expect.stringContaining('/login'))
+      })
+    })
+
+    it('should track the deletion request and success events', async () => {
+      const { getByText, getByRole } = renderModal({ onClose, metadata: { address: '0xABC' } })
+
+      await userEvent.type(getByRole('textbox'), 'DELETE')
+      await userEvent.click(getByText(t('delete_account_modal.delete')))
+
+      await waitFor(() => {
+        expect(mockAnalyticsTrack).toHaveBeenCalledWith('Delete Account Request', { address: '0xABC' })
+        expect(mockAnalyticsTrack).toHaveBeenCalledWith('Delete Account Success', { address: '0xABC' })
       })
     })
   })
@@ -181,6 +183,55 @@ describe('DeleteAccountConfirmationModal', () => {
         const cancelButton = getByText(t('delete_account_modal.cancel')).closest('button')
         expect(cancelButton).toBeEnabled()
       })
+    })
+
+    it('should track the deletion failure event', async () => {
+      const { getByText, getByRole } = renderModal({ onClose })
+
+      await userEvent.type(getByRole('textbox'), 'DELETE')
+      await userEvent.click(getByText(t('delete_account_modal.delete')))
+
+      await waitFor(() => {
+        expect(mockAnalyticsTrack).toHaveBeenCalledWith('Delete Account Failure', {
+          address: '0x1234567890abcdef',
+          error: 'Network error'
+        })
+      })
+    })
+  })
+
+  describe('when unlinkProfile fails partway through multiple profiles', () => {
+    beforeEach(() => {
+      mockGetProfiles.mockResolvedValue([
+        { type: 'google', details: { email: 'test@test.com' } },
+        { type: 'discord', details: { id: '123' } }
+      ])
+      // First unlink succeeds, second fails
+      mockUnlinkProfile.mockResolvedValueOnce(undefined).mockRejectedValueOnce(new Error('Unlink failed on second profile'))
+    })
+
+    it('should show the localized error message', async () => {
+      const { getByText, getByRole } = renderModal({ onClose })
+
+      await userEvent.type(getByRole('textbox'), 'DELETE')
+      await userEvent.click(getByText(t('delete_account_modal.delete')))
+
+      await waitFor(() => {
+        expect(getByText(t('delete_account_modal.generic_error'))).toBeInTheDocument()
+      })
+    })
+
+    it('should not clear the local session or redirect', async () => {
+      const { getByText, getByRole } = renderModal({ onClose })
+
+      await userEvent.type(getByRole('textbox'), 'DELETE')
+      await userEvent.click(getByText(t('delete_account_modal.delete')))
+
+      await waitFor(() => {
+        expect(getByText(t('delete_account_modal.generic_error'))).toBeInTheDocument()
+      })
+      expect(mockLocalStorageClearIdentity).not.toHaveBeenCalled()
+      expect(window.location.replace).not.toHaveBeenCalled()
     })
   })
 
