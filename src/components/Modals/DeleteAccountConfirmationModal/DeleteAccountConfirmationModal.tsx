@@ -60,6 +60,12 @@ async function deleteThirdwebAccount() {
  * and decentraland-connect connection state.
  * This runs regardless of whether the redirect succeeds, to ensure
  * no stale session persists after account deletion.
+ *
+ * Note: thirdweb's unlinkProfile() only hits the server-side API and does NOT
+ * clean up local storage. The public logout is only available via the
+ * useDisconnect hook (requires ThirdwebProvider context) or the internal
+ * InAppWebConnector.logout() method (undocumented). Since this modal is not
+ * rendered inside a ThirdwebProvider, we clear thirdweb's local data manually.
  */
 async function clearLocalSession(address: string) {
   // Clear Decentraland SSO identity for the connected address
