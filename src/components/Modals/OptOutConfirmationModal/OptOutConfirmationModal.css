@@ -1,4 +1,4 @@
-.OptOutConfirmationModal.ui.modal {
+.OptOutConfirmationModal.MuiDialog-root {
   max-width: 520px;
   padding: 26px;
 }

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { JumpIn, Skeleton, useTabletAndBelowMediaQuery } from 'decentraland-ui2'
 import { UserCreditsStatus } from '../../lib/api/credits'
+import { t } from '../../lib/utils/translation'
 import { Title } from '../Typography'
 import {
   Container,
@@ -67,9 +67,10 @@ const CreditsSettings: React.FC<Props> = props => {
                 buttonText={t('credits_settings.rejoin_button')}
                 buttonProps={{ variant: 'contained' }}
                 modalProps={{
-                  title: t('credits_settings.title'),
-                  description: t('credits_settings.rejoin_message'),
-                  buttonLabel: t('credits_settings.rejoin_button')
+                  os: 'windows',
+                  downloadUrl: 'https://decentraland.org/download',
+                  epicUrl: 'https://store.epicgames.com/p/decentraland',
+                  googlePlayUrl: 'https://play.google.com/store/apps/details?id=org.decentraland.explorer'
                 }}
               />
             </JumpInWrapper>
@@ -92,9 +93,10 @@ const CreditsSettings: React.FC<Props> = props => {
                 buttonText={t('credits_settings.join_button')}
                 buttonProps={{ variant: 'contained' }}
                 modalProps={{
-                  title: t('credits_settings.title'),
-                  description: t('credits_settings.register_message'),
-                  buttonLabel: t('credits_settings.join_button')
+                  os: 'windows',
+                  downloadUrl: 'https://decentraland.org/download',
+                  epicUrl: 'https://store.epicgames.com/p/decentraland',
+                  googlePlayUrl: 'https://play.google.com/store/apps/details?id=org.decentraland.explorer'
                 }}
               />
             </JumpInWrapper>

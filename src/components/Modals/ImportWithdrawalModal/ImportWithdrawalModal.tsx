@@ -1,10 +1,11 @@
 import React, { ComponentProps, useEffect, useState } from 'react'
 import { Network } from '@dcl/schemas'
-import Modal from 'decentraland-dapps/dist/containers/Modal'
-import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
-import { getTransactionHref } from 'decentraland-dapps/dist/modules/transaction/utils'
-import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Button, Close, Field } from 'decentraland-ui'
+import CloseIcon from '@mui/icons-material/Close'
+import { Button, IconButton, TextField } from 'decentraland-ui2'
+import { getChainIdByNetwork } from '../../../lib/utils/eth'
+import Modal from '../../../lib/utils/ModalWrapper'
+import { T, t } from '../../../lib/utils/translation'
+import { getTransactionHref } from '../../../modules/transaction/utils'
 import { Props } from './ImportWithdrawalModal.types'
 
 import './ImportWithdrawalModal.css'
@@ -19,7 +20,7 @@ const ImportWithdrawalModal = ({ withdrawals, address, name, isLoading, error, o
 
   const polygonscanHref = `${getTransactionHref({ address }, getChainIdByNetwork(Network.MATIC))}#tokentxns`
 
-  const handleTxChange: ComponentProps<typeof Field>['onChange'] = e => {
+  const handleTxChange: ComponentProps<typeof TextField>['onChange'] = e => {
     const { value } = e.target
     setTx(value.trim())
   }
@@ -47,7 +48,15 @@ const ImportWithdrawalModal = ({ withdrawals, address, name, isLoading, error, o
   }
 
   return (
-    <Modal name={name} className="ImportWithdrawalModal" closeIcon={<Close onClick={onClose} />}>
+    <Modal
+      name={name}
+      className="ImportWithdrawalModal"
+      closeIcon={
+        <IconButton onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
+      }
+    >
       <Modal.Header>
         <div className="title">{t('import_withdrawal_modal.title')} </div>
       </Modal.Header>
@@ -64,16 +73,16 @@ const ImportWithdrawalModal = ({ withdrawals, address, name, isLoading, error, o
             }}
           />
         </p>
-        <Field
+        <TextField
           label={t('import_withdrawal_modal.tx_label')}
           placeholder="0x0000...0000"
           value={tx}
           onChange={handleTxChange}
           className="wallet"
-          message={!isLoading ? txError || error : undefined}
+          helperText={!isLoading ? txError || error : undefined}
           error={!isLoading && (!!txError || !!error)}
         />
-        <Button className="button" primary onClick={handleImport} loading={isLoading} disabled={isLoading}>
+        <Button className="button" variant="contained" color="primary" onClick={handleImport} disabled={isLoading}>
           {t('import_withdrawal_modal.import_withdrawal')}
         </Button>
       </Modal.Content>

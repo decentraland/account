@@ -1,4 +1,4 @@
-import { BaseClient, BaseClientConfig } from 'decentraland-dapps/dist/lib'
+import { BaseClient, BaseClientConfig } from './BaseClient'
 
 /**
  * User credits status enum - matches the credits-server response values

@@ -1,11 +1,11 @@
-.SeeAllTransactionModal.ui.modal > .header:not(.ui) {
+.SeeAllTransactionModal.MuiDialog-root > .header:not(.ui) {
   text-align: center;
   border-bottom: 1px solid #ccc;
   margin: 0;
   padding: 20px 32px 28px 32px;
 }
 
-.SeeAllTransactionModal.ui.modal .dcl.close {
+.SeeAllTransactionModal.MuiDialog-root .dcl.close {
   margin-top: -5px;
 }
 

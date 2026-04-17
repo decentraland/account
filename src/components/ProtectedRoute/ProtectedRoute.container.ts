@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { localStorageGetIdentity } from '@dcl/single-sign-on-client'
-import { getData as getWallet, isConnected, isConnecting } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { RootState } from '../../modules/reducer'
+import { getData as getWallet, isConnected, isConnecting } from '../../modules/wallet/selectors'
 import ProtectedRoute from './ProtectedRoute'
 import { MapStateProps } from './ProtectedRoute.types'
 

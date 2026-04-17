@@ -1,6 +1,6 @@
 import React from 'react'
-import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
-import { getTransactionHref } from 'decentraland-dapps/dist/modules/transaction/utils'
+import { getChainIdByNetwork } from '../../../../lib/utils/eth'
+import { getTransactionHref } from '../../../../modules/transaction/utils'
 import { Props } from './ExplorerLink.types'
 
 const ExplorerLink = ({ network, chainId, txHash }: Props) => {

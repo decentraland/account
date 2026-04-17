@@ -1,9 +1,9 @@
 import { useCallback, useMemo } from 'react'
 import { NotificationType } from '@dcl/schemas'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { objectToSnake, toCamel } from 'ts-case-convert'
 import { Switch } from 'decentraland-ui2'
+import { t } from '../../../lib/utils/translation'
 import { Description, Title } from '../../Typography'
 import {
   Accordion,

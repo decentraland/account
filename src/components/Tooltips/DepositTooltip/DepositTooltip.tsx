@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { t } from '../../../lib/utils/translation'
 import Tooltip from '../Tooltip'
 
 export default class DepositTooltip extends React.PureComponent {

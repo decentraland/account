@@ -1,11 +1,11 @@
 import { Network } from '@dcl/schemas'
+import { Dispatch } from 'redux'
 import {
   OpenBuyManaWithFiatModalRequestAction,
   OpenManaFiatGatewayRequestAction,
   openBuyManaWithFiatModalRequest
-} from 'decentraland-dapps/dist/modules/gateway/actions'
-import { OpenModalAction } from 'decentraland-dapps/dist/modules/modal/actions'
-import { Dispatch } from 'redux'
+} from '../../../../modules/gateway/actions'
+import { OpenModalAction } from '../../../../modules/modal/actions'
 
 export type Props = {
   address?: string

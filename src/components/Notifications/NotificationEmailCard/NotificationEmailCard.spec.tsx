@@ -1,4 +1,4 @@
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { t } from '../../../lib/utils/translation'
 import { buildInitialState } from '../../../modules/subscription/reducer'
 import { renderWithProviders } from '../../../specs/utils'
 import NotificationEmailCard, {

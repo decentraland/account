@@ -1,6 +1,5 @@
-import { RouteProps } from 'react-router-dom'
-
-export type Props = RouteProps & {
+export type Props = {
+  children: React.ReactNode
   isConnected: boolean
   isConnecting: boolean
 }

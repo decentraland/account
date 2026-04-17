@@ -1,8 +1,10 @@
 import React, { Suspense, lazy, useCallback, useState } from 'react'
-import { Network, ProviderType } from '@dcl/schemas'
+import { useTokenBalance } from '@dcl/core-web3'
+import { ChainId, Network, ProviderType } from '@dcl/schemas'
 import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Tooltip } from 'decentraland-ui2'
+import { config } from '../../config'
+import { t } from '../../lib/utils/translation'
 import { DepositStatus, WithdrawalStatus } from '../../modules/mana/types'
 import { shortening } from '../../modules/wallet/utils'
 import DepositTooltip from '../Tooltips/DepositTooltip'
@@ -10,16 +12,29 @@ import WithdrawalTooltip from '../Tooltips/WithdrawalTooltip'
 import { Title } from '../Typography'
 import { AccountCard } from './AccountCard'
 import AccountCardContainer from './AccountCardContainer/AccountCardContainer'
-import { Address, ContentCopyRoundedIcon, Description, Header } from './Wallets.styled'
+import { Address as AddressStyled, ContentCopyRoundedIcon, Description, Header } from './Wallets.styled'
 import { Props } from './Wallets.types'
+import type { Address } from 'viem'
 
 const ThirdwebWalletManager = lazy(() => import('./ThirdwebWalletManager/ThirdwebWalletManager'))
+
+const isProd = config.get('CHAIN_ID') === '1'
 
 const Wallets: React.FC<Props> = props => {
   const { withdrawals, deposits, transactionsByNetwork, address, providerType } = props
   const [openTooltip, setOpenTooltip] = useState(false)
   const ethereumTransactions = transactionsByNetwork[Network.ETHEREUM]
   const maticTransactions = transactionsByNetwork[Network.MATIC]
+
+  const { balance: manaEth } = useTokenBalance({
+    tokenAddress: config.get('MANA_TOKEN_ADDRESS_ETHEREUM') as Address,
+    chainId: isProd ? ChainId.ETHEREUM_MAINNET : ChainId.ETHEREUM_SEPOLIA
+  })
+
+  const { balance: manaMatic } = useTokenBalance({
+    tokenAddress: config.get('MANA_TOKEN_ADDRESS_MATIC') as Address,
+    chainId: isProd ? ChainId.MATIC_MAINNET : ChainId.MATIC_AMOY
+  })
 
   const isFirstWithdrawal = withdrawals.length === 1 && withdrawals[0].status === WithdrawalStatus.PENDING
   const isFirstDeposits = deposits.length === 1 && deposits[0].status === DepositStatus.PENDING
@@ -47,7 +62,7 @@ const Wallets: React.FC<Props> = props => {
         ) : (
           <Description variant="subtitle1">
             <AccountBalanceWalletRoundedIcon />
-            <Address>{shortening(address)}</Address>
+            <AddressStyled>{shortening(address)}</AddressStyled>
             <Tooltip
               PopperProps={{
                 disablePortal: true
@@ -68,8 +83,18 @@ const Wallets: React.FC<Props> = props => {
         )}
       </Header>
       <AccountCardContainer>
-        <AccountCard network={Network.ETHEREUM} title="Ethereum MANA" transactions={ethereumTransactions} />
-        <AccountCard network={Network.MATIC} title="Polygon MANA" transactions={maticTransactions} />
+        <AccountCard
+          network={Network.ETHEREUM}
+          title="Ethereum MANA"
+          transactions={ethereumTransactions}
+          amount={parseFloat(manaEth ?? '0') || 0}
+        />
+        <AccountCard
+          network={Network.MATIC}
+          title="Polygon MANA"
+          transactions={maticTransactions}
+          amount={parseFloat(manaMatic ?? '0') || 0}
+        />
       </AccountCardContainer>
       {isFirstDeposits ? <DepositTooltip /> : isFirstWithdrawal ? <WithdrawalTooltip /> : null}
     </>

@@ -1,4 +1,4 @@
-.ReceiveManaModal.ui.modal {
+.ReceiveManaModal.MuiDialog-root {
   width: 520px;
   height: 278px;
 }
@@ -17,7 +17,7 @@
   margin-bottom: 49px;
 }
 
-.ReceiveManaModal.ui.modal > .header:not(.ui) {
+.ReceiveManaModal.MuiDialog-root > .header:not(.ui) {
   text-align: center;
 }
 
@@ -25,23 +25,23 @@
   width: 450px;
 }
 
-.ReceiveManaModal.ui.modal > .content {
+.ReceiveManaModal.MuiDialog-root > .content {
   text-align: center;
   padding: 0px 40px;
 }
 
-.ReceiveManaModal .dcl.field {
+.ReceiveManaModal .field-wrapper {
   min-width: 360px;
 }
 
 .SendManaModal .dcl.close,
-.ui.modal > .dcl.close {
+.MuiDialog-root > .dcl.close {
   margin-top: -20px;
   margin-right: -20px;
   padding: 0px;
 }
 
-.ReceiveManaModal.ui.modal .field .ui.input input {
+.ReceiveManaModal.MuiDialog-root .field input {
   padding: 16px 16px;
   background: #f3f2f5;
   border: 1px solid rgba(115, 110, 125, 0.32);
@@ -49,14 +49,14 @@
   border-radius: 8px;
 }
 
-.ReceiveManaModal .dcl.field .overlay,
-.ui.form .dcl.field .overlay {
+.ReceiveManaModal .field-wrapper .overlay,
+.field-wrapper .overlay {
   bottom: 37px;
   text-transform: uppercase;
 }
 
-.ReceiveManaModal .dcl.field .overlay,
-.ui.form .dcl.field .overlay {
+.ReceiveManaModal .field-wrapper .overlay,
+.field-wrapper .overlay {
   font-weight: 600;
   font-size: 13px;
   line-height: 18px;

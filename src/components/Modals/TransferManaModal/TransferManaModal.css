@@ -1,4 +1,4 @@
-.ui.modal.TransferManaModal {
+.MuiDialog-root.TransferManaModal {
   padding: 26px;
   width: 520px;
 }
@@ -46,13 +46,13 @@
 }
 
 .TransferManaModal .dcl.close,
-.ui.modal > .dcl.close {
+.MuiDialog-root > .dcl.close {
   margin: 10px;
   padding: 10px;
   background-color: white;
 }
 
-.TransferManaModal .ui.sub.header {
+.TransferManaModal .sub-header {
   text-transform: none;
   font-size: 15px;
   line-height: 24px;
@@ -69,7 +69,7 @@
   justify-content: center;
 }
 
-.TransferManaModal .dcl.field {
+.TransferManaModal .field-wrapper {
   width: 100%;
   min-width: 100%;
   margin-top: 30px;
@@ -79,27 +79,27 @@
   letter-spacing: 0.4px;
 }
 
-.TransferManaModal .dcl.field .ui.input.amount input,
-.TransferManaModal .ui.form .dcl.field .ui.input.amount input {
+.TransferManaModal .amount-input input,
+.TransferManaModal .amount-input input {
   text-align: center;
   font-weight: 600;
   font-size: 40px;
   line-height: 48px;
 }
 
-.TransferManaModal .dcl.field .ui.input.wallet input,
-.TransferManaModal .ui.form .dcl.field .ui.input.wallet input {
+.TransferManaModal .wallet-input input,
+.TransferManaModal .wallet-input input {
   text-align: center;
   font-weight: 600;
   font-size: 17px;
   line-height: 26px;
 }
 
-.TransferManaModal .dcl.field .ui.basic.button {
+.TransferManaModal .field-wrapper .MuiButton-outlined {
   padding-bottom: 40px;
 }
 
-.TransferManaModal button.ui.primary {
+.TransferManaModal button.MuiButton-contained {
   margin-top: 20px;
   width: 100%;
 }

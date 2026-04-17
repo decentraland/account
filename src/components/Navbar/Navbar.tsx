@@ -1,30 +1,67 @@
 import React, { useCallback, useMemo } from 'react'
-import { useHistory } from 'react-router-dom'
-import { localStorageGetIdentity } from '@dcl/single-sign-on-client'
-import { Navbar2 as BaseNavbar2 } from 'decentraland-dapps/dist/containers'
+import { useAuthIdentity, useTokenBalance, useWallet } from '@dcl/core-web3'
+import { ChainId } from '@dcl/schemas'
+import { Navbar as DclNavbar } from 'decentraland-ui2'
+import type { NavbarProps } from 'decentraland-ui2'
 import { config } from '../../config'
-import { Props } from './Navbar.types'
+import { redirectToAuth } from '../../utils/authRedirect'
+import type { Address } from 'viem'
 
 import './Navbar.css'
 
-const Navbar = (props: Props) => {
-  const { address } = props
-  const history = useHistory()
+const isProd = config.get('CHAIN_ID') === '1'
 
-  const handleOnSignIn = useCallback(() => {
-    window.location.replace(`${config.get('AUTH_URL')}/login?redirectTo=${window.location.href}`)
-    return
-  }, [history])
+const Navbar = () => {
+  const { address, isConnected, isConnecting, isDisconnecting, disconnect } = useWallet()
+  useAuthIdentity()
 
-  const identity = useMemo(() => {
-    if (address) {
-      return localStorageGetIdentity(address)
+  const { balance: manaEth } = useTokenBalance({
+    tokenAddress: config.get('MANA_TOKEN_ADDRESS_ETHEREUM') as Address,
+    chainId: isProd ? ChainId.ETHEREUM_MAINNET : ChainId.ETHEREUM_SEPOLIA
+  })
+
+  const { balance: manaMatic } = useTokenBalance({
+    tokenAddress: config.get('MANA_TOKEN_ADDRESS_MATIC') as Address,
+    chainId: isProd ? ChainId.MATIC_MAINNET : ChainId.MATIC_AMOY
+  })
+
+  const handleSignIn = useCallback(() => {
+    redirectToAuth()
+  }, [])
+
+  const handleSignOut = useCallback(() => {
+    disconnect()
+  }, [disconnect])
+
+  const manaBalances = useMemo(() => {
+    if (!isConnected) return {}
+    return {
+      ethereum: parseFloat(manaEth ?? '0') || 0,
+      matic: parseFloat(manaMatic ?? '0') || 0
     }
+  }, [isConnected, manaEth, manaMatic])
 
-    return undefined
-  }, [address])
+  const navbarProps = useMemo(
+    () =>
+      ({
+        activePage: undefined,
+        isSignedIn: isConnected,
+        isSigningIn: isConnecting,
+        isDisconnecting,
+        address: address || undefined,
+        manaBalances,
+        onClickSignIn: handleSignIn,
+        onClickSignOut: handleSignOut,
+        onClickNavbarItem: (_event: React.MouseEvent<HTMLElement>, options: { url?: string }) => {
+          if (options?.url) {
+            window.location.href = options.url
+          }
+        }
+      }) as NavbarProps,
+    [isConnected, isConnecting, isDisconnecting, address, manaBalances, handleSignIn, handleSignOut]
+  )
 
-  return <BaseNavbar2 {...props} withNotifications identity={identity} onSignIn={handleOnSignIn} />
+  return <DclNavbar {...navbarProps} />
 }
 
 export default React.memo(Navbar)

@@ -6,3 +6,8 @@ export enum FeatureName {
   TURNSTILE_VERIFICATION = 'turnstile-verification',
   REFERRAL = 'show-referral'
 }
+
+export enum ApplicationName {
+  DAPPS = 'dapps',
+  EXPLORER = 'explorer'
+}

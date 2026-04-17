@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import { openModal } from 'decentraland-dapps/dist/modules/modal/actions'
 import { getUserCreditsStatusRequest } from '../../modules/creditsSettings/actions'
 import {
   getCreditsSettingsError,
@@ -8,6 +7,7 @@ import {
   isLoadingCreditsStatus,
   isOptingOut
 } from '../../modules/creditsSettings/selectors'
+import { openModal } from '../../modules/modal/actions'
 import { RootState } from '../../modules/reducer'
 import CreditsSettings from './CreditsSettings'
 import { MapDispatch, MapDispatchProps, MapStateProps } from './CreditsSettings.types'

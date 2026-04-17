@@ -1,5 +1,5 @@
-import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import { Dispatch } from 'redux'
+import { ModalProps } from '../../../lib/utils/ModalWrapper'
 import { fetchManaPriceRequest, transferManaRequest } from '../../../modules/mana/actions'
 
 export type Props = ModalProps & {

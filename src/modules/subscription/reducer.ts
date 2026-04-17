@@ -1,7 +1,7 @@
 import { NotificationType } from '@dcl/schemas'
-import { loadingReducer } from 'decentraland-dapps/dist/modules/loading/reducer'
 import { objectToCamel, toCamel } from 'ts-case-convert'
 import { ToCamel } from 'ts-case-convert/lib/caseConvert'
+import { loadingReducer } from '../loading/reducer'
 import {
   CLEAR_SUBSCRIPTIONS_ERROR,
   ClearSaveSubscriptionErrorAction,

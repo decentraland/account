@@ -1,8 +1,8 @@
-import { isErrorWithMessage } from 'decentraland-dapps/dist/lib/error'
-import { closeModal } from 'decentraland-dapps/dist/modules/modal/actions'
-import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { CreditsSettingsAPI, UserStatusResponse } from '../../lib/api/credits'
+import { isErrorWithMessage } from '../../lib/utils/error'
+import { closeModal } from '../modal/actions'
+import { getAddress } from '../wallet/selectors'
 import {
   GET_USER_CREDITS_STATUS_REQUEST,
   OPT_OUT_FROM_CREDITS_REQUEST,

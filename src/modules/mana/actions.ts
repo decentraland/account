@@ -1,6 +1,6 @@
 import { ChainId, Network } from '@dcl/schemas'
-import { buildTransactionPayload } from 'decentraland-dapps/dist/modules/transaction/utils'
-import { action } from 'typesafe-actions'
+import { action } from '../../lib/utils/action'
+import { buildTransactionPayload } from '../transaction/utils'
 import { Deposit, DepositStatus, Transfer, Withdrawal, WithdrawalStatus } from './types'
 
 // Get MANA Approved

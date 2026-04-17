@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { openManaFiatGatewayRequest } from 'decentraland-dapps/dist/modules/gateway/actions'
-import { openModal } from 'decentraland-dapps/dist/modules/modal/actions'
+import { openManaFiatGatewayRequest } from '../../../../../modules/gateway/actions'
+import { openModal } from '../../../../../modules/modal/actions'
 import { RootState } from '../../../../../modules/reducer'
 import AccountTransaction from './AccountTransaction'
 import { MapDispatch, MapDispatchProps, MapStateProps } from './AccountTransaction.types'

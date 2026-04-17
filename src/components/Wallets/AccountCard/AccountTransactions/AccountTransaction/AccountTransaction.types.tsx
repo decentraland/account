@@ -1,9 +1,9 @@
 import { Network } from '@dcl/schemas'
-import { OpenManaFiatGatewayRequestAction, openManaFiatGatewayRequest } from 'decentraland-dapps/dist/modules/gateway/actions'
-import { OpenModalAction } from 'decentraland-dapps/dist/modules/modal/actions'
 import { Dispatch } from 'redux'
-import { NetworkGatewayType } from 'decentraland-ui'
+import { OpenManaFiatGatewayRequestAction, openManaFiatGatewayRequest } from '../../../../../modules/gateway/actions'
+import { NetworkGatewayType } from '../../../../../modules/gateway/types'
 import { Transaction } from '../../../../../modules/mana/types'
+import { OpenModalAction } from '../../../../../modules/modal/actions'
 
 export type Props = {
   transaction: Transaction

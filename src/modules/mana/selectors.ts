@@ -1,16 +1,22 @@
 import { Network } from '@dcl/schemas'
-import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
-import { ManaPurchase, Purchase, PurchaseStatus } from 'decentraland-dapps/dist/modules/gateway/types'
-import { isManaPurchase } from 'decentraland-dapps/dist/modules/gateway/utils'
-import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
-import { getData as getTransactionsData } from 'decentraland-dapps/dist/modules/transaction/selectors'
-import { Transaction } from 'decentraland-dapps/dist/modules/transaction/types'
-import { isPending } from 'decentraland-dapps/dist/modules/transaction/utils'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { createSelector } from 'reselect'
-import { AuthorizationStepStatus } from 'decentraland-ui'
+import { getChainConfiguration } from '../../lib/utils/eth'
+import { t } from '../../lib/utils/translation'
+import { ManaPurchase, Purchase, PurchaseStatus, isManaPurchase } from '../gateway/types'
+import { isLoadingType } from '../loading/selectors'
 import { RootState } from '../reducer'
+import { getData as getTransactionsData } from '../transaction/selectors'
+import { Transaction } from '../transaction/types'
+import { isPending } from '../transaction/utils'
+import { getAddress } from '../wallet/selectors'
+export enum AuthorizationStepStatus {
+  PENDING = 'pending',
+  WAITING = 'waiting',
+  PROCESSING = 'processing',
+  ALLOWANCE_GRANTED = 'allowance_granted',
+  CONFIRMED = 'confirmed',
+  ERROR = 'error'
+}
 import {
   APPROVE_MANA_SUCCESS,
   DEPOSIT_MANA_REQUEST,

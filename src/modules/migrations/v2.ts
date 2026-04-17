@@ -1,9 +1,10 @@
 import { Withdrawal } from '../mana/types'
-import { RootState } from '../reducer'
 
-const v2 = (state: RootState) => {
-  const oldWithdrawals = state.mana.data.withdrawals
-  const oldTransactions = state.transaction.data
+// Migration v2: normalize withdrawal data shape
+// Uses `any` for state since the shape changed between versions
+const v2 = (state: any) => {
+  const oldWithdrawals = state?.mana?.data?.withdrawals ?? []
+  const oldTransactions = state?.transactions?.transactions ?? state?.transaction?.data ?? []
   const updatedWithdrawals = oldWithdrawals.map(mapOldWithdrawal)
   const updatedTransactions = oldTransactions.map(mapOldTransactions)
 
@@ -12,13 +13,13 @@ const v2 = (state: RootState) => {
     mana: {
       ...state.mana,
       data: {
-        ...state.mana.data,
+        ...state.mana?.data,
         withdrawals: updatedWithdrawals
       }
     },
-    transaction: {
-      ...state.transaction,
-      data: updatedTransactions
+    transactions: {
+      ...state.transactions,
+      transactions: updatedTransactions
     }
   }
 }

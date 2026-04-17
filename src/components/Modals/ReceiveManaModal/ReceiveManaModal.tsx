@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import Modal from 'decentraland-dapps/dist/containers/Modal'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
-import { Close, Field } from 'decentraland-ui'
+import CloseIcon from '@mui/icons-material/Close'
+import { IconButton, TextField } from 'decentraland-ui2'
+import Modal, { ModalProps } from '../../../lib/utils/ModalWrapper'
+import { t } from '../../../lib/utils/translation'
 
 import './ReceiveManaModal.css'
 
@@ -18,18 +18,32 @@ const ReceiveManaModal = ({ name, onClose, metadata }: ModalProps) => {
   }
 
   return (
-    <Modal name={name} className="ReceiveManaModal" closeIcon={<Close onClick={onClose} />}>
+    <Modal
+      name={name}
+      className="ReceiveManaModal"
+      closeIcon={
+        <IconButton onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
+      }
+    >
       <Modal.Header>
         <div className="title"> {t('receive_mana_modal.title')}</div>
       </Modal.Header>
       <Modal.Content>
         <div className="message"> {t('receive_mana_modal.message')} </div>
-        <Field
+        <TextField
           value={`${address.slice(0, 6)}...${address.slice(-4)}`}
           placeholder="0x0000...0000"
-          action={t('receive_mana_modal.copy')}
-          onAction={copyToClipboard}
-          message={isCopied ? t('receive_mana_modal.copied') : ''}
+          helperText={isCopied ? t('receive_mana_modal.copied') : ''}
+          InputProps={{
+            readOnly: true,
+            endAdornment: (
+              <span style={{ cursor: 'pointer' }} onClick={copyToClipboard}>
+                {t('receive_mana_modal.copy')}
+              </span>
+            )
+          }}
         />
       </Modal.Content>
     </Modal>

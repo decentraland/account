@@ -14,6 +14,8 @@
   "MOON_PAY_WIDGET_URL": "https://buy-staging.moonpay.io",
   "MATIC_ENV": "testnet",
   "MANA_CONTRACT_ADDRESS": "0xfa04d2e2ba9aec166c93dfeeba7427b2303befa9",
+  "MANA_TOKEN_ADDRESS_ETHEREUM": "0xfa04d2e2ba9aec166c93dfeeba7427b2303befa9",
+  "MANA_TOKEN_ADDRESS_MATIC": "0x7ad72b9f944ea9793cf4055d88f81138cc2c63a0",
   "ERC20_PREDICATE_CONTRACT_ADDRESS": "0x4258c75b752c812b7fa586bdeb259f2d4bd17f4f",
   "ROOT_CHAIN_MANAGER_CONTRACT_ADDRESS": "0x34F5A25B627f50Bb3f5cAb72807c4D4F405a9232",
   "SEGMENT_API_KEY": "I2fojSHbvc856pZqoLYXZrfwxsKJ24WG",
@@ -25,5 +27,8 @@
   "CREDITS_SERVER_URL": "https://credits.decentraland.zone/",
   "REACT_APP_CLOUDFLARE_TURNSTILE_SITE_KEY": "0x4AAAAAABgMRzn7-vLyDB_X",
   "MARKETPLACE_URL": "https://decentraland.zone/marketplace",
-  "ACCOUNT_URL": "https://decentraland.zone/account"
+  "ACCOUNT_URL": "https://decentraland.zone/account",
+  "WALLET_CONNECT_PROJECT_ID": "61570c542c2d66c659492e5b24a41522",
+  "MAGIC_API_KEY": "pk_live_CE856A4938B36648",
+  "THIRDWEB_CLIENT_ID": "e1adce863fe287bb6cf0e3fd90bdb77f"
 }

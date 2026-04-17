@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { Network } from '@dcl/schemas'
-import Modal from 'decentraland-dapps/dist/containers/Modal'
-import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
-import { Purchase } from 'decentraland-dapps/dist/modules/gateway/types'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
-import { Close } from 'decentraland-ui'
+import CloseIcon from '@mui/icons-material/Close'
+import { IconButton } from 'decentraland-ui2'
+import { getChainIdByNetwork } from '../../../lib/utils/eth'
+import Modal, { ModalProps } from '../../../lib/utils/ModalWrapper'
+import { t } from '../../../lib/utils/translation'
+import { Purchase } from '../../../modules/gateway/types'
 import { Deposit, Transaction, TransactionType, Transfer, Withdrawal } from '../../../modules/mana/types'
 import { getStatusMessage } from '../../../modules/mana/utils'
 import Data from './Data'
@@ -57,7 +57,15 @@ const TransactionDetailModal: React.FC<ModalProps> = ({ name, onClose, metadata 
   const datetime = data?.timestamp ? new Date(data?.timestamp).toLocaleString() : ''
 
   return (
-    <Modal name={name} className="TransactionDetailModal" closeIcon={<Close onClick={onClose} />}>
+    <Modal
+      name={name}
+      className="TransactionDetailModal"
+      closeIcon={
+        <IconButton onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
+      }
+    >
       <Modal.Header>{t('transaction_detail_modal.title')}</Modal.Header>
       <Modal.Content>
         <Data label={'operation'}>{description}</Data>

@@ -1,4 +1,4 @@
-import { loadingReducer } from 'decentraland-dapps/dist/modules/loading/reducer'
+import { loadingReducer } from '../loading/reducer'
 import {
   CLEAR_CREDITS_SETTINGS_ERROR,
   ClearCreditsSettingsErrorAction,

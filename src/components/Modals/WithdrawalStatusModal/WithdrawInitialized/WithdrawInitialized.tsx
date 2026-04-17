@@ -1,9 +1,9 @@
 import React from 'react'
 import { Network } from '@dcl/schemas'
-import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
-import { getTransactionHref } from 'decentraland-dapps/dist/modules/transaction/utils'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Checkbox } from 'decentraland-ui'
+import { Checkbox, FormControlLabel } from 'decentraland-ui2'
+import { getChainIdByNetwork } from '../../../../lib/utils/eth'
+import { t } from '../../../../lib/utils/translation'
+import { getTransactionHref } from '../../../../modules/transaction/utils'
 import LinkWrapper from '../LinkWrapper'
 import { Props } from './WithdrawInitialized.types'
 
@@ -14,7 +14,7 @@ const WithdrawInitialized = ({ withdrawal }: Props) => {
 
   return (
     <LinkWrapper href={href}>
-      <Checkbox checked={true} label={t('withdrawal_status_modal.status_initialized')} />
+      <FormControlLabel control={<Checkbox checked={true} />} label={t('withdrawal_status_modal.status_initialized')} />
     </LinkWrapper>
   )
 }

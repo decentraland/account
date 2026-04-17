@@ -1,6 +1,6 @@
 import { NotificationType } from '@dcl/schemas'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { toCamel } from 'ts-case-convert'
+import { t } from '../../../lib/utils/translation'
 import { buildInitialState } from '../../../modules/subscription/reducer'
 import { SubscriptionGroupKeys } from '../../../modules/subscription/types'
 import { subscriptionGroups } from '../../../modules/subscription/utils'

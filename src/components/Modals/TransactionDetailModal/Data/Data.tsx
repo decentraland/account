@@ -1,5 +1,5 @@
 import React from 'react'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { t } from '../../../../lib/utils/translation'
 import { Props } from './Data.types'
 
 import './Data.css'

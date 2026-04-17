@@ -1,5 +1,5 @@
-import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import { Dispatch } from 'redux'
+import { ModalProps } from '../../../lib/utils/ModalWrapper'
 import { ClearCreditsSettingsErrorAction, OptOutFromCreditsRequestAction } from '../../../modules/creditsSettings/actions'
 
 export type Props = Omit<ModalProps, 'onClose'> & {

@@ -1,6 +1,6 @@
 import { NotificationChannelType, NotificationType, Subscription, SubscriptionDetails } from '@dcl/schemas'
-import { LoadingState } from 'decentraland-dapps/dist/modules/loading/reducer'
 import { ObjectToCamel, ToCamel } from 'ts-case-convert/lib/caseConvert'
+import { LoadingState } from '../../modules/loading/reducer'
 
 export type NotificationChannelTypeCamelCase = ObjectToCamel<NotificationChannelType>
 

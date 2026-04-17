@@ -1,6 +1,4 @@
-import { TransactionState } from 'decentraland-dapps/dist/modules/transaction/reducer'
-import { Transaction, TransactionStatus } from 'decentraland-dapps/dist/modules/transaction/types'
-import { WalletState } from 'decentraland-dapps/dist/modules/wallet'
+import { Transaction, TransactionStatus } from '../../modules/transaction/types'
 import { RootState } from '../reducer'
 import { FINISH_WITHDRAWAL_SUCCESS } from './actions'
 import { ManaState } from './reducer'
@@ -16,13 +14,16 @@ const createMockTransaction = (overrides: Partial<Transaction>): Transaction => 
   payload: { withdrawal: {} },
   timestamp: Date.now(),
   chainId: 1,
-  events: [],
-  nonce: 0,
-  replacedBy: null,
-  url: '',
-  isCrossChain: false,
   ...overrides
 })
+
+function setTransactions(state: RootState, txs: Transaction[]) {
+  const txRecord: Record<string, any> = {}
+  for (const tx of txs) {
+    txRecord[tx.hash] = tx
+  }
+  ;(state as any).transactions = { transactions: txRecord, pending: [] }
+}
 
 let mockState: RootState
 
@@ -39,17 +40,14 @@ beforeEach(() => {
       loading: [],
       error: null
     } as ManaState,
-    transaction: {
-      data: [],
-      loading: [],
-      error: null
-    } as TransactionState,
+    transactions: {
+      transactions: {},
+      pending: []
+    },
     wallet: {
-      data: {
-        address: '0xwallet1'
-      }
-    } as WalletState
-  } as RootState
+      address: '0xwallet1'
+    }
+  } as unknown as RootState
 })
 
 describe('when getting withdrawal by hash', () => {
@@ -127,13 +125,13 @@ describe('when checking if withdrawal transaction is finalizing', () => {
 
   describe('and there is a pending finish withdrawal transaction with matching hash', () => {
     beforeEach(() => {
-      mockState.transaction.data = [
+      setTransactions(mockState, [
         createMockTransaction({
           payload: {
             withdrawal: mockWithdrawal
           }
         })
-      ]
+      ])
     })
 
     it('should return true', () => {
@@ -143,14 +141,14 @@ describe('when checking if withdrawal transaction is finalizing', () => {
 
   describe('and there is a finish withdrawal transaction with matching hash but it is not pending', () => {
     beforeEach(() => {
-      mockState.transaction.data = [
+      setTransactions(mockState, [
         createMockTransaction({
           status: TransactionStatus.CONFIRMED,
           payload: {
             withdrawal: mockWithdrawal
           }
         })
-      ]
+      ])
     })
 
     it('should return false', () => {
@@ -171,13 +169,13 @@ describe('when checking if withdrawal transaction is finalizing', () => {
         timestamp: Date.now()
       }
 
-      mockState.transaction.data = [
+      setTransactions(mockState, [
         createMockTransaction({
           payload: {
             withdrawal: differentWithdrawal
           }
         })
-      ]
+      ])
     })
 
     it('should return false', () => {
@@ -187,7 +185,7 @@ describe('when checking if withdrawal transaction is finalizing', () => {
 
   describe('and there are no transactions in the state', () => {
     beforeEach(() => {
-      mockState.transaction.data = []
+      setTransactions(mockState, [])
     })
 
     it('should return false', () => {

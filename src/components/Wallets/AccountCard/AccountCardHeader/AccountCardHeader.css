@@ -1,6 +1,6 @@
 .AccountCardHeader {
   padding: 22px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #736e7d3d;
 }
 
 .AccountCardHeader .title {
@@ -13,6 +13,13 @@
   font-size: 24px;
   float: right;
   margin-top: -35px;
+}
+
+.AccountCardHeader .operation-menu .MuiButton-root {
+  min-width: auto;
+  padding: 4px 8px;
+  color: #fcfcfc;
+  background-color: transparent;
 }
 
 .AccountCardHeader .fundsContainer {
@@ -55,15 +62,23 @@
   margin-top: 16px;
 }
 
-.AccountCardHeader .actions .ui.button {
-  padding: 0px;
+.AccountCardHeader .actions button,
+.AccountCardHeader .actions .MuiButton-root {
+  padding: 0px 16px;
   font-size: 13px;
   height: 44px;
   min-width: 96px;
   border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #fcfcfc;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-right: 8px;
 }
-.AccountCardHeader i.icon.dropdown {
-  display: none;
+
+.AccountCardHeader .actions button:hover,
+.AccountCardHeader .actions .MuiButton-root:hover {
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 .AccountCardHeader .add-mana-icon {

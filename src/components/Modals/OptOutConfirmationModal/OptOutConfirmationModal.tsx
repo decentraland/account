@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded'
-import Modal from 'decentraland-dapps/dist/containers/Modal'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { IconButton } from 'decentraland-ui2'
+import Modal from '../../../lib/utils/ModalWrapper'
+import { t } from '../../../lib/utils/translation'
 import {
   ButtonContainer,
   CancelButton,

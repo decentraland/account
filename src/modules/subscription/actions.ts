@@ -1,5 +1,5 @@
 import { SubscriptionDetails } from '@dcl/schemas'
-import { action } from 'typesafe-actions'
+import { action } from '../../lib/utils/action'
 import { SubscriptionFromClient } from './types'
 
 export const GET_SUBSCRIPTIONS_REQUEST = '[Request] Get Subscriptions'

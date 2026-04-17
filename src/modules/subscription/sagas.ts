@@ -1,7 +1,6 @@
-import { isErrorWithMessage } from 'decentraland-dapps/dist/lib/error'
-import { NotificationsAPI } from 'decentraland-dapps/dist/modules/notifications'
-import { History } from 'history'
-import { call, getContext, put, takeEvery } from 'redux-saga/effects'
+import { call, put, takeEvery } from 'redux-saga/effects'
+import { NotificationsAPI } from '../../lib/notifications/NotificationsAPI'
+import { isErrorWithMessage } from '../../lib/utils/error'
 import { locations } from '../locations'
 import {
   GET_SUBSCRIPTIONS_REQUEST,
@@ -70,14 +69,13 @@ export function* subscriptionSagas(notificationsAPI: NotificationsAPI) {
   }
 
   function* handlePostValidationCodeRequest(action: ValidateSubscriptionEmailRequestAction) {
-    const history: History = yield getContext('history')
     try {
       yield call([notificationsAPI, 'postEmailConfirmationCode'], action.payload)
       yield put(validateSubscriptionEmailSuccess())
       yield put(getSubscriptionsRequest())
-      history.push(locations.root(), { hasConfirmEmail: true, defaultTab: 1 })
+      window.location.href = locations.root()
     } catch (error) {
-      history.push(locations.root())
+      window.location.href = locations.root()
       yield put(validateSubscriptionEmailFailure(isErrorWithMessage(error) ? error.message : 'Unknown'))
     }
   }

@@ -1,5 +1,5 @@
-import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import { Dispatch } from 'redux'
+import { ModalProps } from '../../../lib/utils/ModalWrapper'
 import { finishWithdrawalRequest } from '../../../modules/mana/actions'
 import { Withdrawal } from '../../../modules/mana/types'
 

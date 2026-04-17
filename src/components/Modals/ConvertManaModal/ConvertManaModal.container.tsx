@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import { Network } from '@dcl/schemas'
-import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
-import { getNetworks, getData as getWallet } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { isLoadingType } from '../../../modules/loading/selectors'
 import {
   APPROVE_MANA_REQUEST,
   DEPOSIT_MANA_REQUEST,
@@ -15,6 +14,7 @@ import {
 } from '../../../modules/mana/actions'
 import { getLoading, getManaPrice } from '../../../modules/mana/selectors'
 import { RootState } from '../../../modules/reducer'
+import { getNetworks, getData as getWallet } from '../../../modules/wallet/selectors'
 import ConvertManaModal from './ConvertManaModal'
 import { MapDispatch, MapDispatchProps, MapState } from './ConvertManaModal.types'
 

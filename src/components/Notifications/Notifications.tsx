@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { useMediaQuery } from 'decentraland-ui2'
+import { t } from '../../lib/utils/translation'
 import { SubscriptionGroupKeys } from '../../modules/subscription/types'
 import { subscriptionGroups } from '../../modules/subscription/utils'
 import { Description, Title } from '../Typography'
@@ -28,7 +28,8 @@ const GROUP_ORDER = [
 export default function Notifications(props: Props) {
   const { onGetSubscription, address, isStreamingEnabled, isReferralEnabled } = props
   const isTabletOrBelow = useMediaQuery('(max-width:991px)')
-  const location = useLocation<{ hasConfirmEmail?: boolean }>()
+  const location = useLocation()
+  void (location.state as { hasConfirmEmail?: boolean } | null)
   const [expandedPanel, setExpandedPanel] = useState<string | false>(false)
 
   const handleChange = useCallback(

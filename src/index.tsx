@@ -1,45 +1,45 @@
-// eslint-disable-next-line css-import-order/css-import-order
-import 'semantic-ui-css/semantic.min.css'
+import { StrictMode } from 'react'
 import { Provider } from 'react-redux'
-import { Router } from 'react-router-dom'
-import { Web2TransactionModal } from 'decentraland-dapps/dist/containers'
-import ModalProvider from 'decentraland-dapps/dist/providers/ModalProvider'
-import ToastProvider from 'decentraland-dapps/dist/providers/ToastProvider'
-import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
-import WalletProvider from 'decentraland-dapps/dist/providers/WalletProvider'
+import { RouterProvider } from 'react-router-dom'
+import { Web3CoreProvider, Web3SyncProvider } from '@dcl/core-web3'
+import { AnalyticsProvider, TranslationProvider } from '@dcl/hooks'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createRoot } from 'react-dom/client'
+import { PersistGate } from 'redux-persist/integration/react'
 import { DclThemeProvider, darkTheme } from 'decentraland-ui2'
-import './modules/analytics/track'
-import './modules/analytics/sentry'
-import * as modals from './components/Modals'
-import { Routes } from './components/Routes'
-import * as locales from './locales'
-import { history, store } from './modules/store'
+import { persistor, store } from './app/store'
+import { config } from './config'
+import { web3Config } from './features/web3/web3.config'
+import * as translations from './locales'
+import { router } from './routes'
 
-// eslint-disable-next-line css-import-order/css-import-order
-import 'decentraland-ui/dist/themes/alternative/dark-theme.css'
-// eslint-disable-next-line css-import-order/css-import-order
-import './themes'
+import './modules/analytics/sentry'
+
 // eslint-disable-next-line css-import-order/css-import-order
 import './index.css'
 
+const queryClient = new QueryClient()
+
 const component = (
-  <Provider store={store}>
-    <TranslationProvider locales={Object.keys(locales)}>
-      <DclThemeProvider theme={darkTheme}>
-        <ToastProvider>
-          <WalletProvider>
-            <ModalProvider components={modals}>
-              <Router history={history}>
-                <Routes />
-              </Router>
-            </ModalProvider>
-            <Web2TransactionModal />
-          </WalletProvider>
-        </ToastProvider>
-      </DclThemeProvider>
-    </TranslationProvider>
-  </Provider>
+  <StrictMode>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <QueryClientProvider client={queryClient}>
+          <Web3CoreProvider config={web3Config}>
+            <Web3SyncProvider>
+              <DclThemeProvider theme={darkTheme}>
+                <AnalyticsProvider writeKey={config.get('SEGMENT_API_KEY') || ''}>
+                  <TranslationProvider locale="en" translations={{ en: translations.en }} fallbackLocale="en">
+                    <RouterProvider router={router} />
+                  </TranslationProvider>
+                </AnalyticsProvider>
+              </DclThemeProvider>
+            </Web3SyncProvider>
+          </Web3CoreProvider>
+        </QueryClientProvider>
+      </PersistGate>
+    </Provider>
+  </StrictMode>
 )
 
 const root = createRoot(document.getElementById('root')!)

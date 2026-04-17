@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import { closeAllModals } from 'decentraland-dapps/dist/modules/modal'
-import { isConnected } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { closeAllModals } from '../../modules/modal/actions'
 import { RootState } from '../../modules/reducer'
+import { isConnected } from '../../modules/wallet/selectors'
 import Routes from './Routes'
 import { MapDispatch, MapDispatchProps, MapStateProps } from './Routes.types'
 

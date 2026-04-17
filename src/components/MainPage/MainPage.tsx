@@ -3,8 +3,8 @@ import { useLocation } from 'react-router-dom'
 import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded'
 import CardGiftcardRoundedIcon from '@mui/icons-material/CardGiftcardRounded'
 import MarkEmailUnreadRoundedIcon from '@mui/icons-material/MarkEmailUnreadRounded'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Alert, Skeleton, Snackbar, useMediaQuery } from 'decentraland-ui2'
+import { t } from '../../lib/utils/translation'
 import { CreditsSettings } from '../CreditsSettings'
 import { Footer } from '../Footer'
 import { Navbar } from '../Navbar'
@@ -32,8 +32,9 @@ function TabPanel(props: TabPanelProps) {
 
 const MainPage: React.FC<Props> = props => {
   const { isLoading, notificationSettingError, onClearChangeNotificationSettingError } = props
-  const location = useLocation<{ defaultTab?: number }>()
-  const [value, setValue] = useState(location.state?.defaultTab ? location.state.defaultTab : 0)
+  const location = useLocation()
+  const locationState = location.state as { defaultTab?: number } | null
+  const [value, setValue] = useState(locationState?.defaultTab ? locationState.defaultTab : 0)
   const isTabletOrBelow = useMediaQuery('(max-width:991px)')
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {

@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
-import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
-import { getAddress, isConnecting } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { getIsReferralEnabled, getIsStreamingEnabled } from '../../modules/features/selectors'
+import { isLoadingType } from '../../modules/loading/selectors'
 import { RootState } from '../../modules/reducer'
 import { GET_SUBSCRIPTIONS_REQUEST, getSubscriptionsRequest } from '../../modules/subscription/actions'
 import { getLoading } from '../../modules/subscription/selectors'
+import { getAddress, isConnecting } from '../../modules/wallet/selectors'
 import Notifications from './Notifications'
 import { MapDispatch, MapDispatchProps, MapStateProps, OwnProps } from './Notifications.types'
 

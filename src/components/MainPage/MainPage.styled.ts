@@ -8,7 +8,8 @@ export const PageContainer = styled('div')({
   backgroundSize: 'cover',
   width: '100vw',
   minHeight: '100vh',
-  position: 'relative'
+  position: 'relative',
+  paddingTop: '64px'
 })
 
 export const Box = styled(BoxMui)({

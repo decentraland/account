@@ -1,8 +1,8 @@
-.TransactionDetailModal.ui.modal .dcl.close {
+.TransactionDetailModal.MuiDialog-root .dcl.close {
   margin-top: -5px;
 }
 
-.TransactionDetailModal.ui.modal > .header {
+.TransactionDetailModal.MuiDialog-root > .header {
   text-align: center;
   border-bottom: 1px solid #ccc;
   margin: 0;

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import { getAddress, getProviderType } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { getTransactionByNetwork, getWalletDeposits, getWalletWithdrawals } from '../../modules/mana/selectors'
 import { RootState } from '../../modules/reducer'
+import { getAddress, getProviderType } from '../../modules/wallet/selectors'
 import Wallets from './Wallets'
 import { MapDispatch, MapDispatchProps, MapStateProps } from './Wallets.types'
 

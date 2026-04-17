@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Email } from '@dcl/schemas'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { objectToSnake } from 'ts-case-convert'
 import { CircularProgress } from 'decentraland-ui2'
 import { MessageTypeCamelCase } from 'modules/subscription/types'
+import { t } from '../../../lib/utils/translation'
 import { Description, Title } from '../../Typography'
 import { Button, Card, InputContainer, SpanUnconfirmedEmail, Switch, TextField, TitleContainer } from './NotificationEmailCard.styled'
 import { Props } from './NotificationEmailCard.types'
@@ -30,8 +30,8 @@ function NotificationEmailCard(props: Props) {
   } = props
   const [isValidEmail, setIsValidEmail] = useState(true)
   const [email, setEmail] = useState(unconfirmedEmail || emailProp)
-  const history = useHistory()
-  const location = useLocation<{ hasConfirmEmail?: boolean }>()
+  const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
     if (unconfirmedEmail || emailProp) {
@@ -51,8 +51,8 @@ function NotificationEmailCard(props: Props) {
   const handleOnChangeEmail = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setEmail(event.target.value)
-      if (location.state?.hasConfirmEmail) {
-        history.replace({ state: {} })
+      if ((location.state as { hasConfirmEmail?: boolean })?.hasConfirmEmail) {
+        navigate(location.pathname, { replace: true, state: {} })
       }
     },
     [setEmail, location.state]

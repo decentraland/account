@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import { Network } from '@dcl/schemas'
-import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Button, Dropdown, Popup } from 'decentraland-ui'
+import { Button, Menu, MenuItem, Tooltip } from 'decentraland-ui2'
+import { getAnalytics } from '../../../../lib/utils/analytics'
+import { t } from '../../../../lib/utils/translation'
 import { Props } from './AccountCardHeader.types'
 
 import './AccountCardHeader.css'
@@ -19,16 +19,31 @@ const AccountCardHeader = ({
   onAddTokens
 }: Props) => {
   const analytics = getAnalytics()
+  const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null)
+  const isMenuOpen = Boolean(menuAnchorEl)
 
-  const handleTransferMana = () => onTransfer(network)
+  const handleMenuOpen = useCallback((event: React.MouseEvent<HTMLElement>) => {
+    setMenuAnchorEl(event.currentTarget)
+  }, [])
+
+  const handleMenuClose = useCallback(() => {
+    setMenuAnchorEl(null)
+  }, [])
+
+  const handleTransferMana = () => {
+    handleMenuClose()
+    onTransfer(network)
+  }
 
   const handleReceiveMana = () => {
+    handleMenuClose()
     if (address) {
       onReceive(network, address)
     }
   }
 
   const handleImportWithdrawal = () => {
+    handleMenuClose()
     onImportWithdrawal()
   }
 
@@ -52,18 +67,19 @@ const AccountCardHeader = ({
         <div className="title">
           <div className="title-text-container">
             {title}
-            <Popup content={tooltipMessage} position="top center" trigger={<div className="info-logo" />} on="hover" />
+            <Tooltip title={tooltipMessage} placement="top">
+              <div className="info-logo" />
+            </Tooltip>
           </div>
           <div className="operation-menu">
-            <Dropdown text="..." direction="left">
-              <Dropdown.Menu>
-                <Dropdown.Item text={t('account_card_header.send')} onClick={handleTransferMana} />
-                <Dropdown.Item text={t('account_card_header.receive')} onClick={handleReceiveMana} />
-                {network === Network.MATIC && (
-                  <Dropdown.Item text={t('account_card_header.import_withdrawal')} onClick={handleImportWithdrawal} />
-                )}
-              </Dropdown.Menu>
-            </Dropdown>
+            <Button onClick={handleMenuOpen}>...</Button>
+            <Menu anchorEl={menuAnchorEl} open={isMenuOpen} onClose={handleMenuClose}>
+              <MenuItem onClick={handleTransferMana}>{t('account_card_header.send')}</MenuItem>
+              <MenuItem onClick={handleReceiveMana}>{t('account_card_header.receive')}</MenuItem>
+              {network === Network.MATIC && (
+                <MenuItem onClick={handleImportWithdrawal}>{t('account_card_header.import_withdrawal')}</MenuItem>
+              )}
+            </Menu>
           </div>
         </div>
         <div className="fundsContainer">

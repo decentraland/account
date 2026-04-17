@@ -1,2 +1,2 @@
-import SignInPage from './SignInPage.container'
+import SignInPage from './SignInPage'
 export { SignInPage }

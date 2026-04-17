@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Button } from 'decentraland-ui'
+import { Button } from 'decentraland-ui2'
+import { t } from '../../../lib/utils/translation'
 
 import './Tooltip.css'
 
@@ -16,7 +16,7 @@ const Tooltip: React.FC<Props> = ({ children }) => {
     <div className={isHidden ? 'Tooltip tooltip-hidden' : 'Tooltip'}>
       <div className="tooltip-content">
         {children}
-        <Button basic onClick={handleGotit}>
+        <Button variant="text" onClick={handleGotit}>
           {t('tooltip.button')}
         </Button>
       </div>

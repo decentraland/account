@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Contract, Network } from '@dcl/schemas'
-import { NetworkButton, withAuthorizedAction } from 'decentraland-dapps/dist/containers'
-import Modal from 'decentraland-dapps/dist/containers/Modal'
-import { AuthorizedAction } from 'decentraland-dapps/dist/containers/withAuthorizedAction/AuthorizationModal'
-import { AuthorizationType } from 'decentraland-dapps/dist/modules/authorization/types'
-import { T, t } from 'decentraland-dapps/dist/modules/translation/utils'
+import CloseIcon from '@mui/icons-material/Close'
 import { ethers } from 'ethers'
 import { ContractName } from 'decentraland-transactions'
-import { Button, Close, Field, Loader } from 'decentraland-ui'
+import { Button, CircularProgress, IconButton, TextField } from 'decentraland-ui2'
 import { useWithdrawalCost } from '../../../hooks'
+import { AuthorizationType } from '../../../lib/utils/authorization'
+import Modal from '../../../lib/utils/ModalWrapper'
+import { AuthorizedAction, NetworkButton, withAuthorizedAction } from '../../../lib/utils/noop'
+import { T, t } from '../../../lib/utils/translation'
 import { getDepositManaStatus, getError } from '../../../modules/mana/selectors'
 import { ERC20_PREDICATE_CONTRACT_ADDRESS, MANA_CONTRACT_ADDRESS } from '../../../modules/mana/utils'
 import { Props } from './ConvertManaModal.types'
@@ -32,9 +32,9 @@ const ConvertManaModal: React.FC<Props> = ({
 }) => {
   const [amount, setAmount] = useState(0)
 
-  const handleSetAmount = (e: React.FormEvent<HTMLInputElement>) => {
-    const intValue = parseInt(e.currentTarget.value, 10)
-    if (e.currentTarget.value.length === 0) {
+  const handleSetAmount = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const intValue = parseInt(e.target.value, 10)
+    if (e.target.value.length === 0) {
       setAmount(0)
     } else if (!isNaN(intValue)) {
       setAmount(intValue)
@@ -102,22 +102,27 @@ const ConvertManaModal: React.FC<Props> = ({
               }}
             />
           ) : (
-            <Loader size="tiny" />
+            <CircularProgress size={16} />
           )}
         </div>
       )
     }
     return (
       <>
-        <Field
+        <TextField
           label={t('convert_mana_modal.amount_label')}
           placeholder="0"
           value={amount}
           disabled={isLoading}
           onChange={handleSetAmount}
           className="amount"
-          action={t('global.max')}
-          onAction={handleMax}
+          InputProps={{
+            endAdornment: (
+              <span style={{ cursor: 'pointer' }} onClick={handleMax}>
+                {t('global.max')}
+              </span>
+            )
+          }}
         />
         {isDisabledByAmount ? (
           <div className="amount-error">{t('convert_mana_modal.no_balance')}</div>
@@ -154,7 +159,15 @@ const ConvertManaModal: React.FC<Props> = ({
   ])
 
   return (
-    <Modal name={name} className="ConvertManaModal" closeIcon={<Close onClick={onClose} />}>
+    <Modal
+      name={name}
+      className="ConvertManaModal"
+      closeIcon={
+        <IconButton onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
+      }
+    >
       <Modal.Header>
         <div className="title">
           {t(network === Network.ETHEREUM ? 'convert_mana_modal.title_ethereum' : 'convert_mana_modal.title_matic')}
@@ -167,7 +180,7 @@ const ConvertManaModal: React.FC<Props> = ({
       {!hasAcceptedWithdrawalCost ? (
         <Modal.Actions>
           <Button onClick={onClose}>{t('convert_mana_modal.withdrawal_cost_cancel')}</Button>
-          <Button primary onClick={() => setHasAcceptedWithdrawalCost(true)}>
+          <Button variant="contained" color="primary" onClick={() => setHasAcceptedWithdrawalCost(true)}>
             {t('convert_mana_modal.withdrawal_cost_accept')}
           </Button>
         </Modal.Actions>

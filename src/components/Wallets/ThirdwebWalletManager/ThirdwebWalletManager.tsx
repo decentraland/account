@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { createThirdwebClient } from 'thirdweb'
 import { ConnectButton, ThirdwebProvider, useConnect } from 'thirdweb/react'
 import { inAppWallet } from 'thirdweb/wallets'
-import { getConfiguration } from 'decentraland-connect'
+import { config } from '../../../config'
 
-const thirdwebConfig = getConfiguration().thirdweb
-const client = createThirdwebClient({ clientId: thirdwebConfig.clientId })
+const client = createThirdwebClient({ clientId: config.get('THIRDWEB_CLIENT_ID') || '' })
 
 const ThirdwebWalletManagerContent: React.FC = () => {
   const { connect } = useConnect()

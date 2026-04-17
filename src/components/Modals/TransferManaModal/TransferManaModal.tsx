@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Network } from '@dcl/schemas'
-import { NetworkButton } from 'decentraland-dapps/dist/containers'
-import Modal from 'decentraland-dapps/dist/containers/Modal'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Close, Field } from 'decentraland-ui'
+import CloseIcon from '@mui/icons-material/Close'
+import { IconButton, TextField } from 'decentraland-ui2'
+import Modal from '../../../lib/utils/ModalWrapper'
+import { NetworkButton } from '../../../lib/utils/noop'
+import { t } from '../../../lib/utils/translation'
 import { Props } from './TransferManaModal.types'
 
 import './TransferManaModal.css'
@@ -26,17 +27,17 @@ const TransferManaModal: React.FC<Props> = ({
     to: { hasError: false, message: '' }
   })
 
-  const handleSetAmount = (e: React.FormEvent<HTMLInputElement>) => {
-    const intValue = parseInt(e.currentTarget.value, 10)
-    if (e.currentTarget.value.length === 0) {
+  const handleSetAmount = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const intValue = parseInt(e.target.value, 10)
+    if (e.target.value.length === 0) {
       setAmount(0)
     } else if (!isNaN(intValue)) {
       setAmount(intValue)
     }
   }
 
-  const handleSetTo = (e: React.FormEvent<HTMLInputElement>) => {
-    const { value } = e.currentTarget
+  const handleSetTo = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { value } = e.target
     const isValid = /^[0-9a-fA-Fx]{0,42}$/.test(value)
     if (isValid) {
       setErrors({
@@ -85,22 +86,35 @@ const TransferManaModal: React.FC<Props> = ({
   const isDisabledByAmount = network === Network.MATIC ? manaMatic < amount : manaEth < amount
 
   return (
-    <Modal name={name} className="TransferManaModal" closeIcon={<Close onClick={onClose} />}>
+    <Modal
+      name={name}
+      className="TransferManaModal"
+      closeIcon={
+        <IconButton onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
+      }
+    >
       <Modal.Header>
         <div className="title"> {t('transfer_mana_modal.send_tokens')} </div>
         <div className="subtitle"> {t('transfer_mana_modal.subtitle')} </div>
       </Modal.Header>
       <Modal.Content>
-        <Field
+        <TextField
           label={t('transfer_mana_modal.amount_label')}
           placeholder="0"
           value={amount}
           onChange={handleSetAmount}
           className="amount"
-          message={errors.amount.message}
+          helperText={errors.amount.message}
           error={errors.amount.hasError}
-          action={t('global.max')}
-          onAction={handleMax}
+          InputProps={{
+            endAdornment: (
+              <span style={{ cursor: 'pointer' }} onClick={handleMax}>
+                {t('global.max')}
+              </span>
+            )
+          }}
         />
         {isDisabledByAmount ? (
           <div className="amount-error">{t('transfer_mana_modal.no_balance')}</div>
@@ -109,13 +123,13 @@ const TransferManaModal: React.FC<Props> = ({
             {(amount * manaPrice).toFixed(2)} {t('global.usd_symbol')}
           </div>
         )}
-        <Field
+        <TextField
           label={t('transfer_mana_modal.wallet_label')}
           placeholder="0x0000...0000"
           value={to}
           onChange={handleSetTo}
           className="wallet"
-          message={errors.to.message}
+          helperText={errors.to.message}
           error={errors.to.hasError}
         />
         <div className="fees-warning">{network === Network.ETHEREUM ? t('global.fees_warning') : null}</div>

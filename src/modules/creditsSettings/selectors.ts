@@ -1,5 +1,5 @@
-import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
 import { UserCreditsStatus } from '../../lib/api/credits'
+import { isLoadingType } from '../../modules/loading/selectors'
 import { RootState } from '../reducer'
 import { GET_USER_CREDITS_STATUS_REQUEST, OPT_OUT_FROM_CREDITS_REQUEST } from './actions'
 

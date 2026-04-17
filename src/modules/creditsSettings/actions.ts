@@ -1,4 +1,4 @@
-import { action } from 'typesafe-actions'
+import { action } from '../../lib/utils/action'
 import { UserCreditsStatus } from './types'
 
 // Get user credits status actions

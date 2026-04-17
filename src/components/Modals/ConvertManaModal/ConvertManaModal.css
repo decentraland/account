@@ -1,4 +1,4 @@
-.ui.modal.ConvertManaModal {
+.MuiDialog-root.ConvertManaModal {
   padding: 26px;
   width: 520px;
 }
@@ -46,13 +46,13 @@
 }
 
 .ConvertManaModal .dcl.close,
-.ui.modal > .dcl.close {
+.MuiDialog-root > .dcl.close {
   margin: 10px;
   padding: 10px;
   background-color: #ffffff17;
 }
 
-.ConvertManaModal .ui.sub.header {
+.ConvertManaModal .sub-header {
   text-transform: none;
   font-size: 15px;
   line-height: 24px;
@@ -69,7 +69,7 @@
   justify-content: center;
 }
 
-.ConvertManaModal .dcl.field {
+.ConvertManaModal .field-wrapper {
   width: 100%;
   min-width: 100%;
   margin-top: 30px;
@@ -79,28 +79,28 @@
   letter-spacing: 0.4px;
 }
 
-.ConvertManaModal .dcl.field .ui.input.amount input,
-.ConvertManaModal .ui.form .dcl.field .ui.input.amount input {
+.ConvertManaModal .amount-input input,
+.ConvertManaModal .amount-input input {
   text-align: center;
   font-weight: 600;
   font-size: 40px;
   line-height: 48px;
 }
 
-.ConvertManaModal .dcl.field .ui.input.wallet input,
-.ConvertManaModal .ui.form .dcl.field .ui.input.wallet input {
+.ConvertManaModal .wallet-input input,
+.ConvertManaModal .wallet-input input {
   text-align: center;
   font-weight: 600;
   font-size: 17px;
   line-height: 26px;
 }
 
-.ConvertManaModal button.ui.primary.start-transaction-button {
+.ConvertManaModal button.MuiButton-contained.start-transaction-button {
   margin-top: 20px;
   width: 100%;
 }
 
-.ConvertManaModal .dcl.field .ui.basic.button {
+.ConvertManaModal .field-wrapper .MuiButton-outlined {
   padding-bottom: 40px;
 }
 

@@ -1,33 +1,30 @@
-import React, { useCallback } from 'react'
-import { Footer } from 'decentraland-dapps/dist/containers'
-import { default as SignIn } from 'decentraland-dapps/dist/containers/SignInPage'
-import { Page } from 'decentraland-ui'
-import { config } from '../../config'
-import { Navbar } from '../Navbar'
-import { Props } from './SignInPage.types'
+import { useEffect } from 'react'
+import { useWallet } from '@dcl/core-web3'
+import { localStorageGetIdentity } from '@dcl/single-sign-on-client'
+import { useAccount } from 'wagmi'
+import { redirectToAuth } from '../../utils/authRedirect'
 
-import './SignInPage.css'
+const SignInPage = () => {
+  const { address, isConnected, isConnecting } = useWallet()
+  const { isReconnecting } = useAccount()
 
-const SignInPage = ({ isConnecting, isConnected }: Props) => {
-  const handleConnect = useCallback(() => {
-    if (!isConnected && !isConnecting) {
+  const identity = address ? localStorageGetIdentity(address) : null
+  const isFullyAuthenticated = isConnected && !!identity
+  const isLoading = isConnecting || isReconnecting
+
+  useEffect(() => {
+    if (isLoading) return
+
+    if (isFullyAuthenticated) {
       const params = new URLSearchParams(window.location.search)
-      const basename = /^decentraland.(zone|org|today)$/.test(window.location.host) ? '/account' : ''
-      window.location.replace(
-        `${config.get('AUTH_URL')}/login?redirectTo=${encodeURIComponent(`${basename}${params.get('redirectTo') || '/'}`)}`
-      )
+      const redirectTo = params.get('redirectTo')
+      window.location.href = redirectTo ? decodeURIComponent(redirectTo) : '/'
+    } else {
+      redirectToAuth()
     }
-  }, [isConnected, isConnecting])
+  }, [isLoading, isFullyAuthenticated])
 
-  return (
-    <>
-      <Navbar />
-      <Page className="SignInPage" isFullscreen>
-        <SignIn onConnect={handleConnect} />
-      </Page>
-      <Footer isFullscreen />
-    </>
-  )
+  return null
 }
 
-export default React.memo(SignInPage)
+export default SignInPage

@@ -1,10 +1,11 @@
 import { useCallback } from 'react'
 import { Network } from '@dcl/schemas'
-import { NetworkButton } from 'decentraland-dapps/dist/containers'
-import Modal from 'decentraland-dapps/dist/containers/Modal'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Button, Loader, ModalNavigation } from 'decentraland-ui'
+import CloseIcon from '@mui/icons-material/Close'
+import { Box, Button, CircularProgress, IconButton, Typography } from 'decentraland-ui2'
 import { useWithdrawalCost } from '../../../hooks'
+import Modal from '../../../lib/utils/ModalWrapper'
+import { NetworkButton } from '../../../lib/utils/noop'
+import { t } from '../../../lib/utils/translation'
 import { WithdrawalStatus } from '../../../modules/mana/types'
 import CompleteWithdrawal from './CompleteWithdrawal'
 import ReadyToWithdraw from './ReadyToWithdraw'
@@ -32,7 +33,12 @@ export default function WithdrawalStatusModal({
 
   return (
     <Modal name={name} onClose={onClose} className="WithdrawalStatusModal">
-      <ModalNavigation title={t('withdrawal_status_modal.title')} onClose={onClose} />
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 2 }}>
+        <Typography variant="h6">{t('withdrawal_status_modal.title')}</Typography>
+        <IconButton onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
+      </Box>
       <Modal.Content>
         <div className="amount_placeholder">{t('withdrawal_status_modal.amount_placeholder')}</div>
         <div className="amount">
@@ -48,14 +54,13 @@ export default function WithdrawalStatusModal({
         {isReadyToWithdraw ? (
           isLoadingCost ? (
             <div className="withdrawal_cost_loader">
-              <Loader size="tiny" inline />
+              <CircularProgress size={16} />
             </div>
           ) : (
             <div className="withdrawal_cost">
               <>
                 {t('withdrawal_status_modal.withdrawal_cost', {
-                  cost: cost ?? t('global.unknown'),
-                  bold: (text: string) => <b>{text}</b>
+                  cost: cost ?? t('global.unknown')
                 })}
                 <br />
                 {t('withdrawal_status_modal.withdrawal_cost_explanation')}
@@ -64,7 +69,7 @@ export default function WithdrawalStatusModal({
           )
         ) : null}
         {status === WithdrawalStatus.COMPLETE && !isFinalizingWithdrawal ? (
-          <Button primary onClick={onClose}>
+          <Button variant="contained" color="primary" onClick={onClose}>
             {t('global.done')}
           </Button>
         ) : (

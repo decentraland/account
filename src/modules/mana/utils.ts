@@ -1,16 +1,14 @@
 import { Network } from '@dcl/schemas'
-import { IPOSClientConfig, POSClient } from '@maticnetwork/maticjs'
-import { call, select } from '@redux-saga/core/effects'
-import { getChainConfiguration } from 'decentraland-dapps/dist/lib/chainConfiguration'
-import { getChainIdByNetwork, getConnectedProvider, getNetworkWeb3Provider } from 'decentraland-dapps/dist/lib/eth'
-import { PurchaseStatus } from 'decentraland-dapps/dist/modules/gateway/types'
-import { TransactionStatus as TxStatus } from 'decentraland-dapps/dist/modules/transaction/types'
-import { hasFailed, hasSucceeded, isPending } from 'decentraland-dapps/dist/modules/transaction/utils'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { getAddress } from 'decentraland-dapps/dist/modules/wallet/selectors'
-import { BigNumber, ethers, utils } from 'ethers'
+import { select } from '@redux-saga/core/effects'
+import { formatEther } from 'viem'
 import { Provider } from 'decentraland-transactions'
 import { config } from '../../config'
+import { getChainConfiguration, getChainIdByNetwork } from '../../lib/utils/eth'
+import { t } from '../../lib/utils/translation'
+import { PurchaseStatus } from '../gateway/types'
+import { TransactionStatus as TxStatus } from '../transaction/types'
+import { hasFailed, hasSucceeded, isPending } from '../transaction/utils'
+import { getAddress } from '../wallet/selectors'
 import { getWithdrawals } from './selectors'
 import { DepositStatus, MaticEnv, TransactionStatus, TransactionType, TransferStatus, Withdrawal, WithdrawalStatus } from './types'
 
@@ -23,30 +21,6 @@ const CHAIN_ID = +(config.get('CHAIN_ID') || 1)
 
 const POLL_INTERVAL = 30 * 1000 // 30 seconds
 
-function instantiateStateReceiver(provider: Provider) {
-  return new ethers.Contract(
-    '0x0000000000000000000000000000000000001001',
-    [
-      {
-        constant: true,
-        inputs: [],
-        name: 'lastStateId',
-        outputs: [
-          {
-            internalType: 'uint256',
-            name: '',
-            type: 'uint256'
-          }
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function'
-      }
-    ] as any,
-    new ethers.providers.Web3Provider(provider as any)
-  )
-}
-
 export async function isDepositSynced(txHash: string, ethereumProvider: Provider, maticProvider: Provider) {
   // get root counter
   const tx = await ethereumProvider.send!('eth_getTransactionReceipt', [txHash])
@@ -55,10 +29,15 @@ export async function isDepositSynced(txHash: string, ethereumProvider: Provider
   const { 1: stateSyncId } = stateSync.topics
   const rootCounter = parseInt(stateSyncId, 16)
 
-  // get child counter
-  const stateReceiver = instantiateStateReceiver(maticProvider)
-  const lastStateId: BigNumber = await stateReceiver.lastStateId()
-  const childCounter = lastStateId.toNumber()
+  // get child counter - call lastStateId on the state receiver contract
+  const lastStateIdResult: string = await maticProvider.send!('eth_call', [
+    {
+      to: '0x0000000000000000000000000000000000001001',
+      data: '0xc87d42e1' // keccak256("lastStateId()") selector
+    },
+    'latest'
+  ])
+  const childCounter = Number(BigInt(lastStateIdResult))
 
   // check if synced
   const isSynced = childCounter >= rootCounter
@@ -183,49 +162,19 @@ function getMaticEnv(env?: string) {
   }
 }
 
-export function* getMaticPOSClient() {
-  const connectedProvider: Provider | null = yield call(getConnectedProvider)
-
-  if (!connectedProvider) {
-    throw new Error('Could not connect to provider')
-  }
-
-  const web3Provider = new ethers.providers.Web3Provider(connectedProvider as any)
-
+// TODO: Reimplement with viem/wagmi - maticjs has been removed
+export function* getMaticPOSClient(): Generator<any, any, any> {
   const from: string | undefined = yield select(getAddress)
 
   if (!from) {
     throw new Error('Could not get address')
   }
 
-  // The parent chain id is the site's chain id
   const parentConfig = getChainConfiguration(CHAIN_ID)
-  // To avoid issues while making calls to the contracts, we need to make sure the provider is connected to the right network
-  const { chainId: providerChainId }: { chainId: number } = yield call([web3Provider, 'getNetwork'])
-  const maticConfig = getChainConfiguration(parentConfig.networkMapping[Network.MATIC])
+  void getChainConfiguration(parentConfig.networkMapping?.[Network.MATIC] ?? 137)
 
-  const config: IPOSClientConfig = {
-    network: MATIC_ENV,
-    version: MATIC_ENV === MaticEnv.MAINNET ? 'v1' : 'amoy',
-    parent: {
-      provider: providerChainId !== CHAIN_ID ? new ethers.providers.JsonRpcProvider(parentConfig.rpcURL) : web3Provider,
-      defaultConfig: {
-        from
-      }
-    },
-    child: {
-      provider: new ethers.providers.JsonRpcProvider(maticConfig.rpcURL),
-      defaultConfig: {
-        from
-      }
-    }
-  }
-
-  const client = new POSClient()
-
-  yield call([client, client.init], config)
-
-  return client
+  // TODO: Reimplement with viem - POSClient from @maticnetwork/maticjs has been removed
+  throw new Error('getMaticPOSClient: Not yet implemented with viem')
 }
 
 export function* getStoreWithdrawalByHash(hash: string) {
@@ -233,13 +182,23 @@ export function* getStoreWithdrawalByHash(hash: string) {
   return withdrawals.find(w => w.initializeHash === hash)
 }
 
-const EXIT_CONTRACT_GAS_CONSUMPTION = 260670 // gas in wei
+const EXIT_CONTRACT_GAS_CONSUMPTION = 260670n // gas in wei
 
 export async function getEstimatedExitTransactionCost(): Promise<string> {
+  // TODO: Reimplement with viem public client
+  const { createPublicClient, http } = await import('viem')
+  const { mainnet, sepolia } = await import('viem/chains')
+
   const appChainId = getChainIdByNetwork(Network.ETHEREUM)
-  const networkWeb3Provider = await getNetworkWeb3Provider(appChainId)
-  const gasPriceInWei = await networkWeb3Provider.getGasPrice()
-  const estimatedTxGasWei = gasPriceInWei.mul(EXIT_CONTRACT_GAS_CONSUMPTION)
-  const estimatedTxGasEther = utils.formatEther(estimatedTxGasWei)
+  const chain = appChainId === 1 ? mainnet : sepolia
+
+  const client = createPublicClient({
+    chain,
+    transport: http()
+  })
+
+  const gasPrice = await client.getGasPrice()
+  const estimatedTxGasWei = gasPrice * EXIT_CONTRACT_GAS_CONSUMPTION
+  const estimatedTxGasEther = formatEther(estimatedTxGasWei)
   return estimatedTxGasEther
 }

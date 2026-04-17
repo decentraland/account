@@ -1,4 +1,9 @@
 {
+  "sign_in_page": {
+    "title": "Sign In",
+    "description": "Connect your wallet to access your Decentraland account",
+    "connect": "Sign In"
+  },
   "global": {
     "settings": "Settings",
     "usd_symbol": "USD",

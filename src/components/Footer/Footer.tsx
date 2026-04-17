@@ -1,10 +1,6 @@
 import React from 'react'
-import { Footer as BaseFooter } from 'decentraland-dapps/dist/containers'
-import { FooterProps } from 'decentraland-ui'
-import * as tranlsations from '../../locales'
+import { Footer as DclFooter } from 'decentraland-ui2'
 
-const locales = Object.keys(tranlsations)
-
-const Footer = (props: FooterProps) => <BaseFooter locales={locales} {...props} />
+const Footer = (props: Record<string, unknown>) => <DclFooter {...(props as any)} />
 
 export default React.memo(Footer)

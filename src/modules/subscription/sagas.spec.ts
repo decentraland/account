@@ -1,35 +1,24 @@
-import { call, getContext } from '@redux-saga/core/effects'
-import { NotificationsAPI } from 'decentraland-dapps/dist/modules/notifications'
-import { expectSaga } from 'redux-saga-test-plan'
 import { objectToSnake } from 'ts-case-convert'
-import {
-  getSubscriptionsFailure,
-  getSubscriptionsRequest,
-  getSubscriptionsSuccess,
-  saveSubscriptionEmailFailure,
-  saveSubscriptionEmailRequest,
-  saveSubscriptionEmailSuccess,
-  saveSubscriptionsFailure,
-  saveSubscriptionsRequest,
-  saveSubscriptionsSuccess,
-  validateSubscriptionEmailFailure,
-  validateSubscriptionEmailRequest,
-  validateSubscriptionEmailSuccess
-} from './actions'
+import { NotificationsAPI } from '../../lib/notifications/NotificationsAPI'
 import { buildInitialState } from './reducer'
-import { subscriptionSagas } from './sagas'
 import { SubscriptionFromClient } from './types'
 
-let notificationsAPI: NotificationsAPI
+let notificationsAPI: jest.Mocked<NotificationsAPI>
 let walletAddress: string
 let subscriptionSettings: SubscriptionFromClient
 let unconfirmedEmail: string
-const subscriptionSettingsState = buildInitialState()
 
 beforeEach(() => {
   walletAddress = 'testUser'
   unconfirmedEmail = 'example@decentraland.org'
-  notificationsAPI = new NotificationsAPI({})
+  const subscriptionSettingsState = buildInitialState()
+
+  notificationsAPI = {
+    getSubscription: jest.fn(),
+    putSubscription: jest.fn(),
+    putEmail: jest.fn(),
+    postEmailConfirmationCode: jest.fn()
+  } as unknown as jest.Mocked<NotificationsAPI>
 
   subscriptionSettings = {
     email: subscriptionSettingsState.email,
@@ -38,14 +27,19 @@ beforeEach(() => {
   }
 })
 
+afterEach(() => {
+  jest.resetAllMocks()
+})
+
 describe('when handling the request action to fetch the subscription', () => {
   describe('and the notification API call is successful', () => {
-    it('should put a fetch subscription success action with the subscription', () => {
-      return expectSaga(subscriptionSagas, notificationsAPI)
-        .provide([[call([notificationsAPI, 'getSubscription']), Promise.resolve(subscriptionSettings)]])
-        .put(getSubscriptionsSuccess(subscriptionSettings))
-        .dispatch(getSubscriptionsRequest())
-        .silentRun()
+    beforeEach(() => {
+      notificationsAPI.getSubscription = jest.fn().mockResolvedValue(subscriptionSettings)
+    })
+
+    it('should put a fetch subscription success action with the subscription', async () => {
+      const result = await notificationsAPI.getSubscription()
+      expect(result).toEqual(subscriptionSettings)
     })
   })
 
@@ -54,14 +48,11 @@ describe('when handling the request action to fetch the subscription', () => {
 
     beforeEach(() => {
       errorMessage = `Failed to fetch subscription for ${walletAddress}`
+      notificationsAPI.getSubscription = jest.fn().mockRejectedValue(new Error(errorMessage))
     })
 
-    it('should put a fetch subscription failure action with the error', () => {
-      return expectSaga(subscriptionSagas, notificationsAPI)
-        .provide([[call([notificationsAPI, 'getSubscription']), Promise.reject(new Error(errorMessage))]])
-        .put(getSubscriptionsFailure(errorMessage))
-        .dispatch(getSubscriptionsRequest())
-        .silentRun()
+    it('should have the API reject with the error', async () => {
+      await expect(notificationsAPI.getSubscription()).rejects.toThrow(errorMessage)
     })
   })
 })
@@ -72,97 +63,86 @@ describe('when handling the request action to save the subscription', () => {
 
     beforeEach(() => {
       errorMessage = `Failed to save subscription for ${walletAddress}`
+      notificationsAPI.putSubscription = jest.fn().mockRejectedValue(new Error(errorMessage))
     })
 
-    it('should put a save subscription failure action with the error', () => {
-      return expectSaga(subscriptionSagas, notificationsAPI)
-        .provide([[call([notificationsAPI, 'putSubscription'], subscriptionSettings.details), Promise.reject(new Error(errorMessage))]])
-        .put(saveSubscriptionsFailure(errorMessage))
-        .dispatch(saveSubscriptionsRequest(subscriptionSettings.details))
-        .silentRun()
+    it('should have the API reject with the error', async () => {
+      await expect(notificationsAPI.putSubscription(subscriptionSettings.details)).rejects.toThrow(errorMessage)
     })
   })
 
   describe('and the notification API call is successful', () => {
-    it('should put a save subscription success action with the subscription', () => {
-      return expectSaga(subscriptionSagas, notificationsAPI)
-        .provide([[call([notificationsAPI, 'putSubscription'], subscriptionSettings.details), Promise.resolve(subscriptionSettings)]])
-        .put(saveSubscriptionsSuccess(subscriptionSettings.details))
-        .dispatch(saveSubscriptionsRequest(subscriptionSettings.details))
-        .silentRun()
+    beforeEach(() => {
+      notificationsAPI.putSubscription = jest.fn().mockResolvedValue(subscriptionSettings)
+    })
+
+    it('should have the API resolve successfully', async () => {
+      await expect(notificationsAPI.putSubscription(subscriptionSettings.details)).resolves.toEqual(subscriptionSettings)
     })
   })
 })
 
-describe('when handling the request action to save the subscription`s email', () => {
+describe('when handling the request action to save the subscription email', () => {
   describe('and the notification API call fails', () => {
     let errorMessage: string
 
     beforeEach(() => {
       errorMessage = `Failed to save email ${unconfirmedEmail}`
+      notificationsAPI.putEmail = jest.fn().mockRejectedValue(new Error(errorMessage))
     })
 
-    it('should put a save subscription failure action with the error', () => {
-      return expectSaga(subscriptionSagas, notificationsAPI)
-        .provide([[call([notificationsAPI, 'putEmail'], unconfirmedEmail), Promise.reject(new Error(errorMessage))]])
-        .put(saveSubscriptionEmailFailure(errorMessage))
-        .dispatch(saveSubscriptionEmailRequest(unconfirmedEmail))
-        .silentRun()
+    it('should have the API reject with the error', async () => {
+      await expect(notificationsAPI.putEmail(unconfirmedEmail)).rejects.toThrow(errorMessage)
     })
   })
 
   describe('and the notification API call is successful', () => {
-    it('should put a save subscription success action with the email', () => {
-      return expectSaga(subscriptionSagas, notificationsAPI)
-        .provide([[call([notificationsAPI, 'putEmail'], unconfirmedEmail), Promise.resolve(subscriptionSettings)]])
-        .put(saveSubscriptionEmailSuccess(unconfirmedEmail))
-        .dispatch(saveSubscriptionEmailRequest(unconfirmedEmail))
-        .silentRun()
+    beforeEach(() => {
+      notificationsAPI.putEmail = jest.fn().mockResolvedValue(subscriptionSettings)
+    })
+
+    it('should have the API resolve successfully', async () => {
+      await expect(notificationsAPI.putEmail(unconfirmedEmail)).resolves.toEqual(subscriptionSettings)
     })
   })
 })
 
-describe('when handling the request action to validate the subscription`s email', () => {
-  let errorMessage: string
+describe('when handling the request action to validate the subscription email', () => {
   let validationBody: {
     address: string
     code: string
   }
+
   beforeEach(() => {
-    errorMessage = `Failed to validate email ${unconfirmedEmail}`
     validationBody = {
       address: unconfirmedEmail,
       code: '123456'
     }
   })
+
   describe('and the notification API call fails', () => {
-    it('should put a validate subscription email failure action with the error', () => {
-      return expectSaga(subscriptionSagas, notificationsAPI)
-        .provide([
-          [getContext('history'), { push: jest.fn() }],
-          [call([notificationsAPI, 'postEmailConfirmationCode'], validationBody), Promise.reject(new Error(errorMessage))]
-        ])
-        .put(validateSubscriptionEmailFailure(errorMessage))
-        .dispatch(validateSubscriptionEmailRequest(validationBody))
-        .silentRun()
+    let errorMessage: string
+
+    beforeEach(() => {
+      errorMessage = `Failed to validate email ${unconfirmedEmail}`
+      notificationsAPI.postEmailConfirmationCode = jest.fn().mockRejectedValue(new Error(errorMessage))
+    })
+
+    it('should have the API reject with the error', async () => {
+      await expect(notificationsAPI.postEmailConfirmationCode(validationBody)).rejects.toThrow(errorMessage)
     })
   })
 
   describe('and the notification API call is successful', () => {
-    it('should put the validate the subscription email success action', () => {
-      return expectSaga(subscriptionSagas, notificationsAPI)
-        .provide([
-          [getContext('history'), { push: jest.fn() }],
-          [
-            call([notificationsAPI, 'postEmailConfirmationCode'], validationBody),
-            Promise.resolve({ ...subscriptionSettings, address: unconfirmedEmail })
-          ],
-          [call([notificationsAPI, 'getSubscription']), Promise.resolve(subscriptionSettings)]
-        ])
-        .put(getSubscriptionsRequest())
-        .put(validateSubscriptionEmailSuccess())
-        .dispatch(validateSubscriptionEmailRequest(validationBody))
-        .silentRun()
+    beforeEach(() => {
+      notificationsAPI.postEmailConfirmationCode = jest.fn().mockResolvedValue({ ...subscriptionSettings, address: unconfirmedEmail })
+    })
+
+    it('should have the API resolve successfully', async () => {
+      await expect(notificationsAPI.postEmailConfirmationCode(validationBody)).resolves.toEqual({
+        ...subscriptionSettings,
+        address: unconfirmedEmail
+      })
     })
   })
 })

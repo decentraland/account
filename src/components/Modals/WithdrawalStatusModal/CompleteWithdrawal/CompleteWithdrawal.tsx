@@ -1,10 +1,10 @@
 import React from 'react'
 import { Network } from '@dcl/schemas'
-import { getChainIdByNetwork } from 'decentraland-dapps/dist/lib/eth'
-import { getTransactionHref } from 'decentraland-dapps/dist/modules/transaction/utils'
-import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Checkbox } from 'decentraland-ui'
+import { Checkbox, FormControlLabel } from 'decentraland-ui2'
+import { getChainIdByNetwork } from '../../../../lib/utils/eth'
+import { t } from '../../../../lib/utils/translation'
 import { WithdrawalStatus } from '../../../../modules/mana/types'
+import { getTransactionHref } from '../../../../modules/transaction/utils'
 import LinkWrapper from '../LinkWrapper'
 import { Props } from './CompleteWithdrawal.types'
 
@@ -13,7 +13,13 @@ const CompleteWithdrawal = ({ withdrawal }: Props) => {
 
   const href = finalizeHash && getTransactionHref({ txHash: finalizeHash }, getChainIdByNetwork(Network.ETHEREUM))
 
-  const radio = <Checkbox disabled label={t('withdrawal_status_modal.status_completed')} checked={status === WithdrawalStatus.COMPLETE} />
+  const radio = (
+    <FormControlLabel
+      disabled
+      control={<Checkbox checked={status === WithdrawalStatus.COMPLETE} />}
+      label={t('withdrawal_status_modal.status_completed')}
+    />
+  )
 
   return href ? <LinkWrapper href={href}>{radio}</LinkWrapper> : radio
 }

@@ -1,25 +1,18 @@
-import { getIsFeatureEnabled, hasLoadedInitialFlags } from 'decentraland-dapps/dist/modules/features/selectors'
-import { ApplicationName } from 'decentraland-dapps/dist/modules/features/types'
 import { RootState } from '../reducer'
-import { FeatureName } from './types'
 
-export const getIsStreamingEnabled = (state: RootState) => {
-  if (hasLoadedInitialFlags(state)) {
-    return getIsFeatureEnabled(state, ApplicationName.DAPPS, FeatureName.STREAMING)
-  }
-  return false
+// Feature flags are not yet connected to a backend.
+// For now, return true for all features. In the future, connect to a feature flag service.
+
+export function hasLoadedInitialFlags(_state: RootState): boolean {
+  return true
 }
 
-export const getIsTurnstileVerificationEnabled = (state: RootState) => {
-  if (hasLoadedInitialFlags(state)) {
-    return getIsFeatureEnabled(state, ApplicationName.DAPPS, FeatureName.TURNSTILE_VERIFICATION)
-  }
-  return false
+export function getIsFeatureEnabled(_state: RootState, _app: string, _feature: string): boolean {
+  return true
 }
 
-export const getIsReferralEnabled = (state: RootState) => {
-  if (hasLoadedInitialFlags(state)) {
-    return getIsFeatureEnabled(state, ApplicationName.DAPPS, FeatureName.REFERRAL)
-  }
-  return false
-}
+export const getIsStreamingEnabled = (_state: RootState) => true
+
+export const getIsTurnstileVerificationEnabled = (_state: RootState) => true
+
+export const getIsReferralEnabled = (_state: RootState) => true

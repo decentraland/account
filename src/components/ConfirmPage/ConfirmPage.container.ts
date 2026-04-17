@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import { getAddress, isConnecting } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { RootState } from '../../modules/reducer'
 import { validateSubscriptionEmailRequest } from '../../modules/subscription/actions'
+import { getAddress, isConnecting } from '../../modules/wallet/selectors'
 import ConfirmPage from './ConfirmPage'
 import { MapDispatch, MapDispatchProps, MapStateProps } from './ConfirmPage.types'
 

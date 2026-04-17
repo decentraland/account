@@ -14,7 +14,7 @@ const ConfirmPage: React.FC<Props> = props => {
   const { token } = useParams<{ token: string }>()
 
   useEffect(() => {
-    !isLoading && onValidateSubscriptionEmailRequest({ address: searchParamsAddress || address, code: token })
+    !isLoading && token && onValidateSubscriptionEmailRequest({ address: searchParamsAddress || address, code: token })
   }, [isLoading, token, address])
   return (
     <PageContainer>

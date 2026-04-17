@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import { getPendingTransactions } from 'decentraland-dapps/dist/modules/transaction/selectors'
-import { getAddress, isConnected } from 'decentraland-dapps/dist/modules/wallet/selectors'
 import { RootState } from '../../modules/reducer'
+import { getPendingTransactions } from '../../modules/transaction/selectors'
+import { getAddress, isConnected } from '../../modules/wallet/selectors'
 import Navbar from './Navbar'
 import { MapStateProps } from './Navbar.types'
 

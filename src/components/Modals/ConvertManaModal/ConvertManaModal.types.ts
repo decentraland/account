@@ -1,8 +1,8 @@
-import { WithAuthorizedActionProps } from 'decentraland-dapps/dist/containers/withAuthorizedAction'
-import { Wallet } from 'decentraland-dapps/dist/modules/wallet/types'
-import { ModalProps } from 'decentraland-dapps/dist/providers/ModalProvider/ModalProvider.types'
 import { Dispatch } from 'redux'
+import { ModalProps } from '../../../lib/utils/ModalWrapper'
+import { WithAuthorizedActionProps } from '../../../lib/utils/noop'
 import { clearManaError, depositManaRequest, fetchManaPriceRequest, initiateWithdrawalRequest } from '../../../modules/mana/actions'
+import { Wallet } from '../../../modules/wallet/selectors'
 
 export type Props = ModalProps & {
   isLoading: boolean

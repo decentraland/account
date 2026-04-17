@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import { SubscriptionDetails } from '@dcl/schemas'
-import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
-import { isConnecting } from 'decentraland-dapps/dist/modules/wallet/selectors'
+import { isLoadingType } from '../../../modules/loading/selectors'
 import { RootState } from '../../../modules/reducer'
 import {
   GET_SUBSCRIPTIONS_REQUEST,
@@ -17,6 +16,7 @@ import {
   getUnconfirmedEmail,
   isIgnoringAllEmail
 } from '../../../modules/subscription/selectors'
+import { isConnecting } from '../../../modules/wallet/selectors'
 import NotificationGroupCard from './NotificationEmailCard'
 import { MapDispatch, MapDispatchProps, MapStateProps, OwnProps } from './NotificationEmailCard.types'
 

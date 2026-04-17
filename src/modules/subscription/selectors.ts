@@ -1,4 +1,4 @@
-import { isLoadingType } from 'decentraland-dapps/dist/modules/loading/selectors'
+import { isLoadingType } from '../../modules/loading/selectors'
 import { RootState } from '../reducer'
 import { GET_SUBSCRIPTIONS_REQUEST } from './actions'
 import type { MessageTypeCamelCase } from './types'

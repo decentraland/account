@@ -40,6 +40,6 @@
   color: #ffffff;
 }
 
-.Tooltip .ui.button {
+.Tooltip .MuiButton-root {
   margin-left: -8px;
 }

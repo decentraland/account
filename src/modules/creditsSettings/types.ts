@@ -1,5 +1,5 @@
-import { LoadingState } from 'decentraland-dapps/dist/modules/loading/reducer'
 import { UserCreditsStatus } from '../../lib/api/credits'
+import { LoadingState } from '../../modules/loading/reducer'
 
 export { UserCreditsStatus }
 

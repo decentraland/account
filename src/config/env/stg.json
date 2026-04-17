@@ -25,5 +25,8 @@
   "CREDITS_SERVER_URL": "https://credits.decentraland.today",
   "REACT_APP_CLOUDFLARE_TURNSTILE_SITE_KEY": "0x4AAAAAABgMRzn7-vLyDB_X",
   "MARKETPLACE_URL": "https://decentraland.zone/marketplace",
-  "ACCOUNT_URL": "https://decentraland.zone/account"
+  "ACCOUNT_URL": "https://decentraland.zone/account",
+  "WALLET_CONNECT_PROJECT_ID": "61570c542c2d66c659492e5b24a41522",
+  "MAGIC_API_KEY": "pk_live_CE856A4938B36648",
+  "THIRDWEB_CLIENT_ID": "e1adce863fe287bb6cf0e3fd90bdb77f"
 }

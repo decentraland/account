@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Redirect, useLocation } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 import { getIsTurnstileVerificationEnabled } from '../../modules/features/selectors'
 import { RootState } from '../../modules/reducer'
 import { ConfirmPage } from '../ConfirmPage'
@@ -15,7 +15,7 @@ const LegacyEmailConfirmRedirect: React.FC<Props> = ({ path }) => {
     const token = location.pathname.split('/').pop()
     const newPath = `/confirm-email-challenge/${token}${location.search}`
 
-    return <Redirect to={newPath} />
+    return <Navigate to={newPath} replace />
   }
 
   if (path === '/confirm-email/:token') {
