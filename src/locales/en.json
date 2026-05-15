@@ -301,6 +301,8 @@
         "bid_received": "Bid Received",
         "events_started": "Event Started",
         "events_starts_soon": "Event Starts Soon",
+        "event_approved": "Event Approved",
+        "event_rejected": "Event Rejected",
         "governance_announcement": "New DAO Announcement",
         "governance_authored_proposal_finished": "Voting Ended on Your Proposal",
         "governance_coauthor_requested": "Request to Co-Author a Proposal Received",

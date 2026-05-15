@@ -16,7 +16,12 @@ export const subscriptionGroups: SubscriptionGroups = {
     NotificationType.CREDITS_REMINDER_USAGE,
     NotificationType.CREDITS_REMINDER_DO_NOT_MISS_OUT
   ],
-  [SubscriptionGroupKeys.EVENTS]: [NotificationType.EVENTS_STARTED, NotificationType.EVENTS_STARTS_SOON],
+  [SubscriptionGroupKeys.EVENTS]: [
+    NotificationType.EVENTS_STARTED,
+    NotificationType.EVENTS_STARTS_SOON,
+    NotificationType.EVENT_APPROVED,
+    NotificationType.EVENT_REJECTED
+  ],
   [SubscriptionGroupKeys.REWARDS]: [
     NotificationType.REWARD_ASSIGNED,
     NotificationType.REWARD_CAMPAIGN_OUT_OF_FUNDS,

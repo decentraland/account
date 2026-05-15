@@ -299,6 +299,8 @@
         "bid_received": "出價已收到",
         "events_started": "活動開始",
         "events_starts_soon": "活動即將開始",
+        "event_approved": "活動已批准",
+        "event_rejected": "活動已拒絕",
         "governance_announcement": "新 DAO 公告",
         "governance_authored_proposal_finished": "對您的提案的投票結束",
         "governance_coauthor_requested": "收到共同撰寫提案的請求",

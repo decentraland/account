@@ -300,6 +300,8 @@
         "bid_received": "Oferta recibida",
         "events_started": "Evento iniciado",
         "events_starts_soon": "El evento comienza pronto",
+        "event_approved": "Evento aprobado",
+        "event_rejected": "Evento rechazado",
         "governance_announcement": "Anuncio de nuevo DAO",
         "governance_authored_proposal_finished": "La votación finalizó para su propuesta",
         "governance_coauthor_requested": "Solicitud de coautoría de una propuesta recibida",
