@@ -14,14 +14,14 @@ jobs:
       id-token: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v6
       - name: Use Node.js 24.x
         uses: actions/setup-node@v6.1.0
         with:
           node-version: 24.x
           cache: 'npm'
       - name: Set package.json version
-        uses: decentraland/oddish-action@master
+        uses: decentraland/oddish-action@0074f2d535c43b5c83f136525304a6277166d77f # @master
         with:
           deterministic-snapshot: true
           only-update-versions: true
@@ -32,7 +32,7 @@ jobs:
         env:
           NODE_OPTIONS: '--max-old-space-size=8192'
       - name: Publish
-        uses: decentraland/oddish-action@master
+        uses: decentraland/oddish-action@0074f2d535c43b5c83f136525304a6277166d77f # @master
         with:
           cwd: './dist'
           deterministic-snapshot: true
@@ -40,8 +40,6 @@ jobs:
           access: public
           gitlab-token: ${{ secrets.GITLAB_CDN_DEPLOYER_TOKEN }}
           gitlab-pipeline-url: ${{ secrets.GITLAB_CDN_DEPLOYER_URL }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Create Sentry release
         if: github.event_name == 'release' && github.event.action == 'created'
         uses: getsentry/action-release@v1
